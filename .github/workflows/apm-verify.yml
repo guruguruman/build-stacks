@@ -1,0 +1,94 @@
+name: apm-verify
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  apm-verify:
+    runs-on: macos-latest
+    timeout-minutes: 120
+    env:
+      APM_EXPECTED_VERSION: "0.9.1"
+      AGENT_BROWSER_EXPECTED_VERSION: "0.25.3"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install APM and agent-browser
+        run: |
+          set -euo pipefail
+
+          APM_TAG="v${APM_EXPECTED_VERSION}"
+          APM_PLATFORM="darwin"
+          case "$(uname -m)" in
+            arm64|aarch64)
+              APM_ARCH="arm64"
+              APM_SHA256="54f335a46f52b76f36b6a43c8a41d3f3e2c1dc78d1f43f479edc828426ee7033"
+              ;;
+            x86_64|amd64)
+              APM_ARCH="x86_64"
+              APM_SHA256="ca584af724126bdbc53801555b86f06e45e59f8da6cc07d5939ed65c1c80b110"
+              ;;
+            *)
+              echo "Unsupported APM runner architecture: $(uname -m)" >&2
+              exit 1
+              ;;
+          esac
+
+          APM_ARCHIVE="apm-${APM_PLATFORM}-${APM_ARCH}.tar.gz"
+          APM_URL="https://github.com/microsoft/apm/releases/download/${APM_TAG}/${APM_ARCHIVE}"
+          APM_DOWNLOAD_PATH="${RUNNER_TEMP}/${APM_ARCHIVE}"
+          APM_EXTRACT_DIR="${RUNNER_TEMP}/apm-${APM_PLATFORM}-${APM_ARCH}"
+          APM_INSTALL_DIR="${HOME}/.local/lib/apm"
+
+          curl -fsSL --retry 3 --retry-delay 2 "${APM_URL}" -o "${APM_DOWNLOAD_PATH}"
+          echo "${APM_SHA256}  ${APM_DOWNLOAD_PATH}" | shasum -a 256 -c -
+          rm -rf "${APM_EXTRACT_DIR}" "${APM_INSTALL_DIR}"
+          tar -xzf "${APM_DOWNLOAD_PATH}" -C "${RUNNER_TEMP}"
+          mkdir -p "${APM_INSTALL_DIR}" "${HOME}/.local/bin"
+          cp -R "${APM_EXTRACT_DIR}/." "${APM_INSTALL_DIR}/"
+          chmod +x "${APM_INSTALL_DIR}/apm"
+          ln -sf "${APM_INSTALL_DIR}/apm" "${HOME}/.local/bin/apm"
+
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.local/bin:$PATH"
+          apm --version
+          apm --version | grep "version ${APM_EXPECTED_VERSION}"
+          npm install -g agent-browser@${AGENT_BROWSER_EXPECTED_VERSION}
+          agent-browser install
+          agent-browser --version
+          agent-browser --version | grep "agent-browser ${AGENT_BROWSER_EXPECTED_VERSION}"
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Static gates
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.local/bin:$PATH"
+          bun run build
+          bun run generated:verify
+          bun run skill:verify
+          bun run apm:verify
+          bun run scripts/release-license-verify.ts
+          bunx tsc --noEmit
+          bun test
+          apm audit --ci
+          apm compile --validate --local-only
+          bun run smoke:codex
+          bun run smoke:all
+          bun run scripts/codex-skill-activation-smoke.ts --all-skills
+          bun run scripts/repo-secret-scan.ts
+
+      - name: Live agent-browser smoke
+        run: |
+          set -euo pipefail
+          export PATH="$HOME/.local/bin:$PATH"
+          AGENT_BROWSER_RUN_ID=ci-${{ github.run_id }}-${{ github.run_attempt }} bun run scripts/agent-browser-smoke.ts

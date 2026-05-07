@@ -1,0 +1,11 @@
+{
+  "product": "product-role-founder",
+  "sourceKind": "original",
+  "license": "MIT",
+  "status": "authored",
+  "strategy": "Original product-build-stacks authored role skill for the 1.0.0 public surface.",
+  "smokeScenario": "Invoke product-role-founder in a clean APM consumer and complete the documented workflow.",
+  "expectedOutput": "findings, decisions, evidence, residual risk, next handoff",
+  "evidencePath": ".product-build-stacks/evidence/product-role-founder.json",
+  "failureMode": "Name missing dependency or approval and stop without hidden helper fallback."
+}

@@ -1,0 +1,11 @@
+{
+  "legacy": "make-pdf",
+  "product": "product-source-pdf",
+  "upstreamRepo": "garrytan/gstack",
+  "upstreamCommit": "30fe6bb11c6915e6264440b8a044ed0dcfbe06e0",
+  "sourcePath": "make-pdf/SKILL.md.tmpl",
+  "status": "adapted",
+  "strategy": "Preserve the PDF workflow intent, but remove the gstack make-pdf CLI and package-local browse runtime from product-build-stacks.",
+  "unsupportedFeatures": [],
+  "license": "MIT"
+}

@@ -1,0 +1,41 @@
+# OS files
+.DS_Store
+
+# Editor-local files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+*.swp
+*.swo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+apm_modules/
+
+# Build and test output
+dist/
+browser/dist/
+coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+# Runtime state and generated workspaces
+tmp/
+.product/
+.product-build-stacks/*
+!.product-build-stacks/.gitkeep
+!.product-build-stacks/config.example.yaml
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*

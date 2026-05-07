@@ -1,0 +1,25 @@
+{
+  "name": "product-build-stacks",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "APM-managed product build skill stack with official agent-browser policy integration.",
+  "scripts": {
+    "build": "bun run scripts/apm-installed-skills-sync.ts --write",
+    "generated:verify": "bun run scripts/apm-installed-skills-sync.ts --verify",
+    "browser:doctor": "agent-browser --version",
+    "browser:smoke": "bun run scripts/agent-browser-smoke.ts",
+    "skill:verify": "bun run scripts/apm-source-skills-verify.ts",
+    "apm:verify": "bun run scripts/apm-package-verify.ts",
+    "smoke:codex": "bun run scripts/apm-skill-install-smoke.ts --target codex",
+    "smoke:all": "bun run scripts/apm-skill-install-smoke.ts --target all",
+    "release:verify": "bun run scripts/release-verify.ts"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.13",
+    "typescript": "^5.8.3"
+  }
+}

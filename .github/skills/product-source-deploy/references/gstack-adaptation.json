@@ -1,0 +1,11 @@
+{
+  "legacy": "setup-deploy",
+  "product": "product-source-deploy",
+  "upstreamRepo": "garrytan/gstack",
+  "upstreamCommit": "30fe6bb11c6915e6264440b8a044ed0dcfbe06e0",
+  "sourcePath": "setup-deploy/SKILL.md.tmpl",
+  "status": "adapted",
+  "strategy": "Substantive workflow copied from upstream template and transformed for product-stacks names, storage, and host-agnostic tool fallbacks.",
+  "unsupportedFeatures": [],
+  "license": "MIT"
+}

@@ -1,0 +1,16 @@
+.git/
+.product/
+tmp/
+apm_modules/
+node_modules/
+SKILL.md
+SKILL.md.tmpl
+browser/
+bin/
+tests/
+.agents/
+.claude/
+.cursor/
+.github/skills/
+.opencode/
+.DS_Store
