@@ -56,8 +56,8 @@ The parity checker treats this file as the migration inventory.
 
 Delete this document only after all of these are true:
 
-- `scripts/gstack-skill-mapping-verify.ts` no longer reads this file.
-- `scripts/gstack-fidelity-audit.ts` no longer needs legacy-to-product rows as its input.
+- `scripts/gstack-skill-mapping-verify.mjs` no longer reads this file.
+- `scripts/gstack-fidelity-audit.mjs` no longer needs legacy-to-product rows as its input.
 - Every `.apm/skills/*/references/gstack-adaptation.json` is either removed or replaced by release metadata that does not cite a legacy gstack skill name.
 - Release verification no longer depends on gstack mapping coverage as proof that the 52 public `product-*` skills cover the upstream inventory.
 

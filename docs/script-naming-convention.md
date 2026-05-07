@@ -4,25 +4,25 @@
 
 ## File Names
 
-Use `<target-object>-<operation>.ts` for runnable scripts. Keep shared data modules as simple nouns.
+Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data modules as simple nouns.
 
 | File | Target object | Operation | Purpose |
 | --- | --- | --- | --- |
-| `apm-installed-skills-sync.ts` | installed skill folders | sync | Compare or sync checked-in skill folders with a fresh `apm install --target all` result. |
-| `apm-source-skills-verify.ts` | source `.apm/skills/*/SKILL.md` files | verify | Validate the APM skill list against source skill frontmatter, titles, and adaptation metadata. |
-| `apm-package-prepare.ts` | local APM package | prepare | Create a clean local package for install smoke tests. |
-| `apm-skill-install-smoke.ts` | skill folders installed by APM | smoke | Install the local package into a temporary app and verify deployed skill roots. |
-| `apm-package-verify.ts` | APM package | verify | Verify package shape, browser policy docs, stale runtime references, script names, and install behavior. |
-| `agent-browser-smoke.ts` | official `agent-browser` | smoke | Run a live localhost open/snapshot/screenshot/close smoke and verify a concrete screenshot artifact. |
-| `codex-skill-activation-smoke.ts` | Codex skill activation | smoke | Install the local package into a temporary Codex app and verify skill discovery/activation. |
-| `gstack-skill-mapping-verify.ts` | gstack legacy skill mapping | verify | Verify mapping coverage and usability docs. |
-| `gstack-fidelity-audit.ts` | product fidelity against upstream gstack | audit | Fetch upstream gstack tree data and report adapted/partial fidelity. |
-| `gstack-skill-template-port.ts` | upstream gstack skill templates being ported to product skills | port | Fetch upstream gstack skill templates and adapt them into `.apm/skills`. |
-| `release-license-verify.ts` | release license files | verify | Verify license files, release notes, and adaptation metadata license fields. |
-| `script-names-verify.ts` | script names | verify | Enforce this file naming rule and block stale script names. |
-| `apm-skill-list.ts` | APM skill list | module | Export skill metadata and name validation. |
-| `release-verify.ts` | release gate | verify | Run the full release gate command list. |
-| `repo-secret-scan.ts` | repository secret exposure | scan | Scan working tree and git history for secrets or private paths. |
+| `apm-installed-skills-sync.mjs` | installed skill folders | sync | Compare or sync checked-in skill folders with a fresh `apm install --target all` result. |
+| `apm-source-skills-verify.mjs` | source `.apm/skills/*/SKILL.md` files | verify | Validate the APM skill list against source skill frontmatter, titles, and adaptation metadata. |
+| `apm-package-prepare.mjs` | local APM package | prepare | Create a clean local package for install smoke tests. |
+| `apm-skill-install-smoke.mjs` | skill folders installed by APM | smoke | Install the local package into a temporary app and verify deployed skill roots. |
+| `apm-package-verify.mjs` | APM package | verify | Verify package shape, browser policy docs, stale runtime references, script names, and install behavior. |
+| `agent-browser-smoke.mjs` | official `agent-browser` | smoke | Run a live localhost open/snapshot/screenshot/close smoke and verify a concrete screenshot artifact. |
+| `codex-skill-activation-smoke.mjs` | Codex skill activation | smoke | Install the local package into a temporary Codex app and verify skill discovery/activation. |
+| `gstack-skill-mapping-verify.mjs` | gstack legacy skill mapping | verify | Verify mapping coverage and usability docs. |
+| `gstack-fidelity-audit.mjs` | product fidelity against upstream gstack | audit | Fetch upstream gstack tree data and report adapted/partial fidelity. |
+| `gstack-skill-template-port.mjs` | upstream gstack skill templates being ported to product skills | port | Fetch upstream gstack skill templates and adapt them into `.apm/skills`. |
+| `release-license-verify.mjs` | release license files | verify | Verify license files, release notes, and adaptation metadata license fields. |
+| `script-names-verify.mjs` | script names | verify | Enforce this file naming rule and block stale script names. |
+| `apm-skill-list.mjs` | APM skill list | module | Export skill metadata and name validation. |
+| `release-verify.mjs` | release gate | verify | Run the full release gate command list. |
+| `repo-secret-scan.mjs` | repository secret exposure | scan | Scan working tree and git history for secrets or private paths. |
 
 Rules:
 

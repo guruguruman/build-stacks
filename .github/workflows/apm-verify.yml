@@ -18,8 +18,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
 
       - name: Install APM and agent-browser
         run: |
@@ -67,28 +70,28 @@ jobs:
           agent-browser --version | grep "agent-browser ${AGENT_BROWSER_EXPECTED_VERSION}"
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: npm ci
 
       - name: Static gates
         run: |
           set -euo pipefail
           export PATH="$HOME/.local/bin:$PATH"
-          bun run build
-          bun run generated:verify
-          bun run skill:verify
-          bun run apm:verify
-          bun run scripts/release-license-verify.ts
-          bunx tsc --noEmit
-          bun test
+          npm run build
+          npm run generated:verify
+          npm run skill:verify
+          npm run apm:verify
+          node scripts/release-license-verify.mjs
+          node --check scripts/release-verify.mjs
+          npm test
           apm audit --ci
           apm compile --validate --local-only
-          bun run smoke:codex
-          bun run smoke:all
-          bun run scripts/codex-skill-activation-smoke.ts --all-skills
-          bun run scripts/repo-secret-scan.ts
+          npm run smoke:codex
+          npm run smoke:all
+          node scripts/codex-skill-activation-smoke.mjs --all-skills
+          node scripts/repo-secret-scan.mjs
 
       - name: Live agent-browser smoke
         run: |
           set -euo pipefail
           export PATH="$HOME/.local/bin:$PATH"
-          AGENT_BROWSER_RUN_ID=ci-${{ github.run_id }}-${{ github.run_attempt }} bun run scripts/agent-browser-smoke.ts
+          AGENT_BROWSER_RUN_ID=ci-${{ github.run_id }}-${{ github.run_attempt }} node scripts/agent-browser-smoke.mjs

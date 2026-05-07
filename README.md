@@ -56,26 +56,25 @@ The public surface is the 52 skills in [docs/release-acceptance-skill-matrix.md]
 ## Maintainer Verification
 
 ```bash
-bun install --frozen-lockfile
-bun run build
-bun run generated:verify
-bun run skill:verify
-bun run apm:verify
-bun run smoke:codex
-bun run smoke:all
-bun run release:verify
+npm ci
+npm run build
+npm run generated:verify
+npm run skill:verify
+npm run apm:verify
+npm run smoke:codex
+npm run smoke:all
+npm run release:verify
 ```
 
-`bun run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/`, `.claude/`, `.cursor/`, `.github/skills/`, or `.opencode/` manually.
+`npm run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/`, `.claude/`, `.cursor/`, `.github/skills/`, or `.opencode/` manually.
 
 ## Release Files
 
 - [CHANGELOG.md](CHANGELOG.md)
-- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
 - [docs/release-acceptance-scenarios.md](docs/release-acceptance-scenarios.md)
 
 ## Troubleshooting
 
 - Missing skills: rerun `apm install guruguruman/product-build-stacks#v1.0.0 --target all`.
-- Generated drift: run `bun run build` and then `bun run generated:verify`.
+- Generated drift: run `npm run build` and then `npm run generated:verify`.
 - Browser command missing: install official `agent-browser`, then rerun `agent-browser --version` and `agent-browser install`.

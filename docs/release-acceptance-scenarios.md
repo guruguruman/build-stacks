@@ -7,7 +7,7 @@ These scenarios define the `1.0.0-release` acceptance suite. A skill is complete
 Requires official `agent-browser`. If the command is unavailable, stop and install it; do not fall back to root browser implementation files.
 
 ```bash
-bun run build
+npm run build
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
@@ -72,8 +72,8 @@ Success criteria:
 ## 4. Clean Consumer Install
 
 ```bash
-bun run smoke:codex
-bun run smoke:all
+npm run smoke:codex
+npm run smoke:all
 ```
 
 Success criteria:

@@ -5,21 +5,18 @@
   "type": "module",
   "description": "APM-managed product build skill stack with official agent-browser policy integration.",
   "scripts": {
-    "build": "bun run scripts/apm-installed-skills-sync.ts --write",
-    "generated:verify": "bun run scripts/apm-installed-skills-sync.ts --verify",
+    "build": "node scripts/apm-installed-skills-sync.mjs --write",
+    "generated:verify": "node scripts/apm-installed-skills-sync.mjs --verify",
     "browser:doctor": "agent-browser --version",
-    "browser:smoke": "bun run scripts/agent-browser-smoke.ts",
-    "skill:verify": "bun run scripts/apm-source-skills-verify.ts",
-    "apm:verify": "bun run scripts/apm-package-verify.ts",
-    "smoke:codex": "bun run scripts/apm-skill-install-smoke.ts --target codex",
-    "smoke:all": "bun run scripts/apm-skill-install-smoke.ts --target all",
-    "release:verify": "bun run scripts/release-verify.ts"
+    "browser:smoke": "node scripts/agent-browser-smoke.mjs",
+    "skill:verify": "node scripts/apm-source-skills-verify.mjs",
+    "apm:verify": "node scripts/apm-package-verify.mjs",
+    "smoke:codex": "node scripts/apm-skill-install-smoke.mjs --target codex",
+    "smoke:all": "node scripts/apm-skill-install-smoke.mjs --target all",
+    "release:verify": "node scripts/release-verify.mjs",
+    "test": "node --test"
   },
   "dependencies": {
     "playwright": "^1.52.0"
-  },
-  "devDependencies": {
-    "@types/bun": "^1.2.13",
-    "typescript": "^5.8.3"
   }
 }
