@@ -196,6 +196,7 @@ After monitoring completes (or if the user stops early), produce a summary:
 ```
 CANARY REPORT — [url]
 ═════════════════════
+Browser Activation: executed / blocked / report_only / not_applicable
 Duration:     [X minutes]
 Pages:        [N pages monitored]
 Checks:       [N total checks performed]
@@ -213,6 +214,11 @@ Screenshots:   .product-build-stacks/canary-reports/screenshots/
 
 VERDICT: [DEPLOY IS HEALTHY / DEPLOY HAS ISSUES — details above]
 ```
+
+Use `executed` only when official `agent-browser` ran and screenshot, console,
+network, snapshot, or URL evidence is cited. If the target exists but browser
+runtime, auth, approval, or access prevents execution, report `blocked` and do
+not mark the deploy healthy.
 
 Save report to `.product-build-stacks/canary-reports/{date}-canary.md` and `.product-build-stacks/canary-reports/{date}-canary.json`.
 

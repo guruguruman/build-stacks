@@ -57,6 +57,19 @@ agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/sc
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
 
+## Browser Activation Status
+
+Always include `browser_activation: executed | blocked | report_only | not_applicable`
+in the final report.
+
+- Use `executed` only when official `agent-browser` actually ran and the report
+  cites screenshot, snapshot, console, network, or URL evidence.
+- Use `blocked` when a target URL or UI surface exists but browser runtime, auth,
+  approval, or access prevented execution.
+- Use `report_only` when the request asks for QA thinking but no runnable URL,
+  HTML artifact, screenshot, or app surface is available.
+- Use `not_applicable` only when the request has no browser surface.
+
 **Create output directories:**
 
 ```bash

@@ -109,7 +109,7 @@ Run a slop scan on changed files to catch AI code quality issues (empty catches,
 redundant `return await`, overcomplicated abstractions):
 
 ```bash
-bun run slop:diff origin/<base> 2>/dev/null || true
+npm run slop:diff origin/<base> 2>/dev/null || true
 ```
 
 If findings are reported, include them in the product-flow-codereview output as an informational

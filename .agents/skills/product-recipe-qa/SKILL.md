@@ -109,6 +109,11 @@ agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/sc
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
 
+Always include `browser_activation: executed | blocked | report_only | not_applicable`
+in QA summaries. Use `executed` only when official `agent-browser` ran and the
+summary cites screenshot, snapshot, console, network, URL, or before/after
+evidence.
+
 **Check test framework (bootstrap if needed):**
 
 ## Test Bootstrap
@@ -348,6 +353,7 @@ Write to `.product-build-stacks/design-docs/{slug}/{user}-{branch}-test-outcome-
 - Fixes applied (verified: X, best-effort: Y, reverted: Z)
 - Deferred issues
 - Health score delta: baseline → final
+- browser_activation: executed / blocked / report_only / not_applicable
 
 **PR Summary:** Include a one-line summary suitable for PR descriptions:
 > "QA found N issues, fixed M, health score X → Y."

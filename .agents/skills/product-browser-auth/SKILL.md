@@ -30,3 +30,4 @@ This skill is implemented with product-build-stacks boundaries under product-sta
 - evidence: files, commands, browser artifacts, or docs used.
 - residual risk: what remains unavailable because of the degradation.
 - next handoff: the next practical command or manual step.
+- browser_activation: executed, blocked, report_only, or not_applicable.

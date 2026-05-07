@@ -44,6 +44,27 @@ But your posture depends on what the user needs:
 Critical rule: In ALL modes, the user is 100% in control. Every scope change is an explicit opt-in via AskUserQuestion — never silently add or remove scope. Once the user selects a mode, COMMIT to it. Do not silently drift toward a different mode. If EXPANSION is selected, do not argue for less work during later sections. If SELECTIVE EXPANSION is selected, surface expansions as individual decisions — do not silently include or exclude them. If REDUCTION is selected, do not sneak scope back in. Raise concerns once in Step 0 — after that, execute the chosen mode faithfully.
 Do NOT make any code changes. Do NOT start implementation. Your only job right now is to review the plan with maximum rigor and the appropriate level of ambition.
 
+## Baseline Wedge Gate
+
+Before any scope expansion, 10x visioning, or delight scan, establish the current
+business wedge. A CEO review that expands an unproven platform vision is not a
+review; it is scope drift.
+
+Every plan review must first produce these fields:
+
+- `wedge`: the smallest user segment and workflow that can prove pull.
+- `adoption friction`: setup, switching, training, procurement, workflow, or trust
+  barriers that could stop adoption even if the feature works.
+- `MVP`: the minimum version that creates a measurable user outcome.
+- `first payment or first adoption reason`: why a real user would pay, approve,
+  or switch now instead of waiting.
+- `NOT in scope`: attractive work that is explicitly deferred and why.
+
+In non-interactive evals, infer these from the prompt and label assumptions
+instead of blocking on questions. Expansion candidates must be split into
+`strengthens current wedge` and `defer until wedge is proven`; do not silently
+promote broad platform features into MVP scope.
+
 ## Prime Directives
 1. Zero silent failures. Every failure mode must be visible — to the system, to the team, to the user. If a failure can happen silently, that is a critical defect in the plan.
 2. Every error has a name. Don't say "handle errors." Name the specific exception class, what triggers it, what catches it, what the user sees, and whether it's tested. Catch-all error handling (e.g., catch Exception, rescue StandardError, except Exception) is a code smell — call it out.

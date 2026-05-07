@@ -241,6 +241,13 @@ TREND: Performance degrading. LCP doubled in 8 days.
 
 Write to `.product-build-stacks/benchmark-reports/{date}-benchmark.md` and `.product-build-stacks/benchmark-reports/{date}-benchmark.json`.
 
+Every benchmark report must include
+`browser_activation: executed | blocked | report_only | not_applicable`.
+Use `executed` only when official `agent-browser` ran and the report cites URL,
+snapshot, screenshot, network, console, or timing evidence. If no browser evidence
+was collected, report the benchmark as blocked or report-only instead of treating
+the numbers as measured.
+
 ## Important Rules
 
 - **Measure, don't guess.** Use actual performance.getEntries() data, not estimates.

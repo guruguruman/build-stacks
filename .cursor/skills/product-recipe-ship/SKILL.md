@@ -458,11 +458,8 @@ if [ -f package.json ]; then
   if command -v node >/dev/null 2>&1; then
     PKG_VERSION=$(node -e 'const p=require("./package.json");process.stdout.write(p.version||"")' 2>/dev/null)
     PARSE_EXIT=$?
-  elif command -v bun >/dev/null 2>&1; then
-    PKG_VERSION=$(bun -e 'const p=require("./package.json");process.stdout.write(p.version||"")' 2>/dev/null)
-    PARSE_EXIT=$?
   else
-    echo "ERROR: package.json exists but neither node nor bun is available. Install one and re-run."
+    echo "ERROR: package.json exists but node is not available. Install Node and re-run."
     exit 1
   fi
   if [ "$PARSE_EXIT" != "0" ]; then
@@ -548,13 +545,8 @@ if [ -f package.json ]; then
       echo "ERROR: failed to update package.json. VERSION was written but package.json is now stale. Fix and re-run — the new idempotency check will detect the drift."
       exit 1
     }
-  elif command -v bun >/dev/null 2>&1; then
-    bun -e 'const fs=require("fs"),p=require("./package.json");p.version=process.argv[1];fs.writeFileSync("package.json",JSON.stringify(p,null,2)+"\n")' "$NEW_VERSION" || {
-      echo "ERROR: failed to update package.json. VERSION was written but package.json is now stale."
-      exit 1
-    }
   else
-    echo "ERROR: package.json exists but neither node nor bun is available."
+    echo "ERROR: package.json exists but node is not available."
     exit 1
   fi
 fi
@@ -574,10 +566,8 @@ if command -v node >/dev/null 2>&1; then
     exit 1
   }
 else
-  bun -e 'const fs=require("fs"),p=require("./package.json");p.version=process.argv[1];fs.writeFileSync("package.json",JSON.stringify(p,null,2)+"\n")' "$REPAIR_VERSION" || {
-    echo "ERROR: drift repair failed."
-    exit 1
-  }
+  echo "ERROR: drift repair failed — node is not available."
+  exit 1
 fi
 echo "Drift repaired: package.json synced to $REPAIR_VERSION. No version bump performed."
 ```

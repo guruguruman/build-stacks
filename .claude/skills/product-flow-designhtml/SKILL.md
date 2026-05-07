@@ -52,6 +52,19 @@ agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/sc
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
 
+## Browser Activation Status
+
+Always include `browser_activation: executed | blocked | report_only | not_applicable`
+when reporting preview or verification status.
+
+- Use `executed` only when official `agent-browser` opened the HTML/page and
+  captured screenshot, snapshot, console, or URL evidence.
+- Use `blocked` when an HTML/page artifact exists but browser runtime or approval
+  prevented verification.
+- Use `report_only` when no HTML/page artifact was created or inspected and the
+  output is only a design checklist.
+- Use `not_applicable` only when no browser preview is relevant.
+
 ---
 
 ## Step 0: Input Detection
@@ -246,7 +259,6 @@ _ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
 For **framework output**, add to the project's dependencies instead:
 ```bash
 # Detect package manager
-[ -f bun.lockb ] && echo "bun add @chenglou/pretext" || \
 [ -f pnpm-lock.yaml ] && echo "pnpm add @chenglou/pretext" || \
 [ -f yarn.lock ] && echo "yarn add @chenglou/pretext" || \
 echo "npm install @chenglou/pretext"

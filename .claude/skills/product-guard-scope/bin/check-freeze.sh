@@ -29,9 +29,9 @@ fi
 # Try grep/sed first, fall back to Python for escaped quotes
 FILE_PATH=$(printf '%s' "$INPUT" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*:[[:space:]]*"//;s/"$//' || true)
 
-# Python fallback if grep returned empty
+# Node fallback if grep returned empty
 if [ -z "$FILE_PATH" ]; then
-  FILE_PATH=$(printf '%s' "$INPUT" | python3 -c 'import sys,json; print(json.loads(sys.stdin.read()).get("tool_input",{}).get("file_path",""))' 2>/dev/null || true)
+  FILE_PATH=$(printf '%s' "$INPUT" | node -e 'let data=""; process.stdin.setEncoding("utf8"); process.stdin.on("data", chunk => data += chunk); process.stdin.on("end", () => { try { const parsed = JSON.parse(data); process.stdout.write(parsed.tool_input?.file_path ?? ""); } catch {} });' 2>/dev/null || true)
 fi
 
 # If we couldn't extract a file path, allow (don't block on parse failure)

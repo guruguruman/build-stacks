@@ -80,3 +80,4 @@ agent-browser --json --session "$_ABR_SESSION" wait 2000
 - evidence: commands, URLs, screenshots, stream/session status, and artifact paths.
 - residual risk: unavailable browser evidence or unverified auth/session state.
 - next handoff: the next browser command, QA Skill, or manual recovery step.
+- browser_activation: executed, blocked, report_only, or not_applicable.

@@ -82,6 +82,11 @@ agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/sc
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
 
+Always include `browser_activation: executed | blocked | report_only | not_applicable`
+when browser research or visual evidence is part of the consultation. Use
+`executed` only when official `agent-browser` ran and cited screenshot, snapshot,
+URL, or console evidence exists.
+
 If browse is not available, that's fine — visual research is optional. The skill works without it using WebSearch and your built-in design knowledge.
 
 **Find the product-stacks designer (optional — enables AI mockup generation):**

@@ -225,6 +225,11 @@ mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stac
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 ```
 
+When reporting this branch, include
+`browser_activation: executed | blocked | report_only | not_applicable`. Use
+`executed` only when official `agent-browser` captured the screenshot and the
+artifact path is cited.
+
 **Launch N Agent subagents in a single message** (parallel execution). Use the Agent
 tool with `subagent_type: "general-purpose"` for each variant. Each agent is independent
 and handles its own generation, quality check, verification, and retry.

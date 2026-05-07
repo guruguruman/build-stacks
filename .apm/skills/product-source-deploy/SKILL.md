@@ -150,7 +150,7 @@ Use AskUserQuestion to gather the information:
    - D) No automated way — just check the URL loads
 
 4. **Any pre-merge or post-merge hooks?**
-   - Commands to run before merging (e.g., `bun run build`)
+   - Commands to run before merging (e.g., `npm run build`)
    - Commands to run after merge but before deploy verification
 
 ### Step 4: Write configuration

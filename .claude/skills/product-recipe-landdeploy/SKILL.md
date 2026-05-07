@@ -37,6 +37,11 @@ agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/sc
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
 
+Always include `browser_activation: executed | blocked | report_only | not_applicable`
+in deployment verification output. Use `executed` only when official
+`agent-browser` ran and the handoff cites screenshot, snapshot, console, network,
+or URL evidence.
+
 ## Base Branch Detection
 
 Detect the base branch from git when needed:
@@ -478,11 +483,11 @@ and tell the user: "I found and fixed a few issues during the review. The fixes 
 
 **Free tests — run them now:**
 
-Read AGENTS.md or other host instruction files to find the project's test command. If not specified, use `bun test`.
+Read AGENTS.md or other host instruction files to find the project's test command. If not specified, use `npm test`.
 Run the test command and capture the exit code and output.
 
 ```bash
-bun test 2>&1 | tail -10
+npm test 2>&1 | tail -10
 ```
 
 If tests fail: **BLOCKER.** Cannot merge with failing tests.

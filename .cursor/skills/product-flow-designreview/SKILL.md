@@ -145,6 +145,25 @@ Report findings before proceeding to Step 0.
 
 Use existing design assets and browser evidence first. Avoid adding a new design toolchain unless the repo already has one.
 
+## Visual Artifact Status
+
+Design review quality depends on whether a real visual artifact exists. Always
+state this field in the final output:
+
+`visual_artifact_status: executed | available | report_only | not_applicable`
+
+- `executed`: you generated or inspected a visual artifact during this review
+  and can cite the mockup, HTML, screenshot, or browser evidence path.
+- `available`: the prompt or repo already provided a visual artifact and you
+  reviewed it.
+- `report_only`: the plan has UI scope, but no visual artifact was generated or
+  inspected in this run.
+- `not_applicable`: the plan has no UI surface.
+
+When status is `report_only`, call the output a text-only design review, not
+design-complete. Text can improve a plan, but it does not verify visual hierarchy,
+responsive behavior, or AI-slop risk.
+
 ## Step 0: Design Scope Assessment
 
 ### 0A. Initial Design Rating
@@ -404,6 +423,7 @@ Then present options: **A)** Add to TODOS.md **B)** Skip — not valuable enough
   | What already exists  | written                                     |
   | TODOS.md updates     | ___ items proposed                          |
   | Approved Mockups     | ___ generated, ___ approved                  |
+  | Visual artifact      | executed / available / report_only / n/a     |
   | Decisions made       | ___ added to plan                           |
   | Decisions deferred   | ___ (listed below)                          |
   | Overall design score | ___/10 → ___/10                             |

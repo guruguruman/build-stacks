@@ -62,7 +62,7 @@ echo "branch HEAD VERSION: $CURRENT_VERSION"
 ## Step 3: Query the queue
 
 Call the util three times — once for each bump level — so the user sees what
-they'd claim for micro/patch/minor/major. Cheap (same gh call cached by bun).
+they'd claim for micro/patch/minor/major. Cheap (same gh call cached by the repo-local tool).
 
 ```bash
 for LEVEL in micro patch minor major; do

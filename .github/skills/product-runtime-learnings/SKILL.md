@@ -143,8 +143,9 @@ if [ -f "$LEARN_FILE" ]; then
   TOTAL=$(wc -l < "$LEARN_FILE" | tr -d ' ')
   echo "TOTAL: $TOTAL entries"
   # Count by type (after dedup)
-  cat "$LEARN_FILE" | bun -e "
-    const lines = (await Bun.stdin.text()).trim().split('\n').filter(Boolean);
+  cat "$LEARN_FILE" | node -e "
+    const fs = require('fs');
+    const lines = fs.readFileSync(0, 'utf8').trim().split('\n').filter(Boolean);
     const seen = new Map();
     for (const line of lines) {
       try {

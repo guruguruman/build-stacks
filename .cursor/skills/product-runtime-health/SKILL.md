@@ -82,7 +82,7 @@ After auto-detection, present the detected tools via AskUserQuestion:
 
 - Type check: `tsc --noEmit`
 - Lint: `biome check .`
-- Tests: `bun test`
+- Tests: `npm test`
 - Dead code: `knip`
 - Shell lint: `shellcheck *.sh`
 
@@ -98,7 +98,7 @@ section in AGENTS.md or other host instruction files:
 
 - typecheck: tsc --noEmit
 - lint: biome check .
-- test: bun test
+- test: npm test
 - deadcode: knip
 - shell: shellcheck *.sh scripts/*.sh
 ```
@@ -194,7 +194,7 @@ Category      Tool              Score   Status     Duration   Details
 ----------    ----------------  -----   --------   --------   -------
 Type check    tsc --noEmit      10/10   CLEAN      3s         0 errors
 Lint          biome check .      8/10   WARNING    2s         3 warnings
-Tests         bun test          10/10   CLEAN      12s        47/47 passed
+Tests         npm test          10/10   CLEAN      12s        47/47 passed
 Dead code     knip               7/10   WARNING    5s         4 unused exports
 Shell lint    shellcheck        10/10   CLEAN      1s         0 issues
 GBrain        gbrain doctor     10/10   CLEAN      <1s        doctor=ok, queue=3, pushed 2h ago
@@ -300,7 +300,7 @@ Prioritize suggestions by impact (weight * score deficit):
 RECOMMENDATIONS (by impact)
 ============================
 1. [HIGH]  Fix 2 failing tests (Tests: 9/10, weight 30%)
-   Run: bun test --verbose to see failures
+   Run: npm test --verbose to see failures
 2. [MED]   Address 12 lint warnings (Lint: 6/10, weight 20%)
    Run: biome check . --write to auto-fix
 3. [LOW]   Remove 4 unused exports (Dead code: 7/10, weight 15%)

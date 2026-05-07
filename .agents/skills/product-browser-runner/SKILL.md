@@ -99,6 +99,23 @@ agent-browser --json --session "$_ABR_SESSION" network har stop .product-build-s
 - Persist screenshots, traces, HAR, profile, and state only under `.product-build-stacks/`.
 - Do not persist cookies, authorization headers, API keys, bearer tokens, or credential-bearing screenshots unless the user explicitly approves and redaction is applied.
 
+## Browser Activation Status
+
+Every browser-capable final output must include:
+
+`browser_activation: executed | blocked | report_only | not_applicable`
+
+- `executed`: official `agent-browser` ran and the response cites command logs plus
+  screenshot, snapshot, console, network, or URL evidence.
+- `blocked`: a URL, rendered UI, HTML artifact, or requested browser action existed,
+  but runtime, auth, approval, or access prevented execution.
+- `report_only`: no browser runtime work was performed; the output is a checklist,
+  plan review, or text-only QA report.
+- `not_applicable`: the request had no browser surface.
+
+Do not count a browser workflow as executed because a checklist was produced. It is
+executed only when there is browser evidence.
+
 ## Expected Evidence Shape
 
 Browser output should be summarized with these fields when available:
@@ -125,3 +142,4 @@ Do not expose raw browser JSON as a public product-stacks contract. Summarize it
 - evidence: commands, URLs, artifact paths, and source files used to corroborate findings.
 - residual risk: what could not be verified.
 - next handoff: the next practical command or manual step.
+- browser_activation: executed, blocked, report_only, or not_applicable.

@@ -138,6 +138,9 @@ after 3-4 selector attempts:
 The match path returns whatever JSON the matched skill emits. The
 prototype path returns whatever JSON you construct. In both cases:
 
+- Include `browser_activation` with one of `executed`, `blocked`, `report_only`,
+  or `not_applicable`. Use `executed` only when official `agent-browser` ran and
+  the JSON cites URL, snapshot, screenshot, or extracted browser evidence.
 - One JSON document, on stdout.
 - Stderr (or chat) is for logs and the skillify nudge.
 - Do not embed prose around the JSON in the chat reply unless the user

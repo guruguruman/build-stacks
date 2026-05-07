@@ -21,9 +21,9 @@ Use this skill when repeated browser or product workflow work should become a re
 5. If accepted, move the candidate into `.apm/skills/<product-name>/`, add metadata in `references/gstack-adaptation.json`, and run:
 
 ```bash
-bun run skill:verify
-bun run build
-bun run generated:verify
+npm run skill:verify
+npm run build
+npm run generated:verify
 ```
 
 6. Stop before committing unless the user asks for commit/publish work.
@@ -37,6 +37,7 @@ bun run generated:verify
 - smoke scenario
 - expected output
 - evidence path
+- browser_activation if browser evidence was used or requested
 - next handoff
 
 Do not use package-local browse SDKs or hidden global skill registries. Browser evidence must go through official `agent-browser` and the `product-browser-runner` policy.

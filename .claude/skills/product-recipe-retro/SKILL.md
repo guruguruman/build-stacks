@@ -600,7 +600,7 @@ DISCOVER_BIN="git log --numstat --format=medium"
 echo "DISCOVER_BIN: $DISCOVER_BIN"
 ```
 
-If no binary is found, tell the user: "Discovery script not found. Run `bun run build` in the product-stacks directory to compile it." and stop.
+If no binary is found, tell the user: "Discovery script not found. Run `npm run build` in the product-stacks directory to compile it." and stop.
 
 Run the discovery:
 ```bash

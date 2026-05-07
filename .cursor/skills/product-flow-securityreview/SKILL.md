@@ -191,7 +191,7 @@ Goes beyond `npm audit`. Checks actual supply chain risk.
 
 **Package manager detection:**
 ```bash
-[ -f package.json ] && echo "DETECTED: npm/yarn/bun"
+[ -f package.json ] && echo "DETECTED: npm/yarn"
 [ -f Gemfile ] && echo "DETECTED: bundler"
 [ -f requirements.txt ] || [ -f pyproject.toml ] && echo "DETECTED: pip"
 [ -f Cargo.toml ] && echo "DETECTED: cargo"

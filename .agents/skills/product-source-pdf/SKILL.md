@@ -30,3 +30,4 @@ This skill is implemented with product-build-stacks boundaries. product-build-st
 - evidence: commands run, output paths, screenshots, or inspection notes.
 - residual risk: missing generator, visual fidelity gaps, or manual verification still needed.
 - next handoff: the next practical command or file to inspect.
+- browser_activation: executed, blocked, report_only, or not_applicable when browser-rendered evidence is relevant.
