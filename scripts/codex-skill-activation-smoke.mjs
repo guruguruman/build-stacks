@@ -1,58 +1,192 @@
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { tmpdir } from "node:os";
 import { productSkills } from "./apm-skill-list.mjs";
 const repoRoot = process.cwd();
 const codexSmokeRoot = join(repoRoot, ".product-build-stacks", "tmp-codex-skill-smoke");
 const preparedPackageRoot = join(codexSmokeRoot, "package");
 const consumerAppRoot = join(codexSmokeRoot, "app");
 const smokeResultsRoot = join(codexSmokeRoot, "results");
+const codexRuntimeRoot = join(tmpdir(), `product-build-stacks-codex-smoke-${createHash("sha256").update(repoRoot).digest("hex").slice(0, 12)}-${process.pid}`);
+const fakeCodexHome = join(codexRuntimeRoot, "codex-home");
+const fakeHome = join(codexRuntimeRoot, "home");
+const realCodexHome = resolve(process.env.PRODUCT_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
+const realCodexSkillsRoot = join(realCodexHome, "skills");
+const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
+const systemSkillsSnapshotRoot = join(codexRuntimeRoot, "system-skills-snapshot");
 const keepCodexSmokeWorkspace = process.env.PRODUCT_CODEX_SMOKE_KEEP === "1" || process.env.PRODUCT_CODEX_E2E_KEEP === "1";
 const allSkillsSmokeMode = process.argv.includes("--all-skills");
 const allSkillsSmokeTimeoutMs = Number(process.env.PRODUCT_CODEX_SMOKE_TIMEOUT_MS ?? process.env.PRODUCT_CODEX_E2E_TIMEOUT_MS ?? "600000") || 600000;
 const requiredSkillSmokeFields = ["skill", "intent_fit", "findings", "decisions", "evidence", "residual risk", "next handoff", "activation_quality"];
+const codexIsolationConfigArgs = [
+    "-c",
+    "skills.bundled.enabled=false",
+    "-c",
+    "features.plugins=false",
+    "-c",
+    "features.apps=false",
+    "-c",
+    "features.tool_search=false",
+    "-c",
+    "features.tool_suggest=false"
+];
+process.once("exit", cleanupFakeCodexRuntime);
+let codexSkillsPreflightState;
+let codexSystemSkillsPreflightState;
+let codexSystemSkillsPreflightTreeState;
 runCodexSkillSmoke().catch((error) => {
     console.error(error);
     process.exit(1);
 });
 async function runCodexSkillSmoke() {
     resetCodexSmokeWorkspace();
-    preparePackageForSkillSmoke();
-    prepareConsumerAppForSkillSmoke();
-    runLoggedCommandSync(["apm", "install", preparedPackageRoot, "--target", "codex", "--force"], consumerAppRoot, "install.log");
-    runLoggedCommandSync(["apm", "compile", "--target", "codex"], consumerAppRoot, "compile.log");
-    assertSmokeFileExists(join(consumerAppRoot, "AGENTS.md"));
-    for (const skill of productSkills) {
-        assertSmokeFileExists(join(consumerAppRoot, ".agents", "skills", skill.name, "SKILL.md"));
-    }
-    runLoggedCommandSync(["codex", "debug", "prompt-input", "product-recipe-qa を使ってください"], consumerAppRoot, "prompt-input.json");
-    const promptInputPath = join(smokeResultsRoot, "prompt-input.json");
-    const promptInput = readFileSync(promptInputPath, "utf8");
-    const promptInputHasSkillRoots = promptInput.includes("### Skill roots");
-    if (promptInputHasSkillRoots) {
+    prepareFakeCodexRuntime();
+    try {
+        preparePackageForSkillSmoke();
+        prepareConsumerAppForSkillSmoke();
+        runLoggedCommandSync(["apm", "install", preparedPackageRoot, "--target", "codex", "--force"], consumerAppRoot, "install.log");
+        runLoggedCommandSync(["apm", "compile", "--target", "codex"], consumerAppRoot, "compile.log");
+        assertSmokeFileExists(join(consumerAppRoot, "AGENTS.md"));
         for (const skill of productSkills) {
-            assertSmokeFileContains(promptInputPath, skill.name);
-            assertSmokeFileContains(promptInputPath, `/${skill.name}/SKILL.md`);
+            assertSmokeFileExists(join(consumerAppRoot, ".agents", "skills", skill.name, "SKILL.md"));
+        }
+        runLoggedCommandSync(["codex", "debug", "prompt-input", ...codexIsolationConfigArgs, "product-recipe-qa を使ってください"], consumerAppRoot, "prompt-input.json");
+        const promptInputPath = join(smokeResultsRoot, "prompt-input.json");
+        const promptInput = readFileSync(promptInputPath, "utf8");
+        const promptInputHasSkillRoots = promptInput.includes("### Skill roots");
+        if (promptInputHasSkillRoots) {
+            for (const skill of productSkills) {
+                assertSmokeFileContains(promptInputPath, skill.name);
+                assertSmokeFileContains(promptInputPath, `/${skill.name}/SKILL.md`);
+            }
+        }
+        else {
+            writeFileSync(join(smokeResultsRoot, "prompt-input-warning.md"), [
+                "# Codex Prompt Input Warning",
+                "",
+                "`codex debug prompt-input` returned no skill-root listing on this Codex CLI build.",
+                "The hard discovery gate is therefore verifying the installed `.agents/skills/<skill>/SKILL.md` file."
+            ].join("\n"));
+        }
+        if (allSkillsSmokeMode) {
+            await runAllSkillSmokes();
+        }
+        else {
+            runSingleSkillSmoke(promptInputHasSkillRoots);
+        }
+        if (!keepCodexSmokeWorkspace) {
+            rmSync(consumerAppRoot, { recursive: true, force: true });
+            rmSync(preparedPackageRoot, { recursive: true, force: true });
         }
     }
-    else {
-        writeFileSync(join(smokeResultsRoot, "prompt-input-warning.md"), [
-            "# Codex Prompt Input Warning",
-            "",
-            "`codex debug prompt-input` returned no skill-root listing on this Codex CLI build.",
-            "The hard discovery gate is therefore verifying the installed `.agents/skills/<skill>/SKILL.md` file."
-        ].join("\n"));
+    finally {
+        restoreFakeCodexRuntimeSystemSkills();
+        cleanupFakeCodexRuntime();
     }
-    if (allSkillsSmokeMode) {
-        await runAllSkillSmokes();
+}
+function prepareFakeCodexRuntime() {
+    rmSync(codexRuntimeRoot, { recursive: true, force: true });
+    mkdirSync(fakeCodexHome, { recursive: true });
+    mkdirSync(fakeHome, { recursive: true });
+    const copiedFiles = [];
+    const authFile = join(realCodexHome, "auth.json");
+    if (existsSync(authFile)) {
+        cpSync(authFile, join(fakeCodexHome, "auth.json"));
+        copiedFiles.push("auth.json");
     }
-    else {
-        runSingleSkillSmoke(promptInputHasSkillRoots);
+    codexSkillsPreflightState = readFakeCodexRuntimePathState(realCodexSkillsRoot);
+    codexSystemSkillsPreflightState = readFakeCodexRuntimePathState(realCodexSystemSkillsRoot);
+    codexSystemSkillsPreflightTreeState = readFakeCodexRuntimeTreeState(realCodexSystemSkillsRoot);
+    if (existsSync(realCodexSystemSkillsRoot)) {
+        cpSync(realCodexSystemSkillsRoot, systemSkillsSnapshotRoot, { recursive: true, preserveTimestamps: true });
     }
-    if (!keepCodexSmokeWorkspace) {
-        rmSync(consumerAppRoot, { recursive: true, force: true });
-        rmSync(preparedPackageRoot, { recursive: true, force: true });
+    writeFileSync(join(smokeResultsRoot, "codex-runtime.json"), `${JSON.stringify({
+        fakeCodexHome,
+        fakeHome,
+        realCodexHome,
+        copiedFiles,
+        systemSkillsSnapshot: existsSync(systemSkillsSnapshotRoot),
+        ignoreUserConfig: true,
+        note: "Codex smoke commands use fake HOME/CODEX_HOME. Only auth.json is copied when present; user config, skills, history, logs, and state are not copied."
+    }, null, 2)}\n`);
+}
+function restoreFakeCodexRuntimeSystemSkills() {
+    if (existsSync(systemSkillsSnapshotRoot)) {
+        rmSync(realCodexSystemSkillsRoot, { recursive: true, force: true });
+        cpSync(systemSkillsSnapshotRoot, realCodexSystemSkillsRoot, { recursive: true, preserveTimestamps: true });
+        restoreFakeCodexRuntimeTreeTimes(realCodexSystemSkillsRoot, codexSystemSkillsPreflightTreeState);
     }
+    if (codexSkillsPreflightState?.exists && typeof codexSkillsPreflightState.mtimeMs === "number") {
+        const time = new Date(codexSkillsPreflightState.mtimeMs);
+        utimesSync(realCodexSkillsRoot, time, time);
+    }
+    if (codexSystemSkillsPreflightState?.exists && typeof codexSystemSkillsPreflightState.mtimeMs === "number" && existsSync(realCodexSystemSkillsRoot)) {
+        const time = new Date(codexSystemSkillsPreflightState.mtimeMs);
+        utimesSync(realCodexSystemSkillsRoot, time, time);
+    }
+}
+function cleanupFakeCodexRuntime() {
+    rmSync(codexRuntimeRoot, { recursive: true, force: true });
+}
+function readFakeCodexRuntimePathState(path) {
+    try {
+        const stat = statSync(path);
+        return { exists: true, mtimeMs: stat.mtimeMs };
+    }
+    catch {
+        return { exists: false };
+    }
+}
+function readFakeCodexRuntimeTreeState(root) {
+    const rootState = readFakeCodexRuntimePathState(root);
+    if (!rootState.exists) {
+        return {
+            exists: false,
+            rootState,
+            entries: []
+        };
+    }
+    const entries = [];
+    walkFakeCodexRuntimeTreeState(root, root, entries);
+    return {
+        exists: true,
+        rootState,
+        entries
+    };
+}
+function walkFakeCodexRuntimeTreeState(root, current, entries) {
+    for (const name of readdirSync(current).sort()) {
+        const path = join(current, name);
+        const stat = lstatSync(path);
+        entries.push({
+            rel: path.slice(root.length + 1),
+            mtimeMs: stat.mtimeMs
+        });
+        if (stat.isDirectory()) {
+            walkFakeCodexRuntimeTreeState(root, path, entries);
+        }
+    }
+}
+function restoreFakeCodexRuntimeTreeTimes(root, tree) {
+    if (!tree?.exists)
+        return;
+    const deepestFirst = [...tree.entries].sort((left, right) => fakeCodexRuntimePathDepth(right.rel) - fakeCodexRuntimePathDepth(left.rel));
+    for (const entry of deepestFirst) {
+        const path = join(root, entry.rel);
+        if (!existsSync(path))
+            continue;
+        const time = new Date(entry.mtimeMs);
+        utimesSync(path, time, time);
+    }
+    if (existsSync(root) && typeof tree.rootState?.mtimeMs === "number") {
+        const time = new Date(tree.rootState.mtimeMs);
+        utimesSync(root, time, time);
+    }
+}
+function fakeCodexRuntimePathDepth(path) {
+    return path.split("/").length;
 }
 function runSingleSkillSmoke(promptInputHasSkillRoots) {
     const execResult = runCodexExecSkillSmokeSync(productSkills.find((skill) => skill.name === "product-recipe-qa"), "codex-exec.jsonl");
@@ -152,6 +286,8 @@ function buildCodexSkillSmokeCommand(skill) {
         "approval_policy=\"never\"",
         "--skip-git-repo-check",
         "--ephemeral",
+        "--ignore-user-config",
+        ...codexIsolationConfigArgs,
         "--sandbox",
         "read-only",
         "--json",
@@ -203,7 +339,8 @@ function runLoggedCommandSync(command, cwd, logName, options = {}) {
     const proc = spawnSync(command[0], command.slice(1), {
         cwd,
         encoding: "utf8",
-        timeout: options.timeoutMs ?? 60000
+        timeout: options.timeoutMs ?? 60000,
+        env: buildCommandEnv(command)
     });
     const stdout = proc.stdout ?? "";
     const stderr = proc.stderr ?? "";
@@ -225,6 +362,7 @@ function runLoggedCommandSync(command, cwd, logName, options = {}) {
 async function runLoggedCommandAsync(command, cwd, logName, options = {}) {
     const proc = spawn(command[0], command.slice(1), {
         cwd,
+        env: buildCommandEnv(command),
         stdio: ["ignore", "pipe", "pipe"]
     });
     let timedOut = false;
@@ -253,6 +391,15 @@ async function runLoggedCommandAsync(command, cwd, logName, options = {}) {
         throw new Error(`${command[0]} failed (${reportedExitCode}); see ${join(smokeResultsRoot, logName)}`);
     }
     return { exitCode: reportedExitCode, stdout, stderr };
+}
+function buildCommandEnv(command) {
+    if (command[0] !== "codex")
+        return process.env;
+    return {
+        ...process.env,
+        CODEX_HOME: fakeCodexHome,
+        HOME: fakeHome
+    };
 }
 function collectStream(stream) {
     return new Promise((resolve, reject) => {

@@ -12,6 +12,7 @@ const commands = [
     ["node", "scripts/apm-skill-install-smoke.mjs", "--target", "all"],
     ["node", "scripts/codex-skill-activation-smoke.mjs"],
     ["npm", "run", "browser:smoke"],
+    ["node", "scripts/codex-browser-core-smoke.mjs"],
     ["node", "scripts/repo-secret-scan.mjs"]
 ];
 for (const command of commands) {

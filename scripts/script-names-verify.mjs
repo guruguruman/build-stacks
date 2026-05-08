@@ -53,6 +53,13 @@ const scriptRules = [
         legacyNames: ["skill-activation-smoke.mjs", "codex-skill-discovery-activation-smoke.mjs", legacyName("codex", "e2e"), legacyName("codex", "skills-smoke")]
     },
     {
+        file: "codex-browser-core-smoke.mjs",
+        target: "Codex browser core",
+        operation: "smoke",
+        purpose: "Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs.",
+        legacyNames: ["codex-browser-smoke.mjs", "browser-core-codex-smoke.mjs", legacyName("codex", "browser-smoke")]
+    },
+    {
         file: "gstack-skill-mapping-verify.mjs",
         target: "gstack legacy skill mapping",
         operation: "verify",

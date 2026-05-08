@@ -69,7 +69,25 @@ Success criteria:
 - QA records browser artifacts under `.product-build-stacks/artifacts` or `.product-build-stacks/browser`.
 - Ship produces test/docs/changelog/PR handoff and stops before merge/deploy without approval.
 
-## 4. Clean Consumer Install
+## 4. Codex Browser Core Smoke
+
+Run the browser-core Codex skill path against the local fixture. This uses an
+isolated fake `HOME` and fake `CODEX_HOME`, requests `gpt-5.5` with high
+reasoning, and allows `danger-full-access` only for the fixture-backed browser
+run.
+
+```bash
+node scripts/codex-browser-core-smoke.mjs
+```
+
+Success criteria:
+
+- `product-browser-runner` returns `browser_activation: executed` with browser evidence.
+- `product-browser-qa` returns `browser_activation: executed` after fixture form interaction.
+- Evidence stays under the temporary app `.product-build-stacks/artifacts/browser` path.
+- Protected paths, including the real Codex system skill tree, are unchanged after postflight.
+
+## 5. Clean Consumer Install
 
 ```bash
 npm run smoke:codex
@@ -82,7 +100,7 @@ Success criteria:
 - No root bundle skill is created.
 - Evidence JSON is written under `.product-build-stacks/evidence/`.
 
-## 5. Skill Release Acceptance Matrix
+## 6. Skill Release Acceptance Matrix
 
 Every skill in [docs/release-acceptance-skill-matrix.md](release-acceptance-skill-matrix.md) must have:
 

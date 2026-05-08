@@ -15,6 +15,7 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | `apm-package-verify.mjs` | APM package | verify | Verify package shape, browser policy docs, stale runtime references, script names, and install behavior. |
 | `agent-browser-smoke.mjs` | official `agent-browser` | smoke | Run a live localhost open/snapshot/screenshot/close smoke and verify a concrete screenshot artifact. |
 | `codex-skill-activation-smoke.mjs` | Codex skill activation | smoke | Install the local package into a temporary Codex app and verify skill discovery/activation. |
+| `codex-browser-core-smoke.mjs` | Codex browser core | smoke | Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs. |
 | `gstack-skill-mapping-verify.mjs` | gstack legacy skill mapping | verify | Verify mapping coverage and usability docs. |
 | `gstack-fidelity-audit.mjs` | product fidelity against upstream gstack | audit | Fetch upstream gstack tree data and report adapted/partial fidelity. |
 | `gstack-skill-template-port.mjs` | upstream gstack skill templates being ported to product skills | port | Fetch upstream gstack skill templates and adapt them into `.apm/skills`. |
