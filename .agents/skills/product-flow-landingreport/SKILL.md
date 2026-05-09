@@ -110,7 +110,7 @@ Sibling Conductor worktrees (<workspace_root>):
   path                        branch                 VERSION      last commit   PR
   ──────────────────────────────────────────────────────────────────────────────────
   ../tokyo-v2                 feat/dashboard         v1.7.1.0    3h ago         none  ★ active
-  ../melbourne                featproduct-flow-codereview            v1.6.0.0    12d ago        none
+  ../melbourne                featproduct-role-staffengineer            v1.6.0.0    12d ago        none
   ../osaka                    feat/payments          v1.8.0.0    5h ago         #1155
 
 ★ active = has VERSION ahead of base AND last commit < 24h AND no open PR.

@@ -419,8 +419,8 @@ Collect evidence for each check below. Track warnings (yellow) and blockers (red
 tail -n 20 .product-build-stacks/analytics/reviews.jsonl 2>/dev/null || true
 ```
 
-Parse the output. For each review skill (product-flow-engreview, product-flow-ceoreview,
-product-flow-designreview, design-review-lite, codex-review, review, adversarial-review,
+Parse the output. For each review skill (product-role-engmanager, product-role-founder,
+product-role-designer, design-review-lite, codex-review, review, adversarial-review,
 codex-plan-review):
 
 1. Find the most recent entry within the last 7 days.
@@ -455,14 +455,14 @@ Use AskUserQuestion:
 - **RECOMMENDATION:** Choose A for a quick safety check. Choose B if you want the full
   review experience. Choose C only if you're confident in the code.
 - A) Run a quick review (~2 min) — I'll scan the diff for common issues like SQL safety, race conditions, and security gaps (Completeness: 7/10)
-- B) Stop and run a full `product-flow-codereview` first — deeper analysis, more thorough (Completeness: 10/10)
+- B) Stop and run a full `product-role-staffengineer` first — deeper analysis, more thorough (Completeness: 10/10)
 - C) Skip the review — I've reviewed this code myself and I'm confident (Completeness: 3/10)
 
 **If A (quick checklist):** Tell the user: "Running the review checklist against your diff now..."
 
 Read the review checklist:
 ```bash
-cat ~/.claude/skills/gstackproduct-flow-codereview/checklist.md 2>/dev/null || echo "Checklist not found"
+cat ~/.claude/skills/gstackproduct-role-staffengineer/checklist.md 2>/dev/null || echo "Checklist not found"
 ```
 Apply each checklist item to the current diff. This is the same quick review that `product-recipe-ship`
 runs in its Step 3.5. Auto-fix trivial issues (whitespace, imports). For critical findings
@@ -473,7 +473,7 @@ and tell the user: "I found and fixed a few issues during the review. The fixes 
 
 **If no issues found:** Tell the user: "Review checklist passed — no issues found in the diff."
 
-**If B:** **STOP.** "Good call — run `product-flow-codereview` for a thorough pre-landing review. When that's done, run `/land-and-deploy` again and I'll pick up right where we left off."
+**If B:** **STOP.** "Good call — run `product-role-staffengineer` for a thorough pre-landing review. When that's done, run `/land-and-deploy` again and I'll pick up right where we left off."
 
 **If C:** Tell the user: "Understood — skipping review. You know this code best." Continue. Log the user's choice to skip review.
 
@@ -613,7 +613,7 @@ Use AskUserQuestion:
 - C) Merge anyway — I understand the warnings and want to proceed (Completeness: 3/10)
 
 If the user chooses B: **STOP.** Give specific next steps:
-- If reviews are stale: "Run `product-flow-codereview` or `/autoplan` to review the current code, then `/land-and-deploy` again."
+- If reviews are stale: "Run `product-role-staffengineer` or `/autoplan` to review the current code, then `/land-and-deploy` again."
 - If E2E not run: "Run your E2E tests to make sure nothing is broken, then come back."
 - If docs not updated: "Run `/document-release` to update CHANGELOG and docs."
 - If PR body stale: "The PR description doesn't match what's actually in the diff — update it on GitHub."

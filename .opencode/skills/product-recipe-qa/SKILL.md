@@ -70,7 +70,7 @@ You are a QA engineer AND a bug-fix engineer. Test web applications like a real 
 ```bash
 command -v agent-browser >/dev/null && echo "AGENT_BROWSER_AVAILABLE=true" || echo "AGENT_BROWSER_AVAILABLE=false"
 ```
-If `AGENT_BROWSER_AVAILABLE=false`, record browser QA as blocked and continue with non-browser checks. Do not assume the user's real browser auth state is available unless they explicitly approve `--auto-connect`, `--profile`, or saved state usage.
+If `AGENT_BROWSER_AVAILABLE=false`, record browser QA as blocked and continue with non-browser checks.
 
 **Check for clean working tree:**
 
@@ -95,6 +95,11 @@ After the user chooses, execute their choice (commit or stash), then continue wi
 ## Product Browser Setup
 
 Use official `agent-browser` through the `product-browser-runner` policy when a workflow needs rendered-page evidence.
+When a target URL, localhost dev server, HTML file, `/tmp` fixture, repo HTML
+artifact, or user-provided rendered surface exists, run browser QA instead of
+stopping at report-only guidance. For QA flows, `open`, `snapshot`, `forms`,
+`fill`, `click`, `select`, `press`, `console`, `network`, and `screenshot` are
+normal browser commands and do not need separate approval.
 
 ```bash
 command -v agent-browser
@@ -102,9 +107,10 @@ agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
 _ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
+PRODUCT_BROWSER_EVIDENCE_DIR="${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser/${AGENT_BROWSER_RUN_ID:-local}}"
+mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
-agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
+agent-browser --json --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" screenshot
 ```
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
@@ -123,7 +129,9 @@ Use the repository's existing test commands and patterns. If no test framework e
 **Create output directories:**
 
 ```bash
-mkdir -p .product-build-stacks/product-recipe-qa-reports/screenshots
+QA_RUN_ID="${AGENT_BROWSER_RUN_ID:-$(date -u +%Y%m%dT%H%M%SZ)}"
+QA_REPORT_DIR=".product-build-stacks/product-recipe-qa-reports/$QA_RUN_ID"
+mkdir -p "$QA_REPORT_DIR/screenshots"
 ```
 
 ---
@@ -145,7 +153,7 @@ mkdir -p "$PRODUCT_STATE_ROOT/design-docs/$SLUG" "$PRODUCT_STATE_ROOT/sessions" 
 echo "$SLUG"
    ls -t .product-build-stacks/design-docs/$SLUG/*-test-plan-*.md 2>/dev/null | head -1
    ```
-2. **Conversation context:** Check if a prior `/product-flow-engreview` or `/product-flow-ceoreview` produced test plan output in this conversation
+2. **Conversation context:** Check if a prior `/product-role-engmanager` or `/product-role-founder` produced test plan output in this conversation
 3. **Use whichever source is richer.** Fall back to git diff analysis only if neither is available.
 
 ---
@@ -166,7 +174,7 @@ Record baseline health score at end of Phase 6.
 ## Output Structure
 
 ```
-.product-build-stacks/product-recipe-qa-reports/
+.product-build-stacks/product-recipe-qa-reports/{run-id}/
 ├── product-recipe-qa-report-{domain}-{YYYY-MM-DD}.md    # Structured report
 ├── screenshots/
 │   ├── initial.png                        # Landing page annotated screenshot

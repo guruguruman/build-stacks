@@ -58,7 +58,7 @@ Success criteria:
 ## 3. Review to QA to Ship
 
 ```text
-product-flow-codereview
+product-role-staffengineer
 -> product-recipe-qa
 -> product-recipe-ship
 ```
@@ -96,7 +96,7 @@ npm run smoke:all
 
 Success criteria:
 
-- The consumer project installs all 52 skills.
+- The consumer project installs all 40 skills.
 - No root bundle skill is created.
 - Evidence JSON is written under `.product-build-stacks/evidence/`.
 

@@ -13,12 +13,12 @@ const expect = (actual, message) => ({
 const p0Skills = [
     "product-recipe-discovery",
     "product-recipe-autoplan",
-    "product-flow-ceoreview",
-    "product-flow-designreview",
-    "product-flow-engreview",
-    "product-flow-devexreview",
+    "product-role-founder",
+    "product-role-designer",
+    "product-role-engmanager",
+    "product-role-dxlead",
     "product-flow-plantune",
-    "product-flow-codereview",
+    "product-role-staffengineer",
     "product-recipe-qa",
     "product-flow-qareport",
     "product-recipe-ship"
@@ -46,12 +46,12 @@ describe("gstack fidelity ports", () => {
         expect(body).toContain("Do NOT invoke any implementation skill");
         expect(body).toContain("STOP");
         expect(body).toContain(".product-build-stacks/design-docs");
-        expect(body).toContain("product-flow-ceoreview");
-        expect(body).toContain("product-flow-engreview");
+        expect(body).toContain("product-role-founder");
+        expect(body).toContain("product-role-engmanager");
     });
     test("review and qa support files are present", () => {
-        expect(existsSync(".apm/skills/product-flow-codereview/checklist.md")).toBe(true);
-        expect(existsSync(".apm/skills/product-flow-codereview/specialists/security.md")).toBe(true);
+        expect(existsSync(".apm/skills/product-role-staffengineer/checklist.md")).toBe(true);
+        expect(existsSync(".apm/skills/product-role-staffengineer/specialists/security.md")).toBe(true);
         expect(existsSync(".apm/skills/product-recipe-qa/references/issue-taxonomy.md")).toBe(true);
         expect(existsSync(".apm/skills/product-recipe-qa/templates/qa-report-template.md")).toBe(true);
     });

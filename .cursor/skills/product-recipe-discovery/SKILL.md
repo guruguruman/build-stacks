@@ -530,7 +530,7 @@ If `$PRIOR` exists, the new doc gets a `Supersedes:` field referencing it. This 
 Write to `.product-build-stacks/design-docs/{slug}/{user}-{branch}-design-{datetime}.md`.
 
 After writing the design doc, tell the user:
-**"Design doc saved to: {full path}. Other skills (/product-flow-ceoreview, /product-flow-engreview) will find it automatically."**
+**"Design doc saved to: {full path}. Other skills (/product-role-founder, /product-role-engmanager) will find it automatically."**
 
 ### Startup mode design doc template:
 
@@ -936,9 +936,9 @@ If E: proceed to next-skill recommendations.
 
 After the plea, suggest the next step:
 
-- **`/product-flow-ceoreview`** for ambitious features (EXPANSION mode) — rethink the problem, find the 10-star product
-- **`/product-flow-engreview`** for well-scoped implementation planning — lock in architecture, tests, edge cases
-- **`/product-flow-designreview`** for visual/UX design review
+- **`/product-role-founder`** for ambitious features (EXPANSION mode) — rethink the problem, find the 10-star product
+- **`/product-role-engmanager`** for well-scoped implementation planning — lock in architecture, tests, edge cases
+- **`/product-role-designer`** for visual/UX design review
 
 The design doc at `.product-build-stacks/design-docs/` is automatically discoverable by downstream skills — they will read it during their pre-review system audit.
 

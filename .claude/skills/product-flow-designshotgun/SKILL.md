@@ -68,7 +68,7 @@ any part of your product. Let's start."
 
 ## Step 1: Context Gathering
 
-When design-shotgun is invoked from product-flow-designreview, design-consultation, or another
+When design-shotgun is invoked from product-role-designer, design-consultation, or another
 skill, the calling skill has already gathered context. Check for `$_DESIGN_BRIEF` — if
 it's set, skip to Step 2.
 

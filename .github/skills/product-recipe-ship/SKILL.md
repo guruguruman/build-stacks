@@ -93,17 +93,17 @@ Never skip a verification step because a prior `/product-recipe-ship` run alread
 
 ## Review Dashboard
 
-Collect review evidence under .product-build-stacks/product-flow-codereviews/ when durable review state is needed. Summaries must include findings, decisions, evidence, residual risk, and next handoff.
+Collect review evidence under .product-build-stacks/product-role-staffengineer-reviews/ when durable review state is needed. Summaries must include findings, decisions, evidence, residual risk, and next handoff.
 
 If the Eng Review is NOT "CLEAR":
 
 Print: "No prior eng review found — product-recipe-ship will run its own pre-landing review in Step 9."
 
-Check diff size: `git diff <base>...HEAD --stat | tail -1`. If the diff is >200 lines, add: "Note: This is a large diff. Consider running `/product-flow-engreview` or `/autoplan` for architecture-level review before shipping."
+Check diff size: `git diff <base>...HEAD --stat | tail -1`. If the diff is >200 lines, add: "Note: This is a large diff. Consider running `/product-role-engmanager` or `/autoplan` for architecture-level review before shipping."
 
 If CEO Review is missing, mention as informational ("CEO Review not run — recommended for product changes") but do NOT block.
 
-For Design Review: run `_CHANGED_FILES="$(git diff --name-only <base>...HEAD 2>/dev/null || git diff --name-only)"`. If `SCOPE_FRONTEND=true` and no design review (product-flow-designreview or design-review-lite) exists in the dashboard, mention: "Design Review not run — this PR changes frontend code. The lite design check will run automatically in Step 9, but consider running /design-review for a full visual audit post-implementation." Still never block.
+For Design Review: run `_CHANGED_FILES="$(git diff --name-only <base>...HEAD 2>/dev/null || git diff --name-only)"`. If `SCOPE_FRONTEND=true` and no design review (product-role-designer or design-review-lite) exists in the dashboard, mention: "Design Review not run — this PR changes frontend code. The lite design check will run automatically in Step 9, but consider running /design-review for a full visual audit post-implementation." Still never block.
 
 Continue to Step 2 — do NOT block or ask. Ship runs its own review in Step 9.
 
@@ -319,7 +319,7 @@ Compare requested scope, current plan, changed files, and proposed next steps. A
 
 Review the diff for structural issues that tests don't catch.
 
-1. Read `.claude/skillsproduct-flow-codereview/checklist.md`. If the file cannot be read, **STOP** and report the error.
+1. Read the bundled support file `product-role-staffengineer/checklist.md`. If the file cannot be read, **STOP** and report the error.
 
 2. Run `git diff origin/<base>` to get the full diff (scoped to feature changes against the freshly-fetched base branch).
 
@@ -371,7 +371,7 @@ mkdir -p .product-build-stacks/analytics; printf %s
  '{"skill":"review","timestamp":"TIMESTAMP","status":"STATUS","issues_found":N,"critical":N,"informational":N,"quality_score":SCORE,"specialists":SPECIALISTS_JSON,"findings":FINDINGS_JSON,"commit":"'"$(git rev-parse --short HEAD)"'","via":"product-recipe-ship"}' >> .product-build-stacks/analytics/reviews.jsonl
 ```
 Substitute TIMESTAMP (ISO 8601), STATUS ("clean" if no issues, "issues_found" otherwise),
-and N values from the summary counts above. The `via:"product-recipe-ship"` distinguishes from standalone `product-flow-codereview` runs.
+and N values from the summary counts above. The `via:"product-recipe-ship"` distinguishes from standalone `product-role-staffengineer` runs.
 - `quality_score` = the PR Quality Score computed in Step 9.2 (e.g., 7.5). If specialists were skipped (small diff), use `10.0`
 - `specialists` = the per-specialist stats object compiled in Step 9.2. Each specialist that was considered gets an entry: `{"dispatched":true/false,"findings":N,"critical":N,"informational":N}` if dispatched, or `{"dispatched":false,"reason":"scope|gated"}` if skipped. Example: `{"testing":{"dispatched":true,"findings":2,"critical":0,"informational":2},"security":{"dispatched":false,"reason":"scope"}}`
 - `findings` = array of per-finding records. For each finding (from checklist pass and specialists), include: `{"fingerprint":"path:line:category","severity":"CRITICAL|INFORMATIONAL","action":"ACTION"}`. ACTION is `"auto-fixed"`, `"fixed"` (user approved), or `"skipped"` (user chose Skip).
@@ -386,7 +386,7 @@ Save the review output — it goes into the PR body in Step 19.
 
 **Subagent prompt:**
 
-> You are classifying Greptile review comments for a /product-recipe-ship workflow. Read `.claude/skillsproduct-flow-codereview/greptile-triage.md` and follow the fetch, filter, classify, and **escalation detection** steps. Do NOT fix code, do NOT reply to comments, do NOT commit — report only.
+> You are classifying Greptile review comments for a /product-recipe-ship workflow. Read the bundled support file `product-role-staffengineer/greptile-triage.md` and follow the fetch, filter, classify, and **escalation detection** steps. Do NOT fix code, do NOT reply to comments, do NOT commit — report only.
 >
 > For each comment, assign: `classification` (`valid_actionable`, `already_fixed`, `false_positive`, `suppressed`), `escalation_tier` (1 or 2), the file:line or [top-level] tag, body summary, and permalink URL.
 >
@@ -584,7 +584,7 @@ Update changelog or release notes only when the repository already uses them or 
 
 Cross-reference the project's TODOS.md against the changes being shipped. Mark completed items automatically; prompt only if the file is missing or disorganized.
 
-Read `.claude/skillsproduct-flow-codereview/TODOS-format.md` for the canonical format reference.
+Read the bundled support file `product-role-staffengineer/TODOS-format.md` for the canonical format reference.
 
 **1. Check if TODOS.md exists** in the repository root.
 

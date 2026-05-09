@@ -60,6 +60,13 @@ const scriptRules = [
         legacyNames: ["codex-browser-smoke.mjs", "browser-core-codex-smoke.mjs", legacyName("codex", "browser-smoke")]
     },
     {
+        file: "docker-all-skills-eval.mjs",
+        target: "Docker-isolated full skill eval",
+        operation: "eval",
+        purpose: "Run product-build-stacks and gstack skill comparisons inside an isolated Docker runtime.",
+        legacyNames: ["eval-all-skills-docker.mjs", "all-skills-docker-eval.mjs", "skill-comparison-docker-eval.mjs", legacyName("eval", "all-skills-docker")]
+    },
+    {
         file: "gstack-skill-mapping-verify.mjs",
         target: "gstack legacy skill mapping",
         operation: "verify",

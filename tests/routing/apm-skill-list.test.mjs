@@ -12,7 +12,7 @@ const expect = (actual, message) => ({
 });
 describe("APM skill list", () => {
     test("contains only product names", () => {
-        expect(productSkills.length).toBeGreaterThanOrEqual(52);
+        expect(productSkills.length).toBe(40);
         expect(productSkills.every((skill) => isValidProductSkillName(skill.name))).toBe(true);
     });
 });

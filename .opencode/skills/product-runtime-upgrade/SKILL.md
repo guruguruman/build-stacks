@@ -25,7 +25,7 @@ apm audit --ci
 apm compile --validate --local-only
 ```
 
-5. Verify that all 52 `product-*` skills are installed and no root bundle skill was created.
+5. Verify that all 40 `product-*` skills are installed and no root bundle skill was created.
 6. Record evidence under `.product-build-stacks/evidence/product-runtime-upgrade.json`.
 
 ## Output Contract

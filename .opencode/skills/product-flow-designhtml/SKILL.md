@@ -38,6 +38,10 @@ Favor workflows that are discoverable, forgiving, fast for repeated use, and tes
 ## Product Browser Setup
 
 Use official `agent-browser` through the `product-browser-runner` policy when a workflow needs rendered-page evidence.
+When this skill creates or finds an HTML/page artifact, open it in the browser and
+capture preview evidence instead of stopping at a text-only design report. `open`,
+`snapshot`, `console`, `network`, and `screenshot` are normal preview commands
+and do not need separate approval.
 
 ```bash
 command -v agent-browser
@@ -45,9 +49,10 @@ agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
 _ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
+PRODUCT_BROWSER_EVIDENCE_DIR="${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser/${AGENT_BROWSER_RUN_ID:-local}}"
+mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
-agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
+agent-browser --json --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" screenshot
 ```
 
 If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
@@ -59,7 +64,7 @@ when reporting preview or verification status.
 
 - Use `executed` only when official `agent-browser` opened the HTML/page and
   captured screenshot, snapshot, console, or URL evidence.
-- Use `blocked` when an HTML/page artifact exists but browser runtime or approval
+- Use `blocked` when an HTML/page artifact exists but browser runtime or access
   prevented verification.
 - Use `report_only` when no HTML/page artifact was created or inspected and the
   output is only a design checklist.
@@ -130,7 +135,7 @@ Read whichever context exists:
 - If DESIGN.md found: read it for design tokens and constraints.
 
 Use AskUserQuestion:
-> Found [CEO plan from /product-flow-ceoreview | design review variants from /product-flow-designreview | both]
+> Found [CEO plan from /product-role-founder | design review variants from /product-role-designer | both]
 > but no approved design mockup.
 > A) Run /design-shotgun — explore design variants based on the existing plan context
 > B) Skip mockups — I'll design the HTML directly from the plan context
@@ -148,8 +153,8 @@ If none of the above produced any context:
 
 Use AskUserQuestion:
 > No design context found for this project. How do you want to start?
-> A) Run /product-flow-ceoreview first — think through the product strategy before designing
-> B) Run /product-flow-designreview first — design review with visual mockups
+> A) Run /product-role-founder first — think through the product strategy before designing
+> B) Run /product-role-designer first — design review with visual mockups
 > C) Run /design-shotgun — jump straight to visual design exploration
 > D) Just describe it — tell me what you want and I'll design the HTML live
 

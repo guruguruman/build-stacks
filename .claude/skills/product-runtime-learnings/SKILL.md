@@ -53,7 +53,7 @@ tail -n 20 .product-build-stacks/knowledge/learnings.jsonl 2>/dev/null || echo "
 ```
 
 Present the output in a readable format. If no learnings exist, tell the user:
-"No learnings recorded yet. As you use product-flow-codereview, product-recipe-ship, product-recipe-investigate, and other skills,
+"No learnings recorded yet. As you use product-role-staffengineer, product-recipe-ship, product-recipe-investigate, and other skills,
 product-stacks will automatically capture patterns, pitfalls, and insights it discovers."
 
 ---

@@ -24,7 +24,7 @@ if (writeFidelityDocs) {
 }
 const fatalFidelityRows = fidelityRows.filter((row) => row.status === "missing" || row.status === "stub");
 console.log(`gstack fidelity audit: ${fidelitySummary.total} mappings at ${upstreamRepo}@${upstreamCommit}`);
-console.log(`faithful=${fidelitySummary.faithful} adapted=${fidelitySummary.adapted} partial=${fidelitySummary.partial} stub=${fidelitySummary.stub} missing=${fidelitySummary.missing} intentionally-degraded=${fidelitySummary["intentionally-degraded"]}`);
+console.log(`faithful=${fidelitySummary.faithful} adapted=${fidelitySummary.adapted} partial=${fidelitySummary.partial} stub=${fidelitySummary.stub} missing=${fidelitySummary.missing} intentionally-degraded=${fidelitySummary["intentionally-degraded"]} intentionally-omitted=${fidelitySummary["intentionally-omitted"]}`);
 console.log(`json: ${fidelityJsonOut}`);
 if (writeFidelityDocs)
     console.log(`docs: ${fidelityDocsOut}`);
@@ -50,13 +50,15 @@ function parseGstackMappingRows(markdown) {
             ? "root SKILL.md"
             : extractBacktickValues(legacyCell)[0];
         const products = extractBacktickValues(productCell);
-        if (!legacy || products.length === 0)
+        const omitted = /\bintentionally omitted\b/i.test(productCell);
+        if (!legacy || (products.length === 0 && !omitted))
             continue;
         fidelityRows.push({
             legacy,
             legacyPath: legacy === "root SKILL.md" ? "" : legacy,
             products,
-            layer
+            layer,
+            omitted
         });
     }
     return fidelityRows;
@@ -88,6 +90,33 @@ function auditGstackMapping(mapping, gstackTree) {
     const upstreamSkill = gstackTree.find((entry) => entry.path === upstreamSkillPath);
     const upstreamTemplate = gstackTree.find((entry) => entry.path === upstreamTemplatePath);
     const upstreamSupport = upstreamEntries.filter((entry) => !entry.path.endsWith("/SKILL.md") && entry.path !== "SKILL.md" && !entry.path.endsWith("/SKILL.md.tmpl") && entry.path !== "SKILL.md.tmpl");
+    if (mapping.omitted) {
+        return {
+            legacy: mapping.legacy,
+            legacyPath: mapping.legacyPath,
+            products: [],
+            layer: mapping.layer,
+            status: "intentionally-omitted",
+            upstream: {
+                skillPath: upstreamSkillPath,
+                skillSize: upstreamSkill?.size ?? 0,
+                templatePath: upstreamTemplate?.path,
+                templateSize: upstreamTemplate?.size,
+                supportCount: upstreamSupport.length,
+                supportBytes: sumTreeEntrySizes(upstreamSupport),
+                supportKinds: countPathKinds(upstreamSupport.map((entry) => entry.path))
+            },
+            product: {
+                skillPaths: [],
+                skillBytes: 0,
+                supportCount: 0,
+                supportBytes: 0,
+                supportKinds: {},
+                adaptation: undefined
+            },
+            gaps: ["legacy workflow intentionally omitted from the product-build-stacks public surface"]
+        };
+    }
     const productSkillPaths = mapping.products.map(resolveProductSkillPath).filter(Boolean);
     const productSkillBytes = productSkillPaths.reduce((sum, path) => sum + readFileSize(path), 0);
     const productSupport = collectProductSupportEntries(mapping.products);
@@ -256,7 +285,8 @@ function summarizeFidelityRows(fidelityRows) {
         partial: 0,
         stub: 0,
         missing: 0,
-        "intentionally-degraded": 0
+        "intentionally-degraded": 0,
+        "intentionally-omitted": 0
     };
     for (const row of fidelityRows)
         fidelitySummary[row.status] += 1;
@@ -266,7 +296,7 @@ function renderFidelityMarkdown(fidelityRows, fidelitySummary) {
     const sorted = [...fidelityRows].sort((a, b) => rankFidelityStatus(a.status) - rankFidelityStatus(b.status) || b.upstream.skillSize - a.upstream.skillSize);
     const table = sorted.map((row) => [
         row.legacy,
-        row.products.join(", "),
+        row.products.length > 0 ? row.products.join(", ") : "intentionally omitted",
         row.status,
         formatByteCount(row.upstream.skillSize),
         formatByteCount(row.product.skillBytes),
@@ -290,6 +320,7 @@ This audit measures whether product-stacks is faithfully reproducing gstack beha
 | stub | ${fidelitySummary.stub} |
 | missing | ${fidelitySummary.missing} |
 | intentionally-degraded | ${fidelitySummary["intentionally-degraded"]} |
+| intentionally-omitted | ${fidelitySummary["intentionally-omitted"]} |
 | total | ${fidelitySummary.total} |
 
 ## Criteria
@@ -300,6 +331,7 @@ This audit measures whether product-stacks is faithfully reproducing gstack beha
 - \`stub\`: product-stacks has a mapped skill, but its body is materially thinner than upstream.
 - \`missing\`: mapped product file is absent.
 - \`intentionally-degraded\`: unsupported by design and documented with a concrete fallback.
+- \`intentionally-omitted\`: upstream workflow was deliberately removed from the product-build-stacks public surface.
 
 ## Current Findings
 
@@ -319,7 +351,7 @@ Do not treat \`codex exec\` activation as parity. For every \`stub\` or \`partia
 `;
 }
 function rankFidelityStatus(status) {
-    return { missing: 0, stub: 1, partial: 2, "intentionally-degraded": 3, adapted: 4, faithful: 5 }[status];
+    return { missing: 0, stub: 1, partial: 2, "intentionally-degraded": 3, "intentionally-omitted": 4, adapted: 5, faithful: 6 }[status];
 }
 function formatByteCount(bytes) {
     if (bytes < 1000)

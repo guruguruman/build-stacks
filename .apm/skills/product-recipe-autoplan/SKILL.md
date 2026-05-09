@@ -209,10 +209,10 @@ Then prepend a one-line HTML comment to the plan file:
 ### Step 3: Load skill files from disk
 
 Read each file using the Read tool:
-- `consumer-installed product-build-stacks skill directory/product-flow-ceoreview/SKILL.md`
-- `consumer-installed product-build-stacks skill directory/product-flow-designreview/SKILL.md` (only if UI scope detected)
-- `consumer-installed product-build-stacks skill directory/product-flow-engreview/SKILL.md`
-- `consumer-installed product-build-stacks skill directory/product-flow-devexreview/SKILL.md` (only if DX scope detected)
+- `consumer-installed product-build-stacks skill directory/product-role-founder/SKILL.md`
+- `consumer-installed product-build-stacks skill directory/product-role-designer/SKILL.md` (only if UI scope detected)
+- `consumer-installed product-build-stacks skill directory/product-role-engmanager/SKILL.md`
+- `consumer-installed product-build-stacks skill directory/product-role-dxlead/SKILL.md` (only if DX scope detected)
 
 **Section skip list — when following a loaded skill file, SKIP these sections
 (they are already handled by /autoplan):**
@@ -271,7 +271,7 @@ Claude subagent only — saves token spend on Codex prompts we can't use.
 
 ## Phase 1: CEO Review (Strategy & Scope)
 
-Follow product-flow-ceoreview/SKILL.md — all sections, full depth.
+Follow product-role-founder/SKILL.md — all sections, full depth.
 Override: every AskUserQuestion → auto-decide using the 6 principles.
 
 **Override rules:**
@@ -396,7 +396,7 @@ and the premise gate has been passed.
 
 ## Phase 2: Design Review (conditional — skip if no UI scope)
 
-Follow product-flow-designreview/SKILL.md — all 7 dimensions, full depth.
+Follow product-role-designer/SKILL.md — all 7 dimensions, full depth.
 Override: every AskUserQuestion → auto-decide using the 6 principles.
 
 **Override rules:**
@@ -456,7 +456,7 @@ Override: every AskUserQuestion → auto-decide using the 6 principles.
 2. Step 0.5 (Dual Voices): Run Claude subagent (foreground) first, then Codex. Present under
    CODEX SAYS (design — UX challenge) and CLAUDE SUBAGENT (design — independent review)
    headers. Produce design litmus scorecard (consensus table). Use the litmus scorecard
-   format from product-flow-designreview. Include CEO phase findings in Codex prompt ONLY
+   format from product-role-designer. Include CEO phase findings in Codex prompt ONLY
    (not Claude subagent — stays independent).
 
 3. Passes 1-7: Run each from loaded skill. Rate 0-10. Auto-decide each issue.
@@ -480,7 +480,7 @@ Do NOT begin Phase 3 until all Phase 2 outputs (if run) are written to the plan 
 
 ## Phase 3: Eng Review + Dual Voices
 
-Follow product-flow-engreview/SKILL.md — all sections, full depth.
+Follow product-role-engmanager/SKILL.md — all sections, full depth.
 Override: every AskUserQuestion → auto-decide using the 6 principles.
 
 **Override rules:**
@@ -591,7 +591,7 @@ Missing voice = N/A (not CONFIRMED). Single critical finding from one voice = fl
 
 ## Phase 3.5: DX Review (conditional — skip if no developer-facing scope)
 
-Follow product-flow-devexreview/SKILL.md — all 8 DX dimensions, full depth.
+Follow product-role-dxlead/SKILL.md — all 8 DX dimensions, full depth.
 Override: every AskUserQuestion → auto-decide using the 6 principles.
 
 **Skip condition:** If DX scope was NOT detected in Phase 0, skip this phase entirely.
@@ -857,22 +857,22 @@ COMMIT=$(git rev-parse --short HEAD 2>/dev/null)
 TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
 mkdir -p .product-build-stacks/analytics; printf %s
- '{"skill":"product-flow-ceoreview","timestamp":"'"$TIMESTAMP"'","status":"STATUS","unresolved":N,"critical_gaps":N,"mode":"SELECTIVE_EXPANSION","via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
+ '{"skill":"product-role-founder","timestamp":"'"$TIMESTAMP"'","status":"STATUS","unresolved":N,"critical_gaps":N,"mode":"SELECTIVE_EXPANSION","via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
 
 mkdir -p .product-build-stacks/analytics; printf %s
- '{"skill":"product-flow-engreview","timestamp":"'"$TIMESTAMP"'","status":"STATUS","unresolved":N,"critical_gaps":N,"issues_found":N,"mode":"FULL_REVIEW","via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
+ '{"skill":"product-role-engmanager","timestamp":"'"$TIMESTAMP"'","status":"STATUS","unresolved":N,"critical_gaps":N,"issues_found":N,"mode":"FULL_REVIEW","via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
 ```
 
 If Phase 2 ran (UI scope):
 ```bash
 mkdir -p .product-build-stacks/analytics; printf %s
- '{"skill":"product-flow-designreview","timestamp":"'"$TIMESTAMP"'","status":"STATUS","unresolved":N,"via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
+ '{"skill":"product-role-designer","timestamp":"'"$TIMESTAMP"'","status":"STATUS","unresolved":N,"via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
 ```
 
 If Phase 3.5 ran (DX scope):
 ```bash
 mkdir -p .product-build-stacks/analytics; printf %s
- '{"skill":"product-flow-devexreview","timestamp":"'"$TIMESTAMP"'","status":"STATUS","initial_score":N,"overall_score":N,"product_type":"TYPE","tthw_current":"TTHW","tthw_target":"TARGET","unresolved":N,"via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
+ '{"skill":"product-role-dxlead","timestamp":"'"$TIMESTAMP"'","status":"STATUS","initial_score":N,"overall_score":N,"product_type":"TYPE","tthw_current":"TTHW","tthw_target":"TARGET","unresolved":N,"via":"autoplan","commit":"'"$COMMIT"'"}' >> .product-build-stacks/analytics/reviews.jsonl
 ```
 
 Dual voice logs (one per phase that ran):

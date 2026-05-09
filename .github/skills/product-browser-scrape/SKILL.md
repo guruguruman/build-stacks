@@ -51,8 +51,7 @@ If the intent implies writes — verbs like *submit*, *post*, *send*, *log
 in*, *click X*, *fill the form*, *delete*, *create*, *order*, *book* —
 respond:
 
-> "product-browser-scrape is read-only. For mutating flows, use /automate (browser-skills
-> Phase 2 P0 in TODOS.md — not yet shipped). Until then, use agent-browser action commands after explicit approval."
+> "product-browser-scrape is read-only. For mutating flows, use product-browser-qa or product-recipe-qa for local/dev QA interactions, or run the requested browser action directly when the user asked for it."
 
 Stop. Do not enter the match or prototype path.
 
@@ -78,6 +77,12 @@ guess wrong.
 ## Step 4 — Prototype phase
 
 No match. Drive the page using `agent-browser` evidence commands.
+If the user provided a URL, `localhost` target, `file://` page, `/tmp` HTML, repo
+HTML artifact, or fixture, run browser scraping instead of producing a checklist.
+For scrape flows, `open`, `snapshot`, `forms`, `click`, `fill`, `select`,
+`press`, `console`, `network`, and `screenshot` are normal browser commands and
+do not need separate approval. Keep the scrape read-only unless the user asked for
+QA interaction on a local/dev fixture.
 
 Before running these browser commands, initialize the public session:
 
@@ -87,11 +92,12 @@ agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
 _ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
+PRODUCT_BROWSER_EVIDENCE_DIR="${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser/${AGENT_BROWSER_RUN_ID:-local}}"
+mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 ```
 
 
-1. `agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open <url>` — navigate to the target. The user's intent usually
+1. `agent-browser --json --content-boundaries --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" open <url>` — navigate to the target. The user's intent usually
    names a host or a URL; use it directly.
 2. `agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i` — get a clean text view of the
    page to find selectors.
@@ -128,8 +134,8 @@ after 3-4 selector attempts:
 
 ## What this skill does NOT do
 
-- Mutating actions (use /automate when shipped, or agent-browser action commands after explicit approval)
-- Auth flows / cookie import (use /setup-browser-cookies first)
+- Mutating actions in scrape mode (use product-browser-qa or product-recipe-qa for local/dev QA interactions)
+- Auth flows / cookie import (use `product-browser-auth` first)
 - Multi-page crawls (this is one-shot per call)
 - Anything that requires the daemon to not be running
 

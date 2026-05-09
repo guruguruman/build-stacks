@@ -1,11 +1,11 @@
 {
+  "legacy": "document-release",
   "product": "product-role-docengineer",
-  "sourceKind": "original",
-  "license": "MIT",
-  "status": "authored",
-  "strategy": "Original product-build-stacks authored role skill for the 1.0.0 public surface.",
-  "smokeScenario": "Invoke product-role-docengineer in a clean APM consumer and complete the documented workflow.",
-  "expectedOutput": "findings, decisions, evidence, residual risk, next handoff",
-  "evidencePath": ".product-build-stacks/evidence/product-role-docengineer.json",
-  "failureMode": "Name missing dependency or approval and stop without hidden helper fallback."
+  "upstreamRepo": "garrytan/gstack",
+  "upstreamCommit": "30fe6bb11c6915e6264440b8a044ed0dcfbe06e0",
+  "sourcePath": "document-release/SKILL.md.tmpl",
+  "status": "adapted",
+  "strategy": "Substantive workflow copied from upstream template and transformed for product-stacks names, storage, and host-agnostic tool fallbacks.",
+  "unsupportedFeatures": [],
+  "license": "MIT"
 }

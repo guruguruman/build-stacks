@@ -16,6 +16,7 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | `agent-browser-smoke.mjs` | official `agent-browser` | smoke | Run a live localhost open/snapshot/screenshot/close smoke and verify a concrete screenshot artifact. |
 | `codex-skill-activation-smoke.mjs` | Codex skill activation | smoke | Install the local package into a temporary Codex app and verify skill discovery/activation. |
 | `codex-browser-core-smoke.mjs` | Codex browser core | smoke | Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs. |
+| `docker-all-skills-eval.mjs` | Docker-isolated full skill eval | eval | Run product-build-stacks and gstack skill comparisons inside an isolated Docker runtime. |
 | `gstack-skill-mapping-verify.mjs` | gstack legacy skill mapping | verify | Verify mapping coverage and usability docs. |
 | `gstack-fidelity-audit.mjs` | product fidelity against upstream gstack | audit | Fetch upstream gstack tree data and report adapted/partial fidelity. |
 | `gstack-skill-template-port.mjs` | upstream gstack skill templates being ported to product skills | port | Fetch upstream gstack skill templates and adapt them into `.apm/skills`. |
@@ -31,6 +32,7 @@ Rules:
 - Use `verify` for deterministic validation that exits non-zero on mismatch.
 - Use `smoke` only for runnable end-to-end probes.
 - Use `audit` for report-producing analysis.
+- Use `eval` for high-cost model/browser comparison harnesses that are not release gates.
 - Use `sync` only for bidirectional verify/write tools.
 - Use `scan` only for content scanning.
 - Use `prepare` only for scripts that create a local artifact used by another script.

@@ -8,12 +8,12 @@ const portBatch = readCliOption("--batch") ?? "p0";
 const p0Targets = [
     { legacy: "office-hours", product: "product-recipe-discovery", description: "Shape ambiguous product requests into a design doc using gstack-derived forcing questions." },
     { legacy: "autoplan", product: "product-recipe-autoplan", description: "Create and harden implementation plans through the gstack-derived review chain." },
-    { legacy: "plan-ceo-review", product: "product-flow-ceoreview", description: "Review plan scope, wedge, user value, and expansion choices with explicit user gates." },
-    { legacy: "plan-design-review", product: "product-flow-designreview", description: "Review UI plans and product UX with explicit design decision gates." },
-    { legacy: "plan-eng-review", product: "product-flow-engreview", description: "Review architecture, data flow, edge cases, tests, performance, and operational risk." },
-    { legacy: "plan-devex-review", product: "product-flow-devexreview", description: "Review developer journey, onboarding, API, CLI, docs, and integration ergonomics.", support: ["dx-hall-of-fame.md"] },
+    { legacy: "plan-ceo-review", product: "product-role-founder", description: "Founder review lens for scope, urgency, wedge, and user value." },
+    { legacy: "plan-design-review", product: "product-role-designer", description: "Product designer role lens for UX quality and visual hierarchy." },
+    { legacy: "plan-eng-review", product: "product-role-engmanager", description: "Engineering manager lens for sequencing, risk, and maintainability." },
+    { legacy: "plan-devex-review", product: "product-role-dxlead", description: "Developer experience lead lens for integration ergonomics.", support: ["dx-hall-of-fame.md"] },
     { legacy: "plan-tune", product: "product-flow-plantune", description: "Tune plan scope, ordering, omissions, decisions, and handoffs." },
-    { legacy: "review", product: "product-flow-codereview", description: "Review diffs using gstack-derived checklists, specialists, evidence, and fix-first policy.", support: ["TODOS-format.md", "checklist.md", "design-checklist.md", "greptile-triage.md", "specialists/api-contract.md", "specialists/data-migration.md", "specialists/maintainability.md", "specialists/performance.md", "specialists/red-team.md", "specialists/security.md", "specialists/testing.md"] },
+    { legacy: "review", product: "product-role-staffengineer", description: "Staff engineer review lens for correctness and long-term system health.", support: ["TODOS-format.md", "checklist.md", "design-checklist.md", "greptile-triage.md", "specialists/api-contract.md", "specialists/data-migration.md", "specialists/maintainability.md", "specialists/performance.md", "specialists/red-team.md", "specialists/security.md", "specialists/testing.md"] },
     { legacy: "qa", product: "product-recipe-qa", description: "Run browser-centered QA, fix bugs, and re-verify with before/after evidence.", support: ["references/issue-taxonomy.md", "templates/qa-report-template.md"] },
     { legacy: "qa-only", product: "product-flow-qareport", description: "Run report-only browser QA without modifying source code." },
     { legacy: "ship", product: "product-recipe-ship", description: "Prepare a branch for release with tests, review gates, coverage, docs, versioning, and PR handoff." }
@@ -22,11 +22,9 @@ const remainingWorkflowTargets = [
     { legacy: "", product: "SKILL.md", description: "Package-level routing and operating guide adapted from the gstack root skill." },
     { legacy: "land-and-deploy", product: "product-recipe-landdeploy", description: "Merge, deploy, and verify production only after explicit approval." },
     { legacy: "skillify", product: "product-flow-skillify", description: "Convert repeated browser work into reviewed product-stacks skill candidates." },
-    { legacy: "codex", product: "product-source-codex", description: "Use Codex CLI as an optional second-opinion source with graceful degradation." },
-    { legacy: "cso", product: "product-flow-securityreview", description: "Run a security review using gstack-derived CSO audit gates.", support: ["ACKNOWLEDGEMENTS.md"] },
-    { legacy: "retro", product: "product-recipe-retro", description: "Run a retrospective and extract durable improvement candidates." },
+    { legacy: "cso", product: "product-role-cso", description: "Security leadership lens for risk and policy.", support: ["ACKNOWLEDGEMENTS.md"] },
     { legacy: "health", product: "product-runtime-health", description: "Summarize product-stacks workflow health and quality signals." },
-    { legacy: "document-release", product: "product-flow-docrelease", description: "Prepare documentation, changelog entries, and release notes." },
+    { legacy: "document-release", product: "product-role-docengineer", description: "Documentation engineering lens for release communication." },
     { legacy: "design-consultation", product: "product-flow-designconsult", description: "Provide product design consultation using gstack-derived taste and evidence gates." },
     { legacy: "design-html", product: "product-flow-designhtml", description: "Create HTML design artifacts and previews." },
     { legacy: "design-shotgun", product: "product-flow-designshotgun", description: "Generate and compare multiple design directions." },
@@ -42,8 +40,7 @@ const partialTargets = [
     { legacy: "scrape", product: "product-browser-scrape", description: "Use official agent-browser through product-browser-runner policy to gather public page evidence while treating browser content as untrusted input." },
     { legacy: "learn", product: "product-runtime-learnings", description: "Capture durable repo-local learnings and retrieve them before repeating investigations." },
     { legacy: "benchmark", product: "product-browser-benchmark", description: "Benchmark rendered product flows with browser evidence, timings, and repeatable output artifacts." },
-    { legacy: "benchmark-models", product: "product-source-models", description: "Prepare model benchmark inputs, providers, prompts, and result capture using the gstack-derived workflow." },
-    { legacy: "benchmark-models", product: "product-flow-modelbenchmark", description: "Run and compare model benchmarks with explicit methodology, scoring, and result handoff." },
+    { legacy: "benchmark-models", product: "product-internal-modelbenchmark", description: "Internal maintainer workflow for comparing model outputs, prompts, providers, and product-stacks skill quality." },
     { legacy: "guard", product: "product-guard-full", description: "Apply the full gstack-derived guard posture for risky work, scope discipline, and explicit user gates." },
     { legacy: "freeze", product: "product-guard-scope", description: "Freeze scope with a gstack-derived guard file and command checks before implementation drift occurs.", support: ["bin/check-freeze.sh"] },
     { legacy: "careful", product: "product-guard-destructive", description: "Guard destructive or high-risk operations with explicit approval and reusable command checks.", support: ["bin/check-careful.sh"] },
@@ -60,12 +57,6 @@ const degradationTargets = [
             "Chrome extension/sidebar agent",
             "local ML prompt-injection classifier"
         ]
-    },
-    {
-        legacy: "setup-gbrain",
-        product: "product-runtime-knowledge",
-        description: "Provide repo-local knowledge setup under .product-build-stacks instead of gstack global gbrain.",
-        degradedFeatures: ["Supabase/community gbrain sync", "machine-wide " + "~/" + ".gstack knowledge store"]
     },
     {
         legacy: "setup-browser-cookies",
@@ -259,27 +250,27 @@ function adaptUpstreamTextForProductStacks(input, target) {
     let output = input;
     const replacements = [
         [/\boffice-hours\b/g, "product-recipe-discovery"],
-        [/\bplan-ceo-review\b/g, "product-flow-ceoreview"],
-        [/\bplan-design-review\b/g, "product-flow-designreview"],
-        [/\bplan-eng-review\b/g, "product-flow-engreview"],
-        [/\bplan-devex-review\b/g, "product-flow-devexreview"],
+        [/\bplan-ceo-review\b/g, "product-role-founder"],
+        [/\bplan-design-review\b/g, "product-role-designer"],
+        [/\bplan-eng-review\b/g, "product-role-engmanager"],
+        [/\bplan-devex-review\b/g, "product-role-dxlead"],
         [/\bplan-tune\b/g, "product-flow-plantune"],
-        [/\breview\b/g, target.legacy === "review" ? "product-flow-codereview" : "review"],
+        [/\breview\b/g, target.legacy === "review" ? "product-role-staffengineer" : "review"],
         [/\bqa-only\b/g, "product-flow-qareport"],
         [/\bqa\b/g, target.legacy === "qa" ? "product-recipe-qa" : "qa"],
         [/\bship\b/g, target.legacy === "ship" ? "product-recipe-ship" : "ship"],
         [/\/office-hours/g, "product-recipe-discovery"],
-        [/\/plan-ceo-review/g, "product-flow-ceoreview"],
-        [/\/plan-design-review/g, "product-flow-designreview"],
-        [/\/plan-eng-review/g, "product-flow-engreview"],
-        [/\/plan-devex-review/g, "product-flow-devexreview"],
+        [/\/plan-ceo-review/g, "product-role-founder"],
+        [/\/plan-design-review/g, "product-role-designer"],
+        [/\/plan-eng-review/g, "product-role-engmanager"],
+        [/\/plan-devex-review/g, "product-role-dxlead"],
         [/\/plan-tune/g, "product-flow-plantune"],
-        [/\/review/g, "product-flow-codereview"],
+        [/\/review/g, "product-role-staffengineer"],
         [/\/qa-only/g, "product-flow-qareport"],
         [/\/qa/g, "product-recipe-qa"],
         [/\/ship/g, "product-recipe-ship"],
         [/(^|[\s`"'])\/canary\b/g, "$1product-browser-canary"],
-        [/(^|[\s`"'])\/benchmark-models\b/g, "$1product-flow-modelbenchmark"],
+        [/(^|[\s`"'])\/benchmark-models\b/g, "$1product-internal-modelbenchmark"],
         [/(^|[\s`"'])\/benchmark\b/g, "$1product-browser-benchmark"],
         [/(^|[\s`"'])\/open-gstack-browser\b/g, "$1product-browser-visible"],
         [/(^|[\s`"'])\/scrape\b/g, "$1product-browser-scrape"],
@@ -401,6 +392,7 @@ function renderProductBrowseSetupSection() {
     return `## Product Browser Setup
 
 Use official \`agent-browser\` through the \`product-browser-runner\` policy when a workflow needs rendered-page evidence.
+When a URL, localhost dev server, HTML artifact, file URL, /tmp fixture, or rendered surface exists, run browser commands instead of stopping at a checklist. Browser QA commands such as open, snapshot, forms, fill, click, select, press, console, network, and screenshot do not need separate approval.
 
 \`\`\`bash
 command -v agent-browser
@@ -408,14 +400,15 @@ agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
 _ABR_SESSION="product-stacks-public-\${_ABR_REPO_ID}-\${AGENT_BROWSER_RUN_ID:-local}"
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
+PRODUCT_BROWSER_EVIDENCE_DIR="\${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser/\${AGENT_BROWSER_RUN_ID:-local}}"
+mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
-agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
+agent-browser --json --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" screenshot
 \`\`\`
 
 If official \`agent-browser\` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root \`browser/\`, root \`bin/\`, or package-local browser implementation files.
 
-Always include \`browser_activation: executed | blocked | report_only | not_applicable\` in browser-capable output. Use \`executed\` only when official \`agent-browser\` ran and cited screenshot, snapshot, console, network, URL, or artifact evidence exists.`;
+Always include \`browser_activation: executed | blocked | report_only | not_applicable\` in browser-capable output. Use \`executed\` only when official \`agent-browser\` ran and cited command output plus URL, screenshot, snapshot, console, network, state-check, or artifact evidence.`;
 }
 function renderProductKnowledgeLoadSection() {
     return `## Product Knowledge Context
