@@ -51,7 +51,7 @@ agent-browser --json --session "$_ABR_SESSION" close
 
 ## Shipped Skills
 
-The public surface is the 40 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names; upstream gstack names are retained only in adaptation metadata.
+The public surface is the 40 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
 
 ## Maintainer Verification
 

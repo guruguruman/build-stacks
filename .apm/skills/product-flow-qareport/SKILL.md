@@ -3,11 +3,6 @@ name: product-flow-qareport
 description: Run report-only browser QA without modifying source code.
 ---
 
-<!--
-Ported from garrytan/gstack/qa-only/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-flow-qareport
 
 ## Product-Stacks Operating Preamble

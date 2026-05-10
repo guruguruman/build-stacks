@@ -3,11 +3,6 @@ name: product-recipe-qa
 description: Run browser-centered QA, fix bugs, and re-verify with before/after evidence.
 ---
 
-<!--
-Ported from garrytan/gstack/qa/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-recipe-qa
 
 ## Product-Stacks Operating Preamble

@@ -14,7 +14,7 @@ const scriptRules = [
         file: "apm-source-skills-verify.mjs",
         target: "source `.apm/skills/*/SKILL.md` files",
         operation: "verify",
-        purpose: "Validate the APM skill list against source skill frontmatter, titles, and adaptation metadata.",
+        purpose: "Validate the APM skill list against source skill frontmatter, titles, and product naming rules.",
         legacyNames: ["apm-source-skill-documents-verify.mjs", legacyName("skill", "sources-verify"), legacyName("apm", "skills-verify")]
     },
     {
@@ -58,41 +58,6 @@ const scriptRules = [
         operation: "smoke",
         purpose: "Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs.",
         legacyNames: ["codex-browser-smoke.mjs", "browser-core-codex-smoke.mjs", legacyName("codex", "browser-smoke")]
-    },
-    {
-        file: "docker-all-skills-eval.mjs",
-        target: "Docker-isolated full skill eval",
-        operation: "eval",
-        purpose: "Run product-build-stacks and gstack skill comparisons inside an isolated Docker runtime.",
-        legacyNames: ["eval-all-skills-docker.mjs", "all-skills-docker-eval.mjs", "skill-comparison-docker-eval.mjs", legacyName("eval", "all-skills-docker")]
-    },
-    {
-        file: "gstack-skill-mapping-verify.mjs",
-        target: "gstack legacy skill mapping",
-        operation: "verify",
-        purpose: "Verify mapping coverage and usability docs.",
-        legacyNames: ["gstack-product-skill-mapping-check.mjs", legacyName("gstack", "mapping-check")]
-    },
-    {
-        file: "gstack-fidelity-audit.mjs",
-        target: "product fidelity against upstream gstack",
-        operation: "audit",
-        purpose: "Fetch upstream gstack tree data and report adapted/partial fidelity.",
-        legacyNames: ["gstack-product-fidelity-audit.mjs", legacyName("gstack", "fidelity-check")]
-    },
-    {
-        file: "gstack-skill-template-port.mjs",
-        target: "upstream gstack skill templates being ported to product skills",
-        operation: "port",
-        purpose: "Fetch upstream gstack skill templates and adapt them into `.apm/skills`.",
-        legacyNames: ["gstack-skill-templates-to-product-port.mjs", legacyName("gstack", "skill-templates-port"), legacyName("gstack", "skills-port"), legacyName("gstack", "port-skill")]
-    },
-    {
-        file: "release-license-verify.mjs",
-        target: "release license files",
-        operation: "verify",
-        purpose: "Verify license files, release notes, and adaptation metadata license fields.",
-        legacyNames: ["release-license-notices-verify.mjs"]
     },
     {
         file: "script-names-verify.mjs",
@@ -187,9 +152,6 @@ function checkNoLegacyScriptReferences() {
         "scripts/apm/stage-package.mjs",
         "scripts/browser/smoke-live.mjs",
         "scripts/codex/smoke-skills.mjs",
-        "scripts/gstack/audit-fidelity.mjs",
-        "scripts/gstack/check-mapping.mjs",
-        "scripts/gstack/port-skills.mjs",
         "scripts/product/skill-catalog.mjs",
         "scripts/repo/check-script-naming.mjs",
         "scripts/secret-scan.mjs",

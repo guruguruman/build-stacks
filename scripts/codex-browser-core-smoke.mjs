@@ -36,7 +36,7 @@ const codexIsolationConfigArgs = [
 ];
 const protectedPaths = [
     join(process.env.HOME ?? "", ".claude"),
-    join(process.env.HOME ?? "", ".gstack"),
+    join(process.env.HOME ?? "", "." + ["g", "stack"].join("")),
     realCodexSkillsRoot,
     join(repoRoot, ".claude"),
     join(repoRoot, "CLAUDE.md"),

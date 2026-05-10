@@ -1,16 +1,11 @@
 ---
 name: product-runtime-session
-description: Save and restore repo-local working context under .product-build-stacks using the gstack session workflow.
+description: Save and restore repo-local working context under .product-build-stacks using the product-stacks session workflow.
 ---
-
-<!--
-Ported from garrytan/gstack/context-save/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-runtime-session
 
-## Upstream context-save Workflow
+## Product context-save Workflow
 
 ## Product-Stacks Operating Preamble
 
@@ -277,7 +272,7 @@ If there are no saved contexts, tell the user: "No saved contexts yet. Run
 - **This is a product-stacks skill.** Use explicit `save`, `list`, or `restore`
   modes. The old no-argument save/restore behavior was ambiguous and is no longer used.
 
-## Upstream context-restore Workflow
+## Product context-restore Workflow
 
 ## Product-Stacks Operating Preamble
 

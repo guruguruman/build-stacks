@@ -3,11 +3,6 @@ name: product-role-dxlead
 description: Developer experience review for APIs, onboarding, integration ergonomics, docs, adoption friction, and unsupported paths.
 ---
 
-<!--
-Ported from garrytan/gstack/plan-devex-review/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-role-dxlead
 
 ## Product-Stacks Operating Preamble

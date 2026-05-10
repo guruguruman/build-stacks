@@ -3,11 +3,6 @@ name: product-recipe-ship
 description: Prepare a branch for release with tests, review gates, coverage, docs, versioning, and PR handoff.
 ---
 
-<!--
-Ported from garrytan/gstack/ship/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-recipe-ship
 
 ## Product-Stacks Operating Preamble
@@ -333,7 +328,7 @@ Separate observed facts from inference. Lower confidence when evidence is missin
 
 ## Product Placeholder: DESIGN_REVIEW_LITE
 
-This upstream placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
+This workflow placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
 
    Include any design findings alongside the code review findings. They follow the same Fix-First flow below.
 

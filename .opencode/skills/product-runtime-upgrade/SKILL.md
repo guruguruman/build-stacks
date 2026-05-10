@@ -3,11 +3,6 @@ name: product-runtime-upgrade
 description: Upgrade product-stacks with explicit migration boundaries.
 ---
 
-<!--
-Ported from garrytan/gstack/gstack-upgrade/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-build-stacks 1.0.0: APM package upgrades only, repo-local runtime state, no global gstack runtime.
--->
-
 # product-runtime-upgrade
 
 Use this skill when a user wants to upgrade `product-build-stacks`, verify the installed version, or prepare a migration between public APM package tags.

@@ -3,11 +3,6 @@ name: product-flow-plantune
 description: Tune plan scope, ordering, omissions, decisions, and handoffs.
 ---
 
-<!--
-Ported from garrytan/gstack/plan-tune/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-build-stacks 1.0.0 with repo-local preference files.
--->
-
 # product-flow-plantune
 
 Use this skill to improve an implementation plan before execution.

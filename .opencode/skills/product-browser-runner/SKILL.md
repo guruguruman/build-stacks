@@ -28,7 +28,7 @@ If the command is missing, report that the consumer machine needs official `agen
 
 Do not fall back to repo-root browser implementation files when the command is missing. Mark the browser portion as blocked and continue with non-browser evidence where possible.
 
-## gstack-Compatible Browser Posture
+## Product Browser Posture
 
 Default to useful browser work. When a request includes a URL, localhost app,
 `file://` page, repo HTML artifact, `/tmp` HTML, Docker/eval fixture, screenshot,

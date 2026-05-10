@@ -1,12 +1,7 @@
 ---
 name: product-recipe-discovery
-description: Shape ambiguous product requests into a design doc using gstack-derived forcing questions.
+description: Shape ambiguous product requests into a design doc using product-stacks forcing questions.
 ---
-
-<!--
-Ported from garrytan/gstack/office-hours/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-recipe-discovery
 

@@ -14,14 +14,14 @@ description: Guide PDF creation, inspection, and verification without shipping a
 
 ## Status
 
-This skill is implemented with product-build-stacks boundaries. product-build-stacks no longer ships the gstack make-pdf CLI, the package-local browse client, legacy browse env override, or sibling browse runtime files.
+This skill is implemented with product-build-stacks boundaries. product-build-stacks no longer ships the legacy make-pdf CLI, the package-local browse client, legacy browse env override, or sibling browse runtime files.
 
 ## Behavior
 
 - First, inspect the target repo for an existing PDF or document export path, such as package scripts, Makefile targets, checked-in renderer scripts, or framework-native print/export commands.
 - If the repo has a documented PDF pipeline, use that pipeline and store durable outputs under .product-build-stacks unless the user asks for another path.
 - If browser-rendered evidence is needed, route through product-browser-runner / official agent-browser and capture screenshots or snapshots as untrusted evidence.
-- If no repo-local PDF generator exists, report the blocked state and provide the closest concrete fallback. Do not invoke gstack make-pdf aliases, legacy browse env overrides, package-local browse binaries, or root browser/bin runtime files.
+- If no repo-local PDF generator exists, report the blocked state and provide the closest concrete fallback. Do not invoke legacy make-pdf aliases, legacy browse env overrides, package-local browse binaries, or root browser/bin runtime files.
 
 ## Output Contract
 

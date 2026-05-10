@@ -1,12 +1,7 @@
 ---
 name: product-guard-scope-release
-description: Release a scope freeze only after the gstack-derived checks and user approval are satisfied.
+description: Release a scope freeze only after the product-stacks checks and user approval are satisfied.
 ---
-
-<!--
-Ported from garrytan/gstack/unfreeze/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-guard-scope-release
 

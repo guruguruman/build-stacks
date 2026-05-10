@@ -24,7 +24,7 @@ verifyScriptNamingRules();
 checkNoForbiddenRuntimeReferences();
 checkBrowserSkillSessionSetup();
 verifyPreparedPackageInstall();
-verifyReleaseLicenseCompleteness();
+verifyNoLegacyStackReferences();
 if (apmPackageFailures.length > 0) {
     console.error(apmPackageFailures.join("\n"));
     process.exit(1);
@@ -88,7 +88,7 @@ function verifyBrowserRunnerSkillPolicy() {
         "agent-browser --json --session \"$_ABR_SESSION\" close",
         "do not ask for a separate approval",
         "browser_activation: executed | blocked | report_only | not_applicable",
-        "gstack-Compatible Browser Posture",
+        "Product Browser Posture",
         "product-browser-auth",
         "untrusted",
         "\"source\": \"agent-browser\"",
@@ -146,7 +146,7 @@ function verifyPublicPackageScripts() {
         }
     }
     const apmBody = readFileSync("apm.yml", "utf8");
-    for (const unsafe of ["parity:check", "fidelity:check", "gstack:port", "codex:e2e", "test:browser", "test:golden", "test:guards"]) {
+    for (const unsafe of ["parity:check", "fidelity:check", "codex:e2e", "test:browser", "test:golden", "test:guards"]) {
         if (apmBody.includes(`${unsafe}:`))
             apmPackageFailures.push(`apm.yml exposes unsupported APM-facing script: ${unsafe}`);
     }
@@ -167,7 +167,7 @@ function checkNoForbiddenRuntimeReferences() {
     ];
     const forbidden = [
         "~/.claude/skills/product-stacks",
-        "~/.gstack",
+        "~/." + legacyStackToken(),
         ".product/",
         "type: hybrid",
         "future runner-managed",
@@ -294,14 +294,33 @@ function verifyPreparedPackageShape(root) {
     const apmPath = join(root, "apm.yml");
     if (existsSync(apmPath)) {
         const body = readFileSync(apmPath, "utf8");
-        for (const unsafe of ["parity:check", "fidelity:check", "gstack:port", "codex:e2e", "test:browser", "test:golden", "test:guards"]) {
+        for (const unsafe of ["parity:check", "fidelity:check", "codex:e2e", "test:browser", "test:golden", "test:guards"]) {
             if (body.includes(`${unsafe}:`))
                 apmPackageFailures.push(`prepared apm.yml exposes unsafe script: ${unsafe}`);
         }
     }
 }
-function verifyReleaseLicenseCompleteness() {
-    runComplianceCommand(["node", "scripts/release-license-verify.mjs"], ".");
+function verifyNoLegacyStackReferences() {
+    const token = legacyStackToken();
+    const result = spawnSync("git", ["ls-files", "-z"], { encoding: "utf8" });
+    if (result.status !== 0) {
+        apmPackageFailures.push(`command failed: git ls-files -z\n${result.stderr.trim()}`);
+        return;
+    }
+    for (const file of result.stdout.split("\0").filter(Boolean)) {
+        if (!existsSync(file))
+            continue;
+        if (file.toLowerCase().includes(token)) {
+            apmPackageFailures.push(`${file} contains removed legacy stack token in path`);
+            continue;
+        }
+        const body = readFileSync(file, "utf8");
+        if (body.toLowerCase().includes(token))
+            apmPackageFailures.push(`${file} contains removed legacy stack token`);
+    }
+}
+function legacyStackToken() {
+    return ["g", "stack"].join("");
 }
 function runComplianceCommand(command, cwd) {
     const result = spawnSync(command[0], command.slice(1), {

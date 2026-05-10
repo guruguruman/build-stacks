@@ -1,12 +1,7 @@
 ---
 name: product-recipe-investigate
-description: Investigate a product or codebase issue using gstack-derived evidence gathering, hypothesis testing, and handoff discipline.
+description: Investigate a product or codebase issue using product-stacks evidence gathering, hypothesis testing, and handoff discipline.
 ---
-
-<!--
-Ported from garrytan/gstack/investigate/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-recipe-investigate
 

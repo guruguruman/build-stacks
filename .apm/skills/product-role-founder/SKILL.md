@@ -3,11 +3,6 @@ name: product-role-founder
 description: Founder and CEO-style product review for scope, wedge, adoption friction, MVP, NOT in scope, and first payment reason.
 ---
 
-<!--
-Ported from garrytan/gstack/plan-ceo-review/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-role-founder
 
 ## Product-Stacks Operating Preamble

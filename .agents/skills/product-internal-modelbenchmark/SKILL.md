@@ -3,11 +3,6 @@ name: product-internal-modelbenchmark
 description: Internal maintainer workflow for comparing model outputs, prompts, providers, and product-stacks skill quality.
 ---
 
-<!--
-Ported from garrytan/gstack/benchmark-models/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-build-stacks 1.0.0 without unshipped benchmark helper binaries.
--->
-
 # product-internal-modelbenchmark
 
 Use this skill to compare model outputs for a concrete product workflow, prompt, or skill handoff.

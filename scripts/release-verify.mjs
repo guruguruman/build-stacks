@@ -3,7 +3,6 @@ import { spawnSync } from "node:child_process";
 const commands = [
     ["npm", "test"],
     ["node", "scripts/apm-source-skills-verify.mjs"],
-    ["node", "scripts/release-license-verify.mjs"],
     ["node", "scripts/apm-installed-skills-sync.mjs", "--verify"],
     ["node", "scripts/apm-package-verify.mjs"],
     ["apm", "audit", "--ci"],

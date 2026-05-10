@@ -5,11 +5,9 @@ description: Document pair-agent compatibility limits under product-stacks.
 
 # product-browser-pairagent
 
-Ported boundary from gstack pair-agent at garrytan/gstack@30fe6bb11c6915e6264440b8a044ed0dcfbe06e0.
-
 ## Status
 
-This skill is implemented with product-build-stacks boundaries under product-stacks architecture. The user-visible goal is preserved where possible, but the gstack implementation depends on machine-wide state, tunnel exposure, a Chrome extension, or global runtime services that product-stacks deliberately does not expose.
+This skill is implemented with product-build-stacks boundaries under product-stacks architecture. Remote pair-agent workflows can depend on machine-wide state, tunnel exposure, a Chrome extension, or global runtime services that product-stacks deliberately does not expose.
 
 ## Degraded Features
 

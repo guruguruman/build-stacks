@@ -9,18 +9,13 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | File | Target object | Operation | Purpose |
 | --- | --- | --- | --- |
 | `apm-installed-skills-sync.mjs` | installed skill folders | sync | Compare or sync checked-in skill folders with a fresh `apm install --target all` result. |
-| `apm-source-skills-verify.mjs` | source `.apm/skills/*/SKILL.md` files | verify | Validate the APM skill list against source skill frontmatter, titles, and adaptation metadata. |
+| `apm-source-skills-verify.mjs` | source `.apm/skills/*/SKILL.md` files | verify | Validate the APM skill list against source skill frontmatter, titles, and product naming rules. |
 | `apm-package-prepare.mjs` | local APM package | prepare | Create a clean local package for install smoke tests. |
 | `apm-skill-install-smoke.mjs` | skill folders installed by APM | smoke | Install the local package into a temporary app and verify deployed skill roots. |
 | `apm-package-verify.mjs` | APM package | verify | Verify package shape, browser policy docs, stale runtime references, script names, and install behavior. |
 | `agent-browser-smoke.mjs` | official `agent-browser` | smoke | Run a live localhost open/snapshot/screenshot/close smoke and verify a concrete screenshot artifact. |
 | `codex-skill-activation-smoke.mjs` | Codex skill activation | smoke | Install the local package into a temporary Codex app and verify skill discovery/activation. |
 | `codex-browser-core-smoke.mjs` | Codex browser core | smoke | Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs. |
-| `docker-all-skills-eval.mjs` | Docker-isolated full skill eval | eval | Run product-build-stacks and gstack skill comparisons inside an isolated Docker runtime. |
-| `gstack-skill-mapping-verify.mjs` | gstack legacy skill mapping | verify | Verify mapping coverage and usability docs. |
-| `gstack-fidelity-audit.mjs` | product fidelity against upstream gstack | audit | Fetch upstream gstack tree data and report adapted/partial fidelity. |
-| `gstack-skill-template-port.mjs` | upstream gstack skill templates being ported to product skills | port | Fetch upstream gstack skill templates and adapt them into `.apm/skills`. |
-| `release-license-verify.mjs` | release license files | verify | Verify license files, release notes, and adaptation metadata license fields. |
 | `script-names-verify.mjs` | script names | verify | Enforce this file naming rule and block stale script names. |
 | `apm-skill-list.mjs` | APM skill list | module | Export skill metadata and name validation. |
 | `release-verify.mjs` | release gate | verify | Run the full release gate command list. |
@@ -28,7 +23,7 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 
 Rules:
 
-- Keep the target object first so related files sort together: `apm-*`, `gstack-*`, `release-*`.
+- Keep the target object first so related files sort together: `apm-*`, `codex-*`, `release-*`.
 - Use `verify` for deterministic validation that exits non-zero on mismatch.
 - Use `smoke` only for runnable end-to-end probes.
 - Use `audit` for report-producing analysis.
@@ -45,7 +40,7 @@ Rules:
 - Verifier helpers use explicit phrases, for example `verifyPublicPackageScripts()` or `checkNoRootLegacyRuntime()`.
 - Assertions use `assert<Fact>()`, for example `assertAgentBrowserSuccess()`.
 - Renderers use `render<Artifact>()`, for example `renderFidelityMarkdown()`.
-- Parsers/readers use `parse<Thing>()` or `read<Thing>()`, for example `parseGstackMappingRows()`.
+- Parsers/readers use `parse<Thing>()` or `read<Thing>()`, for example `parseSkillList()`.
 - Command helpers include the execution boundary, for example `runComplianceCommand()` or `runLoggedCommandAsync()`.
 - Shared predicates use `is<Fact>()`, for example `isValidProductSkillName()`.
 

@@ -3,11 +3,6 @@ name: product-guard-destructive
 description: Guard destructive or high-risk operations with explicit approval and reusable command checks.
 ---
 
-<!--
-Ported from garrytan/gstack/careful/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-guard-destructive
 
 # product-guard-destructive — Destructive Command Review

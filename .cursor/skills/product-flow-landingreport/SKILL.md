@@ -1,12 +1,7 @@
 ---
 name: product-flow-landingreport
-description: Review landing-page clarity, conversion, copy, proof, UX, and evidence with a gstack-derived report.
+description: Review landing-page clarity, conversion, copy, proof, UX, and evidence with a product-stacks report.
 ---
-
-<!--
-Ported from garrytan/gstack/landing-report/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-flow-landingreport
 

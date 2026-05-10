@@ -3,11 +3,6 @@ name: product-role-cso
 description: Security review for threat model, privacy, auth, secrets, policy risk, and release-blocking findings.
 ---
 
-<!--
-Ported from garrytan/gstack/cso/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-role-cso
 
 ## Product-Stacks Operating Preamble

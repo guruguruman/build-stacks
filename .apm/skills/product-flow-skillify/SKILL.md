@@ -3,11 +3,6 @@ name: product-flow-skillify
 description: Convert repeated browser work into reviewed product-stacks skill candidates.
 ---
 
-<!--
-Ported from garrytan/gstack/skillify/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-build-stacks 1.0.0 with APM source primitives and official agent-browser only.
--->
-
 # product-flow-skillify
 
 Use this skill when repeated browser or product workflow work should become a reviewed `product-*` skill candidate.
@@ -18,7 +13,7 @@ Use this skill when repeated browser or product workflow work should become a re
 2. Create a candidate directory under `.product-build-stacks/skill-candidates/<name>/`.
 3. Draft `SKILL.md` with frontmatter, when-to-use guidance, workflow, output contract, smoke scenario, expected output, evidence path, and failure mode.
 4. Review the candidate for overlap with existing 40 skills in `docs/release-acceptance-skill-matrix.md`.
-5. If accepted, move the candidate into `.apm/skills/<product-name>/`, add metadata in `references/gstack-adaptation.json`, and run:
+5. If accepted, move the candidate into `.apm/skills/<product-name>/`, add metadata in `release metadata`, and run:
 
 ```bash
 npm run skill:verify

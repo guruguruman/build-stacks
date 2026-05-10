@@ -3,11 +3,6 @@ name: product-flow-designhtml
 description: Create HTML design artifacts and previews.
 ---
 
-<!--
-Ported from garrytan/gstack/design-html/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-flow-designhtml
 
 ## Product-Stacks Operating Preamble

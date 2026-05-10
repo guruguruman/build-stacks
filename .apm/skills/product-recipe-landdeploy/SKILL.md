@@ -3,11 +3,6 @@ name: product-recipe-landdeploy
 description: Merge, deploy, and verify production only after explicit approval.
 ---
 
-<!--
-Ported from garrytan/gstack/land-and-deploy/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-recipe-landdeploy
 
 ## Product-Stacks Operating Preamble
@@ -463,10 +458,7 @@ Use AskUserQuestion:
 
 **If A (quick checklist):** Tell the user: "Running the review checklist against your diff now..."
 
-Read the review checklist:
-```bash
-cat ~/.claude/skills/gstackproduct-role-staffengineer/checklist.md 2>/dev/null || echo "Checklist not found"
-```
+Read the bundled review checklist from `product-role-staffengineer/checklist.md` when it is available.
 Apply each checklist item to the current diff. This is the same quick review that `product-recipe-ship`
 runs in its Step 3.5. Auto-fix trivial issues (whitespace, imports). For critical findings
 (SQL safety, race conditions, security), ask the user.

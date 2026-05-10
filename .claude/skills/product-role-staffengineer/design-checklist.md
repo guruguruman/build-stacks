@@ -1,6 +1,6 @@
 # Design Review Checklist (Lite)
 
-> **Subset of DESIGN_METHODOLOGY** — when adding items here, also update `renderProductDesignMethodologySection()` in `scripts/gstack-skill-template-port.mjs`, and vice versa.
+> **Subset of DESIGN_METHODOLOGY** — when adding items here, also update `renderProductDesignMethodologySection()` in `product-role-staffengineer/SKILL.md`, and vice versa.
 
 ## Instructions
 

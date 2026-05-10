@@ -1,12 +1,7 @@
 ---
 name: product-flow-designconsult
-description: Provide product design consultation using gstack-derived taste and evidence gates.
+description: Provide product design consultation using product-stacks taste and evidence gates.
 ---
-
-<!--
-Ported from garrytan/gstack/design-consultation/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-flow-designconsult
 
@@ -201,7 +196,7 @@ If the user said no research, skip entirely and proceed to Phase 3 using your bu
 
 ## Product Placeholder: DESIGN_OUTSIDE_VOICES
 
-This upstream placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
+This workflow placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
 
 ## Phase 3: The Complete Proposal
 

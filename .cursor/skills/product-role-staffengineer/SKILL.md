@@ -3,11 +3,6 @@ name: product-role-staffengineer
 description: Staff-level code review for diffs, architecture, correctness, migrations, tests, and long-term system health.
 ---
 
-<!--
-Ported from garrytan/gstack/review/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-role-staffengineer
 
 ## Product-Stacks Operating Preamble

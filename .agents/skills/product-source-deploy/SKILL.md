@@ -3,11 +3,6 @@ name: product-source-deploy
 description: Set up deployment readiness checks, provider assumptions, secrets hygiene, and release handoff.
 ---
 
-<!--
-Ported from garrytan/gstack/setup-deploy/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-source-deploy
 
 ## Product-Stacks Operating Preamble

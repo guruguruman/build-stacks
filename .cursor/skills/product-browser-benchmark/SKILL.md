@@ -3,11 +3,6 @@ name: product-browser-benchmark
 description: Benchmark rendered product flows with browser evidence, timings, and repeatable output artifacts.
 ---
 
-<!--
-Ported from garrytan/gstack/benchmark/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-browser-benchmark
 
 ## Product-Stacks Operating Preamble

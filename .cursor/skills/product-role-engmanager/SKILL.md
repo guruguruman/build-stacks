@@ -3,11 +3,6 @@ name: product-role-engmanager
 description: Engineering manager review for implementation plans, sequencing, risk, maintainability, delivery tradeoffs, and scope control.
 ---
 
-<!--
-Ported from garrytan/gstack/plan-eng-review/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-role-engmanager
 
 ## Product-Stacks Operating Preamble

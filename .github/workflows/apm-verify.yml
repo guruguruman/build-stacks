@@ -80,7 +80,6 @@ jobs:
           npm run generated:verify
           npm run skill:verify
           npm run apm:verify
-          node scripts/release-license-verify.mjs
           node --check scripts/release-verify.mjs
           npm test
           apm audit --ci

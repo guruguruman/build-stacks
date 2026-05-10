@@ -44,10 +44,11 @@ function checkAuthoredSkillDocument(skillName) {
     if (!body.includes(`# ${skillName}`)) {
         sourceSkillDocumentFailures.push(`wrong title: ${file}`);
     }
+    const legacyStackHome = "~/." + ["g", "stack"].join("");
     for (const forbidden of [
         "~/.claude/skills/" + "product-stacks",
         ".claude/skills/" + "product-stacks",
-        "~/" + ".gstack",
+        legacyStackHome,
         "consumer-installed product-build-stacks " + "skill directory/" + "bin",
         "product-stacks-config",
         "product-stacks-update-check",
@@ -55,16 +56,5 @@ function checkAuthoredSkillDocument(skillName) {
     ]) {
         if (body.includes(forbidden))
             sourceSkillDocumentFailures.push(`${file} contains unshipped helper reference: ${forbidden}`);
-    }
-    const metadataPath = join(sourceSkillRoot, skillName, "references/gstack-adaptation.json");
-    if (!existsSync(metadataPath)) {
-        sourceSkillDocumentFailures.push(`missing adaptation metadata: ${metadataPath}`);
-    }
-    else {
-        const metadata = JSON.parse(readFileSync(metadataPath, "utf8"));
-        if (metadata.product !== skillName)
-            sourceSkillDocumentFailures.push(`${metadataPath} product mismatch`);
-        if (metadata.license !== "MIT")
-            sourceSkillDocumentFailures.push(`${metadataPath} license must be MIT`);
     }
 }

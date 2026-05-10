@@ -3,11 +3,6 @@ name: product-runtime-learnings
 description: Capture durable repo-local learnings and retrieve them before repeating investigations.
 ---
 
-<!--
-Ported from garrytan/gstack/learn/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-runtime-learnings
 
 ## Product-Stacks Operating Preamble

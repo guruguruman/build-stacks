@@ -1,12 +1,7 @@
 ---
 name: product-guard-full
-description: Apply the full gstack-derived guard posture for risky work, scope discipline, and explicit user gates.
+description: Apply the full product-stacks guard posture for risky work, scope discipline, and explicit user gates.
 ---
-
-<!--
-Ported from garrytan/gstack/guard/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-guard-full
 

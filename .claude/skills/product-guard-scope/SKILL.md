@@ -1,12 +1,7 @@
 ---
 name: product-guard-scope
-description: Freeze scope with a gstack-derived guard file and command checks before implementation drift occurs.
+description: Freeze scope with a product-stacks guard file and command checks before implementation drift occurs.
 ---
-
-<!--
-Ported from garrytan/gstack/freeze/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
 
 # product-guard-scope
 

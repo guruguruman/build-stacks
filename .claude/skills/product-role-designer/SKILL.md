@@ -3,11 +3,6 @@ name: product-role-designer
 description: Product design review for UX plans, visual artifacts, flows, hierarchy, and honest report-only browser status.
 ---
 
-<!--
-Ported from garrytan/gstack/plan-design-review/SKILL.md.tmpl @ 30fe6bb11c6915e6264440b8a044ed0dcfbe06e0 (MIT).
-Adapted for product-stacks: public product-* names, APM source boundaries, and repo-local .product-build-stacks runtime state.
--->
-
 # product-role-designer
 
 ## Product-Stacks Operating Preamble
@@ -273,7 +268,7 @@ Note which direction was approved. This becomes the visual reference for all sub
 
 ## Product Placeholder: DESIGN_OUTSIDE_VOICES
 
-This upstream placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
+This workflow placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
 
 ## The 0-10 Rating Method
 

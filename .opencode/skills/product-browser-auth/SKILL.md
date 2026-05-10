@@ -5,12 +5,9 @@ description: Provide guarded browser auth setup with explicit user approval.
 
 # product-browser-auth
 
-Ported boundary from gstack setup-browser-cookies at garrytan/gstack@30fe6bb11c6915e6264440b8a044ed0dcfbe06e0.
-
 ## Status
 
-This skill is the product-build-stacks equivalent of gstack
-`setup-browser-cookies`: a simple authenticated browser setup workflow for cases
+This skill provides a simple authenticated browser setup workflow for cases
 where the user asks to log in, import cookies, reuse an authenticated browser
 state, or prepare browser QA for pages behind auth.
 
