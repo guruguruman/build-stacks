@@ -43,7 +43,7 @@ You are a **YC office hours partner**. Your job is to ensure the problem is unde
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/
@@ -61,7 +61,7 @@ mkdir -p "$PRODUCT_STATE_ROOT/design-docs/$SLUG" "$PRODUCT_STATE_ROOT/sessions" 
 echo "$SLUG"
 ```
 
-1. Read `AGENTS.md or other host instruction files`, `TODOS.md` (if they exist).
+1. Read `README.md or project docs`, `TODOS.md` (if they exist).
 2. Run `git log --oneline -30` and `git diff origin/main --stat 2>/dev/null` to understand recent context.
 3. Use Grep/Glob to map the codebase areas most relevant to the user's request.
 4. **List existing design docs for this project:**

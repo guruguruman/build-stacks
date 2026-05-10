@@ -90,7 +90,7 @@ git diff $(git merge-base HEAD main 2>/dev/null || echo HEAD~10) --stat 2>/dev/n
 
 Then read:
 - The plan file (current plan or branch diff)
-- AGENTS.md or other host instruction files for project conventions
+- README.md or project docs for project conventions
 - README.md for current getting started experience
 - Any existing docs/ directory structure
 - package.json or equivalent (what developers will install)
@@ -105,7 +105,7 @@ Then read:
 **Design doc check:**
 ```bash
 setopt +o nomatch 2>/dev/null || true
-SLUG=$(consumer-installed product-build-stacks skill directory/browse/bin/remote-slug 2>/dev/null || basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | tr -cs "[:alnum:]" "-" | tr "[:upper:]" "[:lower:]" | sed "s/^-//;s/-$//")"
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr '/' '-' || echo 'no-branch')
 DESIGN=$(ls -t .product-build-stacks/design-docs/$SLUG/*-$BRANCH-design-*.md 2>/dev/null | head -1)
 [ -z "$DESIGN" ] && DESIGN=$(ls -t .product-build-stacks/design-docs/$SLUG/*-design-*.md 2>/dev/null | head -1)
@@ -269,7 +269,7 @@ AskUserQuestion:
 Every great developer tool has a magical moment: the instant a developer goes from
 "is this worth my time?" to "oh wow, this is real."
 
-Load the "## Pass 1" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`
+Load the "## Pass 1" section from `product-role-dxlead/dx-hall-of-fame.md`
 for gold standard examples.
 
 Identify the most likely magical moment for this product type, then present delivery
@@ -468,7 +468,7 @@ If .product-build-stacks/learnings exists, inspect relevant recent notes before 
 Before starting review passes, check for prior DX reviews on this project:
 
 ```bash
-SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")"
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | tr -cs "[:alnum:]" "-" | tr "[:upper:]" "[:lower:]" | sed "s/^-//;s/-$//")"
 tail -n 20 .product-build-stacks/analytics/reviews.jsonl 2>/dev/null || true | grep product-role-dxlead || echo "NO_PRIOR_DX_REVIEWS"
 ```
 
@@ -488,7 +488,7 @@ Rate 0-10: Can a developer go from zero to hello world in under 5 minutes?
 magical moment from 0D (delivery vehicle), and any Install/Hello World friction
 points from 0F.
 
-Load reference: Read the "## Pass 1" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 1" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **Installation**: One command? One click? No prerequisites?
@@ -517,7 +517,7 @@ Rate 0-10: Is the interface intuitive, consistent, and complete?
 A YC founder expects `tool.do(thing)`. A platform engineer expects
 `tool.configure(options).execute(thing)`.
 
-Load reference: Read the "## Pass 2" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 2" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **Naming**: Guessable without docs? Consistent grammar?
@@ -541,7 +541,7 @@ and how to fix it?
 **Evidence recall:** Reference any error-related friction points from 0F and confusion
 points from 0G.
 
-Load reference: Read the "## Pass 3" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 3" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 **Trace 3 specific error paths** from the plan or codebase. For each, evaluate against
 the three-tier system from the Hall of Fame:
@@ -566,7 +566,7 @@ Rate 0-10: Can a developer find what they need and learn by doing?
 style? A YC founder needs copy-paste examples front and center. A platform engineer
 needs architecture docs and API reference.
 
-Load reference: Read the "## Pass 4" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 4" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **Information architecture**: Find what they need in under 2 minutes?
@@ -582,7 +582,7 @@ Evaluate:
 
 Rate 0-10: Can developers upgrade without fear?
 
-Load reference: Read the "## Pass 5" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 5" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **Backward compatibility**: What breaks? Blast radius limited?
@@ -600,7 +600,7 @@ Rate 0-10: Does this integrate into developers' existing workflows?
 **Evidence recall:** Does local dev setup work for [persona from 0A]'s typical
 environment?
 
-Load reference: Read the "## Pass 6" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 6" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **Editor integration**: Language server? Autocomplete? Inline docs?
@@ -618,7 +618,7 @@ Evaluate:
 
 Rate 0-10: Is there a community, and does the plan invest in ecosystem health?
 
-Load reference: Read the "## Pass 7" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 7" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **Open source**: Code open? Permissive license?
@@ -634,7 +634,7 @@ Evaluate:
 
 Rate 0-10: Does the plan include ways to measure and improve DX over time?
 
-Load reference: Read the "## Pass 8" section from `consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+Load reference: Read the "## Pass 8" section from `product-role-dxlead/dx-hall-of-fame.md`.
 
 Evaluate:
 - **TTHW tracking**: Can you measure getting started time? Is it instrumented?
@@ -652,7 +652,7 @@ Evaluate:
 This is NOT a scored pass. It's a checklist of proven patterns from product-stacks's own DX.
 
 Load reference: Read the "## Claude Code Skill DX Checklist" section from
-`consumer-installed product-build-stacks skill directory/product-role-dxlead/dx-hall-of-fame.md`.
+`product-role-dxlead/dx-hall-of-fame.md`.
 
 Check each item. For any unchecked item, explain what's missing and suggest the fix.
 

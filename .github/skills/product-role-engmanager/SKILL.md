@@ -37,7 +37,7 @@ MVP, screens, or architecture at length.
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/
@@ -91,7 +91,7 @@ When evaluating architecture, think "boring by default." When reviewing tests, t
 ### Design Doc Check
 ```bash
 setopt +o nomatch 2>/dev/null || true  # zsh compat
-SLUG=$(consumer-installed product-build-stacks skill directory/browse/bin/remote-slug 2>/dev/null || basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | tr -cs "[:alnum:]" "-" | tr "[:upper:]" "[:lower:]" | sed "s/^-//;s/-$//")"
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr '/' '-' || echo 'no-branch')
 DESIGN=$(ls -t .product-build-stacks/design-docs/$SLUG/*-$BRANCH-design-*.md 2>/dev/null | head -1)
 [ -z "$DESIGN" ] && DESIGN=$(ls -t .product-build-stacks/design-docs/$SLUG/*-design-*.md 2>/dev/null | head -1)
@@ -182,7 +182,7 @@ For each issue found in this section, call AskUserQuestion individually. One iss
 
 Map changed codepaths to tests. Flag happy path, failure path, edge case, and regression coverage gaps with file-level evidence.
 
-For LLM/prompt changes: check the "Prompt/LLM changes" file patterns listed in AGENTS.md or other host instruction files. If this plan touches ANY of those patterns, state which eval suites must be run, which cases should be added, and what baselines to compare against. Then use AskUserQuestion to confirm the eval scope with the user.
+For LLM/prompt changes: check the "Prompt/LLM changes" file patterns listed in README.md or project docs. If this plan touches ANY of those patterns, state which eval suites must be run, which cases should be added, and what baselines to compare against. Then use AskUserQuestion to confirm the eval scope with the user.
 
 For each issue found in this section, call AskUserQuestion individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one AskUserQuestion. Use the preamble's AskUserQuestion Format section. The AskUserQuestion call is a tool_use, not prose — call the tool directly. If no AskUserQuestion variant is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and ExitPlanMode; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
 

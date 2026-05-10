@@ -101,7 +101,7 @@ latest entry wins).
 
 ## Export
 
-Export learnings as markdown suitable for adding to AGENTS.md or other host instruction files or project documentation.
+Export learnings as markdown suitable for adding to README.md or project docs or project documentation.
 
 ```bash
 SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")"
@@ -126,7 +126,7 @@ Format the output as a markdown section:
 - **[key]**: [insight] (confidence: N/10)
 ```
 
-Present the formatted output to the user. Ask if they want to append it to AGENTS.md or other host instruction files
+Present the formatted output to the user. Ask if they want to append it to README.md or project docs
 or save it as a separate file.
 
 ---

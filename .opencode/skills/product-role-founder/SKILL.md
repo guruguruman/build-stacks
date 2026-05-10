@@ -160,12 +160,12 @@ git stash list                                 # Any stashed work
 grep -r "TODO\|FIXME\|HACK\|XXX" -l --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . | head -30
 git log --since=30.days --name-only --format="" | sort | uniq -c | sort -rn | head -20  # Recently touched files
 ```
-Then read AGENTS.md or other host instruction files, TODOS.md, and any existing architecture docs.
+Then read README.md or project docs, TODOS.md, and any existing architecture docs.
 
 **Design doc check:**
 ```bash
 setopt +o nomatch 2>/dev/null || true  # zsh compat
-SLUG=$(consumer-installed product-build-stacks skill directory/browse/bin/remote-slug 2>/dev/null || basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | tr -cs "[:alnum:]" "-" | tr "[:upper:]" "[:lower:]" | sed "s/^-//;s/-$//")"
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr '/' '-' || echo 'no-branch')
 DESIGN=$(ls -t .product-build-stacks/design-docs/$SLUG/*-$BRANCH-design-*.md 2>/dev/null | head -1)
 [ -z "$DESIGN" ] && DESIGN=$(ls -t .product-build-stacks/design-docs/$SLUG/*-design-*.md 2>/dev/null | head -1)
@@ -259,7 +259,7 @@ If .product-build-stacks/learnings exists, inspect relevant recent notes before 
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/
@@ -361,7 +361,7 @@ Both are outcome-framed. Only one makes the user feel the cathedral. Lead with t
 After the opt-in/cherry-pick ceremony, write the plan to disk so the vision and decisions survive beyond this conversation. Only run this step for EXPANSION and SELECTIVE EXPANSION modes.
 
 ```bash
-SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")" && mkdir -p .product-build-stacks/design-docs/$SLUG/ceo-plans
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | tr -cs "[:alnum:]" "-" | tr "[:upper:]" "[:lower:]" | sed "s/^-//;s/-$//")"
 ```
 
 Before writing, check for existing CEO plans in the ceo-plans/ directory. If any are >30 days old or their branch has been merged/deleted, offer to archive them:
@@ -616,7 +616,7 @@ Test pyramid check: Many unit, fewer integration, few E2E? Or inverted?
 Flakiness risk: Flag any test depending on time, randomness, external services, or ordering.
 Load/stress test requirements: For any new codepath called frequently or processing significant data.
 
-For LLM/prompt changes: Check AGENTS.md or other host instruction files for the "Prompt/LLM changes" file patterns. If this plan touches ANY of those patterns, state which eval suites must be run, which cases should be added, and what baselines to compare against.
+For LLM/prompt changes: Check README.md or project docs for the "Prompt/LLM changes" file patterns. If this plan touches ANY of those patterns, state which eval suites must be run, which cases should be added, and what baselines to compare against.
 **STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY. If this section turned up zero findings, state "No issues, moving on" and proceed. If the section has findings, you MUST call AskUserQuestion as a tool_use — a finding with an "obvious fix" is still a finding and still needs user approval before any change lands in the plan. Do NOT proceed until the user responds.
 **Reminder: Do NOT make any code changes. Review only.**
 
@@ -828,7 +828,7 @@ the review is complete and the context is no longer needed.
 
 ```bash
 setopt +o nomatch 2>/dev/null || true  # zsh compat
-SLUG="$(basename "$PWD" | tr -cs '[:alnum:]' '-' | tr '[:upper:]' '[:lower:]' | sed 's/^-//;s/-$//')"
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | tr -cs "[:alnum:]" "-" | tr "[:upper:]" "[:lower:]" | sed "s/^-//;s/-$//")"
 PRODUCT_STATE_ROOT=".product-build-stacks"
 mkdir -p "$PRODUCT_STATE_ROOT/design-docs/$SLUG" "$PRODUCT_STATE_ROOT/sessions" "$PRODUCT_STATE_ROOT/learnings"
 echo "$SLUG"

@@ -10,11 +10,17 @@ Adapted for product-stacks: public product-* names, APM source boundaries, and r
 
 # product-guard-destructive
 
-# product-guard-destructive — Destructive Command Guardrails
+# product-guard-destructive — Destructive Command Review
 
-Safety mode is now **active**. Every bash command will be checked for destructive
-patterns before running. If a destructive command is detected, you'll be warned
-and can choose to proceed or cancel.
+This skill reviews destructive or high-risk operations and gives the assistant a
+strict approval posture. It does **not** claim that shell commands are automatically
+blocked unless the current host has explicitly wired the bundled hook script.
+
+If host hook integration is active, the bundled `bin/check-careful.sh` script can
+return `permissionDecision: "ask"` for matching commands. If no hook integration is
+active, treat this as an advisory guard: inspect commands before running them, ask
+for explicit approval when they match the protected patterns, and report that
+runtime enforcement is `report_only`.
 
 ```bash
 mkdir -p .product-build-stacks/analytics
@@ -39,10 +45,19 @@ echo '{"skill":"product-guard-destructive","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)
 These patterns are allowed without warning:
 - `rm -rf node_modules` / `.next` / `dist` / `__pycache__` / `.cache` / `build` / `.turbo` / `coverage`
 
-## How it works
+## How to apply
 
-The hook reads the command from the tool input JSON, checks it against the
-patterns above, and returns `permissionDecision: "ask"` with a warning message
-if a match is found. You can always override the warning and proceed.
+1. Check every proposed shell command against the protected patterns above.
+2. If a command matches, stop and ask the user for explicit approval before
+   running it.
+3. If the command is a safe exception, state why it is safe and proceed.
+4. If the host has active hook integration, cite the hook result.
+5. If no hook integration is active, do not imply automatic blocking occurred.
 
-To deactivate, end the conversation or start a new one. Hooks are session-scoped.
+## Output Contract
+
+- destructive_guard: `enforced` when host hook integration actually ran, otherwise `report_only`.
+- findings: matched risky commands or safe exceptions.
+- decisions: commands approved, skipped, or requiring user approval.
+- evidence: command text, hook result if any, and state file paths used.
+- next handoff: safest next command or approval needed.

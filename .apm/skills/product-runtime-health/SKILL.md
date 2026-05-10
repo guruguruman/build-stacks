@@ -38,7 +38,7 @@ When the user types `/health`, run this skill.
 
 ## Step 1: Detect Health Stack
 
-Read AGENTS.md or other host instruction files and look for a `## Health Stack` section. If found, parse the tools
+Read `.product-build-stacks/config/health-stack.md` and look for a `## Health Stack` section. If found, parse the tools
 listed there and skip auto-detection.
 
 If no `## Health Stack` section exists, auto-detect available tools:
@@ -86,12 +86,16 @@ After auto-detection, present the detected tools via AskUserQuestion:
 - Dead code: `knip`
 - Shell lint: `shellcheck *.sh`
 
-A) Looks right -- persist to AGENTS.md or other host instruction files and continue
+A) Looks right -- persist to `.product-build-stacks/config/health-stack.md` and continue
 B) I need to adjust some tools (tell me which)
 C) Skip persistence -- just run these"
 
 If the user chooses A or B (after adjustments), append or update a `## Health Stack`
-section in AGENTS.md or other host instruction files:
+section in `.product-build-stacks/config/health-stack.md`:
+
+```bash
+mkdir -p .product-build-stacks/config
+```
 
 ```markdown
 ## Health Stack
@@ -315,7 +319,7 @@ Rank by `weight * (10 - score)` descending. Only show categories below 10.
 
 1. **Wrap, don't replace.** Run the project's own tools. Never substitute your own analysis for what the tool reports.
 2. **Read-only.** Never fix issues. Present the dashboard and let the user decide.
-3. **Respect AGENTS.md or other host instruction files.** If `## Health Stack` is configured, use those exact commands. Do not second-guess.
+3. **Respect `.product-build-stacks/config/health-stack.md`.** If `## Health Stack` is configured, use those exact commands. Do not second-guess.
 4. **Skipped is not failed.** If a tool isn't available, skip it gracefully and redistribute weight. Do not penalize the score.
 5. **Show raw output for failures.** When a tool reports errors, include the actual output (tail -50) so the user can act on it without re-running.
 6. **Trends require history.** On first run, say "First health check -- no trend data yet. Run /health again after making changes to track progress."

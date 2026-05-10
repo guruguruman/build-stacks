@@ -35,7 +35,7 @@ The `position != null` filter on line-level comments automatically skips outdate
 Derive the project-specific history path:
 ```bash
 REMOTE_SLUG=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
-PROJECT_HISTORY="$HOME/.product-build-stacks/design-docs/$REMOTE_SLUG/greptile-history.md"
+PROJECT_HISTORY=".product-build-stacks/design-docs/$REMOTE_SLUG/greptile-history.md"
 ```
 
 Read `$PROJECT_HISTORY` if it exists (per-project suppressions). Each line records a previous triage outcome:
@@ -184,7 +184,7 @@ When classifying comments, also assess whether Greptile's implied severity match
 Before writing, ensure both directories exist:
 ```bash
 REMOTE_SLUG=$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")
-mkdir -p "$HOME/.product-build-stacks/design-docs/$REMOTE_SLUG"
+mkdir -p ".product-build-stacks/design-docs/$REMOTE_SLUG"
 mkdir -p .product-build-stacks
 ```
 

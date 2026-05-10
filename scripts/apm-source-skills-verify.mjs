@@ -48,7 +48,7 @@ function checkAuthoredSkillDocument(skillName) {
         "~/.claude/skills/" + "product-stacks",
         ".claude/skills/" + "product-stacks",
         "~/" + ".gstack",
-        "consumer-installed product-build-stacks skill directory/bin",
+        "consumer-installed product-build-stacks " + "skill directory/" + "bin",
         "product-stacks-config",
         "product-stacks-update-check",
         "product-stacks-model-benchmark"

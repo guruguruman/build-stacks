@@ -10,10 +10,16 @@ Adapted for product-stacks: public product-* names, APM source boundaries, and r
 
 # product-guard-scope
 
-# product-guard-scope — Restrict Edits to a Directory
+# product-guard-scope — Scope Boundary Review
 
-Lock file edits to a specific directory. Any Edit or Write operation targeting
-a file outside the allowed path will be **blocked** (not just warned).
+Record a repo-local scope boundary and use it to review planned edits. This skill
+does **not** claim edits are automatically blocked unless the current host has
+explicitly wired the bundled `bin/check-freeze.sh` hook.
+
+If host hook integration is active, edits outside the boundary can be denied by
+the bundled check script. If no hook integration is active, treat the boundary as
+advisory: compare intended file changes to the frozen path, ask before editing
+outside it, and report runtime enforcement as `report_only`.
 
 ```bash
 mkdir -p .product-build-stacks/analytics
@@ -22,9 +28,9 @@ echo '{"skill":"product-guard-scope","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","re
 
 ## Setup
 
-Ask the user which directory to restrict edits to. Use AskUserQuestion:
+Ask the user which directory to use as the scope boundary. Use AskUserQuestion:
 
-- Question: "Which directory should I restrict edits to? Files outside this path will be blocked from editing."
+- Question: "Which directory should I treat as the approved edit scope? I will ask before editing outside it."
 - Text input (not multiple choice) — the user types a path.
 
 Once the user provides a directory path:
@@ -45,22 +51,34 @@ echo "$FREEZE_DIR" > "$STATE_DIR/freeze-dir.txt"
 echo "Freeze boundary set: $FREEZE_DIR"
 ```
 
-Tell the user: "Edits are now restricted to `<path>/`. Any Edit or Write
-outside this directory will be blocked. To change the boundary, run `product-guard-scope`
-again. To remove it, run `product-guard-scope-release` or end the session."
+Tell the user: "Scope boundary recorded: `<path>/`. I will keep edits inside this
+path unless you approve an expansion. If host hook integration is active, the
+bundled hook can enforce the boundary; otherwise this is an advisory guard. To
+change the boundary, run `product-guard-scope` again. To remove it, run
+`product-guard-scope-release`."
 
-## How it works
+## How to apply
 
-The hook reads `file_path` from the Edit/Write tool input JSON, then checks
-whether the path starts with the freeze directory. If not, it returns
-`permissionDecision: "deny"` to block the operation.
+Before editing, compare each intended file path with the recorded boundary. If a
+path is outside the boundary, ask the user before editing it. If host hook
+integration is active, cite the hook result. If no hook integration is active,
+do not imply automatic blocking occurred.
 
-The freeze boundary persists for the session via the state file. The hook
-script reads it on every Edit/Write invocation.
+The boundary persists as a repo-local state file. The bundled hook script can read
+that state only in hosts that wire it into Edit/Write checks.
 
 ## Notes
 
 - The trailing `/` on the freeze directory prevents `/src` from matching `/src-old`
-- Freeze applies to Edit and Write tools only — Read, Bash, Glob, Grep are unaffected
-- This prevents accidental edits, not a security boundary — Bash commands like `sed` can still modify files outside the boundary
-- To deactivate, run `product-guard-scope-release` or end the conversation
+- This prevents accidental scope drift, not a security boundary.
+- Bash commands, formatters, generators, and external tools can still modify files
+  outside the boundary unless separately constrained.
+- To deactivate, run `product-guard-scope-release`.
+
+## Output Contract
+
+- scope_guard: `enforced` when host hook integration actually ran, otherwise `report_only`.
+- approved_scope: recorded path.
+- findings: paths inside and outside scope.
+- decisions: allowed edits, blocked-by-user edits, or approvals needed.
+- next handoff: scope change or release command if needed.

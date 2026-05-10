@@ -24,7 +24,7 @@ Adapted for product-stacks: public product-* names, APM source boundaries, and r
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/
@@ -103,7 +103,7 @@ grep -q "laravel" composer.json 2>/dev/null && echo "FRAMEWORK: Laravel"
 **Soft gate, not hard gate:** Stack detection determines scan PRIORITY, not scan SCOPE. In subsequent phases, PRIORITIZE scanning for detected languages/frameworks first and most thoroughly. However, do NOT skip undetected languages entirely — after the targeted scan, run a brief catch-all pass with high-signal patterns (SQL injection, command injection, hardcoded secrets, SSRF) across ALL file types. A Python service nested in `ml/` that wasn't detected at root still gets basic coverage.
 
 **Mental model:**
-- Read AGENTS.md or other host instruction files, README, key config files
+- Read README.md or project docs, README, key config files
 - Map the application architecture: what components exist, how they connect, where trust boundaries are
 - Identify the data flow: where does user input enter? Where does it exit? What transformations happen?
 - Document invariants and assumptions the code relies on

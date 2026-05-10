@@ -10,14 +10,15 @@ Adapted for product-stacks: public product-* names, APM source boundaries, and r
 
 # product-guard-full
 
-# product-guard-full — Full Safety Mode
+# product-guard-full — Full Guard Review
 
-Activates both destructive command warnings and directory-scoped edit restrictions.
-This is the combination of `product-guard-destructive` + `product-guard-scope` in a single command.
+Apply both destructive-operation review and scope-boundary review in one workflow.
+This is the combination of `product-guard-destructive` + `product-guard-scope`.
 
-**Dependency note:** This skill references hook scripts from the sibling `product-guard-destructive`
-and `product-guard-scope` skill directories. Both must be installed (they are installed together
-by the product-stacks setup script).
+**Runtime truth:** This skill does not claim automatic command/edit blocking unless
+the current host has explicitly wired the bundled guard hook scripts. Without host
+hook integration, it is an advisory guard that requires the assistant to ask before
+destructive commands or out-of-scope edits.
 
 ```bash
 mkdir -p .product-build-stacks/analytics
@@ -26,9 +27,9 @@ echo '{"skill":"guard","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basena
 
 ## Setup
 
-Ask the user which directory to restrict edits to. Use AskUserQuestion:
+Ask the user which directory to use as the approved edit scope. Use AskUserQuestion:
 
-- Question: "Guard mode: which directory should edits be restricted to? Destructive command warnings are always on. Files outside the chosen path will be blocked from editing."
+- Question: "Which directory should I treat as the approved edit scope? I will ask before destructive commands and before editing outside it."
 - Text input (not multiple choice) — the user types a path.
 
 Once the user provides a directory path:
@@ -50,12 +51,21 @@ echo "Freeze boundary set: $FREEZE_DIR"
 ```
 
 Tell the user:
-- "**Guard mode active.** Two protections are now running:"
-- "1. **Destructive command warnings** — rm -rf, DROP TABLE, force-push, etc. will warn before executing (you can override)"
-- "2. **Edit boundary** — file edits restricted to `<path>/`. Edits outside this directory are blocked."
-- "To remove the edit boundary, run `product-guard-scope-release`. To deactivate everything, end the session."
+- "**Guard review active.** Two review rules are now in effect:"
+- "1. **Destructive command review** — I will ask before rm -rf, DROP TABLE, force-push, deploys, and similar operations."
+- "2. **Scope boundary review** — approved scope is `<path>/`; I will ask before editing outside it."
+- "If host hook integration is active, bundled hooks may enforce these checks. Otherwise enforcement is advisory/report-only."
+- "To remove the edit boundary, run `product-guard-scope-release`."
 
 ## What's protected
 
 See `product-guard-destructive` for the full list of destructive command patterns and safe exceptions.
 See `product-guard-scope` for how edit boundary enforcement works.
+
+## Output Contract
+
+- full_guard: `enforced` when host hook integration actually ran, otherwise `report_only`.
+- approved_scope: recorded path.
+- destructive_findings: risky commands or safe exceptions.
+- scope_findings: paths inside and outside scope.
+- next handoff: approval needed, scope release, or safe next command.

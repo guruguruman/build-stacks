@@ -12,7 +12,9 @@ Adapted for product-stacks: public product-* names, APM source boundaries, and r
 
 # product-guard-scope-release — Clear Freeze Boundary
 
-Remove the edit restriction set by `product-guard-scope`, allowing edits to all directories.
+Remove the repo-local scope boundary recorded by `product-guard-scope`. This clears
+the state used by advisory checks and by any host hook integration that reads the
+bundled freeze state file.
 
 ```bash
 mkdir -p .product-build-stacks/analytics
@@ -33,6 +35,6 @@ else
 fi
 ```
 
-Tell the user the result. Note that `product-guard-scope` hooks are still registered for the
-session — they will just allow everything since no state file exists. To re-freeze,
-run `product-guard-scope` again.
+Tell the user the result. Do not claim hooks are registered unless the current host
+has confirmed hook integration. To record a new boundary, run `product-guard-scope`
+again.

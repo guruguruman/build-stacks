@@ -35,7 +35,7 @@ If unavailable, use main as a working assumption and state the assumption.
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/
@@ -197,7 +197,7 @@ Evals are mandatory when prompt-related files change. Skip this step entirely if
 git diff origin/<base> --name-only
 ```
 
-Match against these patterns (from AGENTS.md or other host instruction files):
+Match against these patterns (from README.md or project docs):
 - `app/services/*_prompt_builder.rb`
 - `app/services/*_generation_service.rb`, `*_writer_service.rb`, `*_designer_service.rb`
 - `app/services/*_evaluator.rb`, `*_scorer.rb`, `*_classifier_service.rb`, `*_analyzer.rb`
@@ -792,10 +792,10 @@ git push -u origin <branch-name>
 
 **Subagent prompt:**
 
-> You are executing the /document-release workflow after a code push. Read the full skill file `${HOME}/APM-installed product-build-stacks output/document-release/SKILL.md` and execute its complete workflow end-to-end, including CHANGELOG clobber protection, doc exclusions, risky-change gates, and named staging. Do NOT attempt to edit the PR body — no PR exists yet. Branch: `<branch>`, base: `<base>`.
+> You are executing the /document-release workflow after a code push. Read the full skill file `product-role-docengineer/SKILL.md` and execute its complete workflow end-to-end, including CHANGELOG clobber protection, doc exclusions, risky-change gates, and named staging. Do NOT attempt to edit the PR body — no PR exists yet. Branch: `<branch>`, base: `<base>`.
 >
 > After completing the workflow, output a single JSON object on the LAST LINE of your response (no other text after it):
-> `{"files_updated":["README.md","AGENTS.md or other host instruction files",...],"commit_sha":"abc1234","pushed":true,"documentation_section":"<markdown block for PR body's ## Documentation section>"}`
+> `{"files_updated":["README.md","README.md or project docs",...],"commit_sha":"abc1234","pushed":true,"documentation_section":"<markdown block for PR body's ## Documentation section>"}`
 >
 > If no documentation files needed updating, output:
 > `{"files_updated":[],"commit_sha":null,"pushed":false,"documentation_section":null}`
@@ -830,7 +830,13 @@ If an **open** PR/MR already exists: **update** the PR body using `gh pr edit --
 **Always update the PR title to start with `v$NEW_VERSION`.** PR titles use the workspace-aware format `v<NEW_VERSION> <type>: <summary>` — version ALWAYS first, no exceptions, no "custom title kept intentionally" escape hatch. Use the inline rewrite rule in this step; no external helper is required.
 
 1. Read the current title: `CURRENT=$(gh pr view --json title -q .title)` (or `glab mr view -F json | jq -r .title`).
-2. Compute the corrected title: `NEW_TITLE="v 20 20 12 61 79 80 81 98 33 100 204 250 395 398 399 400 701printf "%s" "" | sed -E "s|^v[0-9]+(\.[0-9]+){2,3}[[:space:]-]*||")"`. The helper handles three cases: title already correct (no-op), title has a different `v<X.Y.Z.W>` prefix (replace it), or title has no version prefix (prepend one).
+2. Compute the corrected title:
+   ```bash
+   TITLE_BODY=$(printf "%s" "$CURRENT" | sed -E 's|^v[0-9]+(\.[0-9]+){2,3}[[:space:]-]*||')
+   TITLE_BODY="${TITLE_BODY:-<type>: <summary>}"
+   NEW_TITLE="v${NEW_VERSION} ${TITLE_BODY}"
+   ```
+   This handles three cases: title already correct (no-op), title has a different `v<X.Y.Z.W>` prefix (replace it), or title has no version prefix (prepend one).
 3. If `NEW_TITLE` differs from `CURRENT`, run `gh pr edit --title "$NEW_TITLE"` (or `glab mr update -t "$NEW_TITLE"`).
 4. **Self-check:** re-fetch the title and assert it starts with `v$NEW_VERSION `. If it does not, retry the edit once. If still wrong, surface the failure to the user.
 

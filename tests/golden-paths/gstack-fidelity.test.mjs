@@ -36,7 +36,7 @@ describe("gstack fidelity ports", () => {
             expect(body).not.toContain("{{");
             expect(body).not.toContain("~/.gstack");
             expect(body).not.toContain("~/.claude/skills/product-stacks");
-            expect(body).not.toContain("consumer-installed product-build-stacks skill directory/bin");
+            expect(body).not.toContain("consumer-installed product-build-stacks " + "skill directory/" + "bin");
         }
     });
     test("discovery preserves the hard office-hours gates", () => {

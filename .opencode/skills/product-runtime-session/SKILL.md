@@ -35,16 +35,17 @@ can resume without losing a beat via `product-runtime-session`.
 
 ## Detect command
 
-Parse the user's input to determine the mode:
+Parse the user's input to determine the mode. Modes are explicit so save and
+restore never conflict:
 
-- `product-runtime-session` or `product-runtime-session <title>` → **Save**
-- `product-runtime-session list` → **List**
+- `product-runtime-session save [title]` → **Save**
+- `product-runtime-session list [--all]` → **List**
+- `product-runtime-session restore [title-fragment-or-number]` → **Restore**
+- `product-runtime-session resume [title-fragment-or-number]` → **Restore** alias
+- `product-runtime-session` → show the modes above and stop. Do not save or restore.
 
-If the user provides a title after the command (e.g., `product-runtime-session auth refactor`),
+If the user provides a title after `save` (e.g., `product-runtime-session save auth refactor`),
 use it as the title. Otherwise, infer a title from the current work.
-
-If the user types `product-runtime-session resume` or `product-runtime-session restore`, tell them:
-"Use `product-runtime-session` instead — save and restore are separate skills now."
 
 ---
 
@@ -196,7 +197,7 @@ Modified: {N} files
 Duration: {duration or "unknown"}
 ════════════════════════════════════════
 
-Restore later with product-runtime-session.
+Restore later with `product-runtime-session restore`.
 ```
 
 ---
@@ -260,7 +261,7 @@ SAVED CONTEXTS (all branches)
 ```
 
 If there are no saved contexts, tell the user: "No saved contexts yet. Run
-`product-runtime-session` to save your current working state."
+`product-runtime-session save` to save your current working state."
 
 ---
 
@@ -273,9 +274,8 @@ If there are no saved contexts, tell the user: "No saved contexts yet. Run
   save creates a new file.
 - **Infer, don't interrogate.** Use git state and conversation context to fill in
   the file. Only use AskUserQuestion if the title genuinely cannot be inferred.
-- **This is a product-stacks skill, not a Claude Code built-in.** When the user types
-  `product-runtime-session`, invoke this skill via the Skill tool. The old `/checkpoint`
-  name collided with Claude Code's native `/rewind` alias — the rename fixed that.
+- **This is a product-stacks skill.** Use explicit `save`, `list`, or `restore`
+  modes. The old no-argument save/restore behavior was ambiguous and is no longer used.
 
 ## Upstream context-restore Workflow
 
@@ -298,13 +298,13 @@ context and present it clearly so the user can resume work without losing a beat
 **HARD GATE:** Do NOT implement code changes. This skill only reads saved
 context files and presents the summary.
 
-**Default: load the most recent saved context across ALL branches.** This is
-intentionally different from `product-runtime-session list`, which defaults to the current
-branch. `product-runtime-session` is for Conductor workspace handoff — a context saved
-on one branch can be resumed from another.
+For `product-runtime-session restore` with no selector, load the most recent saved
+context across ALL branches. This is intentionally different from
+`product-runtime-session list`, which defaults to the current branch. Restore mode
+is for workspace handoff — a context saved on one branch can be resumed from another.
 
-**Do NOT filter the candidate set by current branch.** The `list` flow does
-that; `product-runtime-session` does not.
+**Do NOT filter the restore candidate set by current branch.** The `list` flow
+does that; restore mode does not.
 
 ---
 
@@ -312,10 +312,12 @@ that; `product-runtime-session` does not.
 
 Parse the user's input:
 
-- `product-runtime-session` → load the most recent saved context (any branch)
-- `product-runtime-session <title-fragment-or-number>` → load a specific saved context
-- `product-runtime-session list` → tell the user "Use `product-runtime-session list` — listing
-  lives on the save side" and exit. No mode detection here.
+- `product-runtime-session restore` → load the most recent saved context (any branch)
+- `product-runtime-session restore <title-fragment-or-number>` → load a specific saved context
+- `product-runtime-session resume [title-fragment-or-number]` → same as restore
+- `product-runtime-session list` → use the list flow above.
+- `product-runtime-session save [title]` → use the save flow above.
+- `product-runtime-session` → show the explicit modes and stop. Do not save or restore.
 
 ---
 
@@ -402,8 +404,8 @@ If A, summarize the first remaining work item and suggest starting there.
 
 If Step 1 printed `NO_CHECKPOINTS`, tell the user:
 
-"No saved contexts yet. Run `product-runtime-session` first to save your current working
-state, then `product-runtime-session` will find it."
+"No saved contexts yet. Run `product-runtime-session save` first to save your current
+working state, then `product-runtime-session restore` will find it."
 
 ---
 
@@ -416,5 +418,5 @@ state, then `product-runtime-session` will find it."
 - **"Most recent" means the filename `YYYYMMDD-HHMMSS` prefix**, not
   `ls -1t` (filesystem mtime). Filenames are stable across file-system
   operations; mtime is not.
-- **This is a product-stacks skill, not a Claude Code built-in.** When the user types
-  `product-runtime-session`, invoke this skill via the Skill tool.
+- **This is a product-stacks skill.** Use explicit `save`, `list`, or `restore`
+  modes. No-argument `product-runtime-session` is help-only.

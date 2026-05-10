@@ -22,11 +22,11 @@ Adapted for product-stacks: public product-* names, APM source boundaries, and r
 
 # product-source-deploy — Configure Deployment for product-stacks
 
-You are helping the user configure their deployment so `/land-and-deploy` works
+You are helping the user configure their deployment so `product-recipe-landdeploy` works
 automatically. Your job is to detect the deploy platform, production URL, health
-checks, and deploy status commands — then persist everything to AGENTS.md or other host instruction files.
+checks, and deploy status commands — then persist the result in `.product-build-stacks/config/deploy.md`.
 
-After this runs once, `/land-and-deploy` reads AGENTS.md or other host instruction files and skips detection entirely.
+After this runs once, `product-recipe-landdeploy` reads `.product-build-stacks/config/deploy.md` and skips detection entirely.
 
 ## User-invocable
 When the user types `product-source-deploy`, run this skill.
@@ -36,12 +36,13 @@ When the user types `product-source-deploy`, run this skill.
 ### Step 1: Check existing configuration
 
 ```bash
-grep -A 20 "## Deploy Configuration" AGENTS.md or other host instruction files 2>/dev/null || echo "NO_CONFIG"
+DEPLOY_CONFIG=".product-build-stacks/config/deploy.md"
+test -f "$DEPLOY_CONFIG" && sed -n '1,220p' "$DEPLOY_CONFIG" || echo "NO_CONFIG"
 ```
 
 If configuration already exists, show it and ask:
 
-- **Context:** Deploy configuration already exists in AGENTS.md or other host instruction files.
+- **Context:** Deploy configuration already exists in `.product-build-stacks/config/deploy.md`.
 - **RECOMMENDATION:** Choose A to update if your setup changed.
 - A) Reconfigure from scratch (overwrite existing)
 - B) Edit specific fields (show current config, let me change one thing)
@@ -100,7 +101,7 @@ If `render.yaml` detected:
 5. Set health check: the inferred URL
 
 Ask the user to confirm. Render uses auto-deploy from the connected git branch — after
-merge to main, Render picks it up automatically. The "deploy wait" in /land-and-deploy
+merge to main, Render picks it up automatically. The "deploy wait" in product-recipe-landdeploy
 should poll the Render URL until it responds with the new version.
 
 #### Vercel
@@ -155,8 +156,12 @@ Use AskUserQuestion to gather the information:
 
 ### Step 4: Write configuration
 
-Read AGENTS.md or other host instruction files (or create it). Find and replace the `## Deploy Configuration` section
-if it exists, or append it at the end.
+Create `.product-build-stacks/config/deploy.md` or replace its full contents.
+Do not edit generated install output.
+
+```bash
+mkdir -p .product-build-stacks/config
+```
 
 ```markdown
 ## Deploy Configuration (configured by product-source-deploy)
@@ -203,11 +208,11 @@ Health check:  {health check}
 Status cmd:    {status command}
 Merge method:  {merge method}
 
-Saved to AGENTS.md or other host instruction files. /land-and-deploy will use these settings automatically.
+Saved to `.product-build-stacks/config/deploy.md`. product-recipe-landdeploy will use these settings automatically.
 
 Next steps:
-- Run /land-and-deploy to merge and deploy your current PR
-- Edit the "## Deploy Configuration" section in AGENTS.md or other host instruction files to change settings
+- Run product-recipe-landdeploy to merge and deploy your current PR
+- Edit `.product-build-stacks/config/deploy.md` to change settings
 - Run product-source-deploy again to reconfigure
 ```
 
@@ -215,6 +220,6 @@ Next steps:
 
 - **Never expose secrets.** Don't print full API keys, tokens, or passwords.
 - **Confirm with the user.** Always show the detected config and ask for confirmation before writing.
-- **AGENTS.md or other host instruction files is the source of truth.** All configuration lives there — not in a separate config file.
+- **Repo-local config is the source of truth.** Deployment configuration lives in `.product-build-stacks/config/deploy.md`.
 - **Idempotent.** Running product-source-deploy multiple times overwrites the previous config cleanly.
 - **Platform CLIs are optional.** If `fly` or `vercel` CLI isn't installed, fall back to URL-based health checks.

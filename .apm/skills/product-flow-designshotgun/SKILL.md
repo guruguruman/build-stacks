@@ -156,7 +156,7 @@ Set up the output directory:
 
 ```bash
 SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")"
-_DESIGN_DIR="$HOME/.product-build-stacks/design-docs/$SLUG/designs/<screen-name>-$(date +%Y%m%d)"
+_DESIGN_DIR=".product-build-stacks/design-docs/$SLUG/designs/<screen-name>-$(date +%Y%m%d)"
 mkdir -p "$_DESIGN_DIR"
 echo "DESIGN_DIR: $_DESIGN_DIR"
 ```

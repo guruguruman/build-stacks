@@ -171,7 +171,7 @@ mkdir -p "$PRODUCT_STATE_ROOT/design-docs/$SLUG" "$PRODUCT_STATE_ROOT/sessions" 
 echo "$SLUG"
 BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr '/' '-')
 DATETIME=$(date +%Y%m%d-%H%M%S)
-echo "RESTORE_PATH=$HOME/.product-build-stacks/design-docs/$SLUG/${BRANCH}-autoplan-restore-${DATETIME}.md"
+echo "RESTORE_PATH=.product-build-stacks/design-docs/$SLUG/${BRANCH}-autoplan-restore-${DATETIME}.md"
 ```
 
 Write the plan file's full contents to the restore path with this header:
@@ -192,7 +192,7 @@ Then prepend a one-line HTML comment to the plan file:
 
 ### Step 2: Read context
 
-- Read AGENTS.md or other host instruction files, TODOS.md, git log -30, git diff against the base branch --stat
+- Read README.md or project docs, TODOS.md, git log -30, git diff against the base branch --stat
 - Discover design docs: `ls -t .product-build-stacks/design-docs/$SLUG/*-design-*.md 2>/dev/null | head -1`
 - Detect UI scope: grep the plan for view/rendering terms (component, screen, form,
   button, modal, layout, dashboard, sidebar, nav, dialog). Require 2+ matches. Exclude
@@ -209,10 +209,10 @@ Then prepend a one-line HTML comment to the plan file:
 ### Step 3: Load skill files from disk
 
 Read each file using the Read tool:
-- `consumer-installed product-build-stacks skill directory/product-role-founder/SKILL.md`
-- `consumer-installed product-build-stacks skill directory/product-role-designer/SKILL.md` (only if UI scope detected)
-- `consumer-installed product-build-stacks skill directory/product-role-engmanager/SKILL.md`
-- `consumer-installed product-build-stacks skill directory/product-role-dxlead/SKILL.md` (only if DX scope detected)
+- `product-role-founder/SKILL.md`
+- `product-role-designer/SKILL.md` (only if UI scope detected)
+- `product-role-engmanager/SKILL.md`
+- `product-role-dxlead/SKILL.md` (only if DX scope detected)
 
 **Section skip list — when following a loaded skill file, SKIP these sections
 (they are already handled by /autoplan):**

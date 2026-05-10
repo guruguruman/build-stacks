@@ -306,7 +306,7 @@ function adaptUpstreamTextForProductStacks(input, target) {
         [/\bGStack\b/g, "product-stacks"],
         [/\bgstack\b/g, "product-stacks"],
         [/\$B\b/g, "agent-browser"],
-        [/\bCLAUDE\.md\b/g, "AGENTS.md or other host instruction files"],
+        [/\bCLAUDE\.md\b/g, "README.md or project docs"],
         [/\u26A0\uFE0F/g, "WARNING:"]
     ];
     for (const [pattern, value] of replacements)
@@ -415,7 +415,7 @@ function renderProductKnowledgeLoadSection() {
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/

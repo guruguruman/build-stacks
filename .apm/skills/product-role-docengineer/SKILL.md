@@ -120,7 +120,7 @@ Read each documentation file and cross-reference it against the diff. Use these 
 - Are workflow descriptions (dev setup, operational learnings, etc.) current?
 - Flag anything that would fail or confuse a first-time contributor.
 
-**AGENTS.md or other host instruction files / project instructions:**
+**README.md / project docs:**
 - Does the project structure section match the actual file tree?
 - Are listed commands and scripts accurate?
 - Do build/test instructions match what's in package.json (or equivalent)?
@@ -202,11 +202,11 @@ preserved them. This skill must NEVER do that.
 
 After auditing each file individually, do a cross-doc consistency pass:
 
-1. Does the README's feature/capability list match what AGENTS.md or other host instruction files (or project instructions) describes?
+1. Does the README's feature/capability list match what README.md or project docs (or project instructions) describes?
 2. Does ARCHITECTURE's component list match CONTRIBUTING's project structure description?
 3. Does CHANGELOG's latest version match the VERSION file?
-4. **Discoverability:** Is every documentation file reachable from README.md or AGENTS.md or other host instruction files? If
-   ARCHITECTURE.md exists but neither README nor AGENTS.md or other host instruction files links to it, flag it. Every doc
+4. **Discoverability:** Is every documentation file reachable from README.md or README.md or project docs? If
+   ARCHITECTURE.md exists but neither README nor README.md or project docs links to it, flag it. Every doc
    should be discoverable from one of the two entry-point files.
 5. Flag any contradictions between documents. Auto-fix clear factual inconsistencies (e.g., a
    version mismatch). Use AskUserQuestion for narrative contradictions.
@@ -373,10 +373,13 @@ CURRENT_TITLE=$(glab mr view -F json 2>/dev/null | jq -r .title 2>/dev/null || t
 
 If `CURRENT_TITLE` is empty (no open PR/MR), skip with message "No PR/MR found — skipping title sync."
 
-3. Compute the corrected title using the shared helper (single source of truth — same one `product-recipe-ship` uses):
+3. Compute the corrected title using the same inline rule `product-recipe-ship` uses:
 
 ```bash
-NEW_TITLE="v 20 20 12 61 79 80 81 98 33 100 204 250 395 398 399 400 701printf "%s" "" | sed -E "s|^v[0-9]+(\.[0-9]+){2,3}[[:space:]-]*||")"
+VERSION_VALUE=$(tr -d '\r\n[:space:]' < VERSION)
+TITLE_BODY=$(printf "%s" "$CURRENT_TITLE" | sed -E 's|^v[0-9]+(\.[0-9]+){2,3}[[:space:]-]*||')
+TITLE_BODY="${TITLE_BODY:-release}"
+NEW_TITLE="v${VERSION_VALUE} ${TITLE_BODY}"
 ```
 
 The helper handles three cases: title already correct (no-op), title has a different `v<X.Y.Z.W>` prefix (replace it), or title has no version prefix (prepend one).
@@ -426,6 +429,6 @@ Where status is one of:
 - **Never bump VERSION silently.** Always ask. Even if already bumped, check whether it covers the full scope of changes.
 - **Be explicit about what changed.** Every edit gets a one-line summary.
 - **Generic heuristics, not project-specific.** The audit checks work on any repo.
-- **Discoverability matters.** Every doc file should be reachable from README or AGENTS.md or other host instruction files.
+- **Discoverability matters.** Every doc file should be reachable from README or README.md or project docs.
 - **Voice: friendly, user-forward, not obscure.** Write like you're explaining to a smart person
   who hasn't seen the code.

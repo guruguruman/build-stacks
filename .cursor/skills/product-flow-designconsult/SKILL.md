@@ -105,7 +105,7 @@ If `DESIGN_NOT_AVAILABLE`: Phase 5 falls back to the HTML preview page (still go
 
 Look for repo-local context only:
 
-- AGENTS.md, README.md, PLAN.md, ARCHTECTURE.md, and other host instruction files
+- README.md, PLAN.md, ARCHITECTURE.md, TODO docs, and repo-local project docs
 - .product-build-stacks/design-docs/
 - .product-build-stacks/sessions/
 - .product-build-stacks/learnings/
@@ -326,7 +326,7 @@ Generate AI-rendered mockups showing the proposed design system applied to reali
 
 ```bash
 SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")"
-_DESIGN_DIR="$HOME/.product-build-stacks/design-docs/$SLUG/designs/design-system-$(date +%Y%m%d)"
+_DESIGN_DIR=".product-build-stacks/design-docs/$SLUG/designs/design-system-$(date +%Y%m%d)"
 mkdir -p "$_DESIGN_DIR"
 echo "DESIGN_DIR: $_DESIGN_DIR"
 ```
@@ -476,7 +476,7 @@ If `$D extract` was used in Phase 5 (Path A), use the extracted tokens as the pr
 | [today] | Initial design system created | Created by /design-consultation based on [product context / research] |
 ```
 
-**Update AGENTS.md or other host instruction files** (or create it if it doesn't exist) — append this section:
+**Optionally write `.product-build-stacks/config/design-system.md`** with this guidance when the user wants durable repo-local runtime guidance. Do not edit generated install output:
 
 ```markdown
 ## Design System
@@ -489,7 +489,7 @@ In QA mode, flag any code that doesn't match DESIGN.md.
 **AskUserQuestion Q-final — show summary and confirm:**
 
 List all decisions. Flag any that used agent defaults without explicit user confirmation (the user should know what they're shipping). Options:
-- A) Ship it — write DESIGN.md and AGENTS.md or other host instruction files
+- A) Ship it — write DESIGN.md and `.product-build-stacks/config/design-system.md`
 - B) I want to change something (specify what)
 - C) Start over
 
