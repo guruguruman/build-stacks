@@ -1,6 +1,34 @@
 ---
 name: product-recipe-discovery
-description: Shape ambiguous product requests into a design doc using product-stacks forcing questions.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Shape ambiguous product requests into a design doc using forcing questions. This
+  end-to-end product-stacks workflow keeps product-* public interfaces, .apm source
+  guidance, and .product-build-stacks runtime evidence boundaries aligned.
+  Produces decisions, evidence paths, residual risk, and the next handoff for the full
+  workflow.
+  Use when asked to "recipe discovery", "discovery", "shape the idea", or when the
+  requested work matches product-recipe-discovery.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "discovery", "shape the idea", "product brief".
+benefits-from: [product-role-founder, product-flow-plantune]
+triggers:
+  - product-recipe-discovery
+  - recipe discovery
+  - discovery
+  - shape the idea
+  - product brief
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-recipe-discovery

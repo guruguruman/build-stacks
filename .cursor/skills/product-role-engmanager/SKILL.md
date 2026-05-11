@@ -1,6 +1,34 @@
 ---
 name: product-role-engmanager
-description: Engineering manager review for implementation plans, sequencing, risk, maintainability, delivery tradeoffs, and scope control.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Engineering manager review for sequencing, risk, maintainability, and scope control.
+  This review role workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role engmanager", "engineering manager review", "plan review", or
+  when the requested work matches product-role-engmanager.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "engineering manager review", "plan review", "delivery review".
+benefits-from: [product-flow-plantune, product-role-staffengineer]
+triggers:
+  - product-role-engmanager
+  - role engmanager
+  - engineering manager review
+  - plan review
+  - delivery review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-engmanager

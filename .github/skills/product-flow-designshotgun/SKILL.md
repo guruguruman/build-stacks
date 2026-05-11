@@ -1,6 +1,34 @@
 ---
 name: product-flow-designshotgun
-description: Generate and compare multiple design directions.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Generate and compare multiple design directions. This focused product-stacks flow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow designshotgun", "design shotgun", "multiple directions", or when
+  the requested work matches product-flow-designshotgun.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "design shotgun", "multiple directions", "design variants".
+benefits-from: [product-role-designer, product-flow-designhtml]
+triggers:
+  - product-flow-designshotgun
+  - flow designshotgun
+  - design shotgun
+  - multiple directions
+  - design variants
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-designshotgun

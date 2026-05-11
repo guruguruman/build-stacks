@@ -1,6 +1,34 @@
 ---
 name: product-browser-visible
-description: Open and inspect a visible official agent-browser session with product-stacks policy and recovery guidance.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Open a headed browser session for visual inspection. This browser evidence workflow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces browser_activation status, commands run, screenshots or snapshots when
+  available, findings, residual risk, and next handoff.
+  Use when asked to "browser visible", "visible browser", "headed browser", or when the
+  requested work matches product-browser-visible.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "visible browser", "headed browser", "watch browser".
+benefits-from: [product-browser-runner, product-browser-auth]
+triggers:
+  - product-browser-visible
+  - browser visible
+  - visible browser
+  - headed browser
+  - watch browser
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-browser-visible

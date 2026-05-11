@@ -1,6 +1,34 @@
 ---
 name: product-recipe-autoplan
-description: Create and harden implementation plans through the product-stacks review chain.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Create and harden implementation plans through founder, design, engineering, and DX
+  review. This end-to-end product-stacks workflow keeps product-* public interfaces, .apm
+  source guidance, and .product-build-stacks runtime evidence boundaries aligned.
+  Produces decisions, evidence paths, residual risk, and the next handoff for the full
+  workflow.
+  Use when asked to "recipe autoplan", "auto plan", "automatic review", or when the
+  requested work matches product-recipe-autoplan.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "auto plan", "automatic review", "plan review chain".
+benefits-from: [product-role-founder, product-role-designer, product-role-engmanager, product-role-dxlead]
+triggers:
+  - product-recipe-autoplan
+  - recipe autoplan
+  - auto plan
+  - automatic review
+  - plan review chain
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-recipe-autoplan

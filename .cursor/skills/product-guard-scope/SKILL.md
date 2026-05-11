@@ -1,6 +1,34 @@
 ---
 name: product-guard-scope
-description: Freeze scope with a product-stacks guard file and command checks before implementation drift occurs.
+preamble-tier: 1
+version: 1.0.0
+description: |
+  Lock edit scope and report drift. This product-stacks guard workflow keeps product-*
+  public interfaces, .apm source guidance, and .product-build-stacks runtime evidence
+  boundaries aligned.
+  Produces guard status, protected actions found, approval decisions, evidence, residual
+  risk, and next handoff.
+  Use when asked to "guard scope", "scope guard", "freeze scope", or when the requested
+  work matches product-guard-scope.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "scope guard", "freeze scope", "lock edits".
+benefits-from: [product-guard-full, product-guard-scope-release]
+triggers:
+  - product-guard-scope
+  - guard scope
+  - scope guard
+  - freeze scope
+  - lock edits
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-guard-scope

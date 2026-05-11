@@ -1,6 +1,34 @@
 ---
 name: product-guard-scope-release
-description: Release a scope freeze only after the product-stacks checks and user approval are satisfied.
+preamble-tier: 1
+version: 1.0.0
+description: |
+  Release an active scope lock. This product-stacks guard workflow keeps product-* public
+  interfaces, .apm source guidance, and .product-build-stacks runtime evidence boundaries
+  aligned.
+  Produces guard status, protected actions found, approval decisions, evidence, residual
+  risk, and next handoff.
+  Use when asked to "guard scope release", "release scope", "unfreeze scope", or when the
+  requested work matches product-guard-scope-release.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "release scope", "unfreeze scope", "remove scope lock".
+benefits-from: [product-guard-scope]
+triggers:
+  - product-guard-scope-release
+  - guard scope release
+  - release scope
+  - unfreeze scope
+  - remove scope lock
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-guard-scope-release

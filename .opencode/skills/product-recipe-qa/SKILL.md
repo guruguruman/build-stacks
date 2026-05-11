@@ -1,6 +1,34 @@
 ---
 name: product-recipe-qa
-description: Run browser-centered QA, fix bugs, and re-verify with before/after evidence.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Run browser QA, fix issues, and re-verify with evidence. This end-to-end product-stacks
+  workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces decisions, evidence paths, residual risk, and the next handoff for the full
+  workflow.
+  Use when asked to "recipe qa", "run QA", "test and fix", or when the requested work
+  matches product-recipe-qa.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "run QA", "test and fix", "browser QA".
+benefits-from: [product-browser-qa, product-flow-qareport]
+triggers:
+  - product-recipe-qa
+  - recipe qa
+  - run QA
+  - test and fix
+  - browser QA
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-recipe-qa

@@ -14,13 +14,22 @@ const publicPackageScripts = {
     "release:verify": "node scripts/release-verify.mjs",
     test: "node --test"
 };
+const installedSkillRoots = [
+    ".agents/skills",
+    ".claude/skills",
+    ".cursor/skills",
+    ".github/skills",
+    ".opencode/skills"
+];
 checkNoRootSkillBundle();
 checkNoForbiddenPackageRoots();
 checkManifestShape();
 verifyBrowserRunnerSkillPolicy();
 checkReadmeConsumerInstallGuidance();
 verifyPublicPackageScripts();
+verifySourceSkillDocuments();
 verifyScriptNamingRules();
+verifyApmLockfileDeployedFiles();
 checkBrowserPolicyReferences();
 checkBrowserSkillSessionSetup();
 verifyPreparedPackageInstall();
@@ -173,6 +182,51 @@ function readApmYamlScripts() {
 }
 function verifyScriptNamingRules() {
     runComplianceCommand(["node", "scripts/script-names-verify.mjs"], ".");
+}
+function verifySourceSkillDocuments() {
+    runComplianceCommand(["node", "scripts/apm-source-skills-verify.mjs"], ".");
+}
+function verifyApmLockfileDeployedFiles() {
+    const path = "apm.lock.yaml";
+    const expected = collectInstalledSkillRoots().sort();
+    if (!existsSync(path)) {
+        if (expected.length === 0)
+            return;
+        apmPackageFailures.push(`missing ${path}`);
+        return;
+    }
+    const actual = readLockLocalDeployedFiles(path).sort();
+    if (actual.join("\n") !== expected.join("\n")) {
+        apmPackageFailures.push(`${path} local_deployed_files must match current installed skill roots:\nexpected=${expected.join(",")}\nactual=${actual.join(",")}`);
+    }
+}
+function collectInstalledSkillRoots() {
+    const roots = [];
+    for (const root of installedSkillRoots) {
+        if (!existsSync(root))
+            continue;
+        for (const entry of readdirSync(root, { withFileTypes: true })) {
+            if (entry.isDirectory() && existsSync(join(root, entry.name, "SKILL.md"))) {
+                roots.push(join(root, entry.name));
+            }
+        }
+    }
+    return roots;
+}
+function readLockLocalDeployedFiles(path) {
+    const lines = readFileSync(path, "utf8").split("\n");
+    const start = lines.findIndex((line) => line.trim() === "local_deployed_files:");
+    if (start === -1)
+        return [];
+    const values = [];
+    for (const line of lines.slice(start + 1)) {
+        if (!line.trim())
+            continue;
+        if (!line.startsWith("- "))
+            break;
+        values.push(line.slice(2).trim());
+    }
+    return values;
 }
 function checkBrowserPolicyReferences() {
     const files = [

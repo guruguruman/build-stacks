@@ -1,6 +1,34 @@
 ---
 name: product-runtime-upgrade
-description: Upgrade product-stacks with explicit migration boundaries.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Stack update and migration workflow. This repo-local runtime workflow keeps product-*
+  public interfaces, .apm source guidance, and .product-build-stacks runtime evidence
+  boundaries aligned.
+  Produces repo-local state or health evidence under .product-build-stacks when
+  appropriate, plus decisions, residual risk, and next handoff.
+  Use when asked to "runtime upgrade", "upgrade stack", "migration check", or when the
+  requested work matches product-runtime-upgrade.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "upgrade stack", "migration check", "update product stacks".
+benefits-from: [product-runtime-health, product-recipe-ship]
+triggers:
+  - product-runtime-upgrade
+  - runtime upgrade
+  - upgrade stack
+  - migration check
+  - update product stacks
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-runtime-upgrade

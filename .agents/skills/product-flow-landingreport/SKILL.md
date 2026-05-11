@@ -1,6 +1,34 @@
 ---
 name: product-flow-landingreport
-description: Review landing-page clarity, conversion, copy, proof, UX, and evidence with a product-stacks report.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Review landing pages and launch readiness. This focused product-stacks flow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow landingreport", "landing report", "conversion review", or when
+  the requested work matches product-flow-landingreport.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "landing report", "conversion review", "landing page review".
+benefits-from: [product-role-founder, product-browser-runner]
+triggers:
+  - product-flow-landingreport
+  - flow landingreport
+  - landing report
+  - conversion review
+  - landing page review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-landingreport

@@ -1,6 +1,33 @@
 ---
 name: product-browser-canary
-description: Run a browser canary pass that exercises a deployed or local surface and reports launch-blocking evidence.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Post-deploy browser canary monitoring. This browser evidence workflow keeps product-*
+  public interfaces, .apm source guidance, and .product-build-stacks runtime evidence
+  boundaries aligned.
+  Produces browser_activation status, commands run, screenshots or snapshots when
+  available, findings, residual risk, and next handoff.
+  Use when asked to "browser canary", "post deploy canary", "launch check", or when the
+  requested work matches product-browser-canary.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "browser canary", "post deploy canary", "launch check".
+benefits-from: [product-browser-runner, product-role-releaseengineer]
+triggers:
+  - product-browser-canary
+  - browser canary
+  - post deploy canary
+  - launch check
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-browser-canary

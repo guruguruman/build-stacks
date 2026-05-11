@@ -1,6 +1,34 @@
 ---
 name: product-recipe-landdeploy
-description: Merge, deploy, and verify production only after explicit approval.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Merge, deploy, and verify production only with explicit approval. This end-to-end
+  product-stacks workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces decisions, evidence paths, residual risk, and the next handoff for the full
+  workflow.
+  Use when asked to "recipe landdeploy", "land deploy", "merge and deploy", or when the
+  requested work matches product-recipe-landdeploy.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "land deploy", "merge and deploy", "ship to production".
+benefits-from: [product-role-releaseengineer, product-browser-canary, product-guard-destructive]
+triggers:
+  - product-recipe-landdeploy
+  - recipe landdeploy
+  - land deploy
+  - merge and deploy
+  - ship to production
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-recipe-landdeploy

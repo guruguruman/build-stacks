@@ -1,6 +1,34 @@
 ---
 name: product-flow-skillify
-description: Convert repeated product-stacks work into reviewed skill candidates.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Turn repeated work into reviewed skill candidates. This focused product-stacks flow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow skillify", "skillify", "make a skill", or when the requested
+  work matches product-flow-skillify.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "skillify", "make a skill", "workflow skill".
+benefits-from: [product-role-dxlead, product-role-staffengineer]
+triggers:
+  - product-flow-skillify
+  - flow skillify
+  - skillify
+  - make a skill
+  - workflow skill
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-skillify

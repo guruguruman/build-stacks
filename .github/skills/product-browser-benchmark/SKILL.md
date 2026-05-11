@@ -1,6 +1,33 @@
 ---
 name: product-browser-benchmark
-description: Benchmark rendered product flows with browser evidence, available timings, and repeatable output artifacts.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Browser performance benchmark and web vitals evidence. This browser evidence workflow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces browser_activation status, commands run, screenshots or snapshots when
+  available, findings, residual risk, and next handoff.
+  Use when asked to "browser benchmark", "performance evidence", "web vitals", or when the
+  requested work matches product-browser-benchmark.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "browser benchmark", "performance evidence", "web vitals".
+benefits-from: [product-browser-runner, product-browser-canary]
+triggers:
+  - product-browser-benchmark
+  - browser benchmark
+  - performance evidence
+  - web vitals
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-browser-benchmark

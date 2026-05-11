@@ -1,6 +1,34 @@
 ---
 name: product-flow-plantune
-description: Tune plan scope, ordering, omissions, decisions, and handoffs.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Tune plan scope, ordering, omissions, and handoffs. This focused product-stacks flow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow plantune", "tune the plan", "plan tuning", or when the requested
+  work matches product-flow-plantune.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "tune the plan", "plan tuning", "scope review".
+benefits-from: [product-role-engmanager, product-role-founder]
+triggers:
+  - product-flow-plantune
+  - flow plantune
+  - tune the plan
+  - plan tuning
+  - scope review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-plantune

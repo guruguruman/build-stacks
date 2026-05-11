@@ -1,6 +1,34 @@
 ---
 name: product-runtime-learnings
-description: Capture durable repo-local learnings and retrieve them before repeating investigations.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Record learning candidates for review and promotion. This repo-local runtime workflow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces repo-local state or health evidence under .product-build-stacks when
+  appropriate, plus decisions, residual risk, and next handoff.
+  Use when asked to "runtime learnings", "record learning", "retrieve learning", or when
+  the requested work matches product-runtime-learnings.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "record learning", "retrieve learning", "repo memory".
+benefits-from: [product-recipe-investigate, product-runtime-session]
+triggers:
+  - product-runtime-learnings
+  - runtime learnings
+  - record learning
+  - retrieve learning
+  - repo memory
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-runtime-learnings

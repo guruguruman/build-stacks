@@ -1,6 +1,34 @@
 ---
 name: product-browser-pairagent
-description: Prepare browser QA handoff packets for pair-agent or human collaboration.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Browser QA handoff packets for pair-agent collaboration. This browser evidence workflow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces browser_activation status, commands run, screenshots or snapshots when
+  available, findings, residual risk, and next handoff.
+  Use when asked to "browser pairagent", "pair agent handoff", "browser QA packet", or
+  when the requested work matches product-browser-pairagent.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "pair agent handoff", "browser QA packet", "handoff packet".
+benefits-from: [product-browser-runner, product-flow-qareport]
+triggers:
+  - product-browser-pairagent
+  - browser pairagent
+  - pair agent handoff
+  - browser QA packet
+  - handoff packet
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-browser-pairagent

@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-05-03T17:25:58.838151+00:00'
+generated_at: '2026-05-11T00:00:00.000000+00:00'
 dependencies: []
 local_deployed_files:
 - .agents/skills/product-browser-auth
@@ -10,32 +10,23 @@ local_deployed_files:
 - .agents/skills/product-browser-runner
 - .agents/skills/product-browser-scrape
 - .agents/skills/product-browser-visible
-- .agents/skills/product-flow-ceoreview
-- .agents/skills/product-flow-codereview
 - .agents/skills/product-flow-designconsult
 - .agents/skills/product-flow-designhtml
-- .agents/skills/product-flow-designreview
 - .agents/skills/product-flow-designshotgun
-- .agents/skills/product-flow-devexreview
-- .agents/skills/product-flow-docrelease
-- .agents/skills/product-flow-engreview
 - .agents/skills/product-flow-landingreport
-- .agents/skills/product-flow-modelbenchmark
 - .agents/skills/product-flow-plantune
 - .agents/skills/product-flow-qareport
-- .agents/skills/product-flow-secondopinion
-- .agents/skills/product-flow-securityreview
 - .agents/skills/product-flow-skillify
 - .agents/skills/product-guard-destructive
 - .agents/skills/product-guard-full
 - .agents/skills/product-guard-scope
 - .agents/skills/product-guard-scope-release
+- .agents/skills/product-internal-modelbenchmark
 - .agents/skills/product-recipe-autoplan
 - .agents/skills/product-recipe-discovery
 - .agents/skills/product-recipe-investigate
 - .agents/skills/product-recipe-landdeploy
 - .agents/skills/product-recipe-qa
-- .agents/skills/product-recipe-retro
 - .agents/skills/product-recipe-ship
 - .agents/skills/product-role-cso
 - .agents/skills/product-role-designer
@@ -46,24 +37,11 @@ local_deployed_files:
 - .agents/skills/product-role-releaseengineer
 - .agents/skills/product-role-staffengineer
 - .agents/skills/product-runtime-health
-- .agents/skills/product-runtime-knowledge
 - .agents/skills/product-runtime-learnings
 - .agents/skills/product-runtime-session
 - .agents/skills/product-runtime-upgrade
-- .agents/skills/product-source-codex
 - .agents/skills/product-source-deploy
-- .agents/skills/product-source-models
 - .agents/skills/product-source-pdf
-- .claude/rules/product-browser-policy.md
-- .claude/rules/product-core-evidence.md
-- .claude/rules/product-core-language.md
-- .claude/rules/product-core-routing.md
-- .claude/rules/product-core-status.md
-- .claude/rules/product-core-storage.md
-- .claude/rules/product-guard-browser.md
-- .claude/rules/product-guard-destructive.md
-- .claude/rules/product-guard-privacy.md
-- .claude/rules/product-guard-scope.md
 - .claude/skills/product-browser-auth
 - .claude/skills/product-browser-benchmark
 - .claude/skills/product-browser-canary
@@ -72,32 +50,23 @@ local_deployed_files:
 - .claude/skills/product-browser-runner
 - .claude/skills/product-browser-scrape
 - .claude/skills/product-browser-visible
-- .claude/skills/product-flow-ceoreview
-- .claude/skills/product-flow-codereview
 - .claude/skills/product-flow-designconsult
 - .claude/skills/product-flow-designhtml
-- .claude/skills/product-flow-designreview
 - .claude/skills/product-flow-designshotgun
-- .claude/skills/product-flow-devexreview
-- .claude/skills/product-flow-docrelease
-- .claude/skills/product-flow-engreview
 - .claude/skills/product-flow-landingreport
-- .claude/skills/product-flow-modelbenchmark
 - .claude/skills/product-flow-plantune
 - .claude/skills/product-flow-qareport
-- .claude/skills/product-flow-secondopinion
-- .claude/skills/product-flow-securityreview
 - .claude/skills/product-flow-skillify
 - .claude/skills/product-guard-destructive
 - .claude/skills/product-guard-full
 - .claude/skills/product-guard-scope
 - .claude/skills/product-guard-scope-release
+- .claude/skills/product-internal-modelbenchmark
 - .claude/skills/product-recipe-autoplan
 - .claude/skills/product-recipe-discovery
 - .claude/skills/product-recipe-investigate
 - .claude/skills/product-recipe-landdeploy
 - .claude/skills/product-recipe-qa
-- .claude/skills/product-recipe-retro
 - .claude/skills/product-recipe-ship
 - .claude/skills/product-role-cso
 - .claude/skills/product-role-designer
@@ -108,24 +77,11 @@ local_deployed_files:
 - .claude/skills/product-role-releaseengineer
 - .claude/skills/product-role-staffengineer
 - .claude/skills/product-runtime-health
-- .claude/skills/product-runtime-knowledge
 - .claude/skills/product-runtime-learnings
 - .claude/skills/product-runtime-session
 - .claude/skills/product-runtime-upgrade
-- .claude/skills/product-source-codex
 - .claude/skills/product-source-deploy
-- .claude/skills/product-source-models
 - .claude/skills/product-source-pdf
-- .cursor/rules/product-browser-policy.mdc
-- .cursor/rules/product-core-evidence.mdc
-- .cursor/rules/product-core-language.mdc
-- .cursor/rules/product-core-routing.mdc
-- .cursor/rules/product-core-status.mdc
-- .cursor/rules/product-core-storage.mdc
-- .cursor/rules/product-guard-browser.mdc
-- .cursor/rules/product-guard-destructive.mdc
-- .cursor/rules/product-guard-privacy.mdc
-- .cursor/rules/product-guard-scope.mdc
 - .cursor/skills/product-browser-auth
 - .cursor/skills/product-browser-benchmark
 - .cursor/skills/product-browser-canary
@@ -134,32 +90,23 @@ local_deployed_files:
 - .cursor/skills/product-browser-runner
 - .cursor/skills/product-browser-scrape
 - .cursor/skills/product-browser-visible
-- .cursor/skills/product-flow-ceoreview
-- .cursor/skills/product-flow-codereview
 - .cursor/skills/product-flow-designconsult
 - .cursor/skills/product-flow-designhtml
-- .cursor/skills/product-flow-designreview
 - .cursor/skills/product-flow-designshotgun
-- .cursor/skills/product-flow-devexreview
-- .cursor/skills/product-flow-docrelease
-- .cursor/skills/product-flow-engreview
 - .cursor/skills/product-flow-landingreport
-- .cursor/skills/product-flow-modelbenchmark
 - .cursor/skills/product-flow-plantune
 - .cursor/skills/product-flow-qareport
-- .cursor/skills/product-flow-secondopinion
-- .cursor/skills/product-flow-securityreview
 - .cursor/skills/product-flow-skillify
 - .cursor/skills/product-guard-destructive
 - .cursor/skills/product-guard-full
 - .cursor/skills/product-guard-scope
 - .cursor/skills/product-guard-scope-release
+- .cursor/skills/product-internal-modelbenchmark
 - .cursor/skills/product-recipe-autoplan
 - .cursor/skills/product-recipe-discovery
 - .cursor/skills/product-recipe-investigate
 - .cursor/skills/product-recipe-landdeploy
 - .cursor/skills/product-recipe-qa
-- .cursor/skills/product-recipe-retro
 - .cursor/skills/product-recipe-ship
 - .cursor/skills/product-role-cso
 - .cursor/skills/product-role-designer
@@ -170,24 +117,11 @@ local_deployed_files:
 - .cursor/skills/product-role-releaseengineer
 - .cursor/skills/product-role-staffengineer
 - .cursor/skills/product-runtime-health
-- .cursor/skills/product-runtime-knowledge
 - .cursor/skills/product-runtime-learnings
 - .cursor/skills/product-runtime-session
 - .cursor/skills/product-runtime-upgrade
-- .cursor/skills/product-source-codex
 - .cursor/skills/product-source-deploy
-- .cursor/skills/product-source-models
 - .cursor/skills/product-source-pdf
-- .github/instructions/product-browser-policy.instructions.md
-- .github/instructions/product-core-evidence.instructions.md
-- .github/instructions/product-core-language.instructions.md
-- .github/instructions/product-core-routing.instructions.md
-- .github/instructions/product-core-status.instructions.md
-- .github/instructions/product-core-storage.instructions.md
-- .github/instructions/product-guard-browser.instructions.md
-- .github/instructions/product-guard-destructive.instructions.md
-- .github/instructions/product-guard-privacy.instructions.md
-- .github/instructions/product-guard-scope.instructions.md
 - .github/skills/product-browser-auth
 - .github/skills/product-browser-benchmark
 - .github/skills/product-browser-canary
@@ -196,32 +130,23 @@ local_deployed_files:
 - .github/skills/product-browser-runner
 - .github/skills/product-browser-scrape
 - .github/skills/product-browser-visible
-- .github/skills/product-flow-ceoreview
-- .github/skills/product-flow-codereview
 - .github/skills/product-flow-designconsult
 - .github/skills/product-flow-designhtml
-- .github/skills/product-flow-designreview
 - .github/skills/product-flow-designshotgun
-- .github/skills/product-flow-devexreview
-- .github/skills/product-flow-docrelease
-- .github/skills/product-flow-engreview
 - .github/skills/product-flow-landingreport
-- .github/skills/product-flow-modelbenchmark
 - .github/skills/product-flow-plantune
 - .github/skills/product-flow-qareport
-- .github/skills/product-flow-secondopinion
-- .github/skills/product-flow-securityreview
 - .github/skills/product-flow-skillify
 - .github/skills/product-guard-destructive
 - .github/skills/product-guard-full
 - .github/skills/product-guard-scope
 - .github/skills/product-guard-scope-release
+- .github/skills/product-internal-modelbenchmark
 - .github/skills/product-recipe-autoplan
 - .github/skills/product-recipe-discovery
 - .github/skills/product-recipe-investigate
 - .github/skills/product-recipe-landdeploy
 - .github/skills/product-recipe-qa
-- .github/skills/product-recipe-retro
 - .github/skills/product-recipe-ship
 - .github/skills/product-role-cso
 - .github/skills/product-role-designer
@@ -232,42 +157,48 @@ local_deployed_files:
 - .github/skills/product-role-releaseengineer
 - .github/skills/product-role-staffengineer
 - .github/skills/product-runtime-health
-- .github/skills/product-runtime-knowledge
 - .github/skills/product-runtime-learnings
 - .github/skills/product-runtime-session
 - .github/skills/product-runtime-upgrade
-- .github/skills/product-source-codex
 - .github/skills/product-source-deploy
-- .github/skills/product-source-models
 - .github/skills/product-source-pdf
-local_deployed_file_hashes:
-  .claude/rules/product-browser-policy.md: sha256:8857b002d67438c71c760f9463f92d6ad021604b70a220ab69e8514d375f5695
-  .claude/rules/product-core-evidence.md: sha256:25da8e943d781ba7704d8b921191408a829703d5d0af18ee70e9555e9dca7bf4
-  .claude/rules/product-core-language.md: sha256:c167f9809f5fe8623c7664340174fa4f333b576443afc7a826ef4097421b72d1
-  .claude/rules/product-core-routing.md: sha256:40d4d4d646b143c9f67cc0b7995a195a7c9c38fce0682c2a02e024ca475e8260
-  .claude/rules/product-core-status.md: sha256:7c2b2db69fbe39999cc6b6eab57c6521295bfa95b6ff6d2b5eff04a14938ef0b
-  .claude/rules/product-core-storage.md: sha256:cb27e05bc0daf9c8215c675b3cf70f00040e5a565cb95ea370d10dbdd595475b
-  .claude/rules/product-guard-browser.md: sha256:4542ff9592440091f85f3c11f1e3c6fc9c35cc56d1cd181814eac90cd6fe486b
-  .claude/rules/product-guard-destructive.md: sha256:e366338114e79d7fe1933bd6584d2ad7150f1e5ea6440d07dbbe0856c7c44384
-  .claude/rules/product-guard-privacy.md: sha256:40b6d2488535e9e6facbfaab2f712ae9aece4db2c92d0c599626025dcd376b27
-  .claude/rules/product-guard-scope.md: sha256:844cf8964f2712c2f8268b2e6d7d452979bb315fa0aaaaadc8287cbe979d2995
-  .cursor/rules/product-browser-policy.mdc: sha256:567efaba9f6b9d1f6a217a90436b8f222c76490b2e01f15f7e6ef872efb3d521
-  .cursor/rules/product-core-evidence.mdc: sha256:ad419f3280dcd53e93f901daa4b4311a4842c4164d98c429f03c3c72b4788392
-  .cursor/rules/product-core-language.mdc: sha256:1bc36e50a479879e11ca8baf6b896cfd2b969b8764f087f0a05069ae4b3c00da
-  .cursor/rules/product-core-routing.mdc: sha256:e387b75996e4022f02477ab2f7a7c32a85524dcef4489234d42762c4c3348c83
-  .cursor/rules/product-core-status.mdc: sha256:7e683db163545262dfb2e24ba39ba02edf5ae87a19b9370582e2e5b1c11c1385
-  .cursor/rules/product-core-storage.mdc: sha256:3a0fc249a9f943a26f24d0aa66dbcd2333e620363e1b109eb097d6e3f0118ff6
-  .cursor/rules/product-guard-browser.mdc: sha256:4cc9fa1daf3dbe7a2923c5e8d63c15384cca4f6de24a70a663f9c74eca69d58c
-  .cursor/rules/product-guard-destructive.mdc: sha256:130fa84a09f73f9e36bf0a01aa752e35f4ad427a7db7eecf20f0b4767c31ac25
-  .cursor/rules/product-guard-privacy.mdc: sha256:78ab242734dc12563aa4a616bf051c8d3490a3c9324844bfa8815d9b58106ff3
-  .cursor/rules/product-guard-scope.mdc: sha256:e3acc0f36a961d645d713a207a9c545f00b876ec56b789ba1f8aeb9c78b562b9
-  .github/instructions/product-browser-policy.instructions.md: sha256:b10dfdf20746b1acbe7006ad40d4202ff5cd163f97c6579d7a050ed3fd91971f
-  .github/instructions/product-core-evidence.instructions.md: sha256:5d65981a1986540fbc5b792519f1d437eff9d25d80c067821ff8202041d93538
-  .github/instructions/product-core-language.instructions.md: sha256:57f7d38bc5bbec92084dac20c5d6dc2dee0660845ad540aaa0ab05426691bea4
-  .github/instructions/product-core-routing.instructions.md: sha256:43357ddd5092e0af482de199422de3c4e471420b0243b99c1dccfbcbbb832b74
-  .github/instructions/product-core-status.instructions.md: sha256:8fb2314bc456dd646a0189c0801e681118558fd9c2ad5b26e55619a3b9f278eb
-  .github/instructions/product-core-storage.instructions.md: sha256:0d494608d5b48a93d28d93644ff2d5fd89f1c0fd3f8cf6846a8414c269d843f9
-  .github/instructions/product-guard-browser.instructions.md: sha256:b456c315e1b6e34ea930c49a902f6729df9a2a83ccea7b84adf2db76921c47b0
-  .github/instructions/product-guard-destructive.instructions.md: sha256:9ae732cca7fc15f7aa91a873a466d5e1e484cf1bb092e75758099c19cb8784e6
-  .github/instructions/product-guard-privacy.instructions.md: sha256:67923fcc6616cacdbc7cc380f7b699ce7b88093dd71e78dd10481a24f3fcdd9b
-  .github/instructions/product-guard-scope.instructions.md: sha256:a5eb61c3f0bbcd3b085b46470d5d32b5f4054712a4ff9b90ae15747ae7ae65f9
+- .opencode/skills/product-browser-auth
+- .opencode/skills/product-browser-benchmark
+- .opencode/skills/product-browser-canary
+- .opencode/skills/product-browser-pairagent
+- .opencode/skills/product-browser-qa
+- .opencode/skills/product-browser-runner
+- .opencode/skills/product-browser-scrape
+- .opencode/skills/product-browser-visible
+- .opencode/skills/product-flow-designconsult
+- .opencode/skills/product-flow-designhtml
+- .opencode/skills/product-flow-designshotgun
+- .opencode/skills/product-flow-landingreport
+- .opencode/skills/product-flow-plantune
+- .opencode/skills/product-flow-qareport
+- .opencode/skills/product-flow-skillify
+- .opencode/skills/product-guard-destructive
+- .opencode/skills/product-guard-full
+- .opencode/skills/product-guard-scope
+- .opencode/skills/product-guard-scope-release
+- .opencode/skills/product-internal-modelbenchmark
+- .opencode/skills/product-recipe-autoplan
+- .opencode/skills/product-recipe-discovery
+- .opencode/skills/product-recipe-investigate
+- .opencode/skills/product-recipe-landdeploy
+- .opencode/skills/product-recipe-qa
+- .opencode/skills/product-recipe-ship
+- .opencode/skills/product-role-cso
+- .opencode/skills/product-role-designer
+- .opencode/skills/product-role-docengineer
+- .opencode/skills/product-role-dxlead
+- .opencode/skills/product-role-engmanager
+- .opencode/skills/product-role-founder
+- .opencode/skills/product-role-releaseengineer
+- .opencode/skills/product-role-staffengineer
+- .opencode/skills/product-runtime-health
+- .opencode/skills/product-runtime-learnings
+- .opencode/skills/product-runtime-session
+- .opencode/skills/product-runtime-upgrade
+- .opencode/skills/product-source-deploy
+- .opencode/skills/product-source-pdf

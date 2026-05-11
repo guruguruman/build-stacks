@@ -1,6 +1,33 @@
 ---
 name: product-source-pdf
-description: Guide repo-local PDF creation, inspection, and verification.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  PDF generation and document source support. This source integration workflow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces source readiness evidence, assumptions, residual risk, and next handoff.
+  Use when asked to "source pdf", "PDF support", "create PDF", or when the requested work
+  matches product-source-pdf.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "PDF support", "create PDF", "verify PDF".
+benefits-from: [product-role-docengineer, product-flow-designhtml]
+triggers:
+  - product-source-pdf
+  - source pdf
+  - PDF support
+  - create PDF
+  - verify PDF
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-source-pdf

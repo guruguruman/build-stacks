@@ -1,6 +1,34 @@
 ---
 name: product-runtime-health
-description: Summarize product-stacks workflow health and quality signals.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Summarize workflow health and quality signals. This repo-local runtime workflow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces repo-local state or health evidence under .product-build-stacks when
+  appropriate, plus decisions, residual risk, and next handoff.
+  Use when asked to "runtime health", "workflow health", "stack health", or when the
+  requested work matches product-runtime-health.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "workflow health", "stack health", "quality signals".
+benefits-from: [product-runtime-session, product-runtime-learnings]
+triggers:
+  - product-runtime-health
+  - runtime health
+  - workflow health
+  - stack health
+  - quality signals
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-runtime-health

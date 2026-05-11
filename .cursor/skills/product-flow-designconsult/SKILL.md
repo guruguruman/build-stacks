@@ -1,6 +1,34 @@
 ---
 name: product-flow-designconsult
-description: Provide product design consultation using product-stacks taste and evidence gates.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Provide product design consultation. This focused product-stacks flow keeps product-*
+  public interfaces, .apm source guidance, and .product-build-stacks runtime evidence
+  boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow designconsult", "design consult", "product design advice", or
+  when the requested work matches product-flow-designconsult.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "design consult", "product design advice", "UX consultation".
+benefits-from: [product-role-designer, product-browser-runner]
+triggers:
+  - product-flow-designconsult
+  - flow designconsult
+  - design consult
+  - product design advice
+  - UX consultation
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-designconsult

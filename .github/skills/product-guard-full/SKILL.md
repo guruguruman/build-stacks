@@ -1,6 +1,34 @@
 ---
 name: product-guard-full
-description: Apply the full product-stacks guard posture for risky work, scope discipline, and explicit user gates.
+preamble-tier: 1
+version: 1.0.0
+description: |
+  Combine destructive, scope, privacy, and browser guards. This product-stacks guard
+  workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces guard status, protected actions found, approval decisions, evidence, residual
+  risk, and next handoff.
+  Use when asked to "guard full", "full guard", "safe mode", or when the requested work
+  matches product-guard-full.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "full guard", "safe mode", "guard posture".
+benefits-from: [product-guard-destructive, product-guard-scope]
+triggers:
+  - product-guard-full
+  - guard full
+  - full guard
+  - safe mode
+  - guard posture
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-guard-full

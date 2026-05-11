@@ -1,6 +1,34 @@
 ---
 name: product-role-dxlead
-description: Developer experience review for APIs, onboarding, integration ergonomics, docs, adoption friction, and unsupported paths.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Developer experience review for APIs, onboarding, docs, and adoption friction. This
+  review role workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role dxlead", "DX review", "developer experience review", or when the
+  requested work matches product-role-dxlead.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "DX review", "developer experience review", "API review".
+benefits-from: [product-role-docengineer, product-flow-skillify]
+triggers:
+  - product-role-dxlead
+  - role dxlead
+  - DX review
+  - developer experience review
+  - API review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-dxlead

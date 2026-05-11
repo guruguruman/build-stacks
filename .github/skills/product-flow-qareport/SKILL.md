@@ -1,6 +1,34 @@
 ---
 name: product-flow-qareport
-description: Run report-only browser QA without modifying source code.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Produce QA findings without modifying code. This focused product-stacks flow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow qareport", "QA report", "report only QA", or when the requested
+  work matches product-flow-qareport.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "QA report", "report only QA", "browser findings".
+benefits-from: [product-browser-qa, product-browser-runner]
+triggers:
+  - product-flow-qareport
+  - flow qareport
+  - QA report
+  - report only QA
+  - browser findings
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-qareport

@@ -1,6 +1,34 @@
 ---
 name: product-role-releaseengineer
-description: Release engineering lens for rollout, rollback, and verification. Use when the user explicitly names product-role-releaseengineer or asks for this product-stacks role workflow.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Release engineering lens for rollout, rollback, and verification. This review role
+  workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role releaseengineer", "release review", "rollback plan", or when the
+  requested work matches product-role-releaseengineer.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "release review", "rollback plan", "release engineer".
+benefits-from: [product-recipe-ship, product-recipe-landdeploy, product-browser-canary]
+triggers:
+  - product-role-releaseengineer
+  - role releaseengineer
+  - release review
+  - rollback plan
+  - release engineer
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-releaseengineer

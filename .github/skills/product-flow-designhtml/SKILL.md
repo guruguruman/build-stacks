@@ -1,6 +1,34 @@
 ---
 name: product-flow-designhtml
-description: Create HTML design artifacts and previews.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Create HTML artifacts and design previews. This focused product-stacks flow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces focused findings, decisions, evidence, residual risk, and the next handoff for
+  the flow.
+  Use when asked to "flow designhtml", "design HTML", "HTML mockup", or when the requested
+  work matches product-flow-designhtml.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "design HTML", "HTML mockup", "preview page".
+benefits-from: [product-role-designer, product-browser-runner]
+triggers:
+  - product-flow-designhtml
+  - flow designhtml
+  - design HTML
+  - HTML mockup
+  - preview page
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-flow-designhtml

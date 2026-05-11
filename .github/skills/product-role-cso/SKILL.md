@@ -1,6 +1,34 @@
 ---
 name: product-role-cso
-description: Security review for threat model, privacy, auth, secrets, policy risk, and release-blocking findings.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Security review for threat model, privacy, auth, secrets, policy risk, and blockers.
+  This review role workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role cso", "security review", "CSO review", or when the requested
+  work matches product-role-cso.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "security review", "CSO review", "threat model".
+benefits-from: [product-guard-destructive, product-runtime-session]
+triggers:
+  - product-role-cso
+  - role cso
+  - security review
+  - CSO review
+  - threat model
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-cso

@@ -1,6 +1,34 @@
 ---
 name: product-guard-destructive
-description: Guard destructive or high-risk operations with explicit approval and reusable command checks.
+preamble-tier: 1
+version: 1.0.0
+description: |
+  Warn and require approval before destructive actions. This product-stacks guard workflow
+  keeps product-* public interfaces, .apm source guidance, and .product-build-stacks
+  runtime evidence boundaries aligned.
+  Produces guard status, protected actions found, approval decisions, evidence, residual
+  risk, and next handoff.
+  Use when asked to "guard destructive", "destructive guard", "risky command", or when the
+  requested work matches product-guard-destructive.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "destructive guard", "risky command", "approval check".
+benefits-from: [product-guard-full]
+triggers:
+  - product-guard-destructive
+  - guard destructive
+  - destructive guard
+  - risky command
+  - approval check
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-guard-destructive
