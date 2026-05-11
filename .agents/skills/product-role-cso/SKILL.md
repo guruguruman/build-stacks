@@ -274,10 +274,10 @@ Use Grep to search for these patterns:
 
 Scan installed Claude Code skills for malicious patterns. 36% of published skills have security flaws, 13.4% are outright malicious (Snyk ToxicSkills research).
 
-**Tier 1 — repo-local (automatic):** Scan the repo's local skills directory for suspicious patterns:
+**Tier 1 — repo-local (automatic):** Scan repo-local authored and generated skill directories for suspicious patterns:
 
 ```bash
-ls -la .claude/skills/ 2>/dev/null
+find .apm/skills .agents/skills .cursor/skills .github/skills .opencode/skills -name SKILL.md -maxdepth 3 2>/dev/null
 ```
 
 Use Grep to search all local skill SKILL.md files for suspicious patterns:

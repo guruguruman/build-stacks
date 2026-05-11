@@ -34,14 +34,18 @@ agent-browser --version
 agent-browser install
 ```
 
-Do not use stale root `browser/`, root `bin/`, or `bin/product-browser` runtime files in a consumer repo.
+Use official `agent-browser`; do not rely on repository-local browser runtime directories in consumer repos.
 
 First public-page smoke:
 
 ```bash
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open https://example.com
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i

@@ -39,7 +39,7 @@ screenshot, or rendered surface, mark the browser portion as `report_only` or
 4. Gather evidence from repository files, browser runtime output, docs, or test results before making recommendations.
 5. Produce findings, decisions, evidence, residual risk, next handoff, and browser_activation in the final output.
 6. Store durable runtime artifacts under .product-build-stacks, while keeping source guidance under .apm and deployed host output under host folders.
-7. Promote repeated useful behavior through APM source changes; do not create hidden global browser skills outside the project.
+7. Promote repeated useful behavior through APM source changes; keep skill changes project-local and reviewable.
 
 ## Output Contract
 

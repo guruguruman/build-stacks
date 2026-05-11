@@ -24,13 +24,17 @@ command -v agent-browser
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 ```
 
-If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
+If official `agent-browser` is unavailable, report `browser_activation: blocked`, give the exact install or setup command needed to recover, and continue with non-browser evidence where useful.
 
 ## Base Branch Detection
 
@@ -82,7 +86,7 @@ For each page (either from `--pages` or the homepage):
 agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open <page-url>
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 agent-browser --json --session "$_ABR_SESSION" errors
-# Degraded: performance timing is outside the current product-browser-runner policy; record unavailable metrics and use console/network evidence.
+# If timing metrics are unavailable, record unavailable metrics and use console/network evidence.
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
 ```
 
@@ -136,7 +140,7 @@ For each page to monitor:
 agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open <page-url>
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 agent-browser --json --session "$_ABR_SESSION" errors
-# Degraded: performance timing is outside the current product-browser-runner policy; record unavailable metrics and use console/network evidence.
+# If timing metrics are unavailable, record unavailable metrics and use console/network evidence.
 ```
 
 Record the console error count and load time for each page. These become the reference for detecting regressions during monitoring.
@@ -149,7 +153,7 @@ Monitor for the specified duration. Every 60 seconds, check each page:
 agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open <page-url>
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 agent-browser --json --session "$_ABR_SESSION" errors
-# Degraded: performance timing is outside the current product-browser-runner policy; record unavailable metrics and use console/network evidence.
+# If timing metrics are unavailable, record unavailable metrics and use console/network evidence.
 ```
 
 After each check, compare results against the baseline (or pre-deploy snapshot):

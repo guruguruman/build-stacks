@@ -139,8 +139,7 @@ echo "TIMESTAMP=$TIMESTAMP"
 echo "FILE=$FILE"
 ```
 
-The on-disk directory name is `checkpoints/` (not `contexts/`) — this is a legacy
-path kept so existing saved files remain loadable. Users never see it.
+The on-disk directory name is `checkpoints/`. Treat it as the stable storage path for saved session files.
 
 Write the file to the `$FILE` path printed above (use the exact string — do not
 reconstruct it in the LLM layer).
@@ -270,7 +269,7 @@ If there are no saved contexts, tell the user: "No saved contexts yet. Run
 - **Infer, don't interrogate.** Use git state and conversation context to fill in
   the file. Only use AskUserQuestion if the title genuinely cannot be inferred.
 - **This is a product-stacks skill.** Use explicit `save`, `list`, or `restore`
-  modes. The old no-argument save/restore behavior was ambiguous and is no longer used.
+  modes so save and restore never conflict.
 
 ## Product context-restore Workflow
 

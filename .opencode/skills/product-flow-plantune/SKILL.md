@@ -30,4 +30,4 @@ printf '%s\n' '{"skill":"product-flow-plantune","preference":"<preference>","sou
 - evidence path
 - next handoff
 
-Do not call unshipped `product-stacks-*` helpers. Use `.product-build-stacks/preferences/` for durable preference evidence.
+Use repo-local commands only. Store durable preference evidence under `.product-build-stacks/preferences/`.

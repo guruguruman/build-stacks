@@ -20,7 +20,7 @@ Use this skill when a request fits the layer and summary above. If the related r
 2. Gather evidence from repository files, browser runtime output, docs, or test results before making recommendations.
 3. Produce findings, decisions, evidence, residual risk, and next handoff in the final output.
 4. Store durable runtime artifacts under .product-build-stacks, while keeping source guidance under .apm and deployed host output under host folders.
-5. Promote repeated useful behavior through APM source changes; do not create hidden global browser skills outside the project.
+5. Promote repeated useful behavior through APM source changes; keep skill changes project-local and reviewable.
 
 ## Output Contract
 

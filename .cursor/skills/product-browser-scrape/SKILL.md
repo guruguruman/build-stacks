@@ -17,17 +17,12 @@ description: Use agent-browser to gather public page evidence while treating bro
 
 # product-browser-scrape — pull data from a page
 
-One entry point for getting data off the web. Two paths under the hood:
-
-1. **Match path** (~200ms) — if the user's intent matches an existing
-   browser-skill's triggers, record this path as blocked because browser skill
-   registry execution is outside the current product-browser-runner policy.
-2. **Prototype path** (~30s) — no matching skill yet, so drive the page
-   with `agent-browser` evidence commands, return the JSON, and suggest `/skillify` so the
-   next call lands on the match path.
+Use official `agent-browser` to gather read-only evidence from a public page,
+localhost target, HTML artifact, or fixture, then return structured JSON.
 
 Read-only by contract. If the intent implies writing (submitting forms,
-clicking buttons that mutate state), refuse and route to `/automate`.
+clicking buttons that mutate state), refuse and route to `product-browser-qa`
+or `product-recipe-qa`.
 
 ## Step 1 — Determine intent
 
@@ -48,30 +43,11 @@ respond:
 
 > "product-browser-scrape is read-only. For mutating flows, use product-browser-qa or product-recipe-qa for local/dev QA interactions, or run the requested browser action directly when the user asked for it."
 
-Stop. Do not enter the match or prototype path.
+Stop. Do not enter the browser scrape path.
 
-## Step 3 — Match phase
+## Step 3 — Browser scrape
 
-Browser skill registry listing and inspection are currently unavailable. If a APM-managed registry is available, use it to inspect the full SKILL.md including
-`triggers:`, `description:`, and `host:`. Read these and judge whether the
-user's intent semantically matches one of them.
-
-A confident match means **all three** are true:
-
-- The intent's domain matches the skill's `host` (or one of its hostnames)
-- A `triggers:` phrase or the `description:` covers the same data the
-  intent asks for
-- The intent does not require args the skill does not declare in `args:`
-
-If matched, parse any `--arg key=value` from the intent. Because registry execution is outside the current product-browser-runner policy, record the match path as blocked and fall back to the prototype path.
-
-If matching is ambiguous (two skills could plausibly fit), pick the
-narrower-tier one (project > global > bundled, when a APM-managed listing exposes tier data). If still ambiguous, fall through to the prototype path rather than
-guess wrong.
-
-## Step 4 — Prototype phase
-
-No match. Drive the page using `agent-browser` evidence commands.
+Drive the page using `agent-browser` evidence commands.
 If the user provided a URL, `localhost` target, `file://` page, `/tmp` HTML, repo
 HTML artifact, or fixture, run browser scraping instead of producing a checklist.
 For scrape flows, `open`, `snapshot`, `forms`, `click`, `fill`, `select`,
@@ -86,8 +62,12 @@ command -v agent-browser
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
 PRODUCT_BROWSER_EVIDENCE_DIR="${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser/${AGENT_BROWSER_RUN_ID:-local}}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 ```
 
@@ -105,17 +85,27 @@ Emit the result as JSON on stdout (one document, not pretty-printed).
 Use a stable shape — typically `{ "items": [...], "count": N }` or
 similar — so downstream consumers can treat it as data.
 
-## Step 5 — Skillify nudge
+## Optional Skill Handoff
 
-After a successful prototype, append exactly one line:
+If the same scrape is likely to recur and the extraction succeeded with stable
+inputs, include a `next_handoff` object in the JSON that points to
+`product-flow-skillify`. Keep it concrete:
 
-> "Say /skillify to make this a permanent skill (200ms on next call)."
+```json
+{
+  "next_handoff": {
+    "skill": "product-flow-skillify",
+    "reason": "repeatable scrape workflow",
+    "candidate_scope": "<page, fields, selectors, evidence path>"
+  }
+}
+```
 
-That is the entire nudge. Do not nag, do not list pros, do not push.
-Proactive surfacing is a Phase 3 knob (`.product-build-stacks/config/browser_skillify_prompts`),
-not this skill's job.
+Do not suggest a handoff for one-off scrapes, failed extractions, unstable
+selectors, paywalled content, or flows that need auth/cookies. Do not use slash
+aliases.
 
-## When the prototype fails
+## When extraction fails
 
 If the page loads but data extraction does not yield a sensible JSON shape
 after 3-4 selector attempts:
@@ -123,7 +113,6 @@ after 3-4 selector attempts:
 - Report what you tried, what came back, and what's blocking (lazy-loaded,
   JS-rendered, paywalled, etc.).
 - Do NOT write a partial result and call it done.
-- Do NOT suggest /skillify on a broken prototype.
 - Ask the user whether they want to (a) try a different selector, (b)
   switch to a different page, or (c) stop.
 
@@ -136,14 +125,14 @@ after 3-4 selector attempts:
 
 ## Output discipline
 
-The match path returns whatever JSON the matched skill emits. The
-prototype path returns whatever JSON you construct. In both cases:
+Return the JSON you construct from browser evidence:
 
 - Include `browser_activation` with one of `executed`, `blocked`, `report_only`,
   or `not_applicable`. Use `executed` only when official `agent-browser` ran and
   the JSON cites URL, snapshot, screenshot, or extracted browser evidence.
 - One JSON document, on stdout.
-- Stderr (or chat) is for logs and the skillify nudge.
+- Stderr (or chat) is for concise logs and blocked-state notes. Skill promotion
+  guidance belongs in the JSON `next_handoff` object, not in a separate nudge.
 - Do not embed prose around the JSON in the chat reply unless the user
   asked for an explanation — many `product-browser-scrape` callers pipe the output to
   `jq`.

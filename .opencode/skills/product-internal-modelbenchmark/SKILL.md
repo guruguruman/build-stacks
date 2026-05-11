@@ -60,4 +60,4 @@ For `partial` or `blocked`, include:
 - model_benchmark_status: executed, partial, or blocked
 - activation_quality: pass, warn, or fail
 
-Do not call unshipped `product-stacks-*` binaries. Use repo-local commands, provider CLIs, or user-approved manual runs only.
+Use repo-local commands, provider CLIs, or user-approved manual runs only.

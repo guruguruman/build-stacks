@@ -11,9 +11,9 @@ Use this Skill when a product workflow needs browser evidence: rendered-page QA,
 
 Browser execution uses official `agent-browser`. `product-browser-runner` is a Skill and policy layer, not a separate CLI runtime package.
 
-Do not rely on root `browser/`, root `bin/`, compiled browser binaries, or package-local implementation paths in this APM package.
+This package delegates browser execution to the consumer-installed official `agent-browser` runtime; it does not ship implementation binaries.
 
-Do not pass root browser tokens to child processes. Use only per-spawn scoped tokens or explicit user-approved browser state when a workflow needs child-agent browser access.
+Do not pass broad browser tokens to child processes. Use only per-spawn scoped tokens or explicit user-approved browser state when a workflow needs child-agent browser access.
 
 ## Setup Check
 
@@ -26,7 +26,7 @@ agent-browser --version
 
 If the command is missing, report that the consumer machine needs official `agent-browser` and give the recovery command: `brew install agent-browser` or `npm i -g agent-browser`, then `agent-browser install`.
 
-Do not fall back to repo-root browser implementation files when the command is missing. Mark the browser portion as blocked and continue with non-browser evidence where possible.
+When the command is missing, mark the browser portion as blocked and continue with non-browser evidence where possible.
 
 ## Product Browser Posture
 
@@ -50,8 +50,12 @@ For public and local browser work, use a repo/run scoped session instead of the
 ```bash
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
 PRODUCT_BROWSER_EVIDENCE_DIR="${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 ```
 

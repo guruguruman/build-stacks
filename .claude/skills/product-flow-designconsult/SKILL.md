@@ -69,20 +69,24 @@ command -v agent-browser
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 ```
 
-If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
+If official `agent-browser` is unavailable, report `browser_activation: blocked`, give the exact install or setup command needed to recover, and continue with non-browser evidence where useful.
 
 Always include `browser_activation: executed | blocked | report_only | not_applicable`
 when browser research or visual evidence is part of the consultation. Use
 `executed` only when official `agent-browser` ran and cited screenshot, snapshot,
 URL, or console evidence exists.
 
-If browse is not available, that's fine — visual research is optional. The skill works without it using WebSearch and your built-in design knowledge.
+If browser runtime is not available, visual research is optional. The skill works without it using WebSearch and built-in design knowledge.
 
 **Find the product-stacks designer (optional — enables AI mockup generation):**
 
@@ -194,9 +198,9 @@ If the user said no research, skip entirely and proceed to Phase 3 using your bu
 
 ---
 
-## Product Placeholder: DESIGN_OUTSIDE_VOICES
+## Outside Voices
 
-This workflow placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
+Use `product-role-designer` as the design-review lens when an outside critique is useful. Preserve repo-local evidence and report any unavailable visual evidence explicitly.
 
 ## Phase 3: The Complete Proposal
 

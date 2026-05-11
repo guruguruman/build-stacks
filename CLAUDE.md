@@ -25,7 +25,7 @@ Always reply in Japanese.
 <!-- Source: local .apm/instructions/product-core-routing.instructions.md -->
 # product-core-routing
 
-Route requests to `product-*` skills. Keep legacy names out of external interfaces and use the mapping document only for parity checks.
+Route requests to `product-*` skills. Keep legacy names out of external interfaces.
 
 <!-- Source: local .apm/instructions/product-core-status.instructions.md -->
 # product-core-status
@@ -35,7 +35,7 @@ Keep user status updates concise. Mention the current step, material findings, a
 <!-- Source: local .apm/instructions/product-core-storage.instructions.md -->
 # product-core-storage
 
-Store runtime state under `.product/`. Do not persist secrets, cookies, bearer tokens, or credential-bearing screenshots without explicit approval and redaction.
+Store runtime state under `.product-build-stacks/`. Do not persist secrets, cookies, bearer tokens, or credential-bearing screenshots without explicit approval and redaction.
 
 <!-- Source: local .apm/instructions/product-guard-browser.instructions.md -->
 # product-guard-browser

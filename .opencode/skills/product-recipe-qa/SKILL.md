@@ -101,14 +101,18 @@ command -v agent-browser
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
 PRODUCT_BROWSER_EVIDENCE_DIR="${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser/${AGENT_BROWSER_RUN_ID:-local}}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
 agent-browser --json --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" screenshot
 ```
 
-If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
+If official `agent-browser` is unavailable, report `browser_activation: blocked`, give the exact install or setup command needed to recover, and continue with non-browser evidence where useful.
 
 Always include `browser_activation: executed | blocked | report_only | not_applicable`
 in QA summaries. Use `executed` only when official `agent-browser` ran and the

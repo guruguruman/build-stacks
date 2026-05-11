@@ -24,7 +24,7 @@ Always reply in Japanese.
 <!-- Source: local .apm/instructions/product-core-routing.instructions.md -->
 # product-core-routing
 
-Route requests to `product-*` skills. Keep legacy names out of external interfaces and use the mapping document only for parity checks.
+Route requests to `product-*` skills. Keep legacy names out of external interfaces.
 
 <!-- Source: local .apm/instructions/product-core-status.instructions.md -->
 # product-core-status

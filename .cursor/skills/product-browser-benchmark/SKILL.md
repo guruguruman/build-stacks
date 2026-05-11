@@ -1,6 +1,6 @@
 ---
 name: product-browser-benchmark
-description: Benchmark rendered product flows with browser evidence, timings, and repeatable output artifacts.
+description: Benchmark rendered product flows with browser evidence, available timings, and repeatable output artifacts.
 ---
 
 # product-browser-benchmark
@@ -24,25 +24,29 @@ command -v agent-browser
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
 agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 ```
 
-If official `agent-browser` is unavailable, report the blocked state and give the exact install or setup command needed to recover. Do not fall back to root `browser/`, root `bin/`, or package-local browser implementation files.
+If official `agent-browser` is unavailable, report `browser_activation: blocked`, give the exact install or setup command needed to recover, and continue with non-browser evidence where useful.
 
 # product-browser-benchmark — Performance Regression Detection
 
 You are a **Performance Engineer** who has optimized apps serving millions of requests. You know that performance doesn't degrade in one big regression — it dies by a thousand paper cuts. Each PR adds 50ms here, 20KB there, and one day the app takes 8 seconds to load and nobody knows when it got slow.
 
-Your job is to measure, baseline, compare, and alert. You use the official agent-browser's `perf` command and JavaScript evaluation to gather real performance data from running pages.
+Your job is to measure, baseline, compare, and alert. Use official `agent-browser` browser evidence first, collect timing metrics only when the current runtime or repo exposes a verified path, and mark unavailable metrics explicitly instead of inventing measurements.
 
 ## User-invocable
 When the user types `product-browser-benchmark`, run this skill.
 
 ## Arguments
-- `product-browser-benchmark <url>` — full performance audit with baseline comparison
+- `product-browser-benchmark <url>` — available-evidence performance audit with baseline comparison
 - `product-browser-benchmark <url> --baseline` — capture baseline (run before making changes)
 - `product-browser-benchmark <url> --quick` — single-pass timing check (no baseline needed)
 - `product-browser-benchmark <url> --pages /,/dashboard,/api/health` — specify pages
@@ -70,20 +74,20 @@ git diff $(gh pr view --json baseRefName -q .baseRefName 2>/dev/null || gh repo 
 
 ### Phase 3: Performance Data Collection
 
-For each page, collect comprehensive performance metrics:
+For each page, collect available performance evidence:
 
 ```bash
 agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open <page-url>
-# Degraded: performance timing is outside the current product-browser-runner policy; record unavailable metrics and use console/network evidence.
+# If timing metrics are unavailable, record unavailable metrics and use console/network evidence.
 ```
 
-Then gather detailed metrics via JavaScript:
+If the repo or browser runtime exposes a JavaScript evaluation path, gather detailed metrics through that path:
 
 ```bash
-# Degraded: browser JavaScript evaluation is outside the current product-browser-runner policy; do not call direct eval.
+# If browser JavaScript evaluation is unavailable, skip direct eval and use collected browser evidence.
 ```
 
-Extract key metrics:
+When available, extract key metrics:
 - **TTFB** (Time to First Byte): `responseStart - requestStart`
 - **FCP** (First Contentful Paint): from PerformanceObserver or `paint` entries
 - **LCP** (Largest Contentful Paint): from PerformanceObserver
@@ -93,18 +97,18 @@ Extract key metrics:
 
 Resource analysis:
 ```bash
-# Degraded: browser JavaScript evaluation is outside the current product-browser-runner policy; do not call direct eval.
+# If browser JavaScript evaluation is unavailable, skip direct eval and use collected browser evidence.
 ```
 
 Bundle size check:
 ```bash
-# Degraded: browser JavaScript evaluation is outside the current product-browser-runner policy; do not call direct eval.
-# Degraded: browser JavaScript evaluation is outside the current product-browser-runner policy; do not call direct eval.
+# If browser JavaScript evaluation is unavailable, skip direct eval and use collected browser evidence.
+# If browser JavaScript evaluation is unavailable, skip direct eval and use collected browser evidence.
 ```
 
 Network summary:
 ```bash
-# Degraded: browser JavaScript evaluation is outside the current product-browser-runner policy; do not call direct eval.
+# If browser JavaScript evaluation is unavailable, skip direct eval and use collected browser evidence.
 ```
 
 ### Phase 4: Baseline Capture (--baseline mode)

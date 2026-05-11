@@ -1,11 +1,11 @@
 ---
 name: product-flow-skillify
-description: Convert repeated browser work into reviewed product-stacks skill candidates.
+description: Convert repeated product-stacks work into reviewed skill candidates.
 ---
 
 # product-flow-skillify
 
-Use this skill when repeated browser or product workflow work should become a reviewed `product-*` skill candidate.
+Use this maintainer workflow when repeated browser or product workflow work should become a reviewed `product-*` skill candidate.
 
 ## Workflow
 
@@ -13,7 +13,7 @@ Use this skill when repeated browser or product workflow work should become a re
 2. Create a candidate directory under `.product-build-stacks/skill-candidates/<name>/`.
 3. Draft `SKILL.md` with frontmatter, when-to-use guidance, workflow, output contract, smoke scenario, expected output, evidence path, and failure mode.
 4. Review the candidate for overlap with existing 40 skills in `docs/release-acceptance-skill-matrix.md`.
-5. If accepted, move the candidate into `.apm/skills/<product-name>/`, add metadata in `release metadata`, and run:
+5. If accepted, move the candidate into `.apm/skills/<product-name>/`, add it to the skill catalog if it is shipped, and run:
 
 ```bash
 npm run skill:verify
@@ -35,4 +35,4 @@ npm run generated:verify
 - browser_activation if browser evidence was used or requested
 - next handoff
 
-Do not use package-local browse SDKs or hidden global skill registries. Browser evidence must go through official `agent-browser` and the `product-browser-runner` policy.
+Browser evidence must go through official `agent-browser` and the `product-browser-runner` policy. Keep candidate artifacts under `.product-build-stacks/skill-candidates/` until the user explicitly approves promotion into `.apm/skills/`.

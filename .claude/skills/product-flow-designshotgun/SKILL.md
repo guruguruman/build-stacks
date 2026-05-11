@@ -126,7 +126,7 @@ designs to bias generation toward the user's demonstrated taste.
 
 Infer taste from project artifacts and user corrections. Do not invent brand or design preferences without evidence.
 
-**Per-session approved.json files (legacy, still supported):**
+**Per-session approved.json files (recent approval signals):**
 
 ```bash
 setopt +o nomatch 2>/dev/null || true
@@ -143,7 +143,7 @@ Limit to last 10 sessions. Try/catch JSON parse on each (skip corrupted files).
 **Updating taste profile after a design-shotgun session:** When the user picks a
 variant, append an approved event to `.product-build-stacks/design/taste-events.jsonl`. When they
 explicitly reject a variant, append a rejected event to `.product-build-stacks/design/taste-events.jsonl`.
-The CLI handles schema migration from approved.json, decay, and conflict flagging.
+The taste profile update flow reads approved.json files, applies decay, and flags conflicts.
 
 ## Step 3: Generate Variants
 
@@ -212,7 +212,11 @@ command -v agent-browser
 agent-browser --version
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_SESSION="product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}"
+_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
+_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
+AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
+export AGENT_BROWSER_SOCKET_DIR
 mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
 ```
 

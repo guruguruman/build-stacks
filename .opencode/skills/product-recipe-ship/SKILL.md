@@ -326,9 +326,9 @@ Review the diff for structural issues that tests don't catch.
 
 Separate observed facts from inference. Lower confidence when evidence is missing, stale, or only from generated prose.
 
-## Product Placeholder: DESIGN_REVIEW_LITE
+## Design Review Lite
 
-This workflow placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
+When UI or visual behavior changed, run the `product-role-designer` lens using repo-local evidence, screenshots, mockups, or the current diff. Report missing visual evidence explicitly.
 
    Include any design findings alongside the code review findings. They follow the same Fix-First flow below.
 

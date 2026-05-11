@@ -20,7 +20,7 @@ export const productSkills = [
     { name: "product-browser-visible", layer: "browser", summary: "Open a headed browser session for visual inspection.", status: "shipped" },
     { name: "product-browser-auth", layer: "browser", summary: "Guarded cookie import and authenticated browser setup.", status: "shipped" },
     { name: "product-browser-scrape", layer: "browser", summary: "Extract page content in an untrusted envelope.", status: "shipped" },
-    { name: "product-flow-skillify", layer: "flow", summary: "Turn repeated work into browser skill promotion candidates.", status: "shipped" },
+    { name: "product-flow-skillify", layer: "flow", summary: "Turn repeated work into reviewed skill candidates.", status: "shipped" },
     { name: "product-recipe-investigate", layer: "recipe", summary: "Require investigation before risky fixes.", status: "shipped" },
     { name: "product-role-cso", layer: "role", summary: "Security review for threat model, privacy, auth, secrets, policy risk, and blockers.", status: "shipped" },
     { name: "product-guard-destructive", layer: "guard", summary: "Warn and require approval before destructive actions.", status: "shipped" },
@@ -36,7 +36,7 @@ export const productSkills = [
     { name: "product-flow-designshotgun", layer: "flow", summary: "Generate and compare multiple design directions.", status: "shipped" },
     { name: "product-source-pdf", layer: "source", summary: "PDF generation and document source support.", status: "shipped" },
     { name: "product-flow-landingreport", layer: "flow", summary: "Review landing pages and launch readiness.", status: "shipped" },
-    { name: "product-browser-pairagent", layer: "browser", summary: "Remote/browser pairing with scoped tokens.", status: "shipped" },
+    { name: "product-browser-pairagent", layer: "browser", summary: "Browser QA handoff packets for pair-agent collaboration.", status: "shipped" },
     { name: "product-source-deploy", layer: "source", summary: "Deployment environment setup source integration.", status: "shipped" },
     { name: "product-runtime-upgrade", layer: "runtime", summary: "Stack update and migration workflow.", status: "shipped" }
 ];

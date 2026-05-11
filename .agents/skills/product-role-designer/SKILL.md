@@ -266,9 +266,9 @@ Note which direction was approved. This becomes the visual reference for all sub
 
 **If `DESIGN_NOT_AVAILABLE`:** Tell the user: "The product-stacks designer isn't set up yet. Run `$D setup` to enable visual mockups. Proceeding with text-only review, but you're missing the best part." Then proceed to review passes with text-based review.
 
-## Product Placeholder: DESIGN_OUTSIDE_VOICES
+## Outside Voices
 
-This workflow placeholder has no direct product-stacks resolver yet. Preserve the workflow intent, use repo-local evidence, and report any blocked behavior explicitly.
+Use this section for a second-pass design critique grounded in repo-local evidence, screenshots, mockups, or the current plan. Report missing visual evidence explicitly.
 
 ## The 0-10 Rating Method
 
