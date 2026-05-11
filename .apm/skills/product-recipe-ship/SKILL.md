@@ -1,6 +1,34 @@
 ---
 name: product-recipe-ship
-description: Prepare a branch for release with tests, review gates, coverage, docs, versioning, and PR handoff.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Prepare tests, coverage, docs, changelog, and PR handoff. This end-to-end product-stacks
+  workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces decisions, evidence paths, residual risk, and the next handoff for the full
+  workflow.
+  Use when asked to "recipe ship", "prepare release", "ship branch", or when the requested
+  work matches product-recipe-ship.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "prepare release", "ship branch", "release handoff".
+benefits-from: [product-role-staffengineer, product-role-docengineer, product-role-releaseengineer]
+triggers:
+  - product-recipe-ship
+  - recipe ship
+  - prepare release
+  - ship branch
+  - release handoff
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-recipe-ship

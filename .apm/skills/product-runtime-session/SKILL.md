@@ -1,6 +1,34 @@
 ---
 name: product-runtime-session
-description: Save and restore repo-local working context under .product-build-stacks using the product-stacks session workflow.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Save and restore session snapshots under .product-build-stacks. This repo-local runtime
+  workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces repo-local state or health evidence under .product-build-stacks when
+  appropriate, plus decisions, residual risk, and next handoff.
+  Use when asked to "runtime session", "save session", "restore session", or when the
+  requested work matches product-runtime-session.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "save session", "restore session", "working context".
+benefits-from: [product-runtime-learnings]
+triggers:
+  - product-runtime-session
+  - runtime session
+  - save session
+  - restore session
+  - working context
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-runtime-session

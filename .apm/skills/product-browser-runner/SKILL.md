@@ -1,6 +1,34 @@
 ---
 name: product-browser-runner
-description: Use official agent-browser with product-stacks browser policy for safe browser QA, screenshots, snapshots, and controlled interaction in product-build workflows.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Official agent-browser policy for safe browser QA. This browser evidence workflow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces browser_activation status, commands run, screenshots or snapshots when
+  available, findings, residual risk, and next handoff.
+  Use when asked to "browser runner", "browser evidence", "open the page", or when the
+  requested work matches product-browser-runner.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "browser evidence", "open the page", "take a screenshot".
+benefits-from: [product-guard-destructive]
+triggers:
+  - product-browser-runner
+  - browser runner
+  - browser evidence
+  - open the page
+  - take a screenshot
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-browser-runner

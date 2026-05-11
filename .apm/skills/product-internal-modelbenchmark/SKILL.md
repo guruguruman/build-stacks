@@ -1,6 +1,33 @@
 ---
 name: product-internal-modelbenchmark
-description: Internal maintainer workflow for comparing model outputs, prompts, providers, and product-stacks skill quality.
+preamble-tier: 1
+version: 1.0.0
+description: |
+  Internal maintainer and eval workflow for comparing model outputs and skill quality.
+  This internal maintainer workflow keeps product-* public interfaces, .apm source
+  guidance, and .product-build-stacks runtime evidence boundaries aligned.
+  Produces comparison evidence, quality signals, residual risk, and maintainer handoff.
+  Use when asked to "internal modelbenchmark", "model benchmark", "compare models", or
+  when the requested work matches product-internal-modelbenchmark.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "model benchmark", "compare models", "skill quality".
+benefits-from: [product-runtime-health, product-role-staffengineer]
+triggers:
+  - product-internal-modelbenchmark
+  - internal modelbenchmark
+  - model benchmark
+  - compare models
+  - skill quality
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-internal-modelbenchmark

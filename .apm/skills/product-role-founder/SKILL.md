@@ -1,6 +1,34 @@
 ---
 name: product-role-founder
-description: Founder and CEO-style product review for scope, wedge, adoption friction, MVP, NOT in scope, and first payment reason.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Founder and CEO-style review for wedge, adoption friction, MVP, and first payment
+  reason. This review role workflow keeps product-* public interfaces, .apm source
+  guidance, and .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role founder", "founder review", "CEO review", or when the requested
+  work matches product-role-founder.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "founder review", "CEO review", "wedge review".
+benefits-from: [product-recipe-discovery, product-flow-plantune]
+triggers:
+  - product-role-founder
+  - role founder
+  - founder review
+  - CEO review
+  - wedge review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-founder

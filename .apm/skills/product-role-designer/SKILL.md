@@ -1,6 +1,34 @@
 ---
 name: product-role-designer
-description: Product design review for UX plans, visual artifacts, flows, hierarchy, and honest report-only browser status.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Product design review for UX plans, visual artifacts, flows, and honest browser status.
+  This review role workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role designer", "designer review", "design review", or when the
+  requested work matches product-role-designer.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "designer review", "design review", "UX review".
+benefits-from: [product-flow-designconsult, product-flow-designshotgun, product-browser-runner]
+triggers:
+  - product-role-designer
+  - role designer
+  - designer review
+  - design review
+  - UX review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-designer

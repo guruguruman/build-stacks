@@ -1,6 +1,33 @@
 ---
 name: product-source-deploy
-description: Set up deployment readiness checks, provider assumptions, secrets hygiene, and release handoff.
+preamble-tier: 2
+version: 1.0.0
+description: |
+  Deployment environment setup source integration. This source integration workflow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces source readiness evidence, assumptions, residual risk, and next handoff.
+  Use when asked to "source deploy", "deploy setup", "deployment readiness", or when the
+  requested work matches product-source-deploy.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "deploy setup", "deployment readiness", "provider assumptions".
+benefits-from: [product-role-releaseengineer, product-recipe-landdeploy]
+triggers:
+  - product-source-deploy
+  - source deploy
+  - deploy setup
+  - deployment readiness
+  - provider assumptions
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-source-deploy

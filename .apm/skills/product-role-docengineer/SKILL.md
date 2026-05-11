@@ -1,6 +1,34 @@
 ---
 name: product-role-docengineer
-description: Documentation release review for changelog, migration notes, operator docs, proof, and release communication.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Documentation release review for changelog, migration notes, operator docs, and proof.
+  This review role workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role docengineer", "docs review", "documentation release", or when
+  the requested work matches product-role-docengineer.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "docs review", "documentation release", "operator docs".
+benefits-from: [product-recipe-ship, product-source-pdf]
+triggers:
+  - product-role-docengineer
+  - role docengineer
+  - docs review
+  - documentation release
+  - operator docs
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-docengineer

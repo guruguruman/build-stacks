@@ -1,6 +1,34 @@
 ---
 name: product-role-staffengineer
-description: Staff-level code review for diffs, architecture, correctness, migrations, tests, and long-term system health.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Staff-level code review for diffs, architecture, correctness, migrations, and tests.
+  This review role workflow keeps product-* public interfaces, .apm source guidance, and
+  .product-build-stacks runtime evidence boundaries aligned.
+  Produces prioritized findings, decisions, evidence, residual risk, and the next handoff
+  from that role lens.
+  Use when asked to "role staffengineer", "staff engineer review", "review the diff", or
+  when the requested work matches product-role-staffengineer.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "staff engineer review", "review the diff", "pre landing review".
+benefits-from: [product-role-cso, product-role-releaseengineer, product-runtime-session]
+triggers:
+  - product-role-staffengineer
+  - role staffengineer
+  - staff engineer review
+  - review the diff
+  - pre landing review
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-role-staffengineer

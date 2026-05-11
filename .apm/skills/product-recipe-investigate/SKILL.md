@@ -1,6 +1,34 @@
 ---
 name: product-recipe-investigate
-description: Investigate a product or codebase issue using product-stacks evidence gathering, hypothesis testing, and handoff discipline.
+preamble-tier: 3
+version: 1.0.0
+description: |
+  Require investigation before risky fixes. This end-to-end product-stacks workflow keeps
+  product-* public interfaces, .apm source guidance, and .product-build-stacks runtime
+  evidence boundaries aligned.
+  Produces decisions, evidence paths, residual risk, and the next handoff for the full
+  workflow.
+  Use when asked to "recipe investigate", "investigate", "root cause", or when the
+  requested work matches product-recipe-investigate.
+  Proactively suggest when this workflow would reduce ambiguity, preserve evidence
+  discipline, or create a cleaner handoff.
+  Voice triggers: "investigate", "root cause", "debug this".
+benefits-from: [product-runtime-learnings, product-guard-scope]
+triggers:
+  - product-recipe-investigate
+  - recipe investigate
+  - investigate
+  - root cause
+  - debug this
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - WebSearch
+  - AskUserQuestion
 ---
 
 # product-recipe-investigate
