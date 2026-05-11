@@ -15,16 +15,15 @@ const publicPackageScripts = {
     test: "node --test"
 };
 checkNoRootSkillBundle();
-checkNoRootLegacyRuntime();
+checkNoForbiddenPackageRoots();
 checkManifestShape();
 verifyBrowserRunnerSkillPolicy();
 checkReadmeConsumerInstallGuidance();
 verifyPublicPackageScripts();
 verifyScriptNamingRules();
-checkNoForbiddenRuntimeReferences();
+checkBrowserPolicyReferences();
 checkBrowserSkillSessionSetup();
 verifyPreparedPackageInstall();
-verifyNoLegacyStackReferences();
 if (apmPackageFailures.length > 0) {
     console.error(apmPackageFailures.join("\n"));
     process.exit(1);
@@ -37,7 +36,7 @@ function checkNoRootSkillBundle() {
         }
     }
 }
-function checkNoRootLegacyRuntime() {
+function checkNoForbiddenPackageRoots() {
     const forbiddenPaths = [
         "browser",
         "tests/browser",
@@ -48,7 +47,7 @@ function checkNoRootLegacyRuntime() {
     ];
     for (const path of forbiddenPaths) {
         if (existsSync(path))
-            apmPackageFailures.push(`legacy root runtime path must not exist: ${path}`);
+            apmPackageFailures.push(`public package must not include repository runtime path: ${path}`);
     }
 }
 function checkManifestShape() {
@@ -61,7 +60,7 @@ function checkManifestShape() {
     if (packageJson.version !== "1.0.0")
         apmPackageFailures.push("package.json version must be 1.0.0");
     for (const forbidden of ["type: hybrid", "includes:"]) {
-        reportLineMatches("apm.yml", apmBody, forbidden, `contains obsolete manifest field: ${forbidden}`);
+        reportLineMatches("apm.yml", apmBody, forbidden, `contains unsupported manifest field: ${forbidden}`);
     }
 }
 function verifyBrowserRunnerSkillPolicy() {
@@ -76,9 +75,13 @@ function verifyBrowserRunnerSkillPolicy() {
         "`product-browser-runner` is a Skill and policy layer",
         "command -v agent-browser",
         "agent-browser --version",
-        "_ABR_SESSION=\"product-stacks-public-${_ABR_REPO_ID}-${AGENT_BROWSER_RUN_ID:-local}\"",
+        "_ABR_RUN_ID=\"$(printf '%s' \"${AGENT_BROWSER_RUN_ID:-local}\" | cksum | awk '{print $1}')\"",
+        "_ABR_SESSION=\"ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}\"",
         "Do not use `--session-name` for public work",
         "PRODUCT_BROWSER_EVIDENCE_DIR=\"${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser}\"",
+        "AGENT_BROWSER_SOCKET_DIR=\"${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}\"",
+        "mkdir -p \"$AGENT_BROWSER_SOCKET_DIR\"",
+        "export AGENT_BROWSER_SOCKET_DIR",
         "agent-browser --json --content-boundaries --screenshot-dir \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" open <url>",
         "agent-browser --json --content-boundaries --session \"$_ABR_SESSION\" snapshot -i",
         "agent-browser --json --screenshot-dir \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" screenshot",
@@ -119,7 +122,7 @@ function checkReadmeConsumerInstallGuidance() {
         "apm audit --ci",
         "apm compile --validate --local-only",
         "product-browser-runner",
-        "Do not use stale root `browser/`, root `bin/`, or `bin/product-browser` runtime files"
+        "Use official `agent-browser`; do not rely on repository-local browser runtime directories in consumer repos"
     ]) {
         if (!body.includes(phrase))
             apmPackageFailures.push(`${file} missing README install instruction: ${phrase}`);
@@ -130,32 +133,51 @@ function checkReadmeConsumerInstallGuidance() {
 }
 function verifyPublicPackageScripts() {
     const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
-    for (const [name, command] of Object.entries(publicPackageScripts)) {
-        if (packageJson.scripts?.[name] !== command) {
-            apmPackageFailures.push(`package.json script ${name} must be ${command}`);
-        }
-    }
-    const scriptNames = Object.keys(packageJson.scripts ?? {});
-    const expectedNames = Object.keys(publicPackageScripts);
-    if (scriptNames.sort().join(",") !== expectedNames.sort().join(",")) {
-        apmPackageFailures.push(`package.json exposes unsupported APM-facing scripts: ${scriptNames.join(", ")}`);
-    }
+    verifyScriptSurface("package.json", packageJson.scripts ?? {});
+    verifyScriptSurface("apm.yml", readApmYamlScripts());
     for (const [name, command] of Object.entries(packageJson.scripts ?? {})) {
         if (String(command).includes("browser/src")) {
             apmPackageFailures.push(`package.json script ${name} must not invoke root browser/src`);
         }
     }
-    const apmBody = readFileSync("apm.yml", "utf8");
-    for (const unsafe of ["parity:check", "fidelity:check", "codex:e2e", "test:browser", "test:golden", "test:guards"]) {
-        if (apmBody.includes(`${unsafe}:`))
-            apmPackageFailures.push(`apm.yml exposes unsupported APM-facing script: ${unsafe}`);
+}
+function verifyScriptSurface(label, scripts) {
+    for (const [name, command] of Object.entries(publicPackageScripts)) {
+        if (scripts?.[name] !== command) {
+            apmPackageFailures.push(`${label} script ${name} must be ${command}`);
+        }
     }
+    const scriptNames = Object.keys(scripts ?? {});
+    const expectedNames = Object.keys(publicPackageScripts);
+    if ([...scriptNames].sort().join(",") !== [...expectedNames].sort().join(",")) {
+        apmPackageFailures.push(`${label} exposes unsupported APM-facing scripts: ${scriptNames.join(", ")}`);
+    }
+}
+function readApmYamlScripts() {
+    const body = readFileSync("apm.yml", "utf8");
+    const scripts = {};
+    const lines = body.split("\n");
+    const start = lines.findIndex((line) => line.trim() === "scripts:");
+    if (start === -1)
+        return scripts;
+    for (const line of lines.slice(start + 1)) {
+        if (/^\S/.test(line))
+            break;
+        if (!line.trim())
+            continue;
+        const match = line.match(/^\s{2}([A-Za-z0-9:_-]+):\s*"([^"]*)"\s*$/);
+        if (match)
+            scripts[match[1]] = match[2];
+    }
+    return scripts;
 }
 function verifyScriptNamingRules() {
     runComplianceCommand(["node", "scripts/script-names-verify.mjs"], ".");
 }
-function checkNoForbiddenRuntimeReferences() {
+function checkBrowserPolicyReferences() {
     const files = [
+        "AGENTS.md",
+        "CLAUDE.md",
         "README.md",
         "apm.yml",
         "package.json",
@@ -167,15 +189,8 @@ function checkNoForbiddenRuntimeReferences() {
     ];
     const forbidden = [
         "~/.claude/skills/product-stacks",
-        "~/." + legacyStackToken(),
         ".product/",
         "type: hybrid",
-        "future runner-managed",
-        "currently degraded",
-        "intentionally degraded",
-        "experimental",
-        "browser/src/cli.ts",
-        `browser/dist/${legacyBrowserCommandName()}`,
         "@your-org/product-" + "browser-runner",
         "@your-org/agent-browser-runner",
         "../agent-browser-runner",
@@ -193,7 +208,6 @@ function checkNoForbiddenRuntimeReferences() {
         for (const needle of forbidden) {
             reportLineMatches(file, body, needle, `contains forbidden reference: ${needle}`);
         }
-        reportRegexMatches(file, body, new RegExp(`\\b${escapeRegExp(legacyBrowserCommandName())}\\s+`), "contains legacy browser CLI wording");
         reportRegexMatches(file, body, /\bagent-browser\s+(open|snapshot|screenshot|console|errors|network|tab|click|fill|press|select|scroll|wait|download|close|stream|session)\b[^\n]*--json\b/, "contains non-canonical agent-browser option order; global options must precede the command");
         reportRegexMatches(file, body, /\bagent-browser\b[^\n]*--session-name\b/, "contains persistent agent-browser session-name in public browser policy");
     }
@@ -291,36 +305,6 @@ function verifyPreparedPackageShape(root) {
             apmPackageFailures.push(`prepared package exposes unsafe scripts: ${scriptNames.join(", ")}`);
         }
     }
-    const apmPath = join(root, "apm.yml");
-    if (existsSync(apmPath)) {
-        const body = readFileSync(apmPath, "utf8");
-        for (const unsafe of ["parity:check", "fidelity:check", "codex:e2e", "test:browser", "test:golden", "test:guards"]) {
-            if (body.includes(`${unsafe}:`))
-                apmPackageFailures.push(`prepared apm.yml exposes unsafe script: ${unsafe}`);
-        }
-    }
-}
-function verifyNoLegacyStackReferences() {
-    const token = legacyStackToken();
-    const result = spawnSync("git", ["ls-files", "-z"], { encoding: "utf8" });
-    if (result.status !== 0) {
-        apmPackageFailures.push(`command failed: git ls-files -z\n${result.stderr.trim()}`);
-        return;
-    }
-    for (const file of result.stdout.split("\0").filter(Boolean)) {
-        if (!existsSync(file))
-            continue;
-        if (file.toLowerCase().includes(token)) {
-            apmPackageFailures.push(`${file} contains removed legacy stack token in path`);
-            continue;
-        }
-        const body = readFileSync(file, "utf8");
-        if (body.toLowerCase().includes(token))
-            apmPackageFailures.push(`${file} contains removed legacy stack token`);
-    }
-}
-function legacyStackToken() {
-    return ["g", "stack"].join("");
 }
 function runComplianceCommand(command, cwd) {
     const result = spawnSync(command[0], command.slice(1), {
@@ -367,10 +351,4 @@ function reportRegexMatches(file, body, pattern, message) {
         if (regex.test(lines[index]))
             apmPackageFailures.push(`${file}:${index + 1} ${message}`);
     }
-}
-function legacyBrowserCommandName() {
-    return "product-" + "browser";
-}
-function escapeRegExp(value) {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

@@ -14,7 +14,7 @@ const fixtureRoot = join(runRoot, "fixture");
 const runtimeRoot = join(runRoot, "runtime");
 const fakeCodexHome = join(runtimeRoot, "codex-home");
 const fakeHome = join(runtimeRoot, "home");
-const agentBrowserSocketDir = join(runtimeRoot, "ab");
+const agentBrowserSocketDir = `/tmp/pbs-ab-${process.pid}`;
 const realCodexHome = resolve(process.env.PRODUCT_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
 const realCodexSkillsRoot = join(realCodexHome, "skills");
 const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
@@ -121,6 +121,7 @@ function prepareCodexBrowserRuntime() {
 
 function cleanupCodexBrowserRuntime() {
     rmSync(runtimeRoot, { recursive: true, force: true });
+    rmSync(agentBrowserSocketDir, { recursive: true, force: true });
 }
 
 function restoreCodexSystemSkillsSnapshot(preflight) {
@@ -131,6 +132,14 @@ function restoreCodexSystemSkillsSnapshot(preflight) {
         cpSync(systemSkillsSnapshotRoot, realCodexSystemSkillsRoot, { recursive: true, preserveTimestamps: true });
         restoreCodexBrowserTreeTimes(realCodexSystemSkillsRoot, preflight.codexSystemSkillsTree);
         restored = true;
+    }
+    else if (!preflight.codexSystemSkillsRoot?.exists && existsSync(realCodexSystemSkillsRoot)) {
+        rmSync(realCodexSystemSkillsRoot, { recursive: true, force: true });
+        restored = true;
+    }
+    if (!beforeState?.exists && existsSync(realCodexSkillsRoot)) {
+        rmSync(realCodexSkillsRoot, { recursive: true, force: true });
+        return true;
     }
     if (beforeState?.exists && typeof beforeState.mtimeMs === "number") {
         const time = new Date(beforeState.mtimeMs);
@@ -431,10 +440,27 @@ function buildBrowserRunnerPrompt(url) {
         `この評価では /tmp の fixture URL ${url} に対する read-only browser evidence 取得を承認します。`,
         "official agent-browser で open, snapshot, screenshot, console, network を実行してください。",
         "成果物はこの app の .product-build-stacks/artifacts/browser 配下に保存してください。",
+        "session/socket path が長くならないよう、以下の setup を使ってください:",
+        "```bash",
+        "_ABR_ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)\"",
+        "_ABR_REPO_ID=\"$(printf '%s' \"$_ABR_ROOT\" | cksum | awk '{print $1}')\"",
+        "_ABR_RUN_ID=\"$(printf '%s' \"${AGENT_BROWSER_RUN_ID:-local}\" | cksum | awk '{print $1}')\"",
+        "_ABR_SESSION=\"ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}\"",
+        "PRODUCT_BROWSER_EVIDENCE_DIR=\"${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser}\"",
+        "AGENT_BROWSER_SOCKET_DIR=\"${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}\"",
+        "mkdir -p \"$AGENT_BROWSER_SOCKET_DIR\" \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" .product-build-stacks/browser/downloads",
+        "export AGENT_BROWSER_SOCKET_DIR",
+        `agent-browser --json --content-boundaries --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" open ${url}`,
+        "agent-browser --json --content-boundaries --session \"$_ABR_SESSION\" snapshot -i",
+        "agent-browser --json --screenshot-dir \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" screenshot",
+        "agent-browser --json --session \"$_ABR_SESSION\" console",
+        "agent-browser --json --session \"$_ABR_SESSION\" network requests",
+        "agent-browser --json --session \"$_ABR_SESSION\" close",
+        "```",
         "auth、cookie import、deploy、外部サービス write は禁止です。",
         "browser を実行していない場合は executed と書かないでください。",
         "最終出力には findings, decisions, evidence, residual risk, next handoff, browser_activation を含めてください。",
-        "browser_activation は executed | blocked | report_only | not_applicable の単一値にしてください。"
+        "最終行は必ず装飾なしで `browser_activation: executed`、`browser_activation: blocked`、`browser_activation: report_only`、`browser_activation: not_applicable` のいずれか 1 行だけにしてください。"
     ].join("\n");
 }
 
@@ -447,7 +473,7 @@ function buildBrowserQaPrompt(url) {
         "auth、cookie import、deploy、外部サービス write は禁止です。",
         "browser を実行していない場合は executed と書かないでください。",
         "最終出力には findings, decisions, evidence, residual risk, next handoff, browser_activation を含めてください。",
-        "browser_activation は executed | blocked | report_only | not_applicable の単一値にしてください。"
+        "最終行は必ず装飾なしで `browser_activation: executed`、`browser_activation: blocked`、`browser_activation: report_only`、`browser_activation: not_applicable` のいずれか 1 行だけにしてください。"
     ].join("\n");
 }
 
@@ -487,7 +513,8 @@ async function runCodexBrowserSkill(skillName, prompt) {
             CODEX_HOME: fakeCodexHome,
             HOME: fakeHome,
             EVAL_EVIDENCE_DIR: join(appRoot, ".product-build-stacks", "artifacts", "browser"),
-            AGENT_BROWSER_SOCKET_DIR: agentBrowserSocketDir
+            AGENT_BROWSER_SOCKET_DIR: agentBrowserSocketDir,
+            PRODUCT_BROWSER_SOCKET_DIR: agentBrowserSocketDir
         }
     });
     const finalText = existsSync(finalPath) ? readFileSync(finalPath, "utf8") : "";
@@ -573,7 +600,7 @@ function renderCodexBrowserCommandLog(command, stdout, stderr, exitCode) {
 
 function parseBrowserActivation(text) {
     for (const pattern of [
-        /browser_activation\s*:\s*`?(executed|blocked|report_only|not_applicable)`?/i,
+        /\*{0,2}browser_activation\s*:\*{0,2}\s*`?(executed|blocked|report_only|not_applicable)`?/i,
         /browser_activation\s*\*{0,2}\s*\n\s*`?(executed|blocked|report_only|not_applicable)`?/i
     ]) {
         const match = text.match(pattern);

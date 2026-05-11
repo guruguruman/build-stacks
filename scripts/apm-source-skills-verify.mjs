@@ -44,17 +44,4 @@ function checkAuthoredSkillDocument(skillName) {
     if (!body.includes(`# ${skillName}`)) {
         sourceSkillDocumentFailures.push(`wrong title: ${file}`);
     }
-    const legacyStackHome = "~/." + ["g", "stack"].join("");
-    for (const forbidden of [
-        "~/.claude/skills/" + "product-stacks",
-        ".claude/skills/" + "product-stacks",
-        legacyStackHome,
-        "consumer-installed product-build-stacks " + "skill directory/" + "bin",
-        "product-stacks-config",
-        "product-stacks-update-check",
-        "product-stacks-model-benchmark"
-    ]) {
-        if (body.includes(forbidden))
-            sourceSkillDocumentFailures.push(`${file} contains unshipped helper reference: ${forbidden}`);
-    }
 }

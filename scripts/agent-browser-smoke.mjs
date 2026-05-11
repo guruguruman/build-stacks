@@ -5,7 +5,9 @@ import { spawn } from "node:child_process";
 const repoRoot = process.cwd();
 const browserRunId = process.env.AGENT_BROWSER_RUN_ID ?? `ci-${Date.now()}`;
 const repoChecksum = computeRepoChecksum(repoRoot);
-const browserSession = `product-stacks-public-${repoChecksum}-${browserRunId}`;
+const browserRunChecksum = computeRepoChecksum(browserRunId);
+const browserSession = `ps-${repoChecksum}-${browserRunChecksum}`;
+const browserSocketDir = process.env.PRODUCT_BROWSER_SOCKET_DIR ?? `/tmp/agent-browser-${repoChecksum}`;
 const browserSmokeRoot = join(repoRoot, ".product-build-stacks", "live-smoke");
 const fixtureSiteRoot = join(browserSmokeRoot, "site");
 const screenshotOutputDir = join(repoRoot, ".product-build-stacks", "artifacts", "browser", "screenshots");
@@ -15,6 +17,7 @@ const fixtureMarker = "Product Stacks Browser Live Smoke";
 mkdirSync(fixtureSiteRoot, { recursive: true });
 mkdirSync(screenshotOutputDir, { recursive: true });
 mkdirSync(browserDownloadDir, { recursive: true });
+mkdirSync(browserSocketDir, { recursive: true });
 writeFileSync(join(fixtureSiteRoot, "index.html"), `<!doctype html>
 <html>
   <head>
@@ -94,6 +97,10 @@ async function runAgentBrowserCommand(args, label, options = {}) {
 async function runCommand(command, label, options = {}) {
     const proc = spawn(command[0], command.slice(1), {
         cwd: repoRoot,
+        env: {
+            ...process.env,
+            AGENT_BROWSER_SOCKET_DIR: browserSocketDir
+        },
         stdio: ["ignore", "pipe", "pipe"]
     });
     let timedOut = false;
