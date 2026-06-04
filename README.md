@@ -68,6 +68,8 @@ npm run apm:verify
 npm run smoke:codex
 npm run smoke:all
 npm run release:verify
+# Heavy Codex E2E smoke is opt-in because it can create large local runtime images.
+PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 ```
 
 `npm run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/`, `.claude/`, `.cursor/`, `.github/skills/`, or `.opencode/` manually.

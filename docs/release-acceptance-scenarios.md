@@ -79,10 +79,11 @@ Success criteria:
 
 ## 4. Codex Browser Core Smoke
 
-Run the browser-core Codex skill path against the local fixture. This uses an
-isolated fake `HOME` and fake `CODEX_HOME`, requests `gpt-5.5` with high
-reasoning, and allows `danger-full-access` only for the fixture-backed browser
-run.
+Run this only when validating the heavy Codex E2E path. It uses an isolated fake
+`HOME` and fake `CODEX_HOME`, requests `gpt-5.5` with high reasoning, and allows
+`danger-full-access` only for the fixture-backed browser run. It is not part of
+the default `npm run release:verify` path because local Codex/eval runtimes can
+create large Docker images.
 
 ```bash
 node scripts/codex-browser-core-smoke.mjs
@@ -108,7 +109,17 @@ Success criteria:
 - No root bundle skill is created.
 - Evidence JSON is written under `.product-build-stacks/evidence/`.
 
-## 6. Skill Release Acceptance Matrix
+## 6. Full Codex E2E Release Gate
+
+Use this only for release candidates that need Codex activation and browser-core
+runtime evidence. It is opt-in to avoid creating large local Docker/runtime
+images during routine verification.
+
+```bash
+PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
+```
+
+## 7. Skill Release Acceptance Matrix
 
 Every skill in [docs/release-acceptance-skill-matrix.md](release-acceptance-skill-matrix.md) must have:
 

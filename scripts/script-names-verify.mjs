@@ -67,7 +67,7 @@ const scriptRules = [
         file: "release-verify.mjs",
         target: "release gate",
         operation: "verify",
-        purpose: "Run the full release gate command list."
+        purpose: "Run the default release gate command list; heavy Codex E2E smoke is opt-in."
     },
     {
         file: "repo-secret-scan.mjs",

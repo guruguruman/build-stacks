@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Made heavy Codex E2E smoke opt-in for `release:verify` to avoid routine creation of large local Docker/runtime images.
+
 ## 1.0.0 - 2026-05-06
 
 Release name: `1.0.0-release`

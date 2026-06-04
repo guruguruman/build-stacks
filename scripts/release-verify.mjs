@@ -9,11 +9,19 @@ const commands = [
     ["apm", "compile", "--validate", "--local-only"],
     ["node", "scripts/apm-skill-install-smoke.mjs", "--target", "codex"],
     ["node", "scripts/apm-skill-install-smoke.mjs", "--target", "all"],
-    ["node", "scripts/codex-skill-activation-smoke.mjs"],
     ["npm", "run", "browser:smoke"],
-    ["node", "scripts/codex-browser-core-smoke.mjs"],
     ["node", "scripts/repo-secret-scan.mjs"]
 ];
+const codexE2eCommands = [
+    ["node", "scripts/codex-skill-activation-smoke.mjs"],
+    ["node", "scripts/codex-browser-core-smoke.mjs"]
+];
+if (process.env.PRODUCT_RELEASE_VERIFY_CODEX_E2E === "1") {
+    commands.splice(commands.length - 1, 0, ...codexE2eCommands);
+}
+else {
+    console.log("Skipping Codex E2E smoke. Set PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 to run it explicitly.");
+}
 for (const command of commands) {
     console.log(`$ ${command.join(" ")}`);
     const result = spawnSync(command[0], command.slice(1), {
