@@ -19,15 +19,6 @@ triggers:
   - browser canary
   - post deploy canary
   - launch check
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-canary

@@ -20,15 +20,6 @@ triggers:
   - design shotgun
   - multiple directions
   - design variants
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-designshotgun

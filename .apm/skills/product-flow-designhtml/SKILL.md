@@ -20,15 +20,6 @@ triggers:
   - design HTML
   - HTML mockup
   - preview page
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-designhtml

@@ -20,15 +20,6 @@ triggers:
   - run QA
   - test and fix
   - browser QA
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-recipe-qa

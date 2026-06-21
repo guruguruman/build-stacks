@@ -20,15 +20,6 @@ triggers:
   - engineering manager review
   - plan review
   - delivery review
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-role-engmanager

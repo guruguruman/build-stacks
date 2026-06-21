@@ -20,15 +20,6 @@ triggers:
   - QA report
   - report only QA
   - browser findings
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-qareport

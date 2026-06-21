@@ -19,15 +19,6 @@ triggers:
   - browser benchmark
   - performance evidence
   - web vitals
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-benchmark

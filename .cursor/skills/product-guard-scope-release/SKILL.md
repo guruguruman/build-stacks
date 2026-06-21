@@ -20,15 +20,6 @@ triggers:
   - release scope
   - unfreeze scope
   - remove scope lock
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-guard-scope-release

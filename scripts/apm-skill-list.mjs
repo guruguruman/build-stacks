@@ -32,6 +32,7 @@ export const productSkills = [
     { name: "product-runtime-health", layer: "runtime", summary: "Summarize workflow health and quality signals.", status: "shipped" },
     { name: "product-role-docengineer", layer: "role", summary: "Documentation release review for changelog, migration notes, operator docs, and proof.", status: "shipped" },
     { name: "product-flow-designconsult", layer: "flow", summary: "Provide product design consultation.", status: "shipped" },
+    { name: "product-flow-goaldirectedux", layer: "flow", summary: "Run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff.", status: "shipped" },
     { name: "product-flow-designhtml", layer: "flow", summary: "Create HTML artifacts and design previews.", status: "shipped" },
     { name: "product-flow-designshotgun", layer: "flow", summary: "Generate and compare multiple design directions.", status: "shipped" },
     { name: "product-source-pdf", layer: "source", summary: "PDF generation and document source support.", status: "shipped" },

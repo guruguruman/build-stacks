@@ -20,15 +20,6 @@ triggers:
   - landing report
   - conversion review
   - landing page review
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-landingreport

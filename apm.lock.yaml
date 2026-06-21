@@ -11,6 +11,7 @@ local_deployed_files:
 - .agents/skills/product-browser-scrape
 - .agents/skills/product-browser-visible
 - .agents/skills/product-flow-designconsult
+- .agents/skills/product-flow-goaldirectedux
 - .agents/skills/product-flow-designhtml
 - .agents/skills/product-flow-designshotgun
 - .agents/skills/product-flow-landingreport
@@ -51,6 +52,7 @@ local_deployed_files:
 - .claude/skills/product-browser-scrape
 - .claude/skills/product-browser-visible
 - .claude/skills/product-flow-designconsult
+- .claude/skills/product-flow-goaldirectedux
 - .claude/skills/product-flow-designhtml
 - .claude/skills/product-flow-designshotgun
 - .claude/skills/product-flow-landingreport
@@ -91,6 +93,7 @@ local_deployed_files:
 - .cursor/skills/product-browser-scrape
 - .cursor/skills/product-browser-visible
 - .cursor/skills/product-flow-designconsult
+- .cursor/skills/product-flow-goaldirectedux
 - .cursor/skills/product-flow-designhtml
 - .cursor/skills/product-flow-designshotgun
 - .cursor/skills/product-flow-landingreport
@@ -131,6 +134,7 @@ local_deployed_files:
 - .github/skills/product-browser-scrape
 - .github/skills/product-browser-visible
 - .github/skills/product-flow-designconsult
+- .github/skills/product-flow-goaldirectedux
 - .github/skills/product-flow-designhtml
 - .github/skills/product-flow-designshotgun
 - .github/skills/product-flow-landingreport
@@ -171,6 +175,7 @@ local_deployed_files:
 - .opencode/skills/product-browser-scrape
 - .opencode/skills/product-browser-visible
 - .opencode/skills/product-flow-designconsult
+- .opencode/skills/product-flow-goaldirectedux
 - .opencode/skills/product-flow-designhtml
 - .opencode/skills/product-flow-designshotgun
 - .opencode/skills/product-flow-landingreport

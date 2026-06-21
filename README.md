@@ -1,6 +1,6 @@
 # product-build-stacks
 
-`product-build-stacks` is an APM-managed 40-skill package for product discovery, review, browser QA, release, and runtime discipline.
+`product-build-stacks` is an APM-managed 41-skill package for product discovery, review, browser QA, release, and runtime discipline.
 
 `.apm/` is the only authored source. Generated target output is committed for reviewability and must match a clean APM install. Runtime state belongs under `.product-build-stacks/`.
 
@@ -55,7 +55,7 @@ agent-browser --json --session "$_ABR_SESSION" close
 
 ## Shipped Skills
 
-The public surface is the 40 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
+The public surface is the 41 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
 
 ## Maintainer Verification
 

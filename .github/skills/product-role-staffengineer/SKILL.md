@@ -20,15 +20,6 @@ triggers:
   - staff engineer review
   - review the diff
   - pre landing review
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-role-staffengineer

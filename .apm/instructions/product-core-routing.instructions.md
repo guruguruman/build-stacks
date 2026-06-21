@@ -5,4 +5,4 @@ applyTo: "**/*"
 
 # product-core-routing
 
-Route requests to `product-*` skills. Keep legacy names out of external interfaces.
+Route requests to the published `product-*` skill names only.

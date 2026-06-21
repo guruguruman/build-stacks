@@ -20,15 +20,6 @@ triggers:
   - investigate
   - root cause
   - debug this
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-recipe-investigate

@@ -20,15 +20,6 @@ triggers:
   - browser QA
   - test the page
   - capture evidence
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-qa

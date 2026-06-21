@@ -20,15 +20,6 @@ triggers:
   - scrape page
   - public page evidence
   - extract content
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-scrape

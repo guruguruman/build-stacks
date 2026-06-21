@@ -20,15 +20,6 @@ triggers:
   - pair agent handoff
   - browser QA packet
   - handoff packet
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-pairagent

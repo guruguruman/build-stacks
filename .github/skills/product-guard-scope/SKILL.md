@@ -20,15 +20,6 @@ triggers:
   - scope guard
   - freeze scope
   - lock edits
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-guard-scope

@@ -20,15 +20,6 @@ triggers:
   - release review
   - rollback plan
   - release engineer
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-role-releaseengineer

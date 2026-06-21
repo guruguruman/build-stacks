@@ -20,15 +20,6 @@ triggers:
   - founder review
   - CEO review
   - wedge review
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-role-founder

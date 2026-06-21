@@ -19,15 +19,6 @@ triggers:
   - PDF support
   - create PDF
   - verify PDF
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-source-pdf

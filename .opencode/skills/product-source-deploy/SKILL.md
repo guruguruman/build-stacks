@@ -19,15 +19,6 @@ triggers:
   - deploy setup
   - deployment readiness
   - provider assumptions
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-source-deploy

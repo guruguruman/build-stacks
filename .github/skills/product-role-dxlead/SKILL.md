@@ -20,15 +20,6 @@ triggers:
   - DX review
   - developer experience review
   - API review
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-role-dxlead

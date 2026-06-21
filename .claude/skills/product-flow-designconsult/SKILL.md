@@ -20,15 +20,6 @@ triggers:
   - design consult
   - product design advice
   - UX consultation
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-designconsult

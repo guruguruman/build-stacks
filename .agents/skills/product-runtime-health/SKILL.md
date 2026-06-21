@@ -20,15 +20,6 @@ triggers:
   - workflow health
   - stack health
   - quality signals
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-runtime-health

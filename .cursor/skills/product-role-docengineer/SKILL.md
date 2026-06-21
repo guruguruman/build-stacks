@@ -20,15 +20,6 @@ triggers:
   - docs review
   - documentation release
   - operator docs
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-role-docengineer

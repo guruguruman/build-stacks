@@ -20,15 +20,6 @@ triggers:
   - upgrade stack
   - migration check
   - update product stacks
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-runtime-upgrade
@@ -48,7 +39,7 @@ apm audit --ci
 apm compile --validate --local-only
 ```
 
-5. Verify that all 40 `product-*` skills are installed and no root bundle skill was created.
+5. Verify that all 41 `product-*` skills are installed and no root bundle skill was created.
 6. Record evidence under `.product-build-stacks/evidence/product-runtime-upgrade.json`.
 
 ## Output Contract

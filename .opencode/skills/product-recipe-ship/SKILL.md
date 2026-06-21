@@ -20,15 +20,6 @@ triggers:
   - prepare release
   - ship branch
   - release handoff
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-recipe-ship

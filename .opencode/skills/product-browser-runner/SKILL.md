@@ -20,15 +20,6 @@ triggers:
   - browser evidence
   - open the page
   - take a screenshot
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-runner

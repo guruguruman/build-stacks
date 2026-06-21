@@ -20,15 +20,6 @@ triggers:
   - visible browser
   - headed browser
   - watch browser
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-visible

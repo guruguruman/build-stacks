@@ -20,15 +20,6 @@ triggers:
   - destructive guard
   - risky command
   - approval check
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-guard-destructive

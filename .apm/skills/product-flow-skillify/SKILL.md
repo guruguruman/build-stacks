@@ -20,15 +20,6 @@ triggers:
   - skillify
   - make a skill
   - workflow skill
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-skillify
@@ -40,7 +31,7 @@ Use this maintainer workflow when repeated browser or product workflow work shou
 1. Confirm the repeated workflow, trigger phrase, inputs, approval class, and evidence path.
 2. Create a candidate directory under `.product-build-stacks/skill-candidates/<name>/`.
 3. Draft `SKILL.md` with frontmatter, when-to-use guidance, workflow, output contract, smoke scenario, expected output, evidence path, and failure mode.
-4. Review the candidate for overlap with existing 40 skills in `docs/release-acceptance-skill-matrix.md`.
+4. Review the candidate for overlap with existing 41 skills in `docs/release-acceptance-skill-matrix.md`.
 5. If accepted, move the candidate into `.apm/skills/<product-name>/`, add it to the skill catalog if it is shipped, and run:
 
 ```bash

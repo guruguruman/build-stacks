@@ -25,7 +25,7 @@ Always reply in Japanese.
 <!-- Source: local .apm/instructions/product-core-routing.instructions.md -->
 # product-core-routing
 
-Route requests to `product-*` skills. Keep legacy names out of external interfaces.
+Route requests to the published `product-*` skill names only.
 
 <!-- Source: local .apm/instructions/product-core-status.instructions.md -->
 # product-core-status

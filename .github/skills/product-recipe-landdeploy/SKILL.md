@@ -20,15 +20,6 @@ triggers:
   - land deploy
   - merge and deploy
   - ship to production
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-recipe-landdeploy

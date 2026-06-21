@@ -19,15 +19,6 @@ triggers:
   - model benchmark
   - compare models
   - skill quality
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-internal-modelbenchmark

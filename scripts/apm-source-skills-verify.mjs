@@ -11,21 +11,11 @@ const requiredFrontmatterKeys = [
     "version",
     "description",
     "benefits-from",
-    "triggers",
-    "allowed-tools"
-];
-const allowedTools = [
-    "Bash",
-    "Read",
-    "Write",
-    "Edit",
-    "Glob",
-    "Grep",
-    "WebSearch",
-    "AskUserQuestion"
+    "triggers"
 ];
 const highPreambleFlowSkills = new Set([
     "product-flow-designconsult",
+    "product-flow-goaldirectedux",
     "product-flow-designshotgun",
     "product-flow-landingreport",
     "product-flow-plantune",
@@ -99,6 +89,9 @@ function verifyFrontmatterSchema(file, skill, frontmatterLines) {
     if (actualKeys.join("\n") !== requiredFrontmatterKeys.join("\n")) {
         sourceSkillDocumentFailures.push(`${file} frontmatter keys must be ${requiredFrontmatterKeys.join(", ")}`);
     }
+    if (actualKeys.includes("allowed-tools")) {
+        sourceSkillDocumentFailures.push(`${file} must not declare allowed-tools; product skills should not restrict host tool availability`);
+    }
     const values = new Map(keyEntries.map((entry) => [entry.key, entry.value]));
     if (values.get("name") !== skillName) {
         sourceSkillDocumentFailures.push(`frontmatter name mismatch: ${file}`);
@@ -120,10 +113,6 @@ function verifyFrontmatterSchema(file, skill, frontmatterLines) {
     const triggers = collectListValues(frontmatterLines, keyEntries, "triggers");
     if (triggers.length === 0) {
         sourceSkillDocumentFailures.push(`triggers must include at least one item: ${file}`);
-    }
-    const tools = collectListValues(frontmatterLines, keyEntries, "allowed-tools");
-    if (tools.join("\n") !== allowedTools.join("\n")) {
-        sourceSkillDocumentFailures.push(`${file} allowed-tools must be exactly ${allowedTools.join(", ")}`);
     }
 }
 

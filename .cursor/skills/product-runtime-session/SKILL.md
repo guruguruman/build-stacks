@@ -20,15 +20,6 @@ triggers:
   - save session
   - restore session
   - working context
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-runtime-session

@@ -19,15 +19,6 @@ triggers:
   - browser auth
   - authenticated browser
   - cookie setup
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-browser-auth

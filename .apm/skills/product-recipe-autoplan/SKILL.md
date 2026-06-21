@@ -20,15 +20,6 @@ triggers:
   - auto plan
   - automatic review
   - plan review chain
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-recipe-autoplan

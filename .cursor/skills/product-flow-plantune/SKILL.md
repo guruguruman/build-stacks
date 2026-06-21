@@ -20,15 +20,6 @@ triggers:
   - tune the plan
   - plan tuning
   - scope review
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-flow-plantune

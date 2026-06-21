@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added `product-flow-goaldirectedux` for Goal-Directed UX Design, including personas, scenarios, requirements, UX framework, and implementation handoff guidance.
 - Made heavy Codex E2E smoke opt-in for `release:verify` to avoid routine creation of large local Docker/runtime images.
 
 ## 1.0.0 - 2026-05-06

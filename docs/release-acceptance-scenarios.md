@@ -105,7 +105,7 @@ npm run smoke:all
 
 Success criteria:
 
-- The consumer project installs all 40 skills.
+- The consumer project installs all 41 skills.
 - No root bundle skill is created.
 - Evidence JSON is written under `.product-build-stacks/evidence/`.
 

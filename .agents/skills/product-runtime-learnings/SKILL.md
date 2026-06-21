@@ -20,15 +20,6 @@ triggers:
   - record learning
   - retrieve learning
   - repo memory
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - WebSearch
-  - AskUserQuestion
 ---
 
 # product-runtime-learnings

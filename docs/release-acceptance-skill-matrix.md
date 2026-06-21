@@ -1,6 +1,6 @@
 # Skill Release Acceptance Matrix
 
-This is the 1.0.0 shipped skill acceptance ledger. All 40 skills are shipped; internal skills are distributed for maintainer and eval workflows, not primary user-facing routing.
+This is the 1.0.0 shipped skill acceptance ledger. All 41 skills are shipped; internal skills are distributed for maintainer and eval workflows, not primary user-facing routing.
 
 | Skill | Layer | Status | Smoke scenario | Expected output | Evidence path | Failure mode |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -37,6 +37,7 @@ This is the 1.0.0 shipped skill acceptance ledger. All 40 skills are shipped; in
 | `product-runtime-health` | runtime | shipped | Invoke product-runtime-health in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-runtime-health.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
 | `product-role-docengineer` | role | shipped | Invoke product-role-docengineer in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-role-docengineer.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
 | `product-flow-designconsult` | flow | shipped | Invoke product-flow-designconsult in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-flow-designconsult.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
+| `product-flow-goaldirectedux` | flow | shipped | Invoke product-flow-goaldirectedux in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-flow-goaldirectedux.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
 | `product-flow-designhtml` | flow | shipped | Invoke product-flow-designhtml in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-flow-designhtml.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
 | `product-flow-designshotgun` | flow | shipped | Invoke product-flow-designshotgun in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-flow-designshotgun.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
 | `product-source-pdf` | source | shipped | Invoke product-source-pdf in a clean consumer and complete its documented workflow. | findings, decisions, evidence, residual risk, next handoff | .product-build-stacks/evidence/product-source-pdf.json | Missing dependency or approval is named with a next action; no hidden helper fallback. |
