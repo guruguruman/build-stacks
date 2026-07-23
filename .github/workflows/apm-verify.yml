@@ -1,6 +1,7 @@
 name: apm-verify
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -86,7 +87,6 @@ jobs:
           apm compile --validate --local-only
           npm run smoke:codex
           npm run smoke:all
-          node scripts/codex-skill-activation-smoke.mjs --all-skills
           node scripts/repo-secret-scan.mjs
 
       - name: Live agent-browser smoke

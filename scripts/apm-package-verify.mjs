@@ -25,6 +25,7 @@ checkNoRootSkillBundle();
 checkNoForbiddenPackageRoots();
 checkManifestShape();
 verifyGeneratedContextContract();
+verifyCiReleaseContract();
 verifyBrowserRunnerSkillPolicy();
 checkReadmeConsumerInstallGuidance();
 verifyPublicPackageScripts();
@@ -105,6 +106,20 @@ function verifyGeneratedContextContract() {
     }
     if (existsSync("GEMINI.md") && !readFileSync("GEMINI.md", "utf8").includes("@./AGENTS.md")) {
         apmPackageFailures.push("GEMINI.md must import AGENTS.md");
+    }
+}
+function verifyCiReleaseContract() {
+    const file = ".github/workflows/apm-verify.yml";
+    if (!existsSync(file)) {
+        apmPackageFailures.push(`missing CI workflow: ${file}`);
+        return;
+    }
+    const body = readFileSync(file, "utf8");
+    if (!body.includes("workflow_dispatch:")) {
+        apmPackageFailures.push(`${file} must support manual release verification`);
+    }
+    if (body.includes("node scripts/codex-skill-activation-smoke.mjs --all-skills")) {
+        apmPackageFailures.push(`${file} must keep heavy Codex E2E smoke opt-in`);
     }
 }
 function verifyBrowserRunnerSkillPolicy() {
