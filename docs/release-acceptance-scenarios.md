@@ -105,7 +105,9 @@ npm run smoke:all
 
 Success criteria:
 
-- The consumer project installs all 41 skills.
+- The consumer project installs all 42 skills.
+- Converged installs contain `.agents/skills`, `.claude/skills`, and `.kiro/skills`.
+- Retired duplicate roots `.cursor/skills`, `.github/skills`, and `.opencode/skills` are absent.
 - No root bundle skill is created.
 - Evidence JSON is written under `.product-build-stacks/evidence/`.
 

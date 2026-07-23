@@ -38,6 +38,7 @@ const forbiddenPackagePaths = [
     ".product-build-stacks",
     ".agents",
     ".claude",
+    ".kiro",
     ".cursor",
     ".github/skills",
     ".opencode"

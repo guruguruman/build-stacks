@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
+import { installedSkillRoots } from "./apm-contract.mjs";
 const failures = [];
 const scannedFiles = [];
 const publicReleaseRoots = [
@@ -14,12 +15,8 @@ const publicReleaseRoots = [
     "package.json",
     "package-lock.json",
     "scripts",
-    ".agents/skills",
-    ".claude/skills",
-    ".cursor/skills",
-    ".github/skills",
+    ...installedSkillRoots,
     ".github/workflows",
-    ".opencode/skills"
 ];
 const skipDirs = new Set(["node_modules", "apm_modules", "tmp", ".product-build-stacks", ".git"]);
 const secretPatterns = [

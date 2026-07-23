@@ -8,7 +8,8 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 
 | File | Target object | Operation | Purpose |
 | --- | --- | --- | --- |
-| `apm-installed-skills-sync.mjs` | installed skill folders | sync | Compare or sync checked-in skill folders with a fresh `apm install --target all` result. |
+| `apm-contract.mjs` | APM version, targets, and generated roots | module | Export the pinned APM contract shared by generation, verification, and smoke scripts. |
+| `apm-installed-skills-sync.mjs` | installed skill folders | sync | Compare or sync checked-in converged skill folders with a clean APM install. |
 | `apm-source-skills-verify.mjs` | source `.apm/skills/*/SKILL.md` files | verify | Validate the APM skill list against source skill frontmatter, titles, and product naming rules. |
 | `apm-package-prepare.mjs` | local APM package | prepare | Create a clean local package for install smoke tests. |
 | `apm-skill-install-smoke.mjs` | skill folders installed by APM | smoke | Install the local package into a temporary app and verify deployed skill roots. |

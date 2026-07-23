@@ -1,6 +1,6 @@
 # product-build-stacks
 
-`product-build-stacks` is an APM-managed 41-skill package for product discovery, review, browser QA, release, and runtime discipline.
+`product-build-stacks` is an APM 0.26.0-managed 42-skill package for product discovery, review, browser QA, release, and runtime discipline.
 
 `.apm/` is the only authored source. Generated target output is committed for reviewability and must match a clean APM install. Runtime state belongs under `.product-build-stacks/`.
 
@@ -21,7 +21,9 @@ Commit `apm.yml` and `apm.lock.yaml` in consumer repos. Runtime state stays unde
 !.product-build-stacks/config.example.yaml
 ```
 
-Supported APM 0.9.1 targets under `--target all`: `codex`, `claude`, `cursor`, `copilot`/`vscode`, `opencode`, and `agents`.
+Supported APM 0.26.0 targets under `--target all`: `copilot`, `claude`, `cursor`, `opencode`, `codex`, `gemini`, `windsurf`, and `kiro`.
+
+APM 0.26 converges skills for Copilot, Cursor, OpenCode, Codex, Gemini, and Windsurf into `.agents/skills/`. Claude and Kiro keep `.claude/skills/` and `.kiro/skills/`.
 
 ## Browser Runtime
 
@@ -55,7 +57,7 @@ agent-browser --json --session "$_ABR_SESSION" close
 
 ## Shipped Skills
 
-The public surface is the 41 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
+The public surface is the 42 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
 
 ## Maintainer Verification
 
@@ -72,7 +74,7 @@ npm run release:verify
 PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 ```
 
-`npm run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/`, `.claude/`, `.cursor/`, `.github/skills/`, or `.opencode/` manually.
+`npm run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/skills/`, `.claude/skills/`, or `.kiro/skills/` manually.
 
 ## Release Files
 

@@ -17,6 +17,7 @@ const highPreambleFlowSkills = new Set([
     "product-flow-designconsult",
     "product-flow-goaldirectedux",
     "product-flow-designshotgun",
+    "product-flow-infradesign",
     "product-flow-landingreport",
     "product-flow-plantune",
     "product-flow-skillify"

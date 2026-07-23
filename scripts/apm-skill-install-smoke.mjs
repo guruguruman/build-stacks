@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
+import { expectedApmVersion, retiredLegacySkillRoots, targetSkillRoots, verifyApmCliVersion } from "./apm-contract.mjs";
 import { productSkills } from "./apm-skill-list.mjs";
 const target = readCliOption("--target") ?? "codex";
 const workspaceRoot = `.product-build-stacks/tmp/apm-skill-install-smoke-${target}`;
@@ -8,19 +9,10 @@ const packageOut = join(workspaceRoot, "package");
 const consumerOut = join(workspaceRoot, "consumer");
 const evidencePath = `.product-build-stacks/evidence/apm-skill-install-smoke-${target}.json`;
 const expectedSkillNames = productSkills.map((skill) => skill.name).sort();
-const targetSkillRoots = {
-    agents: [".agents/skills"],
-    codex: [".agents/skills"],
-    claude: [".claude/skills"],
-    cursor: [".cursor/skills"],
-    copilot: [".github/skills"],
-    vscode: [".github/skills"],
-    opencode: [".opencode/skills"],
-    all: [".agents/skills", ".claude/skills", ".cursor/skills", ".github/skills", ".opencode/skills"]
-};
 if (!(target in targetSkillRoots)) {
-    throw new Error(`unsupported APM 0.9.1 target for product-build-stacks smoke: ${target}`);
+    throw new Error(`unsupported APM ${expectedApmVersion} target for product-build-stacks smoke: ${target}`);
 }
+verifyApmCliVersion();
 rmSync(workspaceRoot, { recursive: true, force: true });
 mkdirSync(consumerOut, { recursive: true });
 runConsumerInstallCommand(["node", "scripts/apm-package-prepare.mjs", "--out", packageOut], ".");
@@ -48,12 +40,14 @@ for (const rootBundle of [
     ".agents/skills/product-build-stacks",
     ".agents/skills/product-build-stacks-package",
     ".claude/skills/product-build-stacks",
-    ".cursor/skills/product-build-stacks",
-    ".github/skills/product-build-stacks",
-    ".opencode/skills/product-build-stacks"
+    ".kiro/skills/product-build-stacks"
 ]) {
     if (existsSync(join(consumerOut, rootBundle)))
         failures.push(`consumer install created forbidden root bundle: ${rootBundle}`);
+}
+for (const legacyRoot of retiredLegacySkillRoots) {
+    if (existsSync(join(consumerOut, legacyRoot)))
+        failures.push(`consumer install created retired legacy skill root: ${legacyRoot}`);
 }
 mkdirSync(".product-build-stacks/evidence", { recursive: true });
 writeFileSync(evidencePath, `${JSON.stringify({

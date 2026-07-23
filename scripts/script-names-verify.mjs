@@ -4,10 +4,16 @@ const scriptNamingFailures = [];
 const scriptRoot = "scripts";
 const scriptRules = [
     {
+        file: "apm-contract.mjs",
+        target: "APM version, targets, and generated roots",
+        operation: "module",
+        purpose: "Export the pinned APM contract shared by generation, verification, and smoke scripts."
+    },
+    {
         file: "apm-installed-skills-sync.mjs",
         target: "installed skill folders",
         operation: "sync",
-        purpose: "Compare or sync checked-in skill folders with a fresh `apm install --target all` result."
+        purpose: "Compare or sync checked-in converged skill folders with a clean APM install."
     },
     {
         file: "apm-source-skills-verify.mjs",

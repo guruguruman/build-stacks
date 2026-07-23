@@ -1,19 +1,14 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
+import { installedSkillRoots, retiredLegacySkillRoots, verifyApmCliVersion } from "./apm-contract.mjs";
 import { productSkills } from "./apm-skill-list.mjs";
 const mode = process.argv.includes("--write") ? "write" : "verify";
 const workspaceRoot = ".product-build-stacks/tmp/apm-installed-skills-sync";
 const packageOut = join(workspaceRoot, "package");
 const consumerOut = join(workspaceRoot, "consumer");
 const expectedSkillNames = productSkills.map((skill) => skill.name).sort();
-const installedSkillRoots = [
-    ".agents/skills",
-    ".claude/skills",
-    ".cursor/skills",
-    ".github/skills",
-    ".opencode/skills"
-];
+verifyApmCliVersion();
 resetWorkspace();
 runApmInstalledSkillCommand(["node", "scripts/apm-package-prepare.mjs", "--out", packageOut], ".");
 mkdirSync(consumerOut, { recursive: true });
@@ -32,6 +27,14 @@ for (const root of installedSkillRoots) {
     }
     verifySkillRoot(root, `repo output ${root}`);
     compareTrees(deployedRoot, root, root);
+}
+for (const root of retiredLegacySkillRoots) {
+    if (mode === "write") {
+        rmSync(root, { recursive: true, force: true });
+    }
+    else if (existsSync(root)) {
+        failures.push(`retired legacy skill root must be removed: ${root}`);
+    }
 }
 if (failures.length > 0) {
     console.error(failures.join("\n"));

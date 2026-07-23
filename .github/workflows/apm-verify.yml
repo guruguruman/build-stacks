@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 120
     env:
-      APM_EXPECTED_VERSION: "0.9.1"
+      APM_EXPECTED_VERSION: "0.26.0"
       AGENT_BROWSER_EXPECTED_VERSION: "0.25.3"
 
     steps:
@@ -33,11 +33,11 @@ jobs:
           case "$(uname -m)" in
             arm64|aarch64)
               APM_ARCH="arm64"
-              APM_SHA256="54f335a46f52b76f36b6a43c8a41d3f3e2c1dc78d1f43f479edc828426ee7033"
+              APM_SHA256="febddd0a8beb4be7b411e708ed746937a14482d5e0935eb776b7f35e320654df"
               ;;
             x86_64|amd64)
               APM_ARCH="x86_64"
-              APM_SHA256="ca584af724126bdbc53801555b86f06e45e59f8da6cc07d5939ed65c1c80b110"
+              APM_SHA256="6cc47251bbefabe36224bcc5370c1ef08405d4fd15900b42e11ba672ae29483f"
               ;;
             *)
               echo "Unsupported APM runner architecture: $(uname -m)" >&2

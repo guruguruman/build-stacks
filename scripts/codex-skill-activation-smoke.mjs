@@ -324,7 +324,8 @@ function prepareConsumerAppForSkillSmoke() {
     writeFileSync(join(consumerAppRoot, "README.md"), "# tmp-codex-skill-smoke\n");
     writeFileSync(join(consumerAppRoot, "apm.yml"), `name: tmp-codex-skill-smoke
 version: 0.0.0
-target: codex
+targets:
+  - codex
 
 dependencies:
   apm: []

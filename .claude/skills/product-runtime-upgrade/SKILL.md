@@ -24,22 +24,23 @@ triggers:
 
 # product-runtime-upgrade
 
-Use this skill when a user wants to upgrade `product-build-stacks`, verify the installed version, or prepare a migration between public APM package tags.
+Use this skill when a user wants to upgrade the APM CLI or `product-build-stacks`, verify installed versions, or prepare a migration between public APM package tags.
 
 ## Workflow
 
-1. Confirm the current package entry in the consumer `apm.yml` and `apm.lock.yaml`.
-2. Confirm the target version or tag. For the 1.0 release line, use `guruguruman/product-build-stacks#v1.0.0`.
+1. Confirm the current APM CLI version and package entry in the consumer `apm.yml` and `apm.lock.yaml`.
+2. Confirm the target CLI version and package tag. The current maintainer contract uses APM 0.26.0; for the product-stacks 1.0 release line, use `guruguruman/product-build-stacks#v1.0.0`.
 3. Stop before changing dependencies unless the user explicitly approves the upgrade.
 4. Run the APM install command in the consumer repo:
 
 ```bash
+apm --version
 apm install guruguruman/product-build-stacks#v1.0.0 --target all
 apm audit --ci
 apm compile --validate --local-only
 ```
 
-5. Verify that all 41 `product-*` skills are installed and no root bundle skill was created.
+5. Verify that all 42 `product-*` skills are installed under the APM 0.26 converged roots: `.agents/skills`, `.claude/skills`, and `.kiro/skills`; verify that no root bundle or retired per-client duplicate was created.
 6. Record evidence under `.product-build-stacks/evidence/product-runtime-upgrade.json`.
 
 ## Output Contract

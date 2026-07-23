@@ -21,6 +21,7 @@ export const productSkills = [
     { name: "product-browser-auth", layer: "browser", summary: "Guarded cookie import and authenticated browser setup.", status: "shipped" },
     { name: "product-browser-scrape", layer: "browser", summary: "Extract page content in an untrusted envelope.", status: "shipped" },
     { name: "product-flow-skillify", layer: "flow", summary: "Turn repeated work into reviewed skill candidates.", status: "shipped" },
+    { name: "product-flow-infradesign", layer: "flow", summary: "Design evidence-backed infrastructure topologies from repository, user, and operational constraints.", status: "shipped" },
     { name: "product-recipe-investigate", layer: "recipe", summary: "Require investigation before risky fixes.", status: "shipped" },
     { name: "product-role-cso", layer: "role", summary: "Security review for threat model, privacy, auth, secrets, policy risk, and blockers.", status: "shipped" },
     { name: "product-guard-destructive", layer: "guard", summary: "Warn and require approval before destructive actions.", status: "shipped" },

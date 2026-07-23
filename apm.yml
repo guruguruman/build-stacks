@@ -1,7 +1,15 @@
 name: product-build-stacks
 version: 1.0.0
 description: APM-managed product build skill stack with official agent-browser policy integration
-target: all
+targets:
+  - copilot
+  - claude
+  - cursor
+  - opencode
+  - codex
+  - gemini
+  - windsurf
+  - kiro
 
 scripts:
   build: "node scripts/apm-installed-skills-sync.mjs --write"

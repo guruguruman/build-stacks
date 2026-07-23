@@ -309,7 +309,8 @@ function prepareCodexBrowserApp() {
     writeFileSync(join(appRoot, "README.md"), "# product browser core smoke app\n");
     writeFileSync(join(appRoot, "apm.yml"), `name: product-browser-core-smoke
 version: 0.0.0
-target: codex
+targets:
+  - codex
 
 dependencies:
   apm: []
