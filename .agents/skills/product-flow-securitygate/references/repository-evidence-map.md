@@ -25,13 +25,18 @@ Use this map to locate evidence; it is not evidence by itself. Verify current pa
 
 ## Safe discovery patterns
 
-Run from the repository root. Prefer `rg --files` and narrow searches before opening files. Exclude environment files, credentials, build output, dependency directories, database data, and captured user data.
+Run from the repository root. Prefer `rg --files` and narrow searches before opening files. Exclude environment files, credentials, build output, dependency directories, database data, captured user data, installed skill roots, generated host instructions, APM package caches, and prior runtime reports.
+
+Start with application-owned paths. Do not enumerate or audit `.agents/`, `.claude/`,
+`.kiro/`, `apm_modules/`, `.product-build-stacks/`, `node_modules/`, build output, or
+generated instruction bundles unless the user explicitly includes them. Installed skills
+are audit tooling, not application evidence.
 
 ```sh
 git rev-parse HEAD
 git status --short
-rg --files -g 'AGENTS.md' -g 'CLAUDE.md' -g 'README.md' -g '*HARNESS*' -g '!node_modules/**'
-rg -n 'Auth|authenticate|authorize|session|cookie|token|verify|revoke' . -g '*.{ts,tsx,js,jsx,py,go,rs,java,kt,rb,php,cs,md}' -g '!*.env*' -g '!node_modules/**'
+rg --files -g 'AGENTS.md' -g 'CLAUDE.md' -g 'README.md' -g '*HARNESS*' -g '!node_modules/**' -g '!.agents/**' -g '!.claude/**' -g '!.kiro/**' -g '!apm_modules/**' -g '!.product-build-stacks/**'
+rg -n 'Auth|authenticate|authorize|session|cookie|token|verify|revoke' . -g '*.{ts,tsx,js,jsx,py,go,rs,java,kt,rb,php,cs,md}' -g '!*.env*' -g '!node_modules/**' -g '!.agents/**' -g '!.claude/**' -g '!.kiro/**' -g '!apm_modules/**' -g '!.product-build-stacks/**'
 rg -n 'tenant|organization|accountId|workspaceId|membership|role|permission' . -g '*.{ts,tsx,js,jsx,py,go,rs,java,kt,rb,php,cs}' -g '!node_modules/**'
 rg -n 'schema|validate|safeParse|DTO|Validation|bodyLimit|fileSize|multipart' . -g '*.{ts,tsx,js,jsx,py,go,rs,java,kt,rb,php,cs}' -g '!node_modules/**'
 rg -n 'rate.?limit|throttl|quota|budget|concurr|retry|backoff|idempoten|circuit' . -g '*.{ts,tsx,js,jsx,py,go,rs,java,kt,rb,php,cs,md}' -g '!node_modules/**'

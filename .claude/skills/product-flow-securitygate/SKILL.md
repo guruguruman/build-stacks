@@ -80,6 +80,12 @@ Use `bin/security_gate_report.py` to create and validate the report. The validat
 - **FOCUSED:** Assess the changed surface and adjacent trust boundaries. Keep every report row, mark out-of-scope evidence honestly, and never issue a release-wide GO.
 - **RAPID:** Time-box evidence collection but still assess every ID. Use `NOT_VERIFIED` for unfinished checks and let it affect the verdict.
 
+In every mode, exclude installed skill roots, package-manager caches, generated host
+instructions, build output, and prior runtime reports from application discovery unless
+the user explicitly places those surfaces in scope. Do not dump broad file listings or
+full scanner output into context; collect the smallest path- and line-based evidence that
+can support each control.
+
 ## Workflow
 
 ### 1. Establish scope and baseline
@@ -87,6 +93,9 @@ Use `bin/security_gate_report.py` to create and validate the report. The validat
 Record the repository root, commit, dirty-worktree state, audit mode, target environment, included local changes, affected surfaces, data classes, and external services. Read root project documentation and the nearest package instructions. Read authentication/session documentation whenever identity boundaries are in scope.
 
 Do not assume modified or untracked files belong to the audit. State whether they were included.
+Before discovery, exclude `.agents/`, `.claude/`, `.kiro/`, `apm_modules/`,
+`.product-build-stacks/`, dependency directories, and generated build output unless one
+of those paths is explicitly in scope.
 
 ### 2. Create the report first
 

@@ -32,7 +32,7 @@ describe("product-flow-securitygate", () => {
             "-q"
         ]);
         assert.equal(unitTests.status, 0, commandFailure(unitTests));
-        assert.match(unitTests.stderr, /Ran 11 tests/);
+        assert.match(unitTests.stderr, /Ran 13 tests/);
         assert.match(unitTests.stderr, /OK/);
     });
 

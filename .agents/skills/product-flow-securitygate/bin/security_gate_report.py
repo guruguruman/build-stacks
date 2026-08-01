@@ -122,6 +122,17 @@ def make_report(repo: Path, mode: str) -> str:
         "",
         "TBD",
         "",
+        "## Attack surface and mandatory passes",
+        "",
+        "- Baseline posture: TBD",
+        "- OWASP pass: TBD",
+        "- Data-exposure pass: TBD",
+        "- Secret-boundary pass: TBD",
+        "",
+        "## Mandatory failure scenarios",
+        "",
+        *[f"{number}. TBD" for number in range(1, 11)],
+        "",
         "## Control results",
         "",
         "| ID | Verdict | Severity | Evidence | Finding | Remediation | Verification |",
@@ -195,6 +206,9 @@ def line_contains_placeholder(line: str) -> bool:
         return True
     if line.startswith("|"):
         return any(is_placeholder_value(cell) for cell in split_table_row(line))
+    numbered_match = re.match(r"^\s*\d+\.\s+(.+)$", line)
+    if numbered_match:
+        return is_placeholder_value(numbered_match.group(1))
     if ":" in line:
         return is_placeholder_value(line.split(":", 1)[1])
     return False
@@ -261,6 +275,8 @@ def validate_report(path: Path) -> list[str]:
     required_sections = (
         "## Release blockers",
         "## Decisions",
+        "## Attack surface and mandatory passes",
+        "## Mandatory failure scenarios",
         "## Commands executed",
         "## Evidence gaps",
         "## Prioritized remediation plan",
@@ -271,6 +287,29 @@ def validate_report(path: Path) -> list[str]:
     for section in required_sections:
         if section not in text:
             errors.append(f"missing section: {section}")
+
+    passes_section = section_text(text, "## Attack surface and mandatory passes")
+    for pass_name in (
+        "Baseline posture",
+        "OWASP pass",
+        "Data-exposure pass",
+        "Secret-boundary pass",
+    ):
+        match = re.search(rf"^- {re.escape(pass_name)}:\s*(.+)$", passes_section, re.MULTILINE)
+        if not match or is_placeholder_value(match.group(1)):
+            errors.append(f"mandatory audit pass is missing or incomplete: {pass_name}")
+
+    scenarios_section = section_text(text, "## Mandatory failure scenarios")
+    scenario_entries: dict[int, str] = {}
+    for match in re.finditer(r"^(\d+)\.\s+(.+)$", scenarios_section, re.MULTILINE):
+        number = int(match.group(1))
+        if number in scenario_entries:
+            errors.append(f"duplicate mandatory failure scenario: {number}")
+        scenario_entries[number] = match.group(2)
+    for number in range(1, 11):
+        value = scenario_entries.get(number)
+        if not value or is_placeholder_value(value):
+            errors.append(f"mandatory failure scenario is missing or incomplete: {number}")
     for field in ("Target environment", "Scope"):
         match = re.search(rf"^- {re.escape(field)}:\s*(.+)$", text, re.MULTILINE)
         if not match or is_placeholder_value(match.group(1)):
@@ -303,6 +342,15 @@ def validate_report(path: Path) -> list[str]:
         preview = ", ".join(str(number) for number in report_level_placeholder_lines[:8])
         errors.append(f"report still contains placeholders on line(s): {preview}")
     return errors
+
+
+def section_text(text: str, heading: str) -> str:
+    start = text.find(heading)
+    if start == -1:
+        return ""
+    body_start = start + len(heading)
+    next_heading = text.find("\n## ", body_start)
+    return text[body_start:] if next_heading == -1 else text[body_start:next_heading]
 
 
 def self_check() -> list[str]:

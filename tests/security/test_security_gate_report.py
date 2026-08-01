@@ -3,10 +3,11 @@
 
 from __future__ import annotations
 
+import re
+import sys
 import tempfile
 import unittest
 from pathlib import Path
-import sys
 
 SKILL_BIN = Path(__file__).resolve().parents[2] / ".apm" / "skills" / "product-flow-securitygate" / "bin"
 sys.path.insert(0, str(SKILL_BIN))
@@ -29,6 +30,12 @@ def completed_report(mode: str = "FULL") -> str:
             result.append("- Conclusion: `GO`")
         elif line == "TBD":
             result.append("None identified in this synthetic validator test.")
+        elif re.match(r"^- (?:Baseline posture|OWASP pass|Data-exposure pass|Secret-boundary pass): TBD$", line):
+            label = line.split(":", 1)[0]
+            result.append(f"{label}: Synthetic evidence covers this mandatory pass.")
+        elif re.match(r"^\d+\. TBD$", line):
+            number = line.split(".", 1)[0]
+            result.append(f"{number}. Synthetic evidence covers mandatory failure scenario {number}.")
         elif line.startswith("| ") and line.split("|")[1].strip() in security_gate_report.EXPECTED_CONTROL_IDS:
             control_id = line.split("|")[1].strip()
             result.append(
@@ -129,6 +136,26 @@ class SecurityGateReportTests(unittest.TestCase):
         self.assertIn(
             "IAM-05: severity 'LOW' conflicts with catalog severity 'CRITICAL'",
             errors,
+        )
+
+    def test_missing_mandatory_failure_scenario_is_rejected(self) -> None:
+        text = completed_report().replace(
+            "7. Synthetic evidence covers mandatory failure scenario 7.\n",
+            "",
+        )
+        self.assertIn(
+            "mandatory failure scenario is missing or incomplete: 7",
+            self.validate_text(text),
+        )
+
+    def test_missing_mandatory_pass_is_rejected(self) -> None:
+        text = completed_report().replace(
+            "- OWASP pass: Synthetic evidence covers this mandatory pass.\n",
+            "",
+        )
+        self.assertIn(
+            "mandatory audit pass is missing or incomplete: OWASP pass",
+            self.validate_text(text),
         )
 
 
