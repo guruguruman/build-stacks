@@ -29,18 +29,18 @@ Use this skill when a user wants to upgrade the APM CLI or `product-build-stacks
 ## Workflow
 
 1. Confirm the current APM CLI version and package entry in the consumer `apm.yml` and `apm.lock.yaml`.
-2. Confirm the target CLI version and package tag. The current maintainer contract uses APM 0.26.0; for the product-stacks 1.0 release line, use `guruguruman/product-build-stacks#v1.0.0`.
+2. Confirm the target CLI version and package tag. The current maintainer contract uses APM 0.26.0; for the product-stacks 1.1 release line, use `guruguruman/product-build-stacks#v1.1.0`.
 3. Stop before changing dependencies unless the user explicitly approves the upgrade.
 4. Run the APM install command in the consumer repo:
 
 ```bash
 apm --version
-apm install guruguruman/product-build-stacks#v1.0.0 --target all
+apm install guruguruman/product-build-stacks#v1.1.0 --target all
 apm audit --ci
 apm compile --validate --local-only
 ```
 
-5. Verify that all 42 `product-*` skills are installed under the APM 0.26 converged roots: `.agents/skills`, `.claude/skills`, and `.kiro/skills`; verify that no root bundle or retired per-client duplicate was created.
+5. Verify that all 46 `product-*` skills are installed under the APM 0.26 converged roots: `.agents/skills`, `.claude/skills`, and `.kiro/skills`; verify that no root bundle or retired per-client duplicate was created.
 6. Record evidence under `.product-build-stacks/evidence/product-runtime-upgrade.json`.
 
 ## Output Contract
@@ -52,4 +52,4 @@ apm compile --validate --local-only
 - evidence path
 - rollback or forward-fix note
 
-Rollback for public releases is a forward fix: publish `v1.0.1` for a patch or `v1.1.0` for a feature release. Do not instruct users to delete public tags.
+Rollback for public releases is a forward fix: publish `v1.1.1` for a patch or `v1.2.0` for a feature release. Do not instruct users to delete public tags.

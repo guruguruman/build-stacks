@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 1.1.0 - 2026-08-01
+
+Release name: `1.1.0-release`
+
+- Added `product-flow-webuifinish` for score-based rendered Web UI finishing with official browser evidence, scoped implementation, and before/after recapture.
+- Added `product-flow-mobileuifinish` for score-based native and cross-platform mobile UI finishing with simulator, emulator, device, or supplied-screen evidence.
+- Added `product-flow-securitygate`, a 32-control evidence-backed prelaunch security gate with deterministic report validation and GO, CONDITIONAL GO, or NO-GO verdicts.
+- Added `product-flow-pdmscaffold`, a neutral collision-safe `docs/pdm` scaffold with canonical product documents, persona guidance, and research-note templates.
+- Hardened the PdM scaffold against normal and broken destination symlinks so generated files cannot escape the selected project root.
+- Added a mandatory `quality:verify` gate and made `release:verify` and CI invoke it, including agent-browser health, live screenshot evidence, secret scanning, and diff hygiene.
+
 ## 1.0.0 - 2026-07-23
 
 Release name: `1.0.0-release`

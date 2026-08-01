@@ -19,8 +19,12 @@ const highPreambleFlowSkills = new Set([
     "product-flow-designshotgun",
     "product-flow-infradesign",
     "product-flow-landingreport",
+    "product-flow-mobileuifinish",
+    "product-flow-pdmscaffold",
     "product-flow-plantune",
-    "product-flow-skillify"
+    "product-flow-securitygate",
+    "product-flow-skillify",
+    "product-flow-webuifinish"
 ]);
 
 checkProductSkillCatalog();

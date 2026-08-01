@@ -1,6 +1,6 @@
 # product-build-stacks
 
-`product-build-stacks` is an APM 0.26.0-managed 42-skill package for product discovery, review, browser QA, release, and runtime discipline.
+`product-build-stacks` is an APM 0.26.0-managed 46-skill package for product discovery, review, UI finishing, browser QA, release, and runtime discipline.
 
 `.apm/` is the only authored source. Generated target output is committed for reviewability and must match a clean APM install. Runtime state belongs under `.product-build-stacks/`.
 
@@ -8,7 +8,7 @@
 
 ```bash
 apm init --yes
-apm install guruguruman/product-build-stacks#v1.0.0 --target all
+apm install guruguruman/product-build-stacks#v1.1.0 --target all
 apm audit --ci
 apm compile --validate --local-only
 ```
@@ -57,7 +57,7 @@ agent-browser --json --session "$_ABR_SESSION" close
 
 ## Shipped Skills
 
-The public surface is the 42 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
+The public surface is the 46 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
 
 ## Maintainer Verification
 
@@ -69,12 +69,15 @@ npm run skill:verify
 npm run apm:verify
 npm run smoke:codex
 npm run smoke:all
+npm run quality:verify
 npm run release:verify
 # Heavy Codex E2E smoke is opt-in because it can create large local runtime images.
 PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 ```
 
 `npm run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/skills/`, `.claude/skills/`, or `.kiro/skills/` manually.
+
+`npm run quality:verify` is the mandatory quality gate for tests, source/generated consistency, APM validation, clean installs, browser health and screenshot evidence, secret scanning, and diff hygiene. `npm run release:verify` always runs it before any optional heavy Codex E2E smoke.
 
 ## Release Files
 
@@ -83,6 +86,6 @@ PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 
 ## Troubleshooting
 
-- Missing skills: rerun `apm install guruguruman/product-build-stacks#v1.0.0 --target all`.
+- Missing skills: rerun `apm install guruguruman/product-build-stacks#v1.1.0 --target all`.
 - Generated drift: run `npm run build` and then `npm run generated:verify`.
 - Browser command missing: install official `agent-browser`, then rerun `agent-browser --version` and `agent-browser install`.

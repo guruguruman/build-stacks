@@ -1,23 +1,12 @@
 import { spawnSync } from "node:child_process";
 
-const commands = [
-    ["npm", "test"],
-    ["node", "scripts/apm-source-skills-verify.mjs"],
-    ["node", "scripts/apm-installed-skills-sync.mjs", "--verify"],
-    ["node", "scripts/apm-package-verify.mjs"],
-    ["apm", "audit", "--ci"],
-    ["apm", "compile", "--validate", "--local-only"],
-    ["node", "scripts/apm-skill-install-smoke.mjs", "--target", "codex"],
-    ["node", "scripts/apm-skill-install-smoke.mjs", "--target", "all"],
-    ["npm", "run", "browser:smoke"],
-    ["node", "scripts/repo-secret-scan.mjs"]
-];
+const commands = [["npm", "run", "quality:verify"]];
 const codexE2eCommands = [
     ["node", "scripts/codex-skill-activation-smoke.mjs"],
     ["node", "scripts/codex-browser-core-smoke.mjs"]
 ];
 if (process.env.PRODUCT_RELEASE_VERIFY_CODEX_E2E === "1") {
-    commands.splice(commands.length - 1, 0, ...codexE2eCommands);
+    commands.push(...codexE2eCommands);
 }
 else {
     console.log("Skipping Codex E2E smoke. Set PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 to run it explicitly.");

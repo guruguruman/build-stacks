@@ -25,6 +25,8 @@ coverage/
 test-results/
 playwright-report/
 *.tsbuildinfo
+__pycache__/
+*.py[cod]
 
 # Runtime state and generated workspaces
 tmp/

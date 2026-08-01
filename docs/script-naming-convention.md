@@ -19,8 +19,10 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | `codex-browser-core-smoke.mjs` | Codex browser core | smoke | Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs. |
 | `script-names-verify.mjs` | script names | verify | Enforce this file naming rule. |
 | `apm-skill-list.mjs` | APM skill list | module | Export skill metadata and name validation. |
+| `release-quality-verify.mjs` | release quality gate | verify | Run the mandatory deterministic, install, browser, secret, and diff quality checks. |
 | `release-verify.mjs` | release gate | verify | Run the default release gate command list; heavy Codex E2E smoke is opt-in. |
 | `repo-secret-scan.mjs` | repository secret exposure | scan | Scan working tree and git history for secrets or private paths. |
+| `repo-whitespace-verify.mjs` | repository whitespace | verify | Check unstaged, staged, and untracked files for Git whitespace errors. |
 
 Rules:
 
@@ -59,6 +61,7 @@ Do not use bare `run`, `main`, `check`, `assert`, `write`, or `parse` in executa
 - `apm:verify`
 - `smoke:codex`
 - `smoke:all`
+- `quality:verify`
 - `release:verify`
 
 Other files under `scripts/` are maintainer tools and must be invoked by filename when needed.

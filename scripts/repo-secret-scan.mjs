@@ -21,13 +21,14 @@ const publicReleaseRoots = [
 const skipDirs = new Set(["node_modules", "apm_modules", "tmp", ".product-build-stacks", ".git"]);
 const secretPatterns = [
     { name: "OpenAI key", pattern: /sk-[A-Za-z0-9_-]{20,}/ },
+    { name: "Stripe key", pattern: /\b(?:sk|rk)_(?:live|test)_[A-Za-z0-9]{12,}\b/ },
     { name: "GitHub token", pattern: /gh[pousr]_[A-Za-z0-9_]{20,}/ },
     { name: "AWS access key", pattern: /AKIA[0-9A-Z]{16}/ },
     { name: "Authorization header", pattern: /authorization:\s*bearer\s+[A-Za-z0-9._-]{12,}/i },
     { name: "Cookie header", pattern: /\bcookie:\s*[^`\n]{12,}/i },
     { name: "Private home path", pattern: /\/Users\/(?!t-kato\/dev\/personal\/product-stacks\b)[A-Za-z0-9._-]+\// }
 ];
-const textFilePattern = /\.(md|json|ya?ml|mjs|ts|tsx|js|sh|txt|lock|gitignore|apmignore)$/;
+const textFilePattern = /\.(md|py|json|ya?ml|mjs|ts|tsx|js|sh|txt|lock|gitignore|apmignore)$/;
 const textFileNames = new Set(["README.md", "LICENSE", "CHANGELOG.md", ".apmignore"]);
 for (const root of publicReleaseRoots) {
     if (!existsSync(root)) {

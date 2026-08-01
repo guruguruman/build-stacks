@@ -8,15 +8,17 @@ import {
     verifyApmCliVersion
 } from "./apm-contract.mjs";
 const apmPackageFailures = [];
+const expectedPackageVersion = "1.1.0";
 const publicPackageScripts = {
     build: "node scripts/apm-installed-skills-sync.mjs --write",
     "generated:verify": "node scripts/apm-installed-skills-sync.mjs --verify",
-    "browser:doctor": "agent-browser --version",
+    "browser:doctor": "agent-browser doctor --offline --quick",
     "browser:smoke": "node scripts/agent-browser-smoke.mjs",
     "skill:verify": "node scripts/apm-source-skills-verify.mjs",
     "apm:verify": "node scripts/apm-package-verify.mjs",
     "smoke:codex": "node scripts/apm-skill-install-smoke.mjs --target codex",
     "smoke:all": "node scripts/apm-skill-install-smoke.mjs --target all",
+    "quality:verify": "node scripts/release-quality-verify.mjs",
     "release:verify": "node scripts/release-verify.mjs",
     test: "node --test"
 };
@@ -64,8 +66,8 @@ function checkNoForbiddenPackageRoots() {
 function checkManifestShape() {
     const apmBody = readFileSync("apm.yml", "utf8");
     const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
-    if (!apmBody.includes("version: 1.0.0"))
-        apmPackageFailures.push("apm.yml must declare version: 1.0.0");
+    if (!apmBody.includes(`version: ${expectedPackageVersion}`))
+        apmPackageFailures.push(`apm.yml must declare version: ${expectedPackageVersion}`);
     if (!apmBody.includes("targets:"))
         apmPackageFailures.push("apm.yml must declare explicit targets");
     for (const target of canonicalApmTargets) {
@@ -74,8 +76,8 @@ function checkManifestShape() {
     }
     if (apmBody.includes("target: all"))
         apmPackageFailures.push("apm.yml must not use legacy target: all");
-    if (packageJson.version !== "1.0.0")
-        apmPackageFailures.push("package.json version must be 1.0.0");
+    if (packageJson.version !== expectedPackageVersion)
+        apmPackageFailures.push(`package.json version must be ${expectedPackageVersion}`);
     for (const forbidden of ["type: hybrid", "includes:"]) {
         reportLineMatches("apm.yml", apmBody, forbidden, `contains unsupported manifest field: ${forbidden}`);
     }
@@ -117,6 +119,12 @@ function verifyCiReleaseContract() {
     const body = readFileSync(file, "utf8");
     if (!body.includes("workflow_dispatch:")) {
         apmPackageFailures.push(`${file} must support manual release verification`);
+    }
+    if (!body.includes("AGENT_BROWSER_EXPECTED_VERSION: \"0.27.0\"")) {
+        apmPackageFailures.push(`${file} must pin agent-browser 0.27.0`);
+    }
+    if (!body.includes("npm run release:verify")) {
+        apmPackageFailures.push(`${file} must invoke the release verification gate`);
     }
     if (body.includes("node scripts/codex-skill-activation-smoke.mjs --all-skills")) {
         apmPackageFailures.push(`${file} must keep heavy Codex E2E smoke opt-in`);
@@ -175,11 +183,13 @@ function checkReadmeConsumerInstallGuidance() {
         "npm i -g agent-browser",
         "agent-browser --version",
         "agent-browser install",
-        "apm install guruguruman/product-build-stacks#v1.0.0 --target all",
+        `apm install guruguruman/product-build-stacks#v${expectedPackageVersion} --target all`,
         "Commit `apm.yml` and `apm.lock.yaml`",
         ".product-build-stacks/",
         "apm audit --ci",
         "apm compile --validate --local-only",
+        "npm run quality:verify",
+        "npm run release:verify",
         "product-browser-runner",
         "Use official `agent-browser`; do not rely on repository-local browser runtime directories in consumer repos"
     ]) {

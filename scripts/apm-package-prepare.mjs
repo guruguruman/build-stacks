@@ -46,12 +46,13 @@ const forbiddenPackagePaths = [
 const publicPackageScripts = {
     build: "node scripts/apm-installed-skills-sync.mjs --write",
     "generated:verify": "node scripts/apm-installed-skills-sync.mjs --verify",
-    "browser:doctor": "agent-browser --version",
+    "browser:doctor": "agent-browser doctor --offline --quick",
     "browser:smoke": "node scripts/agent-browser-smoke.mjs",
     "skill:verify": "node scripts/apm-source-skills-verify.mjs",
     "apm:verify": "node scripts/apm-package-verify.mjs",
     "smoke:codex": "node scripts/apm-skill-install-smoke.mjs --target codex",
     "smoke:all": "node scripts/apm-skill-install-smoke.mjs --target all",
+    "quality:verify": "node scripts/release-quality-verify.mjs",
     "release:verify": "node scripts/release-verify.mjs",
     test: "node --test"
 };

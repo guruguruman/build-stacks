@@ -70,6 +70,12 @@ const scriptRules = [
         purpose: "Export skill metadata and name validation."
     },
     {
+        file: "release-quality-verify.mjs",
+        target: "release quality gate",
+        operation: "verify",
+        purpose: "Run the mandatory deterministic, install, browser, secret, and diff quality checks."
+    },
+    {
         file: "release-verify.mjs",
         target: "release gate",
         operation: "verify",
@@ -80,6 +86,12 @@ const scriptRules = [
         target: "repository secret exposure",
         operation: "scan",
         purpose: "Scan working tree and git history for secrets or private paths."
+    },
+    {
+        file: "repo-whitespace-verify.mjs",
+        target: "repository whitespace",
+        operation: "verify",
+        purpose: "Check unstaged, staged, and untracked files for Git whitespace errors."
     }
 ];
 const operationPattern = buildOperationPattern(scriptRules);

@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 120
     env:
       APM_EXPECTED_VERSION: "0.26.0"
-      AGENT_BROWSER_EXPECTED_VERSION: "0.25.3"
+      AGENT_BROWSER_EXPECTED_VERSION: "0.27.0"
 
     steps:
       - name: Checkout
@@ -73,24 +73,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Static gates
+      - name: Release verification gate
         run: |
           set -euo pipefail
           export PATH="$HOME/.local/bin:$PATH"
-          npm run build
-          npm run generated:verify
-          npm run skill:verify
-          npm run apm:verify
-          node --check scripts/release-verify.mjs
-          npm test
-          apm audit --ci
-          apm compile --validate --local-only
-          npm run smoke:codex
-          npm run smoke:all
-          node scripts/repo-secret-scan.mjs
-
-      - name: Live agent-browser smoke
-        run: |
-          set -euo pipefail
-          export PATH="$HOME/.local/bin:$PATH"
-          AGENT_BROWSER_RUN_ID=ci-${{ github.run_id }}-${{ github.run_attempt }} node scripts/agent-browser-smoke.mjs
+          AGENT_BROWSER_RUN_ID=ci-${{ github.run_id }}-${{ github.run_attempt }} npm run release:verify
