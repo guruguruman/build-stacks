@@ -82,7 +82,58 @@ describe("product-flow-pdmscaffold", () => {
             rmSync(projectRoot, { recursive: true, force: true });
         }
     });
+
+    it("does not overwrite a destination created after collision preflight", () => {
+        const projectRoot = mkdtempSync(join(tmpdir(), "product-flow-pdmscaffold-race-"));
+        try {
+            const probe = spawnSync("python3", ["-c", raceProbe, installer, projectRoot], {
+                cwd: process.cwd(),
+                encoding: "utf8",
+                env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" }
+            });
+
+            assert.equal(probe.status, 0, commandFailure(probe));
+            assert.match(probe.stdout, /status=3/);
+            assert.match(probe.stdout, /user_content_survived=True/);
+            assert.match(probe.stdout, /created_files_remaining=1/);
+        }
+        finally {
+            rmSync(projectRoot, { recursive: true, force: true });
+        }
+    });
 });
+
+const raceProbe = String.raw`
+import argparse
+import importlib.util
+import sys
+from pathlib import Path
+
+installer = Path(sys.argv[1]).resolve()
+project_root = Path(sys.argv[2]).resolve()
+spec = importlib.util.spec_from_file_location("pdm_scaffold_race_test", installer)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+module.parse_args = lambda: argparse.Namespace(target=str(project_root), dry_run=False)
+
+original_copy = module.copy_file_exclusively
+injected = {"calls": 0, "path": None}
+
+def racing_copy(source, destination):
+    injected["calls"] += 1
+    if injected["calls"] == 2:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text("user-created-during-race\n", encoding="utf-8")
+        injected["path"] = destination
+    return original_copy(source, destination)
+
+module.copy_file_exclusively = racing_copy
+status = module.main()
+remaining = sorted(path for path in (project_root / "docs" / "pdm").rglob("*") if path.is_file())
+print(f"status={status}")
+print(f"user_content_survived={injected['path'].read_text(encoding='utf-8') == 'user-created-during-race' + chr(10)}")
+print(f"created_files_remaining={len(remaining)}")
+`;
 
 function runInstaller(projectRoot, ...args) {
     return spawnSync("python3", [installer, "--target", projectRoot, ...args], {

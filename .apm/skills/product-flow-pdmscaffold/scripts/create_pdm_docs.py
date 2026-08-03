@@ -50,6 +50,25 @@ def is_within(path: Path, root: Path) -> bool:
     return True
 
 
+def copy_file_exclusively(source: Path, destination: Path) -> None:
+    """Copy one file while refusing a destination created after preflight."""
+    created = False
+    try:
+        with destination.open("xb") as output:
+            created = True
+            with source.open("rb") as input_file:
+                shutil.copyfileobj(input_file, output)
+    except BaseException:
+        if created:
+            destination.unlink(missing_ok=True)
+        raise
+
+
+def rollback_created_files(paths: list[Path]) -> None:
+    for path in reversed(paths):
+        path.unlink(missing_ok=True)
+
+
 def main() -> int:
     args = parse_args()
     skill_root = Path(__file__).resolve().parent.parent
@@ -100,9 +119,27 @@ def main() -> int:
     if args.dry_run:
         return 0
 
-    for source, destination in zip(sources, destinations, strict=True):
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source, destination)
+    created_files: list[Path] = []
+    try:
+        for source, destination in zip(sources, destinations, strict=True):
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            copy_file_exclusively(source, destination)
+            created_files.append(destination)
+    except FileExistsError:
+        rollback_created_files(created_files)
+        print(
+            "error: no files were written because a destination file appeared during creation; "
+            "the files created by this run were rolled back.",
+            file=sys.stderr,
+        )
+        return 3
+    except OSError as error:
+        rollback_created_files(created_files)
+        print(
+            f"error: scaffold creation failed and files created by this run were rolled back: {error}",
+            file=sys.stderr,
+        )
+        return 5
 
     print(f"created {len(destinations)} files under {destination_root}")
     return 0
