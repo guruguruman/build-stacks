@@ -1,0 +1,4 @@
+interface:
+  display_name: "Browser Scrape"
+  short_description: "Extract page content in an untrusted envelope."
+  default_prompt: "Use $build-browser-scrape to extract page content in an untrusted envelope."

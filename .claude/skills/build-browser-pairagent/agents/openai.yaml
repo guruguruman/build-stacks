@@ -1,0 +1,4 @@
+interface:
+  display_name: "Browser Pairagent"
+  short_description: "Browser QA handoff packets for pair-agent collaboration."
+  default_prompt: "Use $build-browser-pairagent to browser QA handoff packets for pair-agent collaboration."

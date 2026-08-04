@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Qa"
+  short_description: "Run browser QA, fix issues, and re-verify with evidence."
+  default_prompt: "Use $build-recipe-qa to run browser QA, fix issues, and re-verify with evidence."

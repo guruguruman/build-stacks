@@ -1,0 +1,4 @@
+interface:
+  display_name: "Role Docengineer"
+  short_description: "Documentation release review for changelog, migration notes,..."
+  default_prompt: "Use $build-role-docengineer to documentation release review for changelog, migration notes, operator docs, and proof."

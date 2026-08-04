@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Mobileuifinish"
+  short_description: "Score and finish native or cross-platform mobile UI with real..."
+  default_prompt: "Use $build-flow-mobileuifinish to score and finish native or cross-platform mobile UI with real-screen evidence."

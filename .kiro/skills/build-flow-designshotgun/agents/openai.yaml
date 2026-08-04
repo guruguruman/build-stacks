@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Designshotgun"
+  short_description: "Generate and compare multiple design directions."
+  default_prompt: "Use $build-flow-designshotgun to generate and compare multiple design directions."

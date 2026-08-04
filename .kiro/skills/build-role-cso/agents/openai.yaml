@@ -1,0 +1,4 @@
+interface:
+  display_name: "Role Cso"
+  short_description: "Security review for threat model, privacy, auth, secrets, pol..."
+  default_prompt: "Use $build-role-cso to security review for threat model, privacy, auth, secrets, policy risk, and blockers."

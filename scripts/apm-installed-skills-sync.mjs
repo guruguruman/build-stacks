@@ -2,12 +2,12 @@ import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statS
 import { dirname, join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import { installedSkillRoots, retiredLegacySkillRoots, verifyApmCliVersion } from "./apm-contract.mjs";
-import { productSkills } from "./apm-skill-list.mjs";
+import { buildSkills } from "./build-skill-catalog.mjs";
 const mode = process.argv.includes("--write") ? "write" : "verify";
-const workspaceRoot = ".product-build-stacks/tmp/apm-installed-skills-sync";
+const workspaceRoot = ".build-stacks/tmp/apm-installed-skills-sync";
 const packageOut = join(workspaceRoot, "package");
 const consumerOut = join(workspaceRoot, "consumer");
-const expectedSkillNames = productSkills.map((skill) => skill.name).sort();
+const expectedSkillNames = buildSkills.map((skill) => skill.name).sort();
 verifyApmCliVersion();
 resetWorkspace();
 runApmInstalledSkillCommand(["node", "scripts/apm-package-prepare.mjs", "--out", packageOut], ".");

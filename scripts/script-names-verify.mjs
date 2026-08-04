@@ -17,7 +17,7 @@ const scriptRules = [
     },
     {
         file: "apm-source-skills-verify.mjs",
-        target: "source `.apm/skills/*/SKILL.md` files",
+        target: "source `packages/*/.apm/skills/*/SKILL.md` files",
         operation: "verify",
         purpose: "Validate the APM skill list against source skill frontmatter, titles, and product naming rules."
     },
@@ -64,7 +64,7 @@ const scriptRules = [
         purpose: "Enforce this file naming rule."
     },
     {
-        file: "apm-skill-list.mjs",
+        file: "build-skill-catalog.mjs",
         target: "APM skill list",
         operation: "module",
         purpose: "Export skill metadata and name validation."

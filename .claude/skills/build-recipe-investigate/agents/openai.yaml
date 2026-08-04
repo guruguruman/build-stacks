@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Investigate"
+  short_description: "Require investigation before risky fixes."
+  default_prompt: "Use $build-recipe-investigate to require investigation before risky fixes."

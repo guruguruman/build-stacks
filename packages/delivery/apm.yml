@@ -1,0 +1,8 @@
+name: build-stacks-delivery
+version: 2.0.0
+description: Quality, security, release, deployment, and engineering workflows
+targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
+dependencies:
+  apm:
+    - path: ../browser
+  mcp: []

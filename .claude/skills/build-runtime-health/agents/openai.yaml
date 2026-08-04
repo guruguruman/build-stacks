@@ -1,0 +1,4 @@
+interface:
+  display_name: "Runtime Health"
+  short_description: "Summarize workflow health and quality signals."
+  default_prompt: "Use $build-runtime-health to summarize workflow health and quality signals."

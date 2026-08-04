@@ -5,11 +5,11 @@ const codexE2eCommands = [
     ["node", "scripts/codex-skill-activation-smoke.mjs"],
     ["node", "scripts/codex-browser-core-smoke.mjs"]
 ];
-if (process.env.PRODUCT_RELEASE_VERIFY_CODEX_E2E === "1") {
+if (process.env.BUILD_RELEASE_VERIFY_CODEX_E2E === "1") {
     commands.push(...codexE2eCommands);
 }
 else {
-    console.log("Skipping Codex E2E smoke. Set PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 to run it explicitly.");
+    console.log("Skipping Codex E2E smoke. Set BUILD_RELEASE_VERIFY_CODEX_E2E=1 to run it explicitly.");
 }
 for (const command of commands) {
     console.log(`$ ${command.join(" ")}`);

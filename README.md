@@ -1,91 +1,63 @@
-# product-build-stacks
+# build-stacks
 
-`product-build-stacks` is an APM 0.26.0-managed 46-skill package for product discovery, review, UI finishing, browser QA, release, and runtime discipline.
+`build-stacks` is an APM 0.26 monorepo of composable skills for building software. Version 2 broadens the former product-only stack into six installable packages and publishes 47 breaking-change `build-*` skill names.
 
-`.apm/` is the only authored source. Generated target output is committed for reviewability and must match a clean APM install. Runtime state belongs under `.product-build-stacks/`.
+Authored sources live under `packages/*/.apm/`. Generated target output is committed for reviewability. Runtime state belongs under `.build-stacks/`.
 
-## Install
+## Packages
+
+| Package | Own skills | Installed closure | Depends on |
+| --- | ---: | ---: | --- |
+| `build-stacks-core` | 8 | 8 | — |
+| `build-stacks-browser` | 8 | 16 | core |
+| `build-stacks-design` | 6 | 22 | browser |
+| `build-stacks-product` | 5 | 27 | design |
+| `build-stacks-delivery` | 14 | 30 | browser |
+| `build-stacks-maintainer` | 6 | 47 | product, delivery |
+
+Install the root bundle for the complete stack. The umbrella depends only on `maintainer`; APM follows its dependency closure to the other five packages without duplicating direct roots.
 
 ```bash
 apm init --yes
-apm install guruguruman/product-build-stacks#v1.1.0 --target all
+apm install guruguruman/build-stacks#v2.0.0 --target all
 apm audit --ci
 apm compile --validate --local-only
 ```
 
-Commit `apm.yml` and `apm.lock.yaml` in consumer repos. Runtime state stays under `.product-build-stacks/`; keep it ignored except for optional example config files:
+To install a narrower closure, point APM at a package path such as `packages/design` or `packages/delivery`. Commit `apm.yml` and `apm.lock.yaml` in consumer repositories.
 
-```gitignore
-.product-build-stacks/*
-!.product-build-stacks/.gitkeep
-!.product-build-stacks/config.example.yaml
-```
+APM targets are `copilot`, `claude`, `cursor`, `opencode`, `codex`, `gemini`, `windsurf`, and `kiro`. APM converges most skill output into `.agents/skills/`; Claude and Kiro also use their native skill roots.
 
-Supported APM 0.26.0 targets under `--target all`: `copilot`, `claude`, `cursor`, `opencode`, `codex`, `gemini`, `windsurf`, and `kiro`.
+## Browser runtime
 
-APM 0.26 converges skills for Copilot, Cursor, OpenCode, Codex, Gemini, and Windsurf into `.agents/skills/`. Claude and Kiro keep `.claude/skills/` and `.kiro/skills/`.
-
-## Browser Runtime
-
-Browser workflows use official `agent-browser`. `product-browser-runner` is the Skill/policy layer for approval, evidence paths, redaction, and untrusted browser content.
+Browser packages depend on official `agent-browser`; they do not vendor it.
 
 ```bash
 brew install agent-browser
 # or: npm i -g agent-browser
-agent-browser --version
 agent-browser install
+agent-browser doctor --offline --quick
 ```
 
-Use official `agent-browser`; do not rely on repository-local browser runtime directories in consumer repos.
+`build-browser-runner` owns browser approval, scoped sessions, evidence paths, redaction, and untrusted-content handling. Browser and other durable runtime artifacts stay under `.build-stacks/`.
 
-First public-page smoke:
-
-```bash
-_ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
-_ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
-_ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
-_ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
-AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
-mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
-export AGENT_BROWSER_SOCKET_DIR
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
-agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open https://example.com
-agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
-agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
-agent-browser --json --session "$_ABR_SESSION" close
-```
-
-## Shipped Skills
-
-The public surface is the 46 skills in [docs/release-acceptance-skill-matrix.md](docs/release-acceptance-skill-matrix.md). Names are stable `product-*` names.
-
-## Maintainer Verification
+## Maintainer verification
 
 ```bash
 npm ci
 npm run build
-npm run generated:verify
+npm test
 npm run skill:verify
+npm run metadata:verify
+npm run stack:verify
+npm run generated:verify
 npm run apm:verify
 npm run smoke:codex
 npm run smoke:all
+npm run smoke:packages
 npm run quality:verify
-npm run release:verify
-# Heavy Codex E2E smoke is opt-in because it can create large local runtime images.
-PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 ```
 
-`npm run build` regenerates installed skill output from a clean APM install. Do not edit `.agents/skills/`, `.claude/skills/`, or `.kiro/skills/` manually.
+`npm run build` regenerates `.agents/skills/`, `.claude/skills/`, and `.kiro/skills/`; do not edit those roots manually. `npm run quality:verify` is the release-quality contract. The heavier Codex browser E2E remains opt-in with `BUILD_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify`.
 
-`npm run quality:verify` is the mandatory quality gate for tests, source/generated consistency, APM validation, clean installs, browser health and screenshot evidence, secret scanning, and diff hygiene. `npm run release:verify` always runs it before any optional heavy Codex E2E smoke.
-
-## Release Files
-
-- [CHANGELOG.md](CHANGELOG.md)
-- [docs/release-acceptance-scenarios.md](docs/release-acceptance-scenarios.md)
-
-## Troubleshooting
-
-- Missing skills: rerun `apm install guruguruman/product-build-stacks#v1.1.0 --target all`.
-- Generated drift: run `npm run build` and then `npm run generated:verify`.
-- Browser command missing: install official `agent-browser`, then rerun `agent-browser --version` and `agent-browser install`.
+See [the v2 migration guide](docs/migration-v2.md), [acceptance scenarios](docs/release-acceptance-scenarios.md), and [the 47-skill matrix](docs/release-acceptance-skill-matrix.md).

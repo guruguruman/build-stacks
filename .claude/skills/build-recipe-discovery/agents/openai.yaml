@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Discovery"
+  short_description: "Shape ambiguous product requests into a design doc using forc..."
+  default_prompt: "Use $build-recipe-discovery to shape ambiguous product requests into a design doc using forcing questions."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Landdeploy"
+  short_description: "Merge, deploy, and verify production only with explicit appro..."
+  default_prompt: "Use $build-recipe-landdeploy to merge, deploy, and verify production only with explicit approval."

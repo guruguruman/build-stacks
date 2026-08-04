@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Unit tests for the product prelaunch security-gate completeness contract."""
+"""Unit tests for the build prelaunch security-gate completeness contract."""
 
 from __future__ import annotations
 
@@ -9,8 +9,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-SKILL_BIN = Path(__file__).resolve().parents[2] / ".apm" / "skills" / "product-flow-securitygate" / "bin"
-sys.path.insert(0, str(SKILL_BIN))
+SKILL_SCRIPTS = Path(__file__).resolve().parents[2] / "packages" / "delivery" / ".apm" / "skills" / "build-flow-securitygate" / "scripts"
+sys.path.insert(0, str(SKILL_SCRIPTS))
 
 import security_gate_report
 

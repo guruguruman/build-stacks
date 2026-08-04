@@ -1,0 +1,4 @@
+interface:
+  display_name: "Runtime Session"
+  short_description: "Save and restore session snapshots under .build-stacks."
+  default_prompt: "Use $build-runtime-session to save and restore session snapshots under .build-stacks."

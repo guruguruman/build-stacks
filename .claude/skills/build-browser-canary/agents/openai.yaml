@@ -1,0 +1,4 @@
+interface:
+  display_name: "Browser Canary"
+  short_description: "Post-deploy browser canary monitoring."
+  default_prompt: "Use $build-browser-canary to post-deploy browser canary monitoring."

@@ -1,0 +1,8 @@
+name: build-stacks-product
+version: 2.0.0
+description: Product discovery, strategy, and planning workflows
+targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
+dependencies:
+  apm:
+    - path: ../design
+  mcp: []

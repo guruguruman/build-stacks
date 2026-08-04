@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 
 const repoRoot = process.cwd();
-const runRoot = resolve(process.env.PRODUCT_CODEX_BROWSER_SMOKE_ROOT ?? join(tmpdir(), `product-browser-core-smoke-${Date.now()}-${process.pid}`));
+const runRoot = resolve(process.env.BUILD_CODEX_BROWSER_SMOKE_ROOT ?? join(tmpdir(), `build-browser-core-smoke-${Date.now()}-${process.pid}`));
 const packageRoot = join(runRoot, "package");
 const appRoot = join(runRoot, "app");
 const resultsRoot = join(runRoot, "results");
@@ -15,13 +15,13 @@ const runtimeRoot = join(runRoot, "runtime");
 const fakeCodexHome = join(runtimeRoot, "codex-home");
 const fakeHome = join(runtimeRoot, "home");
 const agentBrowserSocketDir = `/tmp/pbs-ab-${process.pid}`;
-const realCodexHome = resolve(process.env.PRODUCT_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
+const realCodexHome = resolve(process.env.BUILD_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
 const realCodexSkillsRoot = join(realCodexHome, "skills");
 const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
 const systemSkillsSnapshotRoot = join(runtimeRoot, "system-skills-snapshot");
-const codexModel = process.env.PRODUCT_CODEX_BROWSER_MODEL ?? "gpt-5.5";
-const codexReasoning = process.env.PRODUCT_CODEX_BROWSER_REASONING ?? "high";
-const codexTimeoutMs = Number(process.env.PRODUCT_CODEX_BROWSER_TIMEOUT_MS ?? "600000") || 600000;
+const codexModel = process.env.BUILD_CODEX_BROWSER_MODEL ?? "gpt-5.5";
+const codexReasoning = process.env.BUILD_CODEX_BROWSER_REASONING ?? "high";
+const codexTimeoutMs = Number(process.env.BUILD_CODEX_BROWSER_TIMEOUT_MS ?? "600000") || 600000;
 const codexIsolationConfigArgs = [
     "-c",
     "skills.bundled.enabled=false",
@@ -64,8 +64,8 @@ async function runCodexBrowserCoreSmoke() {
         runCodexBrowserCommand(["apm", "compile", "--target", "codex"], appRoot, "apm-compile.log");
         fixtureServer = await startBrowserFixtureServer();
         const runs = [];
-        runs.push(await runCodexBrowserSkill("product-browser-runner", buildBrowserRunnerPrompt(fixtureServer.url)));
-        runs.push(await runCodexBrowserSkill("product-browser-qa", buildBrowserQaPrompt(fixtureServer.url)));
+        runs.push(await runCodexBrowserSkill("build-browser-runner", buildBrowserRunnerPrompt(fixtureServer.url)));
+        runs.push(await runCodexBrowserSkill("build-browser-qa", buildBrowserQaPrompt(fixtureServer.url)));
         const restoredSystemSkills = restoreCodexSystemSkillsSnapshot(preflight);
         const postflight = captureCodexBrowserPostflight(preflight);
         const summary = buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl: fixtureServer.url, restoredSystemSkills });
@@ -307,7 +307,7 @@ function prepareCodexBrowserPackage() {
 
 function prepareCodexBrowserApp() {
     writeFileSync(join(appRoot, "README.md"), "# product browser core smoke app\n");
-    writeFileSync(join(appRoot, "apm.yml"), `name: product-browser-core-smoke
+    writeFileSync(join(appRoot, "apm.yml"), `name: build-browser-core-smoke
 version: 0.0.0
 targets:
   - codex
@@ -437,23 +437,23 @@ function startBrowserFixtureServer() {
 
 function buildBrowserRunnerPrompt(url) {
     return [
-        "product-browser-runner を明示的に使用してください。",
+        "build-browser-runner を明示的に使用してください。",
         `この評価では /tmp の fixture URL ${url} に対する read-only browser evidence 取得を承認します。`,
         "official agent-browser で open, snapshot, screenshot, console, network を実行してください。",
-        "成果物はこの app の .product-build-stacks/artifacts/browser 配下に保存してください。",
+        "成果物はこの app の .build-stacks/artifacts/browser 配下に保存してください。",
         "session/socket path が長くならないよう、以下の setup を使ってください:",
         "```bash",
         "_ABR_ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)\"",
         "_ABR_REPO_ID=\"$(printf '%s' \"$_ABR_ROOT\" | cksum | awk '{print $1}')\"",
         "_ABR_RUN_ID=\"$(printf '%s' \"${AGENT_BROWSER_RUN_ID:-local}\" | cksum | awk '{print $1}')\"",
         "_ABR_SESSION=\"ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}\"",
-        "PRODUCT_BROWSER_EVIDENCE_DIR=\"${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser}\"",
-        "AGENT_BROWSER_SOCKET_DIR=\"${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}\"",
-        "mkdir -p \"$AGENT_BROWSER_SOCKET_DIR\" \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" .product-build-stacks/browser/downloads",
+        "BUILD_BROWSER_EVIDENCE_DIR=\"${EVAL_EVIDENCE_DIR:-.build-stacks/artifacts/browser}\"",
+        "AGENT_BROWSER_SOCKET_DIR=\"${BUILD_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}\"",
+        "mkdir -p \"$AGENT_BROWSER_SOCKET_DIR\" \"$BUILD_BROWSER_EVIDENCE_DIR/screenshots\" .build-stacks/browser/downloads",
         "export AGENT_BROWSER_SOCKET_DIR",
-        `agent-browser --json --content-boundaries --screenshot-dir "$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" open ${url}`,
+        `agent-browser --json --content-boundaries --screenshot-dir "$BUILD_BROWSER_EVIDENCE_DIR/screenshots" --session "$_ABR_SESSION" open ${url}`,
         "agent-browser --json --content-boundaries --session \"$_ABR_SESSION\" snapshot -i",
-        "agent-browser --json --screenshot-dir \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" screenshot",
+        "agent-browser --json --screenshot-dir \"$BUILD_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" screenshot",
         "agent-browser --json --session \"$_ABR_SESSION\" console",
         "agent-browser --json --session \"$_ABR_SESSION\" network requests",
         "agent-browser --json --session \"$_ABR_SESSION\" close",
@@ -467,10 +467,10 @@ function buildBrowserRunnerPrompt(url) {
 
 function buildBrowserQaPrompt(url) {
     return [
-        "product-browser-qa を明示的に使用してください。",
+        "build-browser-qa を明示的に使用してください。",
         `この評価では /tmp の fixture URL ${url} に対するフォーム入力とクリック操作を承認します。`,
         "official agent-browser でページを開き、snapshot/screenshot/console/network evidence を取り、欠勤フォームを送信して success state を確認してください。",
-        "成果物はこの app の .product-build-stacks/artifacts/browser 配下に保存してください。",
+        "成果物はこの app の .build-stacks/artifacts/browser 配下に保存してください。",
         "auth、cookie import、deploy、外部サービス write は禁止です。",
         "browser を実行していない場合は executed と書かないでください。",
         "最終出力には findings, decisions, evidence, residual risk, next handoff, browser_activation を含めてください。",
@@ -513,14 +513,14 @@ async function runCodexBrowserSkill(skillName, prompt) {
         extraEnv: {
             CODEX_HOME: fakeCodexHome,
             HOME: fakeHome,
-            EVAL_EVIDENCE_DIR: join(appRoot, ".product-build-stacks", "artifacts", "browser"),
+            EVAL_EVIDENCE_DIR: join(appRoot, ".build-stacks", "artifacts", "browser"),
             AGENT_BROWSER_SOCKET_DIR: agentBrowserSocketDir,
-            PRODUCT_BROWSER_SOCKET_DIR: agentBrowserSocketDir
+            BUILD_BROWSER_SOCKET_DIR: agentBrowserSocketDir
         }
     });
     const finalText = existsSync(finalPath) ? readFileSync(finalPath, "utf8") : "";
     const activation = parseBrowserActivation(finalText);
-    const evidenceFiles = collectCodexBrowserFiles(join(appRoot, ".product-build-stacks", "artifacts", "browser"));
+    const evidenceFiles = collectCodexBrowserFiles(join(appRoot, ".build-stacks", "artifacts", "browser"));
     const summary = {
         skillName,
         command,
@@ -639,7 +639,7 @@ function buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl, res
         if (run.browserActivation !== "executed")
             runFailures.push(`${run.skillName}: browser_activation is ${run.browserActivation}, expected executed`);
         if (run.evidenceFiles.length === 0)
-            runFailures.push(`${run.skillName}: no browser evidence files under app .product-build-stacks/artifacts/browser`);
+            runFailures.push(`${run.skillName}: no browser evidence files under app .build-stacks/artifacts/browser`);
     }
     const failures = [
         ...runFailures,

@@ -3,22 +3,22 @@ import { dirname, join, resolve } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
-import { productSkills } from "./apm-skill-list.mjs";
+import { buildSkills } from "./build-skill-catalog.mjs";
 const repoRoot = process.cwd();
-const codexSmokeRoot = join(repoRoot, ".product-build-stacks", "tmp-codex-skill-smoke");
+const codexSmokeRoot = join(repoRoot, ".build-stacks", "tmp-codex-skill-smoke");
 const preparedPackageRoot = join(codexSmokeRoot, "package");
 const consumerAppRoot = join(codexSmokeRoot, "app");
 const smokeResultsRoot = join(codexSmokeRoot, "results");
-const codexRuntimeRoot = join(tmpdir(), `product-build-stacks-codex-smoke-${createHash("sha256").update(repoRoot).digest("hex").slice(0, 12)}-${process.pid}`);
+const codexRuntimeRoot = join(tmpdir(), `build-stacks-codex-smoke-${createHash("sha256").update(repoRoot).digest("hex").slice(0, 12)}-${process.pid}`);
 const fakeCodexHome = join(codexRuntimeRoot, "codex-home");
 const fakeHome = join(codexRuntimeRoot, "home");
-const realCodexHome = resolve(process.env.PRODUCT_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
+const realCodexHome = resolve(process.env.BUILD_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
 const realCodexSkillsRoot = join(realCodexHome, "skills");
 const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
 const systemSkillsSnapshotRoot = join(codexRuntimeRoot, "system-skills-snapshot");
-const keepCodexSmokeWorkspace = process.env.PRODUCT_CODEX_SMOKE_KEEP === "1" || process.env.PRODUCT_CODEX_E2E_KEEP === "1";
+const keepCodexSmokeWorkspace = process.env.BUILD_CODEX_SMOKE_KEEP === "1" || process.env.BUILD_CODEX_E2E_KEEP === "1";
 const allSkillsSmokeMode = process.argv.includes("--all-skills");
-const allSkillsSmokeTimeoutMs = Number(process.env.PRODUCT_CODEX_SMOKE_TIMEOUT_MS ?? process.env.PRODUCT_CODEX_E2E_TIMEOUT_MS ?? "600000") || 600000;
+const allSkillsSmokeTimeoutMs = Number(process.env.BUILD_CODEX_SMOKE_TIMEOUT_MS ?? process.env.BUILD_CODEX_E2E_TIMEOUT_MS ?? "600000") || 600000;
 const requiredSkillSmokeFields = ["skill", "intent_fit", "findings", "decisions", "evidence", "residual risk", "next handoff", "activation_quality"];
 const codexIsolationConfigArgs = [
     "-c",
@@ -49,15 +49,15 @@ async function runCodexSkillSmoke() {
         runLoggedCommandSync(["apm", "install", preparedPackageRoot, "--target", "codex", "--force"], consumerAppRoot, "install.log");
         runLoggedCommandSync(["apm", "compile", "--target", "codex"], consumerAppRoot, "compile.log");
         assertSmokeFileExists(join(consumerAppRoot, "AGENTS.md"));
-        for (const skill of productSkills) {
+        for (const skill of buildSkills) {
             assertSmokeFileExists(join(consumerAppRoot, ".agents", "skills", skill.name, "SKILL.md"));
         }
-        runLoggedCommandSync(["codex", "debug", "prompt-input", ...codexIsolationConfigArgs, "product-recipe-qa を使ってください"], consumerAppRoot, "prompt-input.json");
+        runLoggedCommandSync(["codex", "debug", "prompt-input", ...codexIsolationConfigArgs, "build-recipe-qa を使ってください"], consumerAppRoot, "prompt-input.json");
         const promptInputPath = join(smokeResultsRoot, "prompt-input.json");
         const promptInput = readFileSync(promptInputPath, "utf8");
         const promptInputHasSkillRoots = promptInput.includes("### Skill roots");
         if (promptInputHasSkillRoots) {
-            for (const skill of productSkills) {
+            for (const skill of buildSkills) {
                 assertSmokeFileContains(promptInputPath, skill.name);
                 assertSmokeFileContains(promptInputPath, `/${skill.name}/SKILL.md`);
             }
@@ -189,7 +189,7 @@ function fakeCodexRuntimePathDepth(path) {
     return path.split("/").length;
 }
 function runSingleSkillSmoke(promptInputHasSkillRoots) {
-    const execResult = runCodexExecSkillSmokeSync(productSkills.find((skill) => skill.name === "product-recipe-qa"), "codex-exec.jsonl");
+    const execResult = runCodexExecSkillSmokeSync(buildSkills.find((skill) => skill.name === "build-recipe-qa"), "codex-exec.jsonl");
     writeSingleSkillSmokeSummary(execResult.stdout, promptInputHasSkillRoots);
 }
 async function runAllSkillSmokes() {
@@ -197,7 +197,7 @@ async function runAllSkillSmokes() {
     mkdirSync(allDir, { recursive: true });
     const skills = selectSkillsForSmoke();
     const index = new Array(skills.length);
-    const concurrency = Math.max(1, Number(process.env.PRODUCT_CODEX_SMOKE_CONCURRENCY ?? process.env.PRODUCT_CODEX_E2E_CONCURRENCY ?? "3") || 3);
+    const concurrency = Math.max(1, Number(process.env.BUILD_CODEX_SMOKE_CONCURRENCY ?? process.env.BUILD_CODEX_E2E_CONCURRENCY ?? "3") || 3);
     let nextIndex = 0;
     async function runSkillSmokeWorker() {
         while (nextIndex < skills.length) {
@@ -251,15 +251,15 @@ async function runAllSkillSmokes() {
     }
 }
 function selectSkillsForSmoke() {
-    const names = (process.env.PRODUCT_CODEX_SMOKE_SKILLS ?? process.env.PRODUCT_CODEX_E2E_SKILLS)?.split(",")
+    const names = (process.env.BUILD_CODEX_SMOKE_SKILLS ?? process.env.BUILD_CODEX_E2E_SKILLS)?.split(",")
         .map((name) => name.trim())
         .filter(Boolean);
     if (!names?.length)
-        return productSkills;
+        return buildSkills;
     return names.map((name) => {
-        const skill = productSkills.find((candidate) => candidate.name === name);
+        const skill = buildSkills.find((candidate) => candidate.name === name);
         if (!skill)
-            throw new Error(`unknown skill in PRODUCT_CODEX_SMOKE_SKILLS: ${name}`);
+            throw new Error(`unknown skill in BUILD_CODEX_SMOKE_SKILLS: ${name}`);
         return skill;
     });
 }
@@ -426,7 +426,7 @@ function assertSmokeFileContains(path, needle) {
         throw new Error(`expected ${path} to contain ${needle}`);
 }
 function writeSingleSkillSmokeSummary(execStdout, promptInputHasSkillRoots) {
-    const execPassed = execStdout.includes("product-recipe-qa")
+    const execPassed = execStdout.includes("build-recipe-qa")
         && execStdout.includes("findings")
         && execStdout.includes("decisions")
         && execStdout.includes("evidence");

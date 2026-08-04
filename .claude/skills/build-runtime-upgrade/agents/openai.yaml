@@ -1,0 +1,4 @@
+interface:
+  display_name: "Runtime Upgrade"
+  short_description: "Stack update and migration workflow."
+  default_prompt: "Use $build-runtime-upgrade to stack update and migration workflow."

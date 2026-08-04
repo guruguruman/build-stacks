@@ -1,0 +1,8 @@
+name: build-stacks-browser
+version: 2.0.0
+description: Browser policy, QA, evidence, and automation skills
+targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
+dependencies:
+  apm:
+    - path: ../core
+  mcp: []

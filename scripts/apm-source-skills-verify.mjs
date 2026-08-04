@@ -1,178 +1,95 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
-import { productSkills, isValidProductSkillName } from "./apm-skill-list.mjs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { buildPackages, buildSkills, isValidBuildSkillName, skillsForPackage } from "./build-skill-catalog.mjs";
 
-const sourceSkillRoot = ".apm/skills";
-const expectedSkillNames = new Set(productSkills.map((skill) => skill.name));
-const sourceSkillDocumentFailures = [];
-const requiredFrontmatterKeys = [
-    "name",
-    "preamble-tier",
-    "version",
-    "description",
-    "benefits-from",
-    "triggers"
-];
-const highPreambleFlowSkills = new Set([
-    "product-flow-designconsult",
-    "product-flow-goaldirectedux",
-    "product-flow-designshotgun",
-    "product-flow-infradesign",
-    "product-flow-landingreport",
-    "product-flow-mobileuifinish",
-    "product-flow-pdmscaffold",
-    "product-flow-plantune",
-    "product-flow-securitygate",
-    "product-flow-skillify",
-    "product-flow-webuifinish"
-]);
+const failures = [];
+const expectedNames = new Set(buildSkills.map((skill) => skill.name));
+const allowedSkillRootEntries = new Set(["SKILL.md", "agents", "scripts", "references", "assets"]);
 
-checkProductSkillCatalog();
+verifyCatalog();
+verifySourceSkills();
 
-if (sourceSkillDocumentFailures.length > 0) {
-    console.error(sourceSkillDocumentFailures.join("\n"));
+if (failures.length > 0) {
+    console.error(failures.join("\n"));
     process.exit(1);
 }
 
-console.log(`source skill documents verify ok: ${productSkills.length} product skills`);
+console.log(`source skill documents verify ok: ${buildSkills.length} build skills across ${buildPackages.length} packages`);
 
-function checkProductSkillCatalog() {
-    for (const skill of productSkills) {
-        checkAuthoredSkillDocument(skill);
-    }
-    if (existsSync(sourceSkillRoot)) {
-        for (const entry of readdirSync(sourceSkillRoot, { withFileTypes: true })) {
-            if (entry.isDirectory() && !expectedSkillNames.has(entry.name)) {
-                sourceSkillDocumentFailures.push(`unexpected source skill: ${entry.name}`);
-            }
+function verifyCatalog() {
+    if (expectedNames.size !== buildSkills.length) failures.push("canonical catalog contains duplicate skill names");
+    for (const skill of buildSkills) {
+        if (!isValidBuildSkillName(skill.name)) failures.push(`invalid skill name: ${skill.name}`);
+        if (!buildPackages.some((pkg) => pkg.id === skill.package)) failures.push(`unknown package for ${skill.name}: ${skill.package}`);
+        if (skill.activationExamples.length === 0) failures.push(`missing activation examples: ${skill.name}`);
+        for (const dependency of skill.benefitsFrom) {
+            if (!expectedNames.has(dependency)) failures.push(`unknown benefitsFrom edge: ${skill.name} -> ${dependency}`);
         }
     }
 }
 
-function checkAuthoredSkillDocument(skill) {
-    const skillName = skill.name;
-    if (!isValidProductSkillName(skillName)) {
-        sourceSkillDocumentFailures.push(`invalid skill name: ${skillName}`);
-    }
-    const file = join(sourceSkillRoot, skillName, "SKILL.md");
-    if (!existsSync(file)) {
-        sourceSkillDocumentFailures.push(`missing source skill: ${file}`);
-        return;
-    }
-    const body = readFileSync(file, "utf8");
-    const frontmatter = parseFrontmatter(body);
-    if (!frontmatter) {
-        if (!body.startsWith("---\n")) {
-            sourceSkillDocumentFailures.push(`missing frontmatter: ${file}`);
-        }
-        else {
-            sourceSkillDocumentFailures.push(`unterminated frontmatter: ${file}`);
-        }
-        return;
-    }
-    verifyFrontmatterSchema(file, skill, frontmatter);
-    if (!body.includes(`# ${skillName}`)) {
-        sourceSkillDocumentFailures.push(`wrong title: ${file}`);
-    }
-}
-
-function parseFrontmatter(body) {
-    if (!body.startsWith("---\n")) {
-        return null;
-    }
-    const end = body.indexOf("\n---\n", 4);
-    if (end === -1) {
-        return null;
-    }
-    return body.slice(4, end).split("\n");
-}
-
-function verifyFrontmatterSchema(file, skill, frontmatterLines) {
-    const skillName = skill.name;
-    const keyEntries = collectFrontmatterKeys(frontmatterLines);
-    const actualKeys = keyEntries.map((entry) => entry.key);
-    if (actualKeys.join("\n") !== requiredFrontmatterKeys.join("\n")) {
-        sourceSkillDocumentFailures.push(`${file} frontmatter keys must be ${requiredFrontmatterKeys.join(", ")}`);
-    }
-    if (actualKeys.includes("allowed-tools")) {
-        sourceSkillDocumentFailures.push(`${file} must not declare allowed-tools; product skills should not restrict host tool availability`);
-    }
-    const values = new Map(keyEntries.map((entry) => [entry.key, entry.value]));
-    if (values.get("name") !== skillName) {
-        sourceSkillDocumentFailures.push(`frontmatter name mismatch: ${file}`);
-    }
-    const expectedTier = expectedPreambleTier(skill);
-    if (values.get("preamble-tier") !== expectedTier) {
-        sourceSkillDocumentFailures.push(`${file} preamble-tier must be ${expectedTier} for ${skill.layer} layer`);
-    }
-    if (values.get("version") !== "1.0.0") {
-        sourceSkillDocumentFailures.push(`invalid frontmatter version: ${file}`);
-    }
-    if (values.get("description") !== "|") {
-        sourceSkillDocumentFailures.push(`description must be block scalar: ${file}`);
-    }
-    verifyDescriptionBlock(file, frontmatterLines, keyEntries);
-    if (!isInlineArray(values.get("benefits-from"))) {
-        sourceSkillDocumentFailures.push(`benefits-from must be an inline array: ${file}`);
-    }
-    const triggers = collectListValues(frontmatterLines, keyEntries, "triggers");
-    if (triggers.length === 0) {
-        sourceSkillDocumentFailures.push(`triggers must include at least one item: ${file}`);
-    }
-}
-
-function expectedPreambleTier(skill) {
-    if (skill.layer === "recipe" || skill.layer === "role") {
-        return "3";
-    }
-    if (skill.layer === "flow") {
-        return highPreambleFlowSkills.has(skill.name) ? "3" : "2";
-    }
-    if (skill.layer === "guard" || skill.layer === "internal") {
-        return "1";
-    }
-    return "2";
-}
-
-function collectFrontmatterKeys(lines) {
-    const entries = [];
-    for (let index = 0; index < lines.length; index += 1) {
-        const match = lines[index].match(/^([a-z][a-z0-9-]*):(?:\s*(.*))?$/);
-        if (!match) {
+function verifySourceSkills() {
+    for (const pkg of buildPackages) {
+        const root = join(pkg.path, ".apm", "skills");
+        const expected = new Set(skillsForPackage(pkg.id).map((skill) => skill.name));
+        if (!existsSync(root)) {
+            failures.push(`missing package skill root: ${root}`);
             continue;
         }
-        entries.push({ key: match[1], value: match[2] ?? "", index });
-    }
-    return entries;
-}
-
-function verifyDescriptionBlock(file, lines, keyEntries) {
-    const description = collectBlock(lines, keyEntries, "description").join("\n");
-    for (const requiredText of ["Use when", "Proactively suggest", "Voice triggers"]) {
-        if (!description.includes(requiredText)) {
-            sourceSkillDocumentFailures.push(`description missing "${requiredText}": ${file}`);
-        }
+        const actual = readdirSync(root, { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+        for (const name of expected) if (!actual.includes(name)) failures.push(`missing source skill: ${join(root, name)}`);
+        for (const name of actual) if (!expected.has(name)) failures.push(`unexpected source skill in ${pkg.id}: ${name}`);
+        for (const name of actual) verifySkill(pkg.id, join(root, name));
     }
 }
 
-function collectListValues(lines, keyEntries, key) {
-    return collectBlock(lines, keyEntries, key)
-        .map((line) => line.match(/^-\s+(.+)$/)?.[1])
-        .filter(Boolean);
-}
-
-function collectBlock(lines, keyEntries, key) {
-    const startEntry = keyEntries.find((entry) => entry.key === key);
-    if (!startEntry) {
-        return [];
+function verifySkill(packageId, directory) {
+    const name = directory.split("/").at(-1);
+    const path = join(directory, "SKILL.md");
+    if (!existsSync(path)) {
+        failures.push(`missing SKILL.md: ${directory}`);
+        return;
     }
-    const nextEntry = keyEntries.find((entry) => entry.index > startEntry.index);
-    const end = nextEntry ? nextEntry.index : lines.length;
-    return lines.slice(startEntry.index + 1, end)
-        .filter((line) => line.startsWith("  "))
-        .map((line) => line.slice(2));
+    for (const entry of readdirSync(directory)) {
+        if (!allowedSkillRootEntries.has(entry)) failures.push(`${directory} contains non-standard root entry: ${entry}`);
+    }
+    const body = readFileSync(path, "utf8");
+    const match = body.match(/^---\n([\s\S]*?)\n---\n/);
+    if (!match) {
+        failures.push(`invalid frontmatter: ${path}`);
+        return;
+    }
+    const frontmatter = match[1];
+    const keys = [...frontmatter.matchAll(/^([a-z][a-z0-9-]*):/gm)].map((entry) => entry[1]);
+    if (keys.join(",") !== "name,description") failures.push(`${path} frontmatter must contain only name and description`);
+    const declaredName = frontmatter.match(/^name:\s*([^\n]+)$/m)?.[1]?.replace(/^['"]|['"]$/g, "");
+    if (declaredName !== name) failures.push(`frontmatter name mismatch: ${path}`);
+    const descriptionRaw = frontmatter.match(/^description:\s*(.+)$/m)?.[1];
+    let description = "";
+    try {
+        description = descriptionRaw?.startsWith('"') ? JSON.parse(descriptionRaw) : descriptionRaw ?? "";
+    } catch {
+        failures.push(`description must be a valid quoted scalar: ${path}`);
+    }
+    if (!description.startsWith("Use when") && !description.startsWith("Apply when")) failures.push(`description must be intent-first: ${path}`);
+    if (description.length > 1024) failures.push(`description exceeds 1024 characters: ${path}`);
+    if (!/^[\x00-\x7F]*$/.test(frontmatter)) failures.push(`frontmatter must be ASCII-only: ${path}`);
+    const lineCount = body.split("\n").length;
+    const approximateTokens = Math.ceil(body.length / 4);
+    if (lineCount > 500) failures.push(`${path} exceeds 500 lines: ${lineCount}`);
+    if (approximateTokens > 5000) failures.push(`${path} exceeds the 5000-token budget: ~${approximateTokens}`);
+    if (!body.includes(`# ${name}`)) failures.push(`wrong skill title: ${path}`);
+    if (/product-(browser|flow|guard|internal|recipe|role|runtime|source)-|\.product-build-stacks/.test(body)) failures.push(`legacy build-stacks identifier: ${path}`);
+    verifyLinks(path, body);
+    const catalogEntry = buildSkills.find((skill) => skill.name === name);
+    if (catalogEntry?.package !== packageId) failures.push(`catalog package mismatch: ${name}`);
 }
 
-function isInlineArray(value) {
-    return /^\[[^\]]*\]$/.test(value ?? "");
+function verifyLinks(path, body) {
+    for (const match of body.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
+        const target = match[1].split("#")[0];
+        if (!target || /^(https?:|mailto:)/.test(target)) continue;
+        const resolved = resolve(dirname(path), target);
+        if (!existsSync(resolved)) failures.push(`broken relative link in ${path}: ${target}`);
+    }
 }

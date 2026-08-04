@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard Destructive"
+  short_description: "Warn and require approval before destructive actions."
+  default_prompt: "Use $build-guard-destructive to warn and require approval before destructive actions."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Infradesign"
+  short_description: "Design evidence-backed infrastructure topologies from reposit..."
+  default_prompt: "Use $build-flow-infradesign to design evidence-backed infrastructure topologies from repository, user, and operational constraints."

@@ -1,0 +1,7 @@
+name: build-stacks-core
+version: 2.0.0
+description: Core safeguards, state, evidence, and investigation skills
+targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
+dependencies:
+  apm: []
+  mcp: []
