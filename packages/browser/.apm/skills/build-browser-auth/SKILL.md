@@ -1,6 +1,6 @@
 ---
 name: build-browser-auth
-description: "Use when the user wants to guarded cookie import and authenticated browser setup Common requests include \"browser auth\", \"authenticated browser\", \"cookie setup\"."
+description: "Guarded cookie import and authenticated browser setup. Use when the user asks to import cookies safely and set up authenticated browser access. Common requests include \"browser auth\", \"authenticated browser\", \"cookie setup\"."
 ---
 
 # build-browser-auth

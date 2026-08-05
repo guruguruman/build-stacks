@@ -1,6 +1,6 @@
 ---
 name: build-guard-destructive
-description: "Use when the user wants to warn and require approval before destructive actions Common requests include \"guard destructive\", \"destructive guard\", \"risky command\", \"approval check\"."
+description: "Warn and require approval before destructive actions. Use when the user asks to warn and require approval before destructive actions. Common requests include \"guard destructive\", \"destructive guard\", \"risky command\", \"approval check\"."
 ---
 
 # build-guard-destructive

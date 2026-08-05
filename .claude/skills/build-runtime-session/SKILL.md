@@ -1,6 +1,6 @@
 ---
 name: build-runtime-session
-description: "Use when the user wants to save and restore session snapshots under .build-stacks Common requests include \"runtime session\", \"save session\", \"restore session\", \"working context\"."
+description: "Save and restore session snapshots under .build-stacks. Use when the user asks to save and restore session snapshots under .build-stacks. Common requests include \"runtime session\", \"save session\", \"restore session\", \"working context\"."
 ---
 
 # build-runtime-session

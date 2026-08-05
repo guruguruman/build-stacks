@@ -1,6 +1,6 @@
 ---
 name: build-recipe-discovery
-description: "Use when the user wants to shape ambiguous product requests into a design doc using forcing questions Common requests include \"recipe discovery\", \"discovery\", \"shape the idea\", \"product brief\"."
+description: "Shape ambiguous product requests into a design doc using forcing questions. Use when the user asks to shape ambiguous product requests into a design doc using forcing questions. Common requests include \"recipe discovery\", \"discovery\", \"shape the idea\", \"product brief\"."
 ---
 
 # build-recipe-discovery

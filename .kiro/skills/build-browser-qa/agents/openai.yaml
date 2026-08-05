@@ -1,4 +1,4 @@
 interface:
   display_name: "Browser Qa"
   short_description: "Browser-centered QA routines and artifact capture."
-  default_prompt: "Use $build-browser-qa to browser-centered QA routines and artifact capture."
+  default_prompt: "Use $build-browser-qa to run browser-centered QA and capture evidence."

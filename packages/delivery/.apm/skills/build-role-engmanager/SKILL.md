@@ -1,6 +1,6 @@
 ---
 name: build-role-engmanager
-description: "Use when the user wants to engineering manager review for sequencing, risk, maintainability, and scope control Common requests include \"role engmanager\", \"engineering manager review\", \"plan review\", \"delivery review\"."
+description: "Engineering manager review for sequencing, risk, maintainability, and scope control. Use when the user asks to review sequencing, risk, maintainability, and scope as an engineering manager. Common requests include \"role engmanager\", \"engineering manager review\", \"plan review\", \"delivery review\"."
 ---
 
 # build-role-engmanager

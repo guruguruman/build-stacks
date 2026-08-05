@@ -1,6 +1,6 @@
 ---
 name: build-flow-securitygate
-description: "Use when the user wants to run a complete evidence-backed prelaunch security gate with deterministic release verdicts Common requests include \"flow securitygate\", \"prelaunch security gate\", \"release security gate\", \"security go/no-go\"."
+description: "Run a complete evidence-backed prelaunch security gate with deterministic release verdicts. Use when the user asks to run a complete evidence-backed prelaunch security gate with deterministic release verdicts. Common requests include \"flow securitygate\", \"prelaunch security gate\", \"release security gate\", \"security go/no-go\"."
 ---
 
 # build-flow-securitygate

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Flow Securitygate"
-  short_description: "Run a complete evidence-backed prelaunch security gate with d..."
+  display_name: "Flow Security Gate"
+  short_description: "Run a complete evidence-backed prelaunch security gate with..."
   default_prompt: "Use $build-flow-securitygate to run a complete evidence-backed prelaunch security gate with deterministic release verdicts."

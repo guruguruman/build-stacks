@@ -1,6 +1,6 @@
 ---
 name: build-browser-benchmark
-description: "Use when the user wants to browser performance benchmark and web vitals evidence Common requests include \"browser benchmark\", \"performance evidence\", \"web vitals\"."
+description: "Browser performance benchmark and web vitals evidence. Use when the user asks to benchmark browser performance and collect Web Vitals evidence. Common requests include \"browser benchmark\", \"performance evidence\", \"web vitals\"."
 ---
 
 # build-browser-benchmark

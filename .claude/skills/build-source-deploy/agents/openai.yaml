@@ -1,4 +1,4 @@
 interface:
   display_name: "Source Deploy"
   short_description: "Deployment environment setup source integration."
-  default_prompt: "Use $build-source-deploy to deployment environment setup source integration."
+  default_prompt: "Use $build-source-deploy to integrate deployment environment setup and readiness evidence."

@@ -1,6 +1,6 @@
 ---
 name: build-browser-canary
-description: "Use when the user wants to post-deploy browser canary monitoring Common requests include \"browser canary\", \"post deploy canary\", \"launch check\"."
+description: "Post-deploy browser canary monitoring. Use when the user asks to monitor a post-deploy browser canary. Common requests include \"browser canary\", \"post deploy canary\", \"launch check\"."
 ---
 
 # build-browser-canary

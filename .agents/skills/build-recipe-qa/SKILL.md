@@ -1,6 +1,6 @@
 ---
 name: build-recipe-qa
-description: "Use when the user wants to run browser QA, fix issues, and re-verify with evidence Common requests include \"recipe qa\", \"run QA\", \"test and fix\", \"browser QA\"."
+description: "Run browser QA, fix issues, and re-verify with evidence. Use when the user asks to run browser QA, fix issues, and re-verify with evidence. Common requests include \"recipe qa\", \"run QA\", \"test and fix\", \"browser QA\"."
 ---
 
 # build-recipe-qa

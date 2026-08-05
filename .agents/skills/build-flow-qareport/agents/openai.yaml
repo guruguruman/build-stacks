@@ -1,4 +1,4 @@
 interface:
-  display_name: "Flow Qareport"
+  display_name: "Flow QA Report"
   short_description: "Produce QA findings without modifying code."
   default_prompt: "Use $build-flow-qareport to produce QA findings without modifying code."

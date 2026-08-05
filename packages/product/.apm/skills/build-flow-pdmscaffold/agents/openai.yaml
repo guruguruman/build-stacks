@@ -1,4 +1,4 @@
 interface:
-  display_name: "Flow Pdmscaffold"
-  short_description: "Create a neutral, collision-safe canonical PdM documentation..."
+  display_name: "Flow PdM Scaffold"
+  short_description: "Create a neutral, collision-safe canonical PdM..."
   default_prompt: "Use $build-flow-pdmscaffold to create a neutral, collision-safe canonical PdM documentation scaffold."

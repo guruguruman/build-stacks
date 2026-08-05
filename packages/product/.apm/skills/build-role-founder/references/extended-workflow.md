@@ -635,7 +635,7 @@ Complete table of every method that can fail, every exception class, rescued sta
 Any row with RESCUED=N, TEST=N, USER SEES=Silent → **CRITICAL GAP**.
 
 ### TODOS.md updates
-Present each potential TODO as its own individual AskUserQuestion. Never batch TODOs — one per question. Never silently skip this step. Follow the format in the bundled `build-role-staffengineer/TODOS-format.md` support file.
+Present each potential TODO as its own individual AskUserQuestion. Never batch TODOs — one per question. Never silently skip this step. Follow the repository's existing TODO format. If none exists, record the title, priority, rationale, scope, acceptance criteria, dependencies, and effort estimate listed below; do not depend on a skill outside the installed product closure.
 
 For each TODO, describe:
 * **What:** One-line description of the work.

@@ -109,7 +109,7 @@ Compare requested scope, current plan, changed files, and proposed next steps. A
 
 Review the diff for structural issues that tests don't catch.
 
-1. Read the bundled support file `build-role-staffengineer/checklist.md`. If the file cannot be read, **STOP** and report the error.
+1. Read the bundled staff-engineer checklist at `../../build-role-staffengineer/references/checklist.md`. If the file cannot be read, **STOP** and report the error.
 
 2. Run `git diff origin/<base>` to get the full diff (scoped to feature changes against the freshly-fetched base branch).
 
@@ -176,7 +176,7 @@ Save the review output — it goes into the PR body in Step 19.
 
 **Subagent prompt:**
 
-> You are classifying Greptile review comments for a /build-recipe-ship workflow. Read the bundled support file `build-role-staffengineer/greptile-triage.md` and follow the fetch, filter, classify, and **escalation detection** steps. Do NOT fix code, do NOT reply to comments, do NOT commit — report only.
+> You are classifying Greptile review comments for a /build-recipe-ship workflow. Read the bundled Greptile triage guide at `../../build-role-staffengineer/references/greptile-triage.md` and follow the fetch, filter, classify, and **escalation detection** steps. Do NOT fix code, do NOT reply to comments, do NOT commit — report only.
 >
 > For each comment, assign: `classification` (`valid_actionable`, `already_fixed`, `false_positive`, `suppressed`), `escalation_tier` (1 or 2), the file:line or [top-level] tag, body summary, and permalink URL.
 >
@@ -374,7 +374,7 @@ Update changelog or release notes only when the repository already uses them or 
 
 Cross-reference the project's TODOS.md against the changes being shipped. Mark completed items automatically; prompt only if the file is missing or disorganized.
 
-Read the bundled support file `build-role-staffengineer/TODOS-format.md` for the canonical format reference.
+Read the bundled TODOS format at `../../build-role-staffengineer/references/TODOS-format.md` for the canonical format reference.
 
 **1. Check if TODOS.md exists** in the repository root.
 

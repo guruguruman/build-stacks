@@ -1,4 +1,4 @@
 interface:
-  display_name: "Role Engmanager"
-  short_description: "Engineering manager review for sequencing, risk, maintainabil..."
-  default_prompt: "Use $build-role-engmanager to engineering manager review for sequencing, risk, maintainability, and scope control."
+  display_name: "Role Engineering Manager"
+  short_description: "Engineering manager review for sequencing, risk,..."
+  default_prompt: "Use $build-role-engmanager to review sequencing, risk, maintainability, and scope as an engineering manager."

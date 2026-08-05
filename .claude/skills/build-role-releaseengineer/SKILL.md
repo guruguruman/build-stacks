@@ -1,6 +1,6 @@
 ---
 name: build-role-releaseengineer
-description: "Use when the user wants to release engineering lens for rollout, rollback, and verification Common requests include \"role releaseengineer\", \"release review\", \"rollback plan\", \"release engineer\"."
+description: "Release engineering lens for rollout, rollback, and verification. Use when the user asks to review rollout, rollback, and verification readiness. Common requests include \"role releaseengineer\", \"release review\", \"rollback plan\", \"release engineer\"."
 ---
 
 # build-role-releaseengineer

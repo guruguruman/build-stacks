@@ -1,6 +1,6 @@
 ---
 name: build-flow-landingreport
-description: "Use when the user wants to review landing pages and launch readiness Common requests include \"flow landingreport\", \"landing report\", \"conversion review\", \"landing page review\"."
+description: "Review landing pages and launch readiness. Use when the user asks to review landing pages and launch readiness. Common requests include \"flow landingreport\", \"landing report\", \"conversion review\", \"landing page review\"."
 ---
 
 # build-flow-landingreport

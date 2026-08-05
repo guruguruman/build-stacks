@@ -1,4 +1,4 @@
 interface:
   display_name: "Flow Organize Stack"
-  short_description: "Audit APM skill placement and propose safe stack organization..."
+  short_description: "Audit APM skill placement and propose safe stack..."
   default_prompt: "Use $build-flow-organize-stack to audit APM skill placement and propose safe stack organization changes."

@@ -1,6 +1,6 @@
 ---
 name: build-flow-pdmscaffold
-description: "Use when the user wants to create a neutral, collision-safe canonical PdM documentation scaffold Common requests include \"flow pdmscaffold\", \"PdM documentation scaffold\", \"PRODUCT_PLAN template\", \"docs/pdm scaffold\"."
+description: "Create a neutral, collision-safe canonical PdM documentation scaffold. Use when the user asks to create a neutral, collision-safe canonical PdM documentation scaffold. Common requests include \"flow pdmscaffold\", \"PdM documentation scaffold\", \"PRODUCT_PLAN template\", \"docs/pdm scaffold\"."
 ---
 
 # build-flow-pdmscaffold

@@ -1,4 +1,4 @@
 interface:
   display_name: "Browser Auth"
   short_description: "Guarded cookie import and authenticated browser setup."
-  default_prompt: "Use $build-browser-auth to guarded cookie import and authenticated browser setup."
+  default_prompt: "Use $build-browser-auth to import cookies safely and set up authenticated browser access."

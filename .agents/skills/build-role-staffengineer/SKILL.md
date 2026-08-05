@@ -1,6 +1,6 @@
 ---
 name: build-role-staffengineer
-description: "Use when the user wants to staff-level code review for diffs, architecture, correctness, migrations, and tests Common requests include \"role staffengineer\", \"staff engineer review\", \"review the diff\", \"pre landing review\"."
+description: "Staff-level code review for diffs, architecture, correctness, migrations, and tests. Use when the user asks to review diffs, architecture, correctness, migrations, and tests at staff level. Common requests include \"role staffengineer\", \"staff engineer review\", \"review the diff\", \"pre landing review\"."
 ---
 
 # build-role-staffengineer
@@ -62,7 +62,7 @@ Compare shipped diff to the accepted plan. Mark done, deferred, changed, and mis
 
 ## Step 2: Read the checklist
 
-Read the bundled support file `build-role-staffengineer/checklist.md`.
+Read the bundled [review checklist](references/checklist.md), resolving it relative to this `SKILL.md`.
 
 **If the file cannot be read, STOP and report the error.** Do not proceed without the checklist.
 
@@ -70,7 +70,7 @@ Read the bundled support file `build-role-staffengineer/checklist.md`.
 
 ## Step 2.5: Check for Greptile build-role-staffengineer comments
 
-Read the bundled support file `build-role-staffengineer/greptile-triage.md` and follow the fetch, filter, classify, and **escalation detection** steps.
+Read the bundled [Greptile triage guide](references/greptile-triage.md) and follow the fetch, filter, classify, and **escalation detection** steps.
 
 **If no PR exists, `gh` fails, API returns an error, or there are zero Greptile comments:** Skip this step silently. Greptile integration is additive — the build-role-staffengineer works without it.
 
@@ -155,7 +155,7 @@ Separate observed facts from inference. Lower confidence when evidence is missin
 
 ## Review Specialists
 
-Use specialist lenses from references when relevant: security, testing, performance, data migration, maintainability, API contract, red-team, and design.
+Use the bundled specialist lenses when relevant: [security](references/security.md), [testing](references/testing.md), [performance](references/performance.md), [data migration](references/data-migration.md), [maintainability](references/maintainability.md), [API contract](references/api-contract.md), [red-team](references/red-team.md), and [design](references/design-checklist.md).
 
 ---
 

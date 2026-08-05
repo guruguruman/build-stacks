@@ -1,4 +1,4 @@
 interface:
   display_name: "Source Pdf"
   short_description: "PDF generation and document source support."
-  default_prompt: "Use $build-source-pdf to pDF generation and document source support."
+  default_prompt: "Use $build-source-pdf to generate and verify PDFs and supporting document sources."

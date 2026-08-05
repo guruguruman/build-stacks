@@ -1,6 +1,6 @@
 ---
 name: build-recipe-investigate
-description: "Use when the user wants to require investigation before risky fixes Common requests include \"recipe investigate\", \"investigate\", \"root cause\", \"debug this\"."
+description: "Require investigation before risky fixes. Use when the user asks to require investigation before risky fixes. Common requests include \"recipe investigate\", \"investigate\", \"root cause\", \"debug this\"."
 ---
 
 # build-recipe-investigate

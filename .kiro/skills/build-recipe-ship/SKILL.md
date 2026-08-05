@@ -1,6 +1,6 @@
 ---
 name: build-recipe-ship
-description: "Use when the user wants to prepare tests, coverage, docs, changelog, and PR handoff Common requests include \"recipe ship\", \"prepare release\", \"ship branch\", \"release handoff\"."
+description: "Prepare tests, coverage, docs, changelog, and PR handoff. Use when the user asks to prepare tests, coverage, docs, changelog, and PR handoff. Common requests include \"recipe ship\", \"prepare release\", \"ship branch\", \"release handoff\"."
 ---
 
 # build-recipe-ship

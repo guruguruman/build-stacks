@@ -1,4 +1,4 @@
 interface:
-  display_name: "Flow Designhtml"
+  display_name: "Flow Design HTML"
   short_description: "Create HTML artifacts and design previews."
   default_prompt: "Use $build-flow-designhtml to create HTML artifacts and design previews."

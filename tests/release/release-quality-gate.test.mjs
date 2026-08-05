@@ -28,15 +28,26 @@ describe("release quality gate", () => {
             ["npm", "run", "generated:verify"],
             ["npm", "run", "apm:verify"],
             ["apm", "audit", "--ci"],
-            ["apm", "compile", "--validate", "--local-only"],
+            ["node", "scripts/apm-compile-verify.mjs"],
             ["npm", "run", "smoke:codex"],
             ["npm", "run", "smoke:all"],
             ["npm", "run", "smoke:packages"],
+            ["npm", "run", "smoke:codex-activation-install"],
             ["npm", "run", "browser:doctor"],
             ["npm", "run", "browser:smoke"],
             ["node", "scripts/repo-secret-scan.mjs"],
             ["node", "scripts/repo-whitespace-verify.mjs"]
         ]);
+    });
+
+    it("verifies compilation through an isolated installed root", () => {
+        const compileVerifier = readFileSync("scripts/apm-compile-verify.mjs", "utf8");
+
+        assert.match(compileVerifier, /\["apm\.yml", "apm\.lock\.yaml", "packages"\]/);
+        assert.match(compileVerifier, /"install", "--frozen", "--target", "all"/);
+        assert.match(compileVerifier, /"compile", "--validate"/);
+        assert.match(compileVerifier, /cwd: workspaceRoot/);
+        assert.doesNotMatch(compileVerifier, /--local-only/);
     });
 
     it("is mandatory for release verification and CI", () => {

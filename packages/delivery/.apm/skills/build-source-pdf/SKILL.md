@@ -1,6 +1,6 @@
 ---
 name: build-source-pdf
-description: "Use when the user wants to pDF generation and document source support Common requests include \"source pdf\", \"PDF support\", \"create PDF\", \"verify PDF\"."
+description: "PDF generation and document source support. Use when the user asks to generate and verify PDFs and supporting document sources. Common requests include \"source pdf\", \"PDF support\", \"create PDF\", \"verify PDF\"."
 ---
 
 # build-source-pdf

@@ -1,6 +1,6 @@
 ---
 name: build-role-designer
-description: "Use when the user wants to product design review for UX plans, visual artifacts, flows, and honest browser status Common requests include \"role designer\", \"designer review\", \"design review\", \"UX review\"."
+description: "Product design review for UX plans, visual artifacts, flows, and honest browser status. Use when the user asks to review product UX, visual artifacts, flows, and browser evidence. Common requests include \"role designer\", \"designer review\", \"design review\", \"UX review\"."
 ---
 
 # build-role-designer

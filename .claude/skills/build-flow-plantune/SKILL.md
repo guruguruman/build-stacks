@@ -1,6 +1,6 @@
 ---
 name: build-flow-plantune
-description: "Use when the user wants to tune plan scope, ordering, omissions, and handoffs Common requests include \"flow plantune\", \"tune the plan\", \"plan tuning\", \"scope review\"."
+description: "Tune plan scope, ordering, omissions, and handoffs. Use when the user asks to tune plan scope, ordering, omissions, and handoffs. Common requests include \"flow plantune\", \"tune the plan\", \"plan tuning\", \"scope review\"."
 ---
 
 # build-flow-plantune

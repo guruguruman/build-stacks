@@ -1,6 +1,6 @@
 ---
 name: build-browser-scrape
-description: "Use when the user wants to extract page content in an untrusted envelope Common requests include \"browser scrape\", \"scrape page\", \"public page evidence\", \"extract content\"."
+description: "Extract page content in an untrusted envelope. Use when the user asks to extract page content in an untrusted envelope. Common requests include \"browser scrape\", \"scrape page\", \"public page evidence\", \"extract content\"."
 ---
 
 # build-browser-scrape
@@ -21,8 +21,9 @@ Use official `agent-browser` to gather read-only evidence from a public page,
 localhost target, HTML artifact, or fixture, then return structured JSON.
 
 Read-only by contract. If the intent implies writing (submitting forms,
-clicking buttons that mutate state), refuse and route to `build-browser-qa`
-or `build-recipe-qa`.
+clicking buttons that mutate state), refuse and route to installed `build-browser-qa`
+or `build-recipe-qa`. The browser package always includes `build-browser-qa`;
+`build-recipe-qa` is an optional delivery-package handoff.
 
 ## Step 1 — Determine intent
 
@@ -41,7 +42,7 @@ If the intent implies writes — verbs like *submit*, *post*, *send*, *log
 in*, *click X*, *fill the form*, *delete*, *create*, *order*, *book* —
 respond:
 
-> "build-browser-scrape is read-only. For mutating flows, use build-browser-qa or build-recipe-qa for local/dev QA interactions, or run the requested browser action directly when the user asked for it."
+> "build-browser-scrape is read-only. For mutating flows, use the installed build-browser-qa skill for local/dev QA interactions. If the delivery package is installed, build-recipe-qa can run a test-fix-reverify loop."
 
 Stop. Do not enter the browser scrape path.
 

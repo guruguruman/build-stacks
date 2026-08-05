@@ -1,4 +1,4 @@
 interface:
   display_name: "Browser Benchmark"
   short_description: "Browser performance benchmark and web vitals evidence."
-  default_prompt: "Use $build-browser-benchmark to browser performance benchmark and web vitals evidence."
+  default_prompt: "Use $build-browser-benchmark to benchmark browser performance and collect Web Vitals evidence."

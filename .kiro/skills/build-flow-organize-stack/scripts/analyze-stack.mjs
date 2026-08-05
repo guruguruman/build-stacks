@@ -9,11 +9,16 @@ const root = resolve(readOption("--root") ?? process.cwd());
 const json = args.has("--json");
 const check = args.has("--check");
 const findings = [];
+const legacyIdentifierPattern = new RegExp([
+    "product-",
+    "(?:browser|flow|guard|internal|recipe|role|runtime|source)-",
+    "|\\.product-",
+    "build-stacks"
+].join(""));
 const manifests = discoverManifests(root);
 const skills = discoverSkills(root);
 const packageGraph = buildPackageGraph(manifests);
 const cycles = findCycles(packageGraph);
-
 for (const cycle of cycles) {
     findings.push({ severity: "error", code: "package-cycle", message: cycle.join(" -> ") });
 }
@@ -28,9 +33,7 @@ for (const skill of skills) {
     if (skill.declaredName && skill.declaredName !== skill.name) {
         findings.push({ severity: "error", code: "skill-name-mismatch", message: `${skill.path}: ${skill.declaredName} != ${skill.name}` });
     }
-    if (/product-(browser|flow|guard|internal|recipe|role|runtime|source)-|\.product-build-stacks/.test(skill.body)) {
-        findings.push({ severity: "error", code: "legacy-identifier", message: skill.path });
-    }
+    for (const path of skill.legacyFiles) findings.push({ severity: "error", code: "legacy-identifier", message: path });
 }
 
 const catalog = await loadCatalog(root);
@@ -49,7 +52,24 @@ if (catalog) {
             if (!catalogNames.has(dependency)) findings.push({ severity: "error", code: "unknown-benefit", message: `${skill.name} -> ${dependency}` });
         }
     }
-    for (const pkg of catalog.buildPackages) closures[pkg.id] = catalog.packageClosure(pkg.id).map((skill) => skill.name).sort();
+    for (const pkg of catalog.buildPackages) {
+        const manifestPath = `${pkg.path}/apm.yml`;
+        const manifest = manifests.find((entry) => entry.path === manifestPath);
+        const expectedDependencies = pkg.dependencies.map((dependency) => `../${dependency}`);
+        if (!manifest) {
+            findings.push({ severity: "error", code: "missing-package-manifest", message: manifestPath });
+            closures[pkg.id] = [];
+            continue;
+        }
+        if (manifest.dependencies.join("\n") !== expectedDependencies.join("\n")) {
+            findings.push({
+                severity: "error",
+                code: "package-dependency-drift",
+                message: `${manifestPath}: catalog=${expectedDependencies.join(",") || "none"} manifest=${manifest.dependencies.join(",") || "none"}`
+            });
+        }
+        closures[pkg.id] = packageClosureFromGraph(pkg.name, packageGraph, catalog.buildPackages, skills);
+    }
     const rootManifest = manifests.find((manifest) => manifest.path === "apm.yml");
     const expectedRootDependencies = ["./packages/maintainer"];
     if (!rootManifest || rootManifest.dependencies.join("\n") !== expectedRootDependencies.join("\n")) {
@@ -145,12 +165,51 @@ function walk(repoRoot, current, result) {
                 const body = readFileSync(join(path, "SKILL.md"), "utf8");
                 const rel = normalizePath(relative(repoRoot, join(path, "SKILL.md")));
                 const packageId = rel.match(/^packages\/([^/]+)\//)?.[1] ?? "root";
-                result.push({ name: entry.name, declaredName: body.match(/^name:\s*([^\n]+)$/m)?.[1]?.replace(/^['"]|['"]$/g, ""), package: packageId, path: rel, body });
+                result.push({
+                    name: entry.name,
+                    declaredName: body.match(/^name:\s*([^\n]+)$/m)?.[1]?.replace(/^['"]|['"]$/g, ""),
+                    package: packageId,
+                    path: rel,
+                    body,
+                    legacyFiles: discoverLegacyFiles(repoRoot, path)
+                });
                 continue;
             }
             walk(repoRoot, path, result);
         }
     }
+}
+
+function discoverLegacyFiles(repoRoot, skillRoot) {
+    const matches = [];
+    walkSkillFiles(skillRoot, (path) => {
+        if (!/\.(?:md|mjs|js|py|sh|ya?ml|json|toml)$/.test(path)) return;
+        const body = readFileSync(path, "utf8");
+        if (legacyIdentifierPattern.test(body)) {
+            matches.push(normalizePath(relative(repoRoot, path)));
+        }
+    });
+    return matches;
+}
+
+function walkSkillFiles(current, visit) {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+        const path = join(current, entry.name);
+        if (entry.isDirectory()) walkSkillFiles(path, visit);
+        else if (entry.isFile()) visit(path);
+    }
+}
+
+function packageClosureFromGraph(startName, graph, packages, discoveredSkills) {
+    const visited = new Set();
+    const visit = (name) => {
+        if (visited.has(name)) return;
+        visited.add(name);
+        for (const dependency of graph.get(name) ?? []) visit(dependency);
+    };
+    visit(startName);
+    const packageIds = new Set(packages.filter((pkg) => visited.has(pkg.name)).map((pkg) => pkg.id));
+    return discoveredSkills.filter((skill) => packageIds.has(skill.package)).map((skill) => skill.name).sort();
 }
 
 function findCycles(graph) {

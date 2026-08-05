@@ -1,6 +1,6 @@
 ---
 name: build-flow-designshotgun
-description: "Use when the user wants to generate and compare multiple design directions Common requests include \"flow designshotgun\", \"design shotgun\", \"multiple directions\", \"design variants\"."
+description: "Generate and compare multiple design directions. Use when the user asks to generate and compare multiple design directions. Common requests include \"flow designshotgun\", \"design shotgun\", \"multiple directions\", \"design variants\"."
 ---
 
 # build-flow-designshotgun

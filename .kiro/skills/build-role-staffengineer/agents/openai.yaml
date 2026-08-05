@@ -1,4 +1,4 @@
 interface:
-  display_name: "Role Staffengineer"
-  short_description: "Staff-level code review for diffs, architecture, correctness,..."
-  default_prompt: "Use $build-role-staffengineer to staff-level code review for diffs, architecture, correctness, migrations, and tests."
+  display_name: "Role Staff Engineer"
+  short_description: "Staff-level code review for diffs, architecture,..."
+  default_prompt: "Use $build-role-staffengineer to review diffs, architecture, correctness, migrations, and tests at staff level."

@@ -1,4 +1,4 @@
 interface:
   display_name: "Role Designer"
-  short_description: "Product design review for UX plans, visual artifacts, flows,..."
-  default_prompt: "Use $build-role-designer to product design review for UX plans, visual artifacts, flows, and honest browser status."
+  short_description: "Product design review for UX plans, visual artifacts,..."
+  default_prompt: "Use $build-role-designer to review product UX, visual artifacts, flows, and browser evidence."

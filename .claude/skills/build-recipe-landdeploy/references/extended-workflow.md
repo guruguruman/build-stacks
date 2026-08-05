@@ -296,7 +296,7 @@ Use AskUserQuestion:
 
 **If A (quick checklist):** Tell the user: "Running the review checklist against your diff now..."
 
-Read the bundled review checklist from `build-role-staffengineer/checklist.md` when it is available.
+Read the bundled staff-engineer checklist at `../../build-role-staffengineer/references/checklist.md` when it is available.
 Apply each checklist item to the current diff. This is the same quick review that `build-recipe-ship`
 runs in its Step 3.5. Auto-fix trivial issues (whitespace, imports). For critical findings
 (SQL safety, race conditions, security), ask the user.

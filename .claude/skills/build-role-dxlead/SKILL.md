@@ -1,6 +1,6 @@
 ---
 name: build-role-dxlead
-description: "Use when the user wants to developer experience review for APIs, onboarding, docs, and adoption friction Common requests include \"role dxlead\", \"DX review\", \"developer experience review\", \"API review\"."
+description: "Developer experience review for APIs, onboarding, docs, and adoption friction. Use when the user asks to review APIs, onboarding, documentation, and adoption friction. Common requests include \"role dxlead\", \"DX review\", \"developer experience review\", \"API review\"."
 ---
 
 # build-role-dxlead
@@ -264,7 +264,7 @@ AskUserQuestion:
 Every great developer tool has a magical moment: the instant a developer goes from
 "is this worth my time?" to "oh wow, this is real."
 
-Load the "## Pass 1" section from `build-role-dxlead/references/dx-hall-of-fame.md`
+Load the "## Pass 1" section from the bundled [DX Hall of Fame](references/dx-hall-of-fame.md)
 for gold standard examples.
 
 Identify the most likely magical moment for this product type, then present delivery

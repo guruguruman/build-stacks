@@ -91,9 +91,9 @@ const relationships = {
     "build-browser-benchmark": { benefitsFrom: ["build-browser-runner", "build-browser-canary"], activationExamples: ["build-browser-benchmark", "browser benchmark", "performance evidence", "web vitals"] },
     "build-browser-canary": { benefitsFrom: ["build-browser-runner", "build-role-releaseengineer"], activationExamples: ["build-browser-canary", "browser canary", "post deploy canary", "launch check"] },
     "build-browser-pairagent": { benefitsFrom: ["build-browser-runner", "build-flow-qareport"], activationExamples: ["build-browser-pairagent", "browser pairagent", "pair agent handoff", "browser QA packet", "handoff packet"] },
-    "build-browser-qa": { benefitsFrom: ["build-browser-runner", "build-flow-qareport"], activationExamples: ["build-browser-qa", "browser qa", "browser QA", "test the page", "capture evidence"] },
+    "build-browser-qa": { benefitsFrom: ["build-browser-runner", "build-flow-qareport", "build-recipe-qa"], activationExamples: ["build-browser-qa", "browser qa", "browser QA", "test the page", "capture evidence"] },
     "build-browser-runner": { benefitsFrom: ["build-guard-destructive"], activationExamples: ["build-browser-runner", "browser runner", "browser evidence", "open the page", "take a screenshot"] },
-    "build-browser-scrape": { benefitsFrom: ["build-browser-runner", "build-role-cso"], activationExamples: ["build-browser-scrape", "browser scrape", "scrape page", "public page evidence", "extract content"] },
+    "build-browser-scrape": { benefitsFrom: ["build-browser-runner", "build-role-cso", "build-recipe-qa", "build-flow-skillify"], activationExamples: ["build-browser-scrape", "browser scrape", "scrape page", "public page evidence", "extract content"] },
     "build-browser-visible": { benefitsFrom: ["build-browser-runner", "build-browser-auth"], activationExamples: ["build-browser-visible", "browser visible", "visible browser", "headed browser", "watch browser"] },
     "build-guard-destructive": { benefitsFrom: ["build-guard-full"], activationExamples: ["build-guard-destructive", "guard destructive", "destructive guard", "risky command", "approval check"] },
     "build-guard-full": { benefitsFrom: ["build-guard-destructive", "build-guard-scope"], activationExamples: ["build-guard-full", "guard full", "full guard", "safe mode", "guard posture"] },
@@ -101,28 +101,28 @@ const relationships = {
     "build-guard-scope-release": { benefitsFrom: ["build-guard-scope"], activationExamples: ["build-guard-scope-release", "guard scope release", "release scope", "unfreeze scope", "remove scope lock"] },
     "build-recipe-investigate": { benefitsFrom: ["build-runtime-learnings", "build-guard-scope"], activationExamples: ["build-recipe-investigate", "recipe investigate", "investigate", "root cause", "debug this"] },
     "build-runtime-health": { benefitsFrom: ["build-runtime-session", "build-runtime-learnings"], activationExamples: ["build-runtime-health", "runtime health", "workflow health", "stack health", "quality signals"] },
-    "build-runtime-learnings": { benefitsFrom: ["build-recipe-investigate", "build-runtime-session"], activationExamples: ["build-runtime-learnings", "runtime learnings", "record learning", "retrieve learning", "repo memory"] },
+    "build-runtime-learnings": { benefitsFrom: ["build-recipe-investigate", "build-runtime-session", "build-role-staffengineer", "build-recipe-ship"], activationExamples: ["build-runtime-learnings", "runtime learnings", "record learning", "retrieve learning", "repo memory"] },
     "build-runtime-session": { benefitsFrom: ["build-runtime-learnings"], activationExamples: ["build-runtime-session", "runtime session", "save session", "restore session", "working context"] },
-    "build-flow-infradesign": { benefitsFrom: ["build-recipe-discovery", "build-role-engmanager", "build-role-cso", "build-source-deploy"], activationExamples: ["build-flow-infradesign", "flow infradesign", "infrastructure design", "hosting selection", "database selection"] },
+    "build-flow-infradesign": { benefitsFrom: ["build-recipe-discovery", "build-recipe-autoplan", "build-role-engmanager", "build-role-cso", "build-source-deploy"], activationExamples: ["build-flow-infradesign", "flow infradesign", "infrastructure design", "hosting selection", "database selection"] },
     "build-flow-plantune": { benefitsFrom: ["build-role-engmanager", "build-role-founder"], activationExamples: ["build-flow-plantune", "flow plantune", "tune the plan", "plan tuning", "scope review"] },
-    "build-flow-qareport": { benefitsFrom: ["build-browser-qa", "build-browser-runner"], activationExamples: ["build-flow-qareport", "flow qareport", "QA report", "report only QA", "browser findings"] },
+    "build-flow-qareport": { benefitsFrom: ["build-browser-qa", "build-browser-runner", "build-role-founder"], activationExamples: ["build-flow-qareport", "flow qareport", "QA report", "report only QA", "browser findings"] },
     "build-flow-securitygate": { benefitsFrom: ["build-guard-destructive", "build-runtime-session"], activationExamples: ["build-flow-securitygate", "flow securitygate", "prelaunch security gate", "release security gate", "security go/no-go"] },
-    "build-recipe-landdeploy": { benefitsFrom: ["build-role-releaseengineer", "build-browser-canary", "build-guard-destructive"], activationExamples: ["build-recipe-landdeploy", "recipe landdeploy", "land deploy", "merge and deploy", "ship to production"] },
-    "build-recipe-qa": { benefitsFrom: ["build-browser-qa", "build-flow-qareport"], activationExamples: ["build-recipe-qa", "recipe qa", "run QA", "test and fix", "browser QA"] },
-    "build-recipe-ship": { benefitsFrom: ["build-role-staffengineer", "build-role-docengineer", "build-role-releaseengineer"], activationExamples: ["build-recipe-ship", "recipe ship", "prepare release", "ship branch", "release handoff"] },
+    "build-recipe-landdeploy": { benefitsFrom: ["build-role-releaseengineer", "build-browser-canary", "build-guard-destructive", "build-role-founder", "build-role-designer", "build-recipe-autoplan"], activationExamples: ["build-recipe-landdeploy", "recipe landdeploy", "land deploy", "merge and deploy", "ship to production"] },
+    "build-recipe-qa": { benefitsFrom: ["build-browser-qa", "build-flow-qareport", "build-role-founder"], activationExamples: ["build-recipe-qa", "recipe qa", "run QA", "test and fix", "browser QA"] },
+    "build-recipe-ship": { benefitsFrom: ["build-role-staffengineer", "build-role-docengineer", "build-role-releaseengineer", "build-role-designer"], activationExamples: ["build-recipe-ship", "recipe ship", "prepare release", "ship branch", "release handoff"] },
     "build-role-cso": { benefitsFrom: ["build-guard-destructive", "build-runtime-session"], activationExamples: ["build-role-cso", "role cso", "security review", "CSO review", "threat model"] },
     "build-role-docengineer": { benefitsFrom: ["build-recipe-ship", "build-source-pdf"], activationExamples: ["build-role-docengineer", "role docengineer", "docs review", "documentation release", "operator docs"] },
-    "build-role-engmanager": { benefitsFrom: ["build-flow-plantune", "build-role-staffengineer"], activationExamples: ["build-role-engmanager", "role engmanager", "engineering manager review", "plan review", "delivery review"] },
+    "build-role-engmanager": { benefitsFrom: ["build-flow-plantune", "build-role-staffengineer", "build-role-designer", "build-role-founder"], activationExamples: ["build-role-engmanager", "role engmanager", "engineering manager review", "plan review", "delivery review"] },
     "build-role-releaseengineer": { benefitsFrom: ["build-recipe-ship", "build-recipe-landdeploy", "build-browser-canary"], activationExamples: ["build-role-releaseengineer", "role releaseengineer", "release review", "rollback plan", "release engineer"] },
-    "build-role-staffengineer": { benefitsFrom: ["build-role-cso", "build-role-releaseengineer", "build-runtime-session"], activationExamples: ["build-role-staffengineer", "role staffengineer", "staff engineer review", "review the diff", "pre landing review"] },
+    "build-role-staffengineer": { benefitsFrom: ["build-role-cso", "build-role-releaseengineer", "build-runtime-session", "build-role-founder", "build-role-designer"], activationExamples: ["build-role-staffengineer", "role staffengineer", "staff engineer review", "review the diff", "pre landing review"] },
     "build-source-deploy": { benefitsFrom: ["build-role-releaseengineer", "build-recipe-landdeploy"], activationExamples: ["build-source-deploy", "source deploy", "deploy setup", "deployment readiness", "provider assumptions"] },
     "build-source-pdf": { benefitsFrom: ["build-role-docengineer", "build-flow-designhtml"], activationExamples: ["build-source-pdf", "source pdf", "PDF support", "create PDF", "verify PDF"] },
-    "build-flow-designconsult": { benefitsFrom: ["build-role-designer", "build-browser-runner"], activationExamples: ["build-flow-designconsult", "flow designconsult", "design consult", "product design advice", "UX consultation"] },
-    "build-flow-designhtml": { benefitsFrom: ["build-role-designer", "build-browser-runner"], activationExamples: ["build-flow-designhtml", "flow designhtml", "design HTML", "HTML mockup", "preview page"] },
-    "build-flow-designshotgun": { benefitsFrom: ["build-role-designer", "build-flow-designhtml"], activationExamples: ["build-flow-designshotgun", "flow designshotgun", "design shotgun", "multiple directions", "design variants"] },
-    "build-flow-mobileuifinish": { benefitsFrom: ["build-role-designer", "build-flow-designconsult"], activationExamples: ["build-flow-mobileuifinish", "flow mobileuifinish", "finish the mobile UI", "mobile UI review", "polish this mobile UI"] },
-    "build-flow-webuifinish": { benefitsFrom: ["build-browser-runner", "build-role-designer", "build-flow-designconsult"], activationExamples: ["build-flow-webuifinish", "flow webuifinish", "finish the Web UI", "Web UI review", "polish this web UI"] },
-    "build-role-designer": { benefitsFrom: ["build-flow-designconsult", "build-flow-designshotgun", "build-browser-runner"], activationExamples: ["build-role-designer", "role designer", "designer review", "design review", "UX review"] },
+    "build-flow-designconsult": { benefitsFrom: ["build-role-designer", "build-browser-runner", "build-recipe-discovery"], activationExamples: ["build-flow-designconsult", "flow designconsult", "design consult", "product design advice", "UX consultation"] },
+    "build-flow-designhtml": { benefitsFrom: ["build-role-designer", "build-browser-runner", "build-role-founder"], activationExamples: ["build-flow-designhtml", "flow designhtml", "design HTML", "HTML mockup", "preview page"] },
+    "build-flow-designshotgun": { benefitsFrom: ["build-role-designer", "build-flow-designhtml", "build-recipe-discovery"], activationExamples: ["build-flow-designshotgun", "flow designshotgun", "design shotgun", "multiple directions", "design variants"] },
+    "build-flow-mobileuifinish": { benefitsFrom: ["build-role-designer", "build-flow-designconsult", "build-flow-qareport"], activationExamples: ["build-flow-mobileuifinish", "flow mobileuifinish", "finish the mobile UI", "mobile UI review", "polish this mobile UI"] },
+    "build-flow-webuifinish": { benefitsFrom: ["build-browser-runner", "build-role-designer", "build-flow-designconsult", "build-flow-qareport", "build-recipe-qa", "build-flow-landingreport"], activationExamples: ["build-flow-webuifinish", "flow webuifinish", "finish the Web UI", "Web UI review", "polish this web UI"] },
+    "build-role-designer": { benefitsFrom: ["build-flow-designconsult", "build-flow-designshotgun", "build-browser-runner", "build-recipe-ship", "build-role-engmanager", "build-role-founder"], activationExamples: ["build-role-designer", "role designer", "designer review", "design review", "UX review"] },
     "build-flow-skillify": { benefitsFrom: ["build-role-dxlead", "build-role-staffengineer"], activationExamples: ["build-flow-skillify", "flow skillify", "skillify", "make a skill", "workflow skill"] },
     "build-internal-modelbenchmark": { benefitsFrom: ["build-runtime-health", "build-role-staffengineer"], activationExamples: ["build-internal-modelbenchmark", "internal modelbenchmark", "model benchmark", "compare models", "skill quality"] },
     "build-recipe-autoplan": { benefitsFrom: ["build-role-founder", "build-role-designer", "build-role-engmanager", "build-role-dxlead"], activationExamples: ["build-recipe-autoplan", "recipe autoplan", "auto plan", "automatic review", "plan review chain"] },
@@ -130,10 +130,57 @@ const relationships = {
     "build-runtime-upgrade": { benefitsFrom: ["build-runtime-health", "build-recipe-ship"], activationExamples: ["build-runtime-upgrade", "runtime upgrade", "upgrade stack", "migration check", "update build stacks"] },
     "build-flow-goaldirectedux": { benefitsFrom: ["build-role-designer", "build-recipe-discovery", "build-role-dxlead"], activationExamples: ["build-flow-goaldirectedux", "flow goaldirectedux", "Goal-Directed Design", "GDD", "UX requirements", "persona scenarios"] },
     "build-flow-landingreport": { benefitsFrom: ["build-role-founder", "build-browser-runner"], activationExamples: ["build-flow-landingreport", "flow landingreport", "landing report", "conversion review", "landing page review"] },
-    "build-flow-pdmscaffold": { benefitsFrom: ["build-recipe-discovery", "build-flow-goaldirectedux", "build-role-docengineer"], activationExamples: ["build-flow-pdmscaffold", "flow pdmscaffold", "PdM documentation scaffold", "PRODUCT_PLAN template", "docs/pdm scaffold"] },
-    "build-recipe-discovery": { benefitsFrom: ["build-role-founder", "build-flow-plantune"], activationExamples: ["build-recipe-discovery", "recipe discovery", "discovery", "shape the idea", "product brief"] },
-    "build-role-founder": { benefitsFrom: ["build-recipe-discovery", "build-flow-plantune"], activationExamples: ["build-role-founder", "role founder", "founder review", "CEO review", "wedge review"] },
+    "build-flow-pdmscaffold": { benefitsFrom: ["build-recipe-discovery", "build-flow-goaldirectedux", "build-role-docengineer", "build-flow-plantune", "build-flow-skillify"], activationExamples: ["build-flow-pdmscaffold", "flow pdmscaffold", "PdM documentation scaffold", "PRODUCT_PLAN template", "docs/pdm scaffold"] },
+    "build-recipe-discovery": { benefitsFrom: ["build-role-founder", "build-flow-plantune", "build-role-engmanager"], activationExamples: ["build-recipe-discovery", "recipe discovery", "discovery", "shape the idea", "product brief"] },
+    "build-role-founder": { benefitsFrom: ["build-recipe-discovery", "build-flow-plantune", "build-recipe-ship", "build-role-engmanager"], activationExamples: ["build-role-founder", "role founder", "founder review", "CEO review", "wedge review"] },
     "build-flow-organize-stack": { benefitsFrom: ["build-role-dxlead", "build-role-staffengineer"], activationExamples: ["organize this APM stack", "check the package graph", "where should this skill live"] }
+};
+
+const actionOverrides = {
+    "build-role-founder": "review product strategy through a founder and CEO lens",
+    "build-role-designer": "review product UX, visual artifacts, flows, and browser evidence",
+    "build-role-engmanager": "review sequencing, risk, maintainability, and scope as an engineering manager",
+    "build-role-dxlead": "review APIs, onboarding, documentation, and adoption friction",
+    "build-role-staffengineer": "review diffs, architecture, correctness, migrations, and tests at staff level",
+    "build-browser-qa": "run browser-centered QA and capture evidence",
+    "build-role-releaseengineer": "review rollout, rollback, and verification readiness",
+    "build-browser-canary": "monitor a post-deploy browser canary",
+    "build-browser-benchmark": "benchmark browser performance and collect Web Vitals evidence",
+    "build-internal-modelbenchmark": "compare model outputs and skill quality for maintainer evaluation",
+    "build-browser-runner": "apply the official agent-browser policy for safe browser QA",
+    "build-browser-auth": "import cookies safely and set up authenticated browser access",
+    "build-role-cso": "review threats, privacy, auth, secrets, policy risk, and security blockers",
+    "build-role-docengineer": "review changelogs, migration notes, operator docs, and release documentation",
+    "build-source-pdf": "generate and verify PDFs and supporting document sources",
+    "build-browser-pairagent": "prepare browser QA handoff packets for pair-agent collaboration",
+    "build-source-deploy": "integrate deployment environment setup and readiness evidence",
+    "build-runtime-upgrade": "upgrade build-stacks and verify its migration"
+};
+
+const displayTokenLabels = {
+    autoplan: "Auto Plan",
+    canary: "Canary",
+    cso: "CSO",
+    designconsult: "Design Consult",
+    designhtml: "Design HTML",
+    designshotgun: "Design Shotgun",
+    docengineer: "Documentation Engineer",
+    dxlead: "DX Lead",
+    engmanager: "Engineering Manager",
+    goaldirectedux: "Goal-Directed UX",
+    infradesign: "Infrastructure Design",
+    landdeploy: "Land & Deploy",
+    landingreport: "Landing Report",
+    mobileuifinish: "Mobile UI Finish",
+    modelbenchmark: "Model Benchmark",
+    pairagent: "Pair-Agent",
+    pdmscaffold: "PdM Scaffold",
+    plantune: "Plan Tune",
+    qareport: "QA Report",
+    releaseengineer: "Release Engineer",
+    securitygate: "Security Gate",
+    staffengineer: "Staff Engineer",
+    webuifinish: "Web UI Finish"
 };
 
 const packageBySkill = new Map(Object.entries(packageSkills).flatMap(([packageId, names]) => names.map((name) => [name, packageId])));
@@ -144,14 +191,16 @@ export const buildSkills = baseSkills.map((skill) => {
     if (!relation || !packageId) {
         throw new Error(`incomplete build skill catalog entry: ${skill.name}`);
     }
+    const action = actionOverrides[skill.name] ?? `${skill.summary[0].toLowerCase()}${skill.summary.slice(1).replace(/\.$/, "")}`;
     const displayName = skill.name
         .replace(/^build-/, "")
         .split("-")
-        .map((part) => part[0].toUpperCase() + part.slice(1))
+        .map((part) => displayTokenLabels[part] ?? part[0].toUpperCase() + part.slice(1))
         .join(" ");
-    const shortDescription = skill.summary.length <= 64 ? skill.summary : `${skill.summary.slice(0, 61).trimEnd()}...`;
+    const shortDescription = truncateAtWord(skill.summary, 64);
     return {
         ...skill,
+        action,
         package: packageId,
         sourcePath: `${buildPackages.find((pkg) => pkg.id === packageId).path}/.apm/skills/${skill.name}`,
         benefitsFrom: relation.benefitsFrom,
@@ -161,10 +210,18 @@ export const buildSkills = baseSkills.map((skill) => {
         interface: {
             displayName,
             shortDescription,
-            defaultPrompt: `Use $${skill.name} to ${skill.summary[0].toLowerCase()}${skill.summary.slice(1)}`
+            defaultPrompt: `Use $${skill.name} to ${action}.`
         }
     };
 });
+
+function truncateAtWord(value, maxLength) {
+    if (value.length <= maxLength) return value;
+    const candidate = value.slice(0, maxLength - 3).trimEnd();
+    const boundary = candidate.lastIndexOf(" ");
+    const prefix = boundary >= 25 ? candidate.slice(0, boundary) : candidate;
+    return `${prefix}...`;
+}
 
 export function isValidBuildSkillName(name) {
     return /^build-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name) && name.length <= 64;

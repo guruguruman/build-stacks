@@ -1,4 +1,4 @@
 interface:
   display_name: "Role Founder"
-  short_description: "Founder and CEO-style review for wedge, adoption friction, MV..."
-  default_prompt: "Use $build-role-founder to founder and CEO-style review for wedge, adoption friction, MVP, and first payment reason."
+  short_description: "Founder and CEO-style review for wedge, adoption friction,..."
+  default_prompt: "Use $build-role-founder to review product strategy through a founder and CEO lens."

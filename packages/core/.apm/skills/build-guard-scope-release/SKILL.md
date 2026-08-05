@@ -1,6 +1,6 @@
 ---
 name: build-guard-scope-release
-description: "Use when the user wants to release an active scope lock Common requests include \"guard scope release\", \"release scope\", \"unfreeze scope\", \"remove scope lock\"."
+description: "Release an active scope lock. Use when the user asks to release an active scope lock. Common requests include \"guard scope release\", \"release scope\", \"unfreeze scope\", \"remove scope lock\"."
 ---
 
 # build-guard-scope-release

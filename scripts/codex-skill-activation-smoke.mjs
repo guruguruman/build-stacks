@@ -17,6 +17,7 @@ const realCodexSkillsRoot = join(realCodexHome, "skills");
 const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
 const systemSkillsSnapshotRoot = join(codexRuntimeRoot, "system-skills-snapshot");
 const keepCodexSmokeWorkspace = process.env.BUILD_CODEX_SMOKE_KEEP === "1" || process.env.BUILD_CODEX_E2E_KEEP === "1";
+const installOnlySmokeMode = process.argv.includes("--install-only");
 const allSkillsSmokeMode = process.argv.includes("--all-skills");
 const allSkillsSmokeTimeoutMs = Number(process.env.BUILD_CODEX_SMOKE_TIMEOUT_MS ?? process.env.BUILD_CODEX_E2E_TIMEOUT_MS ?? "600000") || 600000;
 const requiredSkillSmokeFields = ["skill", "intent_fit", "findings", "decisions", "evidence", "residual risk", "next handoff", "activation_quality"];
@@ -51,6 +52,14 @@ async function runCodexSkillSmoke() {
         assertSmokeFileExists(join(consumerAppRoot, "AGENTS.md"));
         for (const skill of buildSkills) {
             assertSmokeFileExists(join(consumerAppRoot, ".agents", "skills", skill.name, "SKILL.md"));
+        }
+        if (installOnlySmokeMode) {
+            console.log(`Codex activation install smoke ok: ${buildSkills.length} skills`);
+            if (!keepCodexSmokeWorkspace) {
+                rmSync(consumerAppRoot, { recursive: true, force: true });
+                rmSync(preparedPackageRoot, { recursive: true, force: true });
+            }
+            return;
         }
         runLoggedCommandSync(["codex", "debug", "prompt-input", ...codexIsolationConfigArgs, "build-recipe-qa を使ってください"], consumerAppRoot, "prompt-input.json");
         const promptInputPath = join(smokeResultsRoot, "prompt-input.json");
@@ -301,24 +310,11 @@ function resetCodexSmokeWorkspace() {
     mkdirSync(smokeResultsRoot, { recursive: true });
 }
 function preparePackageForSkillSmoke() {
-    for (const path of [
-        ".apm",
-        ".apmignore",
-        "apm.yml",
-        "README.md",
-        "LICENSE",
-        "CHANGELOG.md",
-        "docs",
-        "package.json",
-        "package-lock.json",
-        "scripts"
-    ]) {
-        if (existsSync(join(repoRoot, path)))
-            copyPackagePathForSmoke(path);
-    }
-}
-function copyPackagePathForSmoke(path) {
-    cpSync(join(repoRoot, path), join(preparedPackageRoot, path), { recursive: true });
+    runLoggedCommandSync(
+        ["node", join(repoRoot, "scripts", "apm-package-prepare.mjs"), "--out", preparedPackageRoot],
+        repoRoot,
+        "package-prepare.log"
+    );
 }
 function prepareConsumerAppForSkillSmoke() {
     writeFileSync(join(consumerAppRoot, "README.md"), "# tmp-codex-skill-smoke\n");

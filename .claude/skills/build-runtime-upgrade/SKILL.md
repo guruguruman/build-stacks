@@ -1,6 +1,6 @@
 ---
 name: build-runtime-upgrade
-description: "Use when the user wants to stack update and migration workflow Common requests include \"runtime upgrade\", \"upgrade stack\", \"migration check\", \"update build stacks\"."
+description: "Stack update and migration workflow. Use when the user asks to upgrade build-stacks and verify its migration. Common requests include \"runtime upgrade\", \"upgrade stack\", \"migration check\", \"update build stacks\"."
 ---
 
 # build-runtime-upgrade
@@ -10,13 +10,14 @@ Use this skill when a user wants to upgrade the APM CLI or `build-stacks`, verif
 ## Workflow
 
 1. Confirm the current APM CLI version and package entry in the consumer `apm.yml` and `apm.lock.yaml`.
-2. Confirm the target CLI version and package tag. The current maintainer contract uses APM 0.26.0; for the build-stacks 1.1 release line, use `guruguruman/build-stacks#v1.1.0`.
+2. Confirm the target CLI version and package tag. The current maintainer contract uses APM 0.26.0. Never infer `latest`; use the user-approved target tag. For the initial v2 release, the target is `guruguruman/build-stacks#v2.0.0`.
 3. Stop before changing dependencies unless the user explicitly approves the upgrade.
 4. Run the APM install command in the consumer repo:
 
 ```bash
 apm --version
-apm install guruguruman/build-stacks#v1.1.0 --target all
+BUILD_STACKS_TARGET_TAG=v2.0.0 # replace only with the user-approved target
+apm install "guruguruman/build-stacks#${BUILD_STACKS_TARGET_TAG}" --target all
 apm audit --ci
 apm compile --validate --local-only
 ```
@@ -33,4 +34,4 @@ apm compile --validate --local-only
 - evidence path
 - rollback or forward-fix note
 
-Rollback for public releases is a forward fix: publish `v1.1.1` for a patch or `v1.2.0` for a feature release. Do not instruct users to delete public tags.
+Rollback for public releases is a forward fix within the active major line: after `v2.0.0`, publish `v2.0.1` for a patch or `v2.1.0` for a compatible feature release. Do not instruct users to delete public tags.

@@ -1,6 +1,6 @@
 ---
 name: build-browser-qa
-description: "Use when the user wants to browser-centered QA routines and artifact capture Common requests include \"browser qa\", \"browser QA\", \"test the page\", \"capture evidence\"."
+description: "Browser-centered QA routines and artifact capture. Use when the user asks to run browser-centered QA and capture evidence. Common requests include \"browser qa\", \"browser QA\", \"test the page\", \"capture evidence\"."
 ---
 
 # build-browser-qa
@@ -18,8 +18,8 @@ Use this as the browser QA router:
 
 - Route rendered evidence, screenshots, snapshots, console, network, forms, fill,
   click, select, and press work through the `build-browser-runner` policy.
-- Route report-only web QA that must not edit source code to `build-flow-qareport`.
-- Route test-fix-reverify loops to `build-recipe-qa`.
+- If installed, route report-only web QA that must not edit source code to `build-flow-qareport`; otherwise produce the report-only findings directly in this skill.
+- If installed, route test-fix-reverify loops to `build-recipe-qa`; otherwise explain that the delivery package is required before running a fix loop, and do not claim fixes or re-verification occurred.
 - Route login, cookie import, or authenticated browser state setup to
   `build-browser-auth` when the user asks for authenticated browser work.
 

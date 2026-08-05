@@ -1,4 +1,4 @@
 interface:
-  display_name: "Role Dxlead"
-  short_description: "Developer experience review for APIs, onboarding, docs, and a..."
-  default_prompt: "Use $build-role-dxlead to developer experience review for APIs, onboarding, docs, and adoption friction."
+  display_name: "Role DX Lead"
+  short_description: "Developer experience review for APIs, onboarding, docs, and..."
+  default_prompt: "Use $build-role-dxlead to review APIs, onboarding, documentation, and adoption friction."

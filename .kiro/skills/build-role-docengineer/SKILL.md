@@ -1,6 +1,6 @@
 ---
 name: build-role-docengineer
-description: "Use when the user wants to documentation release review for changelog, migration notes, operator docs, and proof Common requests include \"role docengineer\", \"docs review\", \"documentation release\", \"operator docs\"."
+description: "Documentation release review for changelog, migration notes, operator docs, and proof. Use when the user asks to review changelogs, migration notes, operator docs, and release documentation. Common requests include \"role docengineer\", \"docs review\", \"documentation release\", \"operator docs\"."
 ---
 
 # build-role-docengineer
@@ -210,8 +210,8 @@ After auditing each file individually, do a cross-doc consistency pass:
 
 ## Step 7: TODOS.md Cleanup
 
-This is a second pass that complements `build-recipe-ship`'s Step 5.5. Read `review/TODOS-format.md` (if
-available) for the canonical TODO item format.
+This is a second pass that complements `build-recipe-ship`'s Step 5.5. Read the bundled
+TODOS format at `../build-role-staffengineer/references/TODOS-format.md` for the canonical TODO item format.
 
 If TODOS.md does not exist, skip this step.
 

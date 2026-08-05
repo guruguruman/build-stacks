@@ -7,7 +7,7 @@ Review the `git diff origin/main` output for the issues listed below. Be specifi
 **Two-pass build-role-staffengineer:**
 - **Pass 1 (CRITICAL):** Run SQL & Data Safety, Race Conditions, LLM Output Trust Boundary, Shell Injection, and Enum Completeness first. Highest severity.
 - **Pass 2 (INFORMATIONAL):** Run remaining categories below. Lower severity but still actioned.
-- **Specialist categories (handled by parallel subagents, NOT this checklist):** Test Gaps, Dead Code, Magic Numbers, Conditional Side Effects, Performance & Bundle Impact, Crypto & Entropy. See `build-role-staffengineer/specialists/` for these.
+- **Specialist categories (handled by parallel subagents, NOT this checklist):** Test Gaps, Dead Code, Magic Numbers, Conditional Side Effects, Performance & Bundle Impact, Crypto & Entropy. Use [testing.md](testing.md), [maintainability.md](maintainability.md), [performance.md](performance.md), [security.md](security.md), and the other specialist references in this directory.
 
 All findings get action via Fix-First Review: obvious mechanical fixes are applied automatically,
 genuinely ambiguous issues are batched into a single user question.

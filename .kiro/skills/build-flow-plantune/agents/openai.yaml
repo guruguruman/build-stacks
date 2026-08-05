@@ -1,4 +1,4 @@
 interface:
-  display_name: "Flow Plantune"
+  display_name: "Flow Plan Tune"
   short_description: "Tune plan scope, ordering, omissions, and handoffs."
   default_prompt: "Use $build-flow-plantune to tune plan scope, ordering, omissions, and handoffs."

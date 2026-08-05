@@ -1,6 +1,6 @@
 ---
 name: build-flow-designconsult
-description: "Use when the user wants to provide product design consultation Common requests include \"flow designconsult\", \"design consult\", \"product design advice\", \"UX consultation\"."
+description: "Provide product design consultation. Use when the user asks to provide product design consultation. Common requests include \"flow designconsult\", \"design consult\", \"product design advice\", \"UX consultation\"."
 ---
 
 # build-flow-designconsult

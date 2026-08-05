@@ -1,6 +1,6 @@
 ---
 name: build-browser-runner
-description: "Use when the user wants to official agent-browser policy for safe browser QA Common requests include \"browser runner\", \"browser evidence\", \"open the page\", \"take a screenshot\"."
+description: "Official agent-browser policy for safe browser QA. Use when the user asks to apply the official agent-browser policy for safe browser QA. Common requests include \"browser runner\", \"browser evidence\", \"open the page\", \"take a screenshot\"."
 ---
 
 # build-browser-runner

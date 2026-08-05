@@ -1,4 +1,4 @@
 interface:
   display_name: "Browser Runner"
   short_description: "Official agent-browser policy for safe browser QA."
-  default_prompt: "Use $build-browser-runner to official agent-browser policy for safe browser QA."
+  default_prompt: "Use $build-browser-runner to apply the official agent-browser policy for safe browser QA."

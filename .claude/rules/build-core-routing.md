@@ -6,3 +6,4 @@ paths:
 # build-core-routing
 
 Route requests to the published `build-*` skill names only.
+Treat cross-package skill references as optional handoffs. Route only when the target skill is installed and discoverable; otherwise complete the safe subset in the active skill or name the additional package required without claiming the handoff ran.

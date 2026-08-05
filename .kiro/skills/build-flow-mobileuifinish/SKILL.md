@@ -1,6 +1,6 @@
 ---
 name: build-flow-mobileuifinish
-description: "Use when the user wants to score and finish native or cross-platform mobile UI with real-screen evidence Common requests include \"flow mobileuifinish\", \"finish the mobile UI\", \"mobile UI review\", \"polish this mobile UI\"."
+description: "Score and finish native or cross-platform mobile UI with real-screen evidence. Use when the user asks to score and finish native or cross-platform mobile UI with real-screen evidence. Common requests include \"flow mobileuifinish\", \"finish the mobile UI\", \"mobile UI review\", \"polish this mobile UI\"."
 ---
 
 # build-flow-mobileuifinish
@@ -27,7 +27,7 @@ must cite visible evidence or an explicitly unverified device state.
 ## Routing Boundary
 
 - Use `build-flow-webuifinish` for responsive mobile-width Web routes.
-- Use `build-browser-qa` or `build-flow-qareport` for functional browser QA.
+- Use installed `build-browser-qa` for functional browser QA. If the delivery package is installed, `build-flow-qareport` is the report-only handoff; otherwise report the functional observation without claiming that handoff ran.
 - Use `build-role-designer` for design-plan or visual-artifact review without a device finishing loop.
 - Use `build-flow-designconsult` or `build-flow-designshotgun` for a new visual direction or mockup exploration.
 - Use the repository's platform-specific build/deployment workflow when the request is setup, signing, release, or distribution rather than UI finishing.

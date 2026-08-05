@@ -1,6 +1,6 @@
 ---
 name: build-source-deploy
-description: "Use when the user wants to deployment environment setup source integration Common requests include \"source deploy\", \"deploy setup\", \"deployment readiness\", \"provider assumptions\"."
+description: "Deployment environment setup source integration. Use when the user asks to integrate deployment environment setup and readiness evidence. Common requests include \"source deploy\", \"deploy setup\", \"deployment readiness\", \"provider assumptions\"."
 ---
 
 # build-source-deploy

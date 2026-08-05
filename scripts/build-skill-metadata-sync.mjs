@@ -6,18 +6,39 @@ const mode = process.argv.includes("--write") ? "write" : "verify";
 const failures = [];
 
 for (const skill of buildSkills) {
-    const path = join("packages", skill.package, ".apm", "skills", skill.name, "agents", "openai.yaml");
+    const skillPath = join(skill.sourcePath, "SKILL.md");
+    const path = join(skill.sourcePath, "agents", "openai.yaml");
     const expected = renderMetadata(skill);
     if (mode === "write") {
+        syncSkillDescription(skillPath, skill, true);
         mkdirSync(dirname(path), { recursive: true });
         writeFileSync(path, expected);
         continue;
     }
+    syncSkillDescription(skillPath, skill, false);
     if (!existsSync(path)) {
         failures.push(`missing skill UI metadata: ${path}`);
         continue;
     }
     if (readFileSync(path, "utf8") !== expected) failures.push(`stale skill UI metadata: ${path}`);
+}
+
+function syncSkillDescription(path, skill, write) {
+    const body = readFileSync(path, "utf8");
+    const expected = `description: ${JSON.stringify(renderSkillDescription(skill))}`;
+    const actual = body.match(/^description:.*$/m)?.[0];
+    if (write) {
+        if (!actual) throw new Error(`missing skill description: ${path}`);
+        const next = body.replace(/^description:.*$/m, expected);
+        if (next !== body) writeFileSync(path, next);
+        return;
+    }
+    if (actual !== expected) failures.push(`stale skill description: ${path}`);
+}
+
+function renderSkillDescription(skill) {
+    const examples = skill.activationExamples.filter((example) => example !== skill.name).slice(0, 4);
+    return `${skill.summary} Use when the user asks to ${skill.action}. Common requests include ${examples.map((example) => JSON.stringify(example)).join(", ")}.`;
 }
 
 if (failures.length > 0) {

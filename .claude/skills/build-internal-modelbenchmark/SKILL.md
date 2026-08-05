@@ -1,6 +1,6 @@
 ---
 name: build-internal-modelbenchmark
-description: "Use when the user wants to internal maintainer and eval workflow for comparing model outputs and skill quality Common requests include \"internal modelbenchmark\", \"model benchmark\", \"compare models\", \"skill quality\"."
+description: "Internal maintainer and eval workflow for comparing model outputs and skill quality. Use when the user asks to compare model outputs and skill quality for maintainer evaluation. Common requests include \"internal modelbenchmark\", \"model benchmark\", \"compare models\", \"skill quality\"."
 ---
 
 # build-internal-modelbenchmark

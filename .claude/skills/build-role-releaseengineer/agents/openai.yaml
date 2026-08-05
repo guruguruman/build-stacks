@@ -1,4 +1,4 @@
 interface:
-  display_name: "Role Releaseengineer"
-  short_description: "Release engineering lens for rollout, rollback, and verificat..."
-  default_prompt: "Use $build-role-releaseengineer to release engineering lens for rollout, rollback, and verification."
+  display_name: "Role Release Engineer"
+  short_description: "Release engineering lens for rollout, rollback, and..."
+  default_prompt: "Use $build-role-releaseengineer to review rollout, rollback, and verification readiness."

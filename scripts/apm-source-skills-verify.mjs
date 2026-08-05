@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
-import { buildPackages, buildSkills, isValidBuildSkillName, skillsForPackage } from "./build-skill-catalog.mjs";
+import { buildPackages, buildSkills, isValidBuildSkillName, packageClosure, skillsForPackage } from "./build-skill-catalog.mjs";
 
 const failures = [];
 const expectedNames = new Set(buildSkills.map((skill) => skill.name));
@@ -71,7 +71,7 @@ function verifySkill(packageId, directory) {
     } catch {
         failures.push(`description must be a valid quoted scalar: ${path}`);
     }
-    if (!description.startsWith("Use when") && !description.startsWith("Apply when")) failures.push(`description must be intent-first: ${path}`);
+    if (!/(?:^|[.!?]\s)(?:Use|Apply) when\b/.test(description)) failures.push(`description must state its activation intent: ${path}`);
     if (description.length > 1024) failures.push(`description exceeds 1024 characters: ${path}`);
     if (!/^[\x00-\x7F]*$/.test(frontmatter)) failures.push(`frontmatter must be ASCII-only: ${path}`);
     const lineCount = body.split("\n").length;
@@ -79,10 +79,55 @@ function verifySkill(packageId, directory) {
     if (lineCount > 500) failures.push(`${path} exceeds 500 lines: ${lineCount}`);
     if (approximateTokens > 5000) failures.push(`${path} exceeds the 5000-token budget: ~${approximateTokens}`);
     if (!body.includes(`# ${name}`)) failures.push(`wrong skill title: ${path}`);
-    if (/product-(browser|flow|guard|internal|recipe|role|runtime|source)-|\.product-build-stacks/.test(body)) failures.push(`legacy build-stacks identifier: ${path}`);
     verifyLinks(path, body);
     const catalogEntry = buildSkills.find((skill) => skill.name === name);
     if (catalogEntry?.package !== packageId) failures.push(`catalog package mismatch: ${name}`);
+    verifySkillResources(directory, catalogEntry);
+}
+
+function verifySkillResources(directory, catalogEntry) {
+    if (!catalogEntry) {
+        failures.push(`missing catalog entry for source skill: ${directory}`);
+        return;
+    }
+    const availableNames = new Set(packageClosure(catalogEntry.package).map((skill) => skill.name));
+    const knownNames = new Set(buildSkills.map((skill) => skill.name));
+    for (const path of collectTextFiles(directory)) {
+        const body = readFileSync(path, "utf8");
+        if (/product-(browser|flow|guard|internal|recipe|role|runtime|source)-|\.product-build-stacks/.test(body)) {
+            failures.push(`legacy build-stacks identifier: ${path}`);
+        }
+        if (path.includes(`${join("references", "")}`) && path.endsWith(".md")) verifyLinks(path, body);
+        verifyCrossSkillResourcePaths(path, body);
+        const referencedNames = new Set([...body.matchAll(/\bbuild-(?:browser|flow|guard|internal|recipe|role|runtime|source)-[a-z0-9-]+\b/g)].map((match) => match[0]));
+        for (const referencedName of referencedNames) {
+            if (!knownNames.has(referencedName) || availableNames.has(referencedName)) continue;
+            if (!catalogEntry.benefitsFrom.includes(referencedName)) {
+                failures.push(`undeclared optional skill reference: ${catalogEntry.name} -> ${referencedName} (${path})`);
+            }
+        }
+    }
+}
+
+function verifyCrossSkillResourcePaths(path, body) {
+    for (const match of body.matchAll(/`((?:\.\.\/)+build-[a-z0-9-]+\/references\/[A-Za-z0-9._-]+\.md)`/g)) {
+        const resolved = resolve(dirname(path), match[1]);
+        if (!existsSync(resolved)) failures.push(`broken cross-skill resource path in ${path}: ${match[1]}`);
+    }
+}
+
+function collectTextFiles(root) {
+    const files = [];
+    walkTextFiles(root, files);
+    return files;
+}
+
+function walkTextFiles(current, files) {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+        const path = join(current, entry.name);
+        if (entry.isDirectory()) walkTextFiles(path, files);
+        else if (entry.isFile() && /\.(?:md|mjs|js|py|sh|ya?ml|json|toml)$/.test(path)) files.push(path);
+    }
 }
 
 function verifyLinks(path, body) {

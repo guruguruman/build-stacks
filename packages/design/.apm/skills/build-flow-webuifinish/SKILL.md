@@ -1,6 +1,6 @@
 ---
 name: build-flow-webuifinish
-description: "Use when the user wants to score and finish rendered Web UI with real-browser before/after evidence Common requests include \"flow webuifinish\", \"finish the Web UI\", \"Web UI review\", \"polish this web UI\"."
+description: "Score and finish rendered Web UI with real-browser before/after evidence. Use when the user asks to score and finish rendered Web UI with real-browser before/after evidence. Common requests include \"flow webuifinish\", \"finish the Web UI\", \"Web UI review\", \"polish this web UI\"."
 ---
 
 # build-flow-webuifinish
@@ -27,12 +27,14 @@ prioritization aid, not fabricated precision: every deduction must cite visible 
 ## Routing Boundary
 
 - Use `build-browser-qa` for functional browser coverage, console/network inspection, and general browser evidence routing.
-- Use `build-flow-qareport` for report-only functional Web QA.
-- Use `build-recipe-qa` for browser QA followed by bug fixes and re-verification.
-- Use `build-flow-landingreport` for positioning, conversion, proof, and landing-page readiness.
+- If installed, use `build-flow-qareport` for report-only functional Web QA; otherwise report the functional observations without leaving this skill.
+- If installed, use `build-recipe-qa` for browser QA followed by bug fixes and re-verification; otherwise name the delivery package as the required handoff.
+- If installed, use `build-flow-landingreport` for positioning, conversion, proof, and landing-page readiness; otherwise keep the result scoped to visible UI finishing.
 - Use `build-role-designer` for design-plan or visual-artifact review without a screen-finishing loop.
 - Use `build-flow-designconsult` or `build-flow-designshotgun` for a new visual direction or mockup exploration.
 - Use `build-flow-mobileuifinish` for native iOS, Android, React Native, Expo, Flutter, Swift, or Kotlin screens.
+
+Cross-package routes are optional. Never claim that an unavailable skill ran, and do not expand the design package closure merely to satisfy a handoff.
 
 Do not activate on `QA`, `browser QA`, `design review`, `screenshot`, `Web`, or `UI`
 alone. Responsive Web routes remain in this skill, including mobile-width browser views.
