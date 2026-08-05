@@ -21,7 +21,9 @@ Install the root bundle for the complete stack. The umbrella depends only on `ma
 apm init --yes
 apm install guruguruman/build-stacks#v2.0.0 --target all
 apm audit --ci
-apm compile --validate --local-only
+apm compile --all
+apm compile --validate
+test -f AGENTS.md && test -f GEMINI.md
 ```
 
 To install a narrower closure, point APM at a package path such as `packages/design` or `packages/delivery`. Commit `apm.yml` and `apm.lock.yaml` in consumer repositories.

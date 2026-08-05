@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-08-05T11:46:00.871836+00:00'
+generated_at: '2026-08-05T13:49:22.206610+00:00'
 apm_version: 0.26.0
 dependencies:
 - repo_url: _local/maintainer
@@ -92,7 +92,7 @@ dependencies:
     .agents/skills/build-role-dxlead/agents/openai.yaml: sha256:7b518eebec9cf5cace06d9b77ab7d3b0ff6ae71ff17adc6c7042421cb5aa1342
     .agents/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
     .agents/skills/build-role-dxlead/references/extended-workflow.md: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
-    .agents/skills/build-runtime-upgrade/SKILL.md: sha256:ce819ffebcd715ac91dd55ced5b5520028c83aad09950a8dfc7e66cde38d08d8
+    .agents/skills/build-runtime-upgrade/SKILL.md: sha256:5c9455e36e26f101ffeae277a553ed72bacffa4ddcac01ecbb90e0c5292461d9
     .agents/skills/build-runtime-upgrade/agents/openai.yaml: sha256:8050e5555a734064d81e4d9f2481aad706d69d392f65252ce211d8ab841c0f82
     .claude/skills/build-flow-organize-stack/SKILL.md: sha256:70cd23a1d9f8f99cdc8a5354625a4d9c1ef5f7fb44c2823f1d79af2032e37246
     .claude/skills/build-flow-organize-stack/agents/openai.yaml: sha256:d74b108120a27a32b6052139a4b92a409bd469deb13a319a20e14ec094af7cbb
@@ -109,7 +109,7 @@ dependencies:
     .claude/skills/build-role-dxlead/agents/openai.yaml: sha256:7b518eebec9cf5cace06d9b77ab7d3b0ff6ae71ff17adc6c7042421cb5aa1342
     .claude/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
     .claude/skills/build-role-dxlead/references/extended-workflow.md: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
-    .claude/skills/build-runtime-upgrade/SKILL.md: sha256:ce819ffebcd715ac91dd55ced5b5520028c83aad09950a8dfc7e66cde38d08d8
+    .claude/skills/build-runtime-upgrade/SKILL.md: sha256:5c9455e36e26f101ffeae277a553ed72bacffa4ddcac01ecbb90e0c5292461d9
     .claude/skills/build-runtime-upgrade/agents/openai.yaml: sha256:8050e5555a734064d81e4d9f2481aad706d69d392f65252ce211d8ab841c0f82
     .kiro/skills/build-flow-organize-stack/SKILL.md: sha256:70cd23a1d9f8f99cdc8a5354625a4d9c1ef5f7fb44c2823f1d79af2032e37246
     .kiro/skills/build-flow-organize-stack/agents/openai.yaml: sha256:d74b108120a27a32b6052139a4b92a409bd469deb13a319a20e14ec094af7cbb
@@ -126,7 +126,7 @@ dependencies:
     .kiro/skills/build-role-dxlead/agents/openai.yaml: sha256:7b518eebec9cf5cace06d9b77ab7d3b0ff6ae71ff17adc6c7042421cb5aa1342
     .kiro/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
     .kiro/skills/build-role-dxlead/references/extended-workflow.md: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
-    .kiro/skills/build-runtime-upgrade/SKILL.md: sha256:ce819ffebcd715ac91dd55ced5b5520028c83aad09950a8dfc7e66cde38d08d8
+    .kiro/skills/build-runtime-upgrade/SKILL.md: sha256:5c9455e36e26f101ffeae277a553ed72bacffa4ddcac01ecbb90e0c5292461d9
     .kiro/skills/build-runtime-upgrade/agents/openai.yaml: sha256:8050e5555a734064d81e4d9f2481aad706d69d392f65252ce211d8ab841c0f82
   source: local
   local_path: ./packages/maintainer
@@ -1175,15 +1175,15 @@ dependencies:
   deployed_file_hashes:
     .agents/skills/build-guard-destructive/SKILL.md: sha256:ad6373594543c9e99c285c4b2cbd3cad29c452dc900ba395327417e446a15a15
     .agents/skills/build-guard-destructive/agents/openai.yaml: sha256:1f79bd5c4c87c8408481bc14e7fb6d29045a1cc2bf2562c4fa1501670fd5ef19
-    .agents/skills/build-guard-destructive/scripts/check-careful.sh: sha256:60b8e73eb5b2f01833b583b96d9d733f8fba91db8a1cdb7413a8e1bf89089b17
+    .agents/skills/build-guard-destructive/scripts/check-careful.sh: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
     .agents/skills/build-guard-full/SKILL.md: sha256:fee5b6c2d00ee0ab5419e3fbdb81db5c03ba8600790d64418c88490fa538daa4
     .agents/skills/build-guard-full/agents/openai.yaml: sha256:96413f4b7a5b11996f3faeb201da9c4fe3ed253eef197dfe2e653ec4da0c5746
     .agents/skills/build-guard-scope-release/SKILL.md: sha256:58078b3a8c3724ff51d715ffca2b72cc924801699ed3efa1956f45304b99537e
     .agents/skills/build-guard-scope-release/agents/openai.yaml: sha256:508c3c13fdc190c5564c8dcd1467efe3fbf2b9ce553b8cda7f079eca9ce53ab7
     .agents/skills/build-guard-scope/SKILL.md: sha256:a5ce76cadda3f9c4ce38866de8135bb6f1be058d84f932931bc2335cdff6d38e
     .agents/skills/build-guard-scope/agents/openai.yaml: sha256:36a9bad892efdbd7ca7f48002dea28b07fb70fa86fb9898843b33d4f148faa25
-    .agents/skills/build-guard-scope/scripts/check-freeze.sh: sha256:5a37ebe3effef1ae1a69e0e2608af7857f0603d7ddb880ee0764bada3806a4ca
-    .agents/skills/build-recipe-investigate/SKILL.md: sha256:34b9ba606939c4dec9a8e35315d6f844c328bda39f703ba58428018c57f1b792
+    .agents/skills/build-guard-scope/scripts/check-freeze.sh: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
+    .agents/skills/build-recipe-investigate/SKILL.md: sha256:dea2efefc61d2130cf991bddfa8f091fe09020f6c3cbaac8ab027376fb67d884
     .agents/skills/build-recipe-investigate/agents/openai.yaml: sha256:6f787b80a7578972385bd2d43ef1e3be46351c18b56fdc4536b52d213c709af5
     .agents/skills/build-runtime-health/SKILL.md: sha256:2568cdf0189892e8c3fb617980810e88c7103cb2d7c6346af20d6390e4bb3bb5
     .agents/skills/build-runtime-health/agents/openai.yaml: sha256:4101b4588c45fb68841f5754b0cc0d2e5aca21237ad4d5f85810cef41d8ff547
@@ -1201,15 +1201,15 @@ dependencies:
     .claude/rules/build-guard-scope.md: sha256:0f019febfae567532eb9b00e70eb8e8ec1e4f515e6a0a59dc469ef8e32d896fe
     .claude/skills/build-guard-destructive/SKILL.md: sha256:ad6373594543c9e99c285c4b2cbd3cad29c452dc900ba395327417e446a15a15
     .claude/skills/build-guard-destructive/agents/openai.yaml: sha256:1f79bd5c4c87c8408481bc14e7fb6d29045a1cc2bf2562c4fa1501670fd5ef19
-    .claude/skills/build-guard-destructive/scripts/check-careful.sh: sha256:60b8e73eb5b2f01833b583b96d9d733f8fba91db8a1cdb7413a8e1bf89089b17
+    .claude/skills/build-guard-destructive/scripts/check-careful.sh: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
     .claude/skills/build-guard-full/SKILL.md: sha256:fee5b6c2d00ee0ab5419e3fbdb81db5c03ba8600790d64418c88490fa538daa4
     .claude/skills/build-guard-full/agents/openai.yaml: sha256:96413f4b7a5b11996f3faeb201da9c4fe3ed253eef197dfe2e653ec4da0c5746
     .claude/skills/build-guard-scope-release/SKILL.md: sha256:58078b3a8c3724ff51d715ffca2b72cc924801699ed3efa1956f45304b99537e
     .claude/skills/build-guard-scope-release/agents/openai.yaml: sha256:508c3c13fdc190c5564c8dcd1467efe3fbf2b9ce553b8cda7f079eca9ce53ab7
     .claude/skills/build-guard-scope/SKILL.md: sha256:a5ce76cadda3f9c4ce38866de8135bb6f1be058d84f932931bc2335cdff6d38e
     .claude/skills/build-guard-scope/agents/openai.yaml: sha256:36a9bad892efdbd7ca7f48002dea28b07fb70fa86fb9898843b33d4f148faa25
-    .claude/skills/build-guard-scope/scripts/check-freeze.sh: sha256:5a37ebe3effef1ae1a69e0e2608af7857f0603d7ddb880ee0764bada3806a4ca
-    .claude/skills/build-recipe-investigate/SKILL.md: sha256:34b9ba606939c4dec9a8e35315d6f844c328bda39f703ba58428018c57f1b792
+    .claude/skills/build-guard-scope/scripts/check-freeze.sh: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
+    .claude/skills/build-recipe-investigate/SKILL.md: sha256:dea2efefc61d2130cf991bddfa8f091fe09020f6c3cbaac8ab027376fb67d884
     .claude/skills/build-recipe-investigate/agents/openai.yaml: sha256:6f787b80a7578972385bd2d43ef1e3be46351c18b56fdc4536b52d213c709af5
     .claude/skills/build-runtime-health/SKILL.md: sha256:2568cdf0189892e8c3fb617980810e88c7103cb2d7c6346af20d6390e4bb3bb5
     .claude/skills/build-runtime-health/agents/openai.yaml: sha256:4101b4588c45fb68841f5754b0cc0d2e5aca21237ad4d5f85810cef41d8ff547
@@ -1235,15 +1235,15 @@ dependencies:
     .github/instructions/build-guard-scope.instructions.md: sha256:905442c0f68191ac63190eab925679ed31d2813c09f1a41f7869033741bc1e96
     .kiro/skills/build-guard-destructive/SKILL.md: sha256:ad6373594543c9e99c285c4b2cbd3cad29c452dc900ba395327417e446a15a15
     .kiro/skills/build-guard-destructive/agents/openai.yaml: sha256:1f79bd5c4c87c8408481bc14e7fb6d29045a1cc2bf2562c4fa1501670fd5ef19
-    .kiro/skills/build-guard-destructive/scripts/check-careful.sh: sha256:60b8e73eb5b2f01833b583b96d9d733f8fba91db8a1cdb7413a8e1bf89089b17
+    .kiro/skills/build-guard-destructive/scripts/check-careful.sh: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
     .kiro/skills/build-guard-full/SKILL.md: sha256:fee5b6c2d00ee0ab5419e3fbdb81db5c03ba8600790d64418c88490fa538daa4
     .kiro/skills/build-guard-full/agents/openai.yaml: sha256:96413f4b7a5b11996f3faeb201da9c4fe3ed253eef197dfe2e653ec4da0c5746
     .kiro/skills/build-guard-scope-release/SKILL.md: sha256:58078b3a8c3724ff51d715ffca2b72cc924801699ed3efa1956f45304b99537e
     .kiro/skills/build-guard-scope-release/agents/openai.yaml: sha256:508c3c13fdc190c5564c8dcd1467efe3fbf2b9ce553b8cda7f079eca9ce53ab7
     .kiro/skills/build-guard-scope/SKILL.md: sha256:a5ce76cadda3f9c4ce38866de8135bb6f1be058d84f932931bc2335cdff6d38e
     .kiro/skills/build-guard-scope/agents/openai.yaml: sha256:36a9bad892efdbd7ca7f48002dea28b07fb70fa86fb9898843b33d4f148faa25
-    .kiro/skills/build-guard-scope/scripts/check-freeze.sh: sha256:5a37ebe3effef1ae1a69e0e2608af7857f0603d7ddb880ee0764bada3806a4ca
-    .kiro/skills/build-recipe-investigate/SKILL.md: sha256:34b9ba606939c4dec9a8e35315d6f844c328bda39f703ba58428018c57f1b792
+    .kiro/skills/build-guard-scope/scripts/check-freeze.sh: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
+    .kiro/skills/build-recipe-investigate/SKILL.md: sha256:dea2efefc61d2130cf991bddfa8f091fe09020f6c3cbaac8ab027376fb67d884
     .kiro/skills/build-recipe-investigate/agents/openai.yaml: sha256:6f787b80a7578972385bd2d43ef1e3be46351c18b56fdc4536b52d213c709af5
     .kiro/skills/build-runtime-health/SKILL.md: sha256:2568cdf0189892e8c3fb617980810e88c7103cb2d7c6346af20d6390e4bb3bb5
     .kiro/skills/build-runtime-health/agents/openai.yaml: sha256:4101b4588c45fb68841f5754b0cc0d2e5aca21237ad4d5f85810cef41d8ff547
@@ -2351,7 +2351,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:60b8e73eb5b2f01833b583b96d9d733f8fba91db8a1cdb7413a8e1bf89089b17
+  content_hash: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
 - kind: project-relative
   target: claude
   value: .claude/skills/build-guard-full
@@ -2441,7 +2441,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:5a37ebe3effef1ae1a69e0e2608af7857f0603d7ddb880ee0764bada3806a4ca
+  content_hash: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
 - kind: project-relative
   target: claude
   value: .claude/skills/build-internal-modelbenchmark
@@ -2558,7 +2558,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:34b9ba606939c4dec9a8e35315d6f844c328bda39f703ba58428018c57f1b792
+  content_hash: sha256:dea2efefc61d2130cf991bddfa8f091fe09020f6c3cbaac8ab027376fb67d884
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-investigate/agents/openai.yaml
@@ -3161,7 +3161,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:ce819ffebcd715ac91dd55ced5b5520028c83aad09950a8dfc7e66cde38d08d8
+  content_hash: sha256:5c9455e36e26f101ffeae277a553ed72bacffa4ddcac01ecbb90e0c5292461d9
 - kind: project-relative
   target: claude
   value: .claude/skills/build-runtime-upgrade/agents/openai.yaml
@@ -4214,7 +4214,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:60b8e73eb5b2f01833b583b96d9d733f8fba91db8a1cdb7413a8e1bf89089b17
+  content_hash: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
 - kind: project-relative
   target: codex
   value: .agents/skills/build-guard-full
@@ -4304,7 +4304,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:5a37ebe3effef1ae1a69e0e2608af7857f0603d7ddb880ee0764bada3806a4ca
+  content_hash: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
 - kind: project-relative
   target: codex
   value: .agents/skills/build-internal-modelbenchmark
@@ -4421,7 +4421,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:34b9ba606939c4dec9a8e35315d6f844c328bda39f703ba58428018c57f1b792
+  content_hash: sha256:dea2efefc61d2130cf991bddfa8f091fe09020f6c3cbaac8ab027376fb67d884
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-investigate/agents/openai.yaml
@@ -5024,7 +5024,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:ce819ffebcd715ac91dd55ced5b5520028c83aad09950a8dfc7e66cde38d08d8
+  content_hash: sha256:5c9455e36e26f101ffeae277a553ed72bacffa4ddcac01ecbb90e0c5292461d9
 - kind: project-relative
   target: codex
   value: .agents/skills/build-runtime-upgrade/agents/openai.yaml
@@ -6257,7 +6257,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:60b8e73eb5b2f01833b583b96d9d733f8fba91db8a1cdb7413a8e1bf89089b17
+  content_hash: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-guard-full
@@ -6347,7 +6347,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:5a37ebe3effef1ae1a69e0e2608af7857f0603d7ddb880ee0764bada3806a4ca
+  content_hash: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-internal-modelbenchmark
@@ -6464,7 +6464,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:34b9ba606939c4dec9a8e35315d6f844c328bda39f703ba58428018c57f1b792
+  content_hash: sha256:dea2efefc61d2130cf991bddfa8f091fe09020f6c3cbaac8ab027376fb67d884
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-investigate/agents/openai.yaml
@@ -7067,7 +7067,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:ce819ffebcd715ac91dd55ced5b5520028c83aad09950a8dfc7e66cde38d08d8
+  content_hash: sha256:5c9455e36e26f101ffeae277a553ed72bacffa4ddcac01ecbb90e0c5292461d9
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-runtime-upgrade/agents/openai.yaml

@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { verifyApmCliVersion } from "./apm-contract.mjs";
@@ -13,6 +13,13 @@ for (const path of ["apm.yml", "apm.lock.yaml", "packages"]) {
 }
 
 run(["apm", "install", "--frozen", "--target", "all"]);
+run(["apm", "compile"]);
+const agentsPath = join(workspaceRoot, "AGENTS.md");
+if (!existsSync(agentsPath)) throw new Error("APM compile did not generate AGENTS.md");
+const agentsBody = readFileSync(agentsPath, "utf8");
+for (const expected of ["# build-core-language", "# build-core-routing"]) {
+    if (!agentsBody.includes(expected)) throw new Error(`generated AGENTS.md missing ${expected}`);
+}
 run(["apm", "compile", "--validate"]);
 
 console.log(`apm compile verify ok: ${workspaceRoot}`);

@@ -67,24 +67,34 @@ Output: **"Root cause hypothesis: ..."** — a specific, testable claim about wh
 After forming your root cause hypothesis, lock edits to the affected module to prevent scope creep.
 
 ```bash
-[ -x "${CLAUDE_SKILL_DIR}/../freeze/bin/check-freeze.sh" ] && echo "FREEZE_AVAILABLE" || echo "FREEZE_UNAVAILABLE"
+BUILD_GUARD_SCOPE_SKILL_DIR=""
+if [ -n "${CLAUDE_SKILL_DIR:-}" ]; then
+  CANDIDATE="$(dirname "$CLAUDE_SKILL_DIR")/build-guard-scope"
+  [ -f "$CANDIDATE/SKILL.md" ] && BUILD_GUARD_SCOPE_SKILL_DIR="$CANDIDATE"
+fi
+for CANDIDATE in .agents/skills/build-guard-scope .claude/skills/build-guard-scope .kiro/skills/build-guard-scope; do
+  [ -f "$CANDIDATE/SKILL.md" ] && BUILD_GUARD_SCOPE_SKILL_DIR="$CANDIDATE" && break
+done
+[ -n "$BUILD_GUARD_SCOPE_SKILL_DIR" ] && echo "SCOPE_GUARD_AVAILABLE: $BUILD_GUARD_SCOPE_SKILL_DIR" || echo "SCOPE_GUARD_UNAVAILABLE"
 ```
 
-**If FREEZE_AVAILABLE:** Identify the narrowest directory containing the affected files. Write it to the freeze state file:
+**If SCOPE_GUARD_AVAILABLE:** Follow the installed `build-guard-scope` contract. Identify the narrowest directory containing the affected files and write its absolute path to the repo-local state file:
 
 ```bash
 BUILD_STATE_ROOT="${BUILD_STATE_ROOT:-.build-stacks}"; PLAN_ROOT="$BUILD_STATE_ROOT/design-docs"; TMP_ROOT="$BUILD_STATE_ROOT/tmp"; mkdir -p "$BUILD_STATE_ROOT" "$PLAN_ROOT" "$TMP_ROOT"
 STATE_DIR="$BUILD_STATE_ROOT"
 mkdir -p "$STATE_DIR"
-echo "<detected-directory>/" > "$STATE_DIR/freeze-dir.txt"
-echo "Debug scope locked to: <detected-directory>/"
+FREEZE_DIR=$(cd "<detected-directory>" 2>/dev/null && pwd)
+FREEZE_DIR="${FREEZE_DIR%/}/"
+echo "$FREEZE_DIR" > "$STATE_DIR/freeze-dir.txt"
+echo "Debug scope recorded: $FREEZE_DIR"
 ```
 
-Substitute `<detected-directory>` with the actual directory path (e.g., `src/auth/`). Tell the user: "Edits restricted to `<dir>/` for this debug session. This prevents changes to unrelated code. Run `build-guard-scope-release` to remove the restriction."
+Substitute `<detected-directory>` with the actual directory path (e.g., `src/auth/`). Report `scope_guard: report_only` unless the current host has explicitly wired `$BUILD_GUARD_SCOPE_SKILL_DIR/scripts/check-freeze.sh` into its Edit/Write hooks and that hook actually ran. The script being installed or executable does not by itself prove enforcement. Tell the user the recorded boundary and that `build-guard-scope-release` removes it.
 
 If the bug spans the entire repo or the scope is genuinely unclear, skip the lock and note why.
 
-**If FREEZE_UNAVAILABLE:** Skip scope lock. Edits are unrestricted.
+**If SCOPE_GUARD_UNAVAILABLE:** Skip the scope boundary and name the missing `core` package skill. Edits are unrestricted.
 
 ---
 

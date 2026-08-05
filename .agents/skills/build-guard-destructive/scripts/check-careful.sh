@@ -7,16 +7,31 @@ set -euo pipefail
 # Read stdin (JSON with tool_input)
 INPUT=$(cat)
 
-# Extract the "command" field value from tool_input
-# Try grep/sed first (handles 99% of cases), fall back to Python for escaped quotes
-CMD=$(printf '%s' "$INPUT" | grep -o '"command"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*:[[:space:]]*"//;s/"$//' || true)
-
-# Node fallback if grep returned empty (e.g., escaped quotes in command)
-if [ -z "$CMD" ]; then
-  CMD=$(printf '%s' "$INPUT" | node -e 'let data=""; process.stdin.setEncoding("utf8"); process.stdin.on("data", chunk => data += chunk); process.stdin.on("end", () => { try { const parsed = JSON.parse(data); process.stdout.write(parsed.tool_input?.command ?? ""); } catch {} });' 2>/dev/null || true)
+# Parse JSON before inspecting its fields. Regex extraction is unsafe here because
+# an escaped quote can truncate the command before a destructive suffix.
+if ! CMD=$(printf '%s' "$INPUT" | node -e '
+let data = "";
+process.stdin.setEncoding("utf8");
+process.stdin.on("data", (chunk) => data += chunk);
+process.stdin.on("end", () => {
+  try {
+    const parsed = JSON.parse(data);
+    const command = parsed?.tool_input?.command;
+    if (command == null) process.exit(0);
+    if (typeof command !== "string" || command.includes("\0")) process.exit(2);
+    process.stdout.write(command);
+  } catch {
+    process.exit(2);
+  }
+});
+' 2>/dev/null); then
+  mkdir -p .build-stacks/analytics 2>/dev/null || true
+  echo '{"event":"hook_fire","skill":"build-guard-destructive","pattern":"json_parse_failure","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}' >> .build-stacks/analytics/skill-usage.jsonl 2>/dev/null || true
+  echo '{"permissionDecision":"ask","message":"[build-guard-destructive] Input JSON parse failure; explicit approval is required."}'
+  exit 0
 fi
 
-# If we still couldn't extract a command, allow
+# A valid payload without a command has no shell operation to review.
 if [ -z "$CMD" ]; then
   echo '{}'
   exit 0

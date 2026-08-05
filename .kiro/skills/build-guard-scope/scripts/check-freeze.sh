@@ -17,7 +17,8 @@ if [ ! -f "$FREEZE_FILE" ]; then
   exit 0
 fi
 
-FREEZE_DIR=$(tr -d '[:space:]' < "$FREEZE_FILE")
+FREEZE_DIR=""
+IFS= read -r FREEZE_DIR < "$FREEZE_FILE" || true
 
 # If freeze dir is empty, allow
 if [ -z "$FREEZE_DIR" ]; then
@@ -25,55 +26,141 @@ if [ -z "$FREEZE_DIR" ]; then
   exit 0
 fi
 
-# Extract file_path from tool_input JSON
-# Try grep/sed first, fall back to Python for escaped quotes
-FILE_PATH=$(printf '%s' "$INPUT" | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*:[[:space:]]*"//;s/"$//' || true)
+# Parse and decide in Node. The segment-by-segment resolver follows symlinks
+# before applying later `..` components and keeps resolving after nonexistent
+# components are popped. It does not depend on GNU `realpath -m`, so it works on
+# macOS as well as Linux.
+set +e
+RESULT=$(printf '%s' "$INPUT" | node -e '
+const fs = require("node:fs");
+const path = require("node:path");
 
-# Node fallback if grep returned empty
-if [ -z "$FILE_PATH" ]; then
-  FILE_PATH=$(printf '%s' "$INPUT" | node -e 'let data=""; process.stdin.setEncoding("utf8"); process.stdin.on("data", chunk => data += chunk); process.stdin.on("end", () => { try { const parsed = JSON.parse(data); process.stdout.write(parsed.tool_input?.file_path ?? ""); } catch {} });' 2>/dev/null || true)
-fi
+const freezeInput = process.argv[1];
+const cwd = process.argv[2];
+let data = "";
 
-# If we couldn't extract a file path, allow (don't block on parse failure)
-if [ -z "$FILE_PATH" ]; then
-  echo '{}'
-  exit 0
-fi
-
-# Resolve file_path to absolute if it isn't already
-case "$FILE_PATH" in
-  /*) ;; # already absolute
-  *)
-    FILE_PATH="$(pwd)/$FILE_PATH"
-    ;;
-esac
-
-# Normalize: remove double slashes and trailing slash
-FILE_PATH=$(printf '%s' "$FILE_PATH" | sed 's|/\+|/|g;s|/$||')
-
-# Resolve symlinks and .. sequences (POSIX-portable, works on macOS)
-_resolve_path() {
-  local _dir _base
-  _dir="$(dirname "$1")"
-  _base="$(basename "$1")"
-  _dir="$(cd "$_dir" 2>/dev/null && pwd -P || printf '%s' "$_dir")"
-  printf '%s/%s' "$_dir" "$_base"
+function segments(value, root) {
+  return value.slice(root.length).split(path.sep).filter(Boolean);
 }
-FILE_PATH=$(_resolve_path "$FILE_PATH")
-FREEZE_DIR=$(_resolve_path "$FREEZE_DIR")
 
-# Check: does the file path start with the freeze directory?
-case "$FILE_PATH" in
-  "${FREEZE_DIR}/"*|"${FREEZE_DIR}")
-    # Inside freeze boundary — allow
-    echo '{}'
+function canonicalize(raw) {
+  if (typeof raw !== "string" || raw.includes("\0")) throw new Error("invalid path");
+  const absolute = path.isAbsolute(raw) ? raw : `${cwd.replace(/\/+$/, "")}/${raw}`;
+  let root = path.parse(absolute).root;
+  let resolved = root;
+  const pending = segments(absolute, root);
+  let symlinkHops = 0;
+
+  while (pending.length > 0) {
+    const segment = pending.shift();
+    if (!segment || segment === ".") continue;
+    if (segment === "..") {
+      resolved = path.dirname(resolved);
+      continue;
+    }
+
+    const candidate = path.join(resolved, segment);
+    try {
+      const stat = fs.lstatSync(candidate);
+      if (!stat.isSymbolicLink()) {
+        resolved = candidate;
+        continue;
+      }
+
+      symlinkHops += 1;
+      if (symlinkHops > 40) throw new Error("too many symbolic links");
+      const target = fs.readlinkSync(candidate);
+      if (path.isAbsolute(target)) {
+        root = path.parse(target).root;
+        resolved = root;
+        pending.unshift(...segments(target, root));
+      } else {
+        pending.unshift(...target.split(path.sep));
+      }
+    } catch (error) {
+      if (error?.code === "ENOENT" || error?.code === "ENOTDIR") {
+        resolved = candidate;
+        continue;
+      }
+      throw error;
+    }
+  }
+
+  return resolved.length > root.length ? resolved.replace(/\/+$/, "") : resolved;
+}
+
+process.stdin.setEncoding("utf8");
+process.stdin.on("data", (chunk) => data += chunk);
+process.stdin.on("end", () => {
+  let parsed;
+  try {
+    parsed = JSON.parse(data);
+  } catch {
+    process.stdout.write(JSON.stringify({ permissionDecision: "deny", message: "[build-guard-scope] Input JSON parse failure; edit denied." }));
+    process.exitCode = 20;
+    return;
+  }
+
+  const filePath = parsed?.tool_input?.file_path;
+  if (filePath == null || filePath === "") {
+    process.stdout.write("{}");
+    return;
+  }
+  if (typeof filePath !== "string" || filePath.includes("\0")) {
+    process.stdout.write(JSON.stringify({ permissionDecision: "deny", message: "[build-guard-scope] Input JSON parse failure; edit denied." }));
+    process.exitCode = 20;
+    return;
+  }
+
+  let canonicalFile;
+  let canonicalFreeze;
+  try {
+    canonicalFile = canonicalize(filePath);
+    canonicalFreeze = canonicalize(freezeInput);
+  } catch {
+    process.stdout.write(JSON.stringify({ permissionDecision: "deny", message: "[build-guard-scope] Path resolution failure; edit denied." }));
+    process.exitCode = 22;
+    return;
+  }
+
+  const freezePrefix = canonicalFreeze.endsWith(path.sep) ? canonicalFreeze : `${canonicalFreeze}${path.sep}`;
+  const inside = canonicalFile === canonicalFreeze || canonicalFile.startsWith(freezePrefix);
+  if (inside) {
+    process.stdout.write("{}");
+    return;
+  }
+
+  process.stdout.write(JSON.stringify({
+    permissionDecision: "deny",
+    message: `[build-guard-scope] Blocked: ${canonicalFile} is outside the freeze boundary (${canonicalFreeze}). Only edits within the frozen directory are allowed.`
+  }));
+  process.exitCode = 21;
+});
+' "$FREEZE_DIR" "$(pwd)" 2>/dev/null)
+STATUS=$?
+set -e
+
+case "$STATUS" in
+  0)
+    printf '%s\n' "$RESULT"
+    ;;
+  20)
+    PATTERN="json_parse_failure"
+    ;;
+  21)
+    PATTERN="boundary_deny"
+    ;;
+  22)
+    PATTERN="path_resolution_failure"
     ;;
   *)
-    # Outside freeze boundary — deny
-    # Log hook fire event
-    mkdir -p .build-stacks/analytics 2>/dev/null || true
-    echo '{"event":"hook_fire","skill":"build-guard-scope","pattern":"boundary_deny","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}' >> .build-stacks/analytics/skill-usage.jsonl 2>/dev/null || true
-
-    printf '{"permissionDecision":"deny","message":"[build-guard-scope] Blocked: %s is outside the freeze boundary (%s). Only edits within the frozen directory are allowed."}\n' "$FILE_PATH" "$FREEZE_DIR"
+    PATTERN="hook_failure"
+    RESULT='{"permissionDecision":"deny","message":"[build-guard-scope] Hook failure; edit denied."}'
     ;;
 esac
+
+if [ "$STATUS" -ne 0 ]; then
+  mkdir -p .build-stacks/analytics 2>/dev/null || true
+  echo '{"event":"hook_fire","skill":"build-guard-scope","pattern":"'"$PATTERN"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basename "$(git rev-parse --show-toplevel 2>/dev/null)" 2>/dev/null || echo "unknown")'"}' >> .build-stacks/analytics/skill-usage.jsonl 2>/dev/null || true
+  printf '%s\n' "$RESULT"
+fi

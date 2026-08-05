@@ -45,7 +45,9 @@ describe("release quality gate", () => {
 
         assert.match(compileVerifier, /\["apm\.yml", "apm\.lock\.yaml", "packages"\]/);
         assert.match(compileVerifier, /"install", "--frozen", "--target", "all"/);
+        assert.match(compileVerifier, /run\(\["apm", "compile"\]\)/);
         assert.match(compileVerifier, /"compile", "--validate"/);
+        assert.match(compileVerifier, /generated AGENTS\.md missing/);
         assert.match(compileVerifier, /cwd: workspaceRoot/);
         assert.doesNotMatch(compileVerifier, /--local-only/);
     });

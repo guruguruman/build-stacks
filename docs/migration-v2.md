@@ -25,7 +25,14 @@ There is no automatic migration of old runtime state. Copy only reviewed, non-se
 
 ```bash
 apm audit --ci
-apm compile --validate --local-only
+apm compile --all
+apm compile --validate
+test -f AGENTS.md && test -f GEMINI.md
 ```
+
+With APM 0.26, `--validate` validates primitives without compiling them. Run
+`apm compile --all` first so installed dependency instructions produce the
+consumer context files, then validate and confirm the expected context files
+exist.
 
 Maintainers of this repository should additionally run `npm run quality:verify`.

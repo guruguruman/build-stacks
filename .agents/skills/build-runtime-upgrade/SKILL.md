@@ -19,10 +19,12 @@ apm --version
 BUILD_STACKS_TARGET_TAG=v2.0.0 # replace only with the user-approved target
 apm install "guruguruman/build-stacks#${BUILD_STACKS_TARGET_TAG}" --target all
 apm audit --ci
-apm compile --validate --local-only
+apm compile --all
+apm compile --validate
+test -f AGENTS.md && test -f GEMINI.md
 ```
 
-5. Verify that all 47 `build-*` skills are installed under the APM 0.26 converged roots: `.agents/skills`, `.claude/skills`, and `.kiro/skills`; verify that no root bundle or retired per-client duplicate was created.
+5. With APM 0.26, `--validate` does not generate context. Confirm that the preceding `apm compile --all` generated `AGENTS.md` and `GEMINI.md`, then verify that all 47 `build-*` skills are installed under the converged roots: `.agents/skills`, `.claude/skills`, and `.kiro/skills`; verify that no root bundle or retired per-client duplicate was created.
 6. Record evidence under `.build-stacks/evidence/build-runtime-upgrade.json`.
 
 ## Output Contract
