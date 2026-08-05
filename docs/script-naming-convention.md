@@ -10,7 +10,7 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | --- | --- | --- | --- |
 | `apm-contract.mjs` | APM version, targets, and generated roots | module | Export the pinned APM contract shared by generation, verification, and smoke scripts. |
 | `apm-installed-skills-sync.mjs` | installed skill folders | sync | Compare or sync checked-in converged skill folders with a clean APM install. |
-| `apm-source-skills-verify.mjs` | source `.apm/skills/*/SKILL.md` files | verify | Validate the APM skill list against source skill frontmatter, titles, and product naming rules. |
+| `apm-source-skills-verify.mjs` | source `packages/*/.apm/skills/*/SKILL.md` files | verify | Validate the APM skill catalog against source frontmatter, resource layout, and build naming rules. |
 | `apm-package-prepare.mjs` | local APM package | prepare | Create a clean local package for install smoke tests. |
 | `apm-skill-install-smoke.mjs` | skill folders installed by APM | smoke | Install the local package into a temporary app and verify deployed skill roots. |
 | `apm-package-verify.mjs` | APM package | verify | Verify package shape, browser policy docs, script names, and install behavior. |
@@ -18,7 +18,7 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | `codex-skill-activation-smoke.mjs` | Codex skill activation | smoke | Install the local package into a temporary Codex app and verify skill discovery/activation. |
 | `codex-browser-core-smoke.mjs` | Codex browser core | smoke | Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs. |
 | `script-names-verify.mjs` | script names | verify | Enforce this file naming rule. |
-| `apm-skill-list.mjs` | APM skill list | module | Export skill metadata and name validation. |
+| `build-skill-catalog.mjs` | APM skill list | module | Export skill metadata and name validation. |
 | `release-quality-verify.mjs` | release quality gate | verify | Run the mandatory deterministic, install, browser, secret, and diff quality checks. |
 | `release-verify.mjs` | release gate | verify | Run the default release gate command list; heavy Codex E2E smoke is opt-in. |
 | `repo-secret-scan.mjs` | repository secret exposure | scan | Scan working tree and git history for secrets or private paths. |
@@ -45,7 +45,7 @@ Rules:
 - Renderers use `render<Artifact>()`, for example `renderAcceptanceMarkdown()`.
 - Parsers/readers use `parse<Thing>()` or `read<Thing>()`, for example `parseSkillList()`.
 - Command helpers include the execution boundary, for example `runComplianceCommand()` or `runLoggedCommandAsync()`.
-- Shared predicates use `is<Fact>()`, for example `isValidProductSkillName()`.
+- Shared predicates use `is<Fact>()`, for example `isValidBuildSkillName()`.
 
 Do not use bare `run`, `main`, `check`, `assert`, `write`, or `parse` in executable scripts unless the file is a tiny one-off that has no reusable helpers.
 

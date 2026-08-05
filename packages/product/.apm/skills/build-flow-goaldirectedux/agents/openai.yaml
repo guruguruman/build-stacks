@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Goal-Directed UX"
+  short_description: "Run Goal-Directed UX Design for personas, scenarios,..."
+  default_prompt: "Use $build-flow-goaldirectedux to run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff."

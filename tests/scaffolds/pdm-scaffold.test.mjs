@@ -5,7 +5,7 @@ import { join, relative } from "node:path";
 import { spawnSync } from "node:child_process";
 import { describe, it } from "node:test";
 
-const skillRoot = ".apm/skills/product-flow-pdmscaffold";
+const skillRoot = "packages/product/.apm/skills/build-flow-pdmscaffold";
 const installer = `${skillRoot}/scripts/create_pdm_docs.py`;
 const expectedFiles = [
     "CURRENT_PRODUCT.md",
@@ -23,9 +23,9 @@ const expectedFiles = [
     "references/source-register-template.md"
 ];
 
-describe("product-flow-pdmscaffold", () => {
+describe("build-flow-pdmscaffold", () => {
     it("creates the neutral scaffold and refuses every overwrite", () => {
-        const projectRoot = mkdtempSync(join(tmpdir(), "product-flow-pdmscaffold-"));
+        const projectRoot = mkdtempSync(join(tmpdir(), "build-flow-pdmscaffold-"));
         try {
             const dryRun = runInstaller(projectRoot, "--dry-run");
             assert.equal(dryRun.status, 0, commandFailure(dryRun));
@@ -50,8 +50,8 @@ describe("product-flow-pdmscaffold", () => {
     });
 
     it("refuses a destination directory symlink without writing outside the project", () => {
-        const projectRoot = mkdtempSync(join(tmpdir(), "product-flow-pdmscaffold-project-"));
-        const outsideRoot = mkdtempSync(join(tmpdir(), "product-flow-pdmscaffold-outside-"));
+        const projectRoot = mkdtempSync(join(tmpdir(), "build-flow-pdmscaffold-project-"));
+        const outsideRoot = mkdtempSync(join(tmpdir(), "build-flow-pdmscaffold-outside-"));
         try {
             symlinkSync(outsideRoot, join(projectRoot, "docs"), "dir");
 
@@ -68,7 +68,7 @@ describe("product-flow-pdmscaffold", () => {
     });
 
     it("refuses a broken destination directory symlink", () => {
-        const projectRoot = mkdtempSync(join(tmpdir(), "product-flow-pdmscaffold-broken-"));
+        const projectRoot = mkdtempSync(join(tmpdir(), "build-flow-pdmscaffold-broken-"));
         const missingDocsRoot = join(projectRoot, "missing-docs");
         try {
             symlinkSync(missingDocsRoot, join(projectRoot, "docs"), "dir");
@@ -84,7 +84,7 @@ describe("product-flow-pdmscaffold", () => {
     });
 
     it("does not overwrite a destination created after collision preflight", () => {
-        const projectRoot = mkdtempSync(join(tmpdir(), "product-flow-pdmscaffold-race-"));
+        const projectRoot = mkdtempSync(join(tmpdir(), "build-flow-pdmscaffold-race-"));
         try {
             const probe = spawnSync("python3", ["-c", raceProbe, installer, projectRoot], {
                 cwd: process.cwd(),

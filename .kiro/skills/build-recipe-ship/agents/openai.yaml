@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Ship"
+  short_description: "Prepare tests, coverage, docs, changelog, and PR handoff."
+  default_prompt: "Use $build-recipe-ship to prepare tests, coverage, docs, changelog, and PR handoff."

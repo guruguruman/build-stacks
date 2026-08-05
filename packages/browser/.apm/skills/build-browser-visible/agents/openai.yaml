@@ -1,0 +1,4 @@
+interface:
+  display_name: "Browser Visible"
+  short_description: "Open a headed browser session for visual inspection."
+  default_prompt: "Use $build-browser-visible to open a headed browser session for visual inspection."

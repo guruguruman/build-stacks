@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Skillify"
+  short_description: "Turn repeated work into reviewed skill candidates."
+  default_prompt: "Use $build-flow-skillify to turn repeated work into reviewed skill candidates."

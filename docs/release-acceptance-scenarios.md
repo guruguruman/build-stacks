@@ -1,6 +1,6 @@
 # Release Acceptance Scenarios
 
-These scenarios define the `1.1.0-release` acceptance suite. A skill is complete when a clean consumer install can exercise the workflow and produce evidence.
+These scenarios define the `2.0.0-release` acceptance suite. A skill is complete when a clean consumer install can exercise the workflow and produce evidence.
 
 ## 1. First Browser Smoke
 
@@ -13,13 +13,13 @@ _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
 _ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
 _ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
-AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+AGENT_BROWSER_SOCKET_DIR="${BUILD_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
 mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
 export AGENT_BROWSER_SOCKET_DIR
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
-agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open https://example.com
+mkdir -p .build-stacks/artifacts/browser/screenshots .build-stacks/browser/downloads
+agent-browser --json --content-boundaries --screenshot-dir .build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open https://example.com
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
-agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
+agent-browser --json --screenshot-dir .build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 agent-browser --json --session "$_ABR_SESSION" close
 ```
 
@@ -27,24 +27,24 @@ Success criteria:
 
 - `snapshot` returns untrusted page content.
 - `screenshot` returns an artifact path and a hint to display/read it.
-- Browser artifacts stay under `.product-build-stacks/`.
+- Browser artifacts stay under `.build-stacks/`.
 
 ## 2. Browser QA
 
 Use a local or fixture page with a form and a visible success state.
 
-The fill/click steps are action policy operations. Ask for explicit user approval before running them. If the flow uses real authentication state, route through `product-browser-auth` first.
+The fill/click steps are action policy operations. Ask for explicit user approval before running them. If the flow uses real authentication state, route through `build-browser-auth` first.
 
 ```bash
 _ABR_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)"
 _ABR_REPO_ID="$(printf '%s' "$_ABR_ROOT" | cksum | awk '{print $1}')"
 _ABR_RUN_ID="$(printf '%s' "${AGENT_BROWSER_RUN_ID:-local}" | cksum | awk '{print $1}')"
 _ABR_SESSION="ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}"
-AGENT_BROWSER_SOCKET_DIR="${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
+AGENT_BROWSER_SOCKET_DIR="${BUILD_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}"
 mkdir -p "$AGENT_BROWSER_SOCKET_DIR"
 export AGENT_BROWSER_SOCKET_DIR
-mkdir -p .product-build-stacks/artifacts/browser/screenshots .product-build-stacks/browser/downloads
-agent-browser --json --content-boundaries --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open http://localhost:3000/login
+mkdir -p .build-stacks/artifacts/browser/screenshots .build-stacks/browser/downloads
+agent-browser --json --content-boundaries --screenshot-dir .build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" open http://localhost:3000/login
 agent-browser --json --content-boundaries --session "$_ABR_SESSION" snapshot -i
 # After explicit user approval:
 agent-browser --json --session "$_ABR_SESSION" fill 'input[name=email]' "$TEST_EMAIL"
@@ -53,7 +53,7 @@ agent-browser --json --session "$_ABR_SESSION" click 'button[type=submit]'
 agent-browser --json --session "$_ABR_SESSION" wait '.dashboard'
 agent-browser --json --session "$_ABR_SESSION" console
 agent-browser --json --session "$_ABR_SESSION" network requests
-agent-browser --json --screenshot-dir .product-build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
+agent-browser --json --screenshot-dir .build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 agent-browser --json --session "$_ABR_SESSION" close
 ```
 
@@ -66,15 +66,15 @@ Success criteria:
 ## 3. Review to QA to Ship
 
 ```text
-product-role-staffengineer
--> product-recipe-qa
--> product-recipe-ship
+build-role-staffengineer
+-> build-recipe-qa
+-> build-recipe-ship
 ```
 
 Success criteria:
 
 - Review produces findings first, with file/line references when code exists.
-- QA records browser artifacts under `.product-build-stacks/artifacts` or `.product-build-stacks/browser`.
+- QA records browser artifacts under `.build-stacks/artifacts` or `.build-stacks/browser`.
 - Ship produces test/docs/changelog/PR handoff and stops before merge/deploy without approval.
 
 ## 4. Codex Browser Core Smoke
@@ -91,9 +91,9 @@ node scripts/codex-browser-core-smoke.mjs
 
 Success criteria:
 
-- `product-browser-runner` returns `browser_activation: executed` with browser evidence.
-- `product-browser-qa` returns `browser_activation: executed` after fixture form interaction.
-- Evidence stays under the temporary app `.product-build-stacks/artifacts/browser` path.
+- `build-browser-runner` returns `browser_activation: executed` with browser evidence.
+- `build-browser-qa` returns `browser_activation: executed` after fixture form interaction.
+- Evidence stays under the temporary app `.build-stacks/artifacts/browser` path.
 - Protected paths, including the real Codex system skill tree, are unchanged after postflight.
 
 ## 5. Clean Consumer Install
@@ -101,15 +101,17 @@ Success criteria:
 ```bash
 npm run smoke:codex
 npm run smoke:all
+npm run smoke:packages
 ```
 
 Success criteria:
 
-- The consumer project installs all 46 skills.
+- The root consumer project installs all 47 skills.
+- Every subpackage consumer installs exactly its documented dependency closure: 8, 16, 22, 27, 30, or 47 skills.
 - Converged installs contain `.agents/skills`, `.claude/skills`, and `.kiro/skills`.
 - Retired duplicate roots `.cursor/skills`, `.github/skills`, and `.opencode/skills` are absent.
 - No root bundle skill is created.
-- Evidence JSON is written under `.product-build-stacks/evidence/`.
+- Evidence JSON is written under `.build-stacks/evidence/`.
 
 ## 6. Mandatory Quality Verification Gate
 
@@ -124,7 +126,7 @@ npm run release:verify
 
 Success criteria:
 
-- The quality gate runs tests, skill/source/generated/APM verification, APM audit and compile, clean-consumer smoke tests, browser doctor and smoke checks, repository secret scanning, and unstaged, staged, plus untracked whitespace checks.
+- The quality gate runs tests, skill metadata and stack verification, source/generated/APM verification, APM audit and compile, root and package clean-consumer smoke tests, browser doctor and smoke checks, repository secret scanning, and unstaged, staged, plus untracked whitespace checks.
 - `npm run release:verify` delegates to `npm run quality:verify` instead of maintaining a second checklist.
 - CI invokes `npm run release:verify`, so local and CI acceptance use the same mandatory contract.
 - Heavy Codex E2E remains opt-in and is reported honestly when it is not enabled.
@@ -136,7 +138,7 @@ runtime evidence. It is opt-in to avoid creating large local Docker/runtime
 images during routine verification.
 
 ```bash
-PRODUCT_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
+BUILD_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 ```
 
 ## 8. Prelaunch Security Gate
@@ -145,7 +147,7 @@ Exercise the deterministic security gate separately from open-ended CSO review a
 release-engineering readiness.
 
 ```text
-product-flow-securitygate
+build-flow-securitygate
 -> create a RAPID report in a clean consumer repository
 -> assess all 32 controls and 10 mandatory failure scenarios
 -> preserve missing runtime, provider, and cloud evidence as NOT_VERIFIED
@@ -159,7 +161,7 @@ Success criteria:
 - Any incomplete Critical or High control forces NO-GO in FULL and RAPID modes.
 - FOCUSED mode never issues a release-wide GO.
 - `security review`, `CSO review`, `threat model`, and `release review` do not trigger this flow by themselves.
-- The skill does not automatically invoke `product-role-cso` or `product-role-releaseengineer`.
+- The skill does not automatically invoke `build-role-cso` or `build-role-releaseengineer`.
 
 ## 9. Web And Mobile UI Finish
 
@@ -167,13 +169,13 @@ Exercise both focused visual-finishing routes without letting them absorb functi
 or generic design review.
 
 ```text
-product-flow-webuifinish
+build-flow-webuifinish
 -> capture a real rendered route
 -> score the current screen
 -> apply one explicitly approved visual change
 -> verify and recapture the same route, viewport, and state
 
-product-flow-mobileuifinish
+build-flow-mobileuifinish
 -> capture or inspect a real native/cross-platform app screen
 -> score the current screen
 -> apply one explicitly approved visual change

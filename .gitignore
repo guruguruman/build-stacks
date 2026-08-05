@@ -31,9 +31,11 @@ __pycache__/
 # Runtime state and generated workspaces
 tmp/
 .product/
-.product-build-stacks/*
-!.product-build-stacks/.gitkeep
-!.product-build-stacks/config.example.yaml
+.build-stacks/*
+!.build-stacks/.gitkeep
+!.build-stacks/config.example.yaml
+# v1 runtime state is intentionally not read or migrated by v2.
+.product-build-stacks/
 
 # Logs
 *.log

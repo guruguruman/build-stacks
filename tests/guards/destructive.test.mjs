@@ -12,7 +12,7 @@ const expect = (actual, message) => ({
 });
 describe("destructive guard", () => {
     test("requires explicit approval", () => {
-        const body = readFileSync(".apm/instructions/product-guard-destructive.instructions.md", "utf8");
+        const body = readFileSync("packages/core/.apm/instructions/build-guard-destructive.instructions.md", "utf8");
         expect(body).toContain("explicit approval");
     });
 });

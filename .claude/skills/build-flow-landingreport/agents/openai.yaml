@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Landing Report"
+  short_description: "Review landing pages and launch readiness."
+  default_prompt: "Use $build-flow-landingreport to review landing pages and launch readiness."

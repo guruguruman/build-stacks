@@ -1,5 +1,7 @@
 .git/
 .product/
+.build-stacks/
+.product-build-stacks/
 tmp/
 apm_modules/
 node_modules/

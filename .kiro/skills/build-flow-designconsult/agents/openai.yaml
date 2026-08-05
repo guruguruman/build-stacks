@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Design Consult"
+  short_description: "Provide product design consultation."
+  default_prompt: "Use $build-flow-designconsult to provide product design consultation."

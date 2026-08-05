@@ -1,0 +1,768 @@
+# build-recipe-ship extended workflow
+
+## Contents
+
+- Step 7: Test Coverage Audit
+- Step 8: Plan Completion Audit
+- Plan Verification
+- Learnings Search
+- Scope Drift
+- Step 9: Pre-Landing Review
+- Confidence Calibration
+- Design Review Lite
+- Review Specialists
+- Cross-Review Deduplication
+- Step 10: Address Greptile review comments (if PR exists)
+- Adversarial Step
+- Learnings Log
+- Product Knowledge Save
+- Step 12: Version bump (auto-decide)
+- Changelog Workflow
+- Step 14: TODOS.md (auto-update)
+- Step 15: Commit (bisectable chunks)
+- Step 16: Verification Gate
+- Step 17: Push
+- Step 18: Documentation sync (via subagent, before PR creation)
+- Step 19: Create PR/MR
+- Summary
+- Test Coverage
+- Pre-Landing Review
+- Design Review
+- Eval Results
+- Greptile Review
+- Scope Drift
+- Plan Completion
+- Verification Results
+- TODOS
+- Documentation
+- Test plan
+- Step 20: Persist build-recipe-ship metrics
+- Important Rules
+
+## Step 7: Test Coverage Audit
+
+**Dispatch this step as a subagent** using the Agent tool with `subagent_type: "general-purpose"`. The subagent runs the coverage audit in a fresh context window — the parent only sees the conclusion, not intermediate file reads. This is context-rot defense.
+
+**Subagent prompt:** Pass the following instructions to the subagent, with `<base>` substituted with the base branch:
+
+> You are running a build-recipe-ship-workflow test coverage audit. Run `git diff <base>...HEAD` as needed. Do not commit or push — report only.
+>
+> ## Coverage Audit
+
+Map changed codepaths to tests. Flag happy path, failure path, edge case, and regression coverage gaps with file-level evidence.
+>
+> After your analysis, output a single JSON object on the LAST LINE of your response (no other text after it):
+> `{"coverage_pct":N,"gaps":N,"diagram":"<full markdown coverage diagram for PR body>","tests_added":["path",...]}`
+
+**Parent processing:**
+
+1. Read the subagent's final output. Parse the LAST line as JSON.
+2. Store `coverage_pct` (for Step 20 metrics), `gaps` (user summary), `tests_added` (for the commit).
+3. Embed `diagram` verbatim in the PR body's `## Test Coverage` section (Step 19).
+4. Print a one-line summary: `Coverage: {coverage_pct}%, {gaps} gaps. {tests_added.length} tests added.`
+
+**If the subagent fails, times out, or returns invalid JSON:** Fall back to running the audit inline in the parent. Do not block /build-recipe-ship on subagent failure — partial results are better than none.
+
+---
+
+## Step 8: Plan Completion Audit
+
+**Dispatch this step as a subagent** using the Agent tool with `subagent_type: "general-purpose"`. The subagent reads the plan file and every referenced code file in its own fresh context. Parent gets only the conclusion.
+
+**Subagent prompt:** Pass these instructions to the subagent:
+
+> You are running a build-recipe-ship-workflow plan completion audit. The base branch is `<base>`. Use `git diff <base>...HEAD` to see what shipped. Do not commit or push — report only.
+>
+> ## Plan Completion Audit
+
+Compare shipped diff to the accepted plan. Mark done, deferred, changed, and missing items with evidence.
+>
+> After your analysis, output a single JSON object on the LAST LINE of your response (no other text after it):
+> `{"total_items":N,"done":N,"changed":N,"deferred":N,"summary":"<markdown checklist for PR body>"}`
+
+**Parent processing:**
+
+1. Parse the LAST line of the subagent's output as JSON.
+2. Store `done`, `deferred` for Step 20 metrics; use `summary` in PR body.
+3. If `deferred > 0` and no user override, present the deferred items via AskUserQuestion before continuing.
+4. Embed `summary` in PR body's `## Plan Completion` section (Step 19).
+
+**If the subagent fails or returns invalid JSON:** Fall back to running the audit inline. Never block /build-recipe-ship on subagent failure.
+
+---
+
+## Plan Verification
+
+Verify claims with repo files, tests, browser artifacts, or command output. Do not rely on plan prose alone.
+
+## Learnings Search
+
+If .build-stacks/learnings exists, inspect relevant recent notes before repeating an investigation. If absent, continue without treating it as a failure.
+
+## Scope Drift
+
+Compare requested scope, current plan, changed files, and proposed next steps. Ask before expanding scope materially.
+
+---
+
+## Step 9: Pre-Landing Review
+
+Review the diff for structural issues that tests don't catch.
+
+1. Read the bundled staff-engineer checklist at `../../build-role-staffengineer/references/checklist.md`. If the file cannot be read, **STOP** and report the error.
+
+2. Run `git diff origin/<base>` to get the full diff (scoped to feature changes against the freshly-fetched base branch).
+
+3. Apply the review checklist in two passes:
+   - **Pass 1 (CRITICAL):** SQL & Data Safety, LLM Output Trust Boundary
+   - **Pass 2 (INFORMATIONAL):** All remaining categories
+
+## Confidence Calibration
+
+Separate observed facts from inference. Lower confidence when evidence is missing, stale, or only from generated prose.
+
+## Design Review Lite
+
+When UI or visual behavior changed, run the `build-role-designer` lens using repo-local evidence, screenshots, mockups, or the current diff. Report missing visual evidence explicitly.
+
+   Include any design findings alongside the code review findings. They follow the same Fix-First flow below.
+
+## Review Specialists
+
+Use specialist lenses from references when relevant: security, testing, performance, data migration, maintainability, API contract, red-team, and design.
+
+## Cross-Review Deduplication
+
+Merge duplicate findings, preserve the strongest evidence, and avoid asking the user the same decision twice.
+
+4. **Classify each finding from both the checklist pass and specialist review (Step 9.1-Step 9.2) as AUTO-FIX or ASK** per the Fix-First Heuristic in
+   checklist.md. Critical findings lean toward ASK; informational lean toward AUTO-FIX.
+
+5. **Auto-fix all AUTO-FIX items.** Apply each fix. Output one line per fix:
+   `[AUTO-FIXED] [file:line] Problem → what you did`
+
+6. **If ASK items remain,** present them in ONE AskUserQuestion:
+   - List each with number, severity, problem, recommended fix
+   - Per-item options: A) Fix  B) Skip
+   - Overall RECOMMENDATION
+   - If 3 or fewer ASK items, you may use individual AskUserQuestion calls instead
+
+7. **After all fixes (auto + user-approved):**
+   - If ANY fixes were applied: commit fixed files by name (`git add <fixed-files> && git commit -m "fix: pre-landing review fixes"`), then **STOP** and tell the user to run `/build-recipe-ship` again to re-test.
+   - If no fixes applied (all ASK items skipped, or no issues found): continue to Step 12.
+
+8. Output summary: `Pre-Landing Review: N issues — M auto-fixed, K asked (J fixed, L skipped)`
+
+   If no issues found: `Pre-Landing Review: No issues found.`
+
+9. Persist the review result to the review log:
+```bash
+mkdir -p .build-stacks/analytics; printf %s
+ '{"skill":"review","timestamp":"TIMESTAMP","status":"STATUS","issues_found":N,"critical":N,"informational":N,"quality_score":SCORE,"specialists":SPECIALISTS_JSON,"findings":FINDINGS_JSON,"commit":"'"$(git rev-parse --short HEAD)"'","via":"build-recipe-ship"}' >> .build-stacks/analytics/reviews.jsonl
+```
+Substitute TIMESTAMP (ISO 8601), STATUS ("clean" if no issues, "issues_found" otherwise),
+and N values from the summary counts above. The `via:"build-recipe-ship"` distinguishes from standalone `build-role-staffengineer` runs.
+- `quality_score` = the PR Quality Score computed in Step 9.2 (e.g., 7.5). If specialists were skipped (small diff), use `10.0`
+- `specialists` = the per-specialist stats object compiled in Step 9.2. Each specialist that was considered gets an entry: `{"dispatched":true/false,"findings":N,"critical":N,"informational":N}` if dispatched, or `{"dispatched":false,"reason":"scope|gated"}` if skipped. Example: `{"testing":{"dispatched":true,"findings":2,"critical":0,"informational":2},"security":{"dispatched":false,"reason":"scope"}}`
+- `findings` = array of per-finding records. For each finding (from checklist pass and specialists), include: `{"fingerprint":"path:line:category","severity":"CRITICAL|INFORMATIONAL","action":"ACTION"}`. ACTION is `"auto-fixed"`, `"fixed"` (user approved), or `"skipped"` (user chose Skip).
+
+Save the review output — it goes into the PR body in Step 19.
+
+---
+
+## Step 10: Address Greptile review comments (if PR exists)
+
+**Dispatch the fetch + classification as a subagent** using the Agent tool with `subagent_type: "general-purpose"`. The subagent pulls every Greptile comment, runs the escalation detection algorithm, and classifies each comment. Parent receives a structured list and handles user interaction + file edits.
+
+**Subagent prompt:**
+
+> You are classifying Greptile review comments for a /build-recipe-ship workflow. Read the bundled Greptile triage guide at `../../build-role-staffengineer/references/greptile-triage.md` and follow the fetch, filter, classify, and **escalation detection** steps. Do NOT fix code, do NOT reply to comments, do NOT commit — report only.
+>
+> For each comment, assign: `classification` (`valid_actionable`, `already_fixed`, `false_positive`, `suppressed`), `escalation_tier` (1 or 2), the file:line or [top-level] tag, body summary, and permalink URL.
+>
+> If no PR exists, `gh` fails, the API errors, or there are zero comments, output: `{"total":0,"comments":[]}` and stop.
+>
+> Otherwise, output a single JSON object on the LAST LINE of your response:
+> `{"total":N,"comments":[{"classification":"...","escalation_tier":N,"ref":"file:line","summary":"...","permalink":"url"},...]}`
+
+**Parent processing:**
+
+Parse the LAST line as JSON.
+
+If `total` is 0, skip this step silently. Continue to Step 12.
+
+Otherwise, print: `+ {total} Greptile comments ({valid_actionable} valid, {already_fixed} already fixed, {false_positive} FP)`.
+
+For each comment in `comments`:
+
+**VALID & ACTIONABLE:** Use AskUserQuestion with:
+- The comment (file:line or [top-level] + body summary + permalink URL)
+- `RECOMMENDATION: Choose A because [one-line reason]`
+- Options: A) Fix now, B) Acknowledge and build-recipe-ship anyway, C) It's a false positive
+- If user chooses A: apply the fix, commit the fixed files (`git add <fixed-files> && git commit -m "fix: address Greptile review — <brief description>"`), reply using the **Fix reply template** from greptile-triage.md (include inline diff + explanation), and save to both per-project and global greptile-history (type: fix).
+- If user chooses C: reply using the **False Positive reply template** from greptile-triage.md (include evidence + suggested re-rank), save to both per-project and global greptile-history (type: fp).
+
+**VALID BUT ALREADY FIXED:** Reply using the **Already Fixed reply template** from greptile-triage.md — no AskUserQuestion needed:
+- Include what was done and the fixing commit SHA
+- Save to both per-project and global greptile-history (type: already-fixed)
+
+**FALSE POSITIVE:** Use AskUserQuestion:
+- Show the comment and why you think it's wrong (file:line or [top-level] + body summary + permalink URL)
+- Options:
+  - A) Reply to Greptile explaining the false positive (recommended if clearly wrong)
+  - B) Fix it anyway (if trivial)
+  - C) Ignore silently
+- If user chooses A: reply using the **False Positive reply template** from greptile-triage.md (include evidence + suggested re-rank), save to both per-project and global greptile-history (type: fp)
+
+**SUPPRESSED:** Skip silently — these are known false positives from previous triage.
+
+**After all comments are resolved:** If any fixes were applied, the tests from Step 5 are now stale. **Re-run tests** (Step 5) before continuing to Step 12. If no fixes were applied, continue to Step 12.
+
+---
+
+## Adversarial Step
+
+Actively search for the strongest reason the plan or implementation could fail, then require evidence before dismissing it.
+
+## Learnings Log
+
+When a reusable lesson emerges, write it as a candidate under .build-stacks/learnings/ only if the current task calls for durable runtime artifacts.
+
+## Product Knowledge Save
+
+Save durable workflow outputs under .build-stacks with explicit file paths in the final handoff. Do not write to .build-stacks.
+
+## Step 12: Version bump (auto-decide)
+
+**Idempotency check:** Before bumping, classify the state by comparing `VERSION` against the base branch AND against `package.json`'s `version` field. Four states: FRESH (do bump), ALREADY_BUMPED (skip bump), DRIFT_STALE_PKG (sync pkg only, no re-bump), DRIFT_UNEXPECTED (stop and ask).
+
+```bash
+BASE_VERSION=$(git show origin/<base>:VERSION 2>/dev/null | tr -d '\r\n[:space:]' || echo "0.0.0.0")
+CURRENT_VERSION=$(cat VERSION 2>/dev/null | tr -d '\r\n[:space:]' || echo "0.0.0.0")
+[ -z "$BASE_VERSION" ] && BASE_VERSION="0.0.0.0"
+[ -z "$CURRENT_VERSION" ] && CURRENT_VERSION="0.0.0.0"
+PKG_VERSION=""
+PKG_EXISTS=0
+if [ -f package.json ]; then
+  PKG_EXISTS=1
+  if command -v node >/dev/null 2>&1; then
+    PKG_VERSION=$(node -e 'const p=require("./package.json");process.stdout.write(p.version||"")' 2>/dev/null)
+    PARSE_EXIT=$?
+  else
+    echo "ERROR: package.json exists but node is not available. Install Node and re-run."
+    exit 1
+  fi
+  if [ "$PARSE_EXIT" != "0" ]; then
+    echo "ERROR: package.json is not valid JSON. Fix the file before re-running /build-recipe-ship."
+    exit 1
+  fi
+fi
+echo "BASE: $BASE_VERSION  VERSION: $CURRENT_VERSION  package.json: ${PKG_VERSION:-<none>}"
+
+if [ "$CURRENT_VERSION" = "$BASE_VERSION" ]; then
+  if [ "$PKG_EXISTS" = "1" ] && [ -n "$PKG_VERSION" ] && [ "$PKG_VERSION" != "$CURRENT_VERSION" ]; then
+    echo "STATE: DRIFT_UNEXPECTED"
+    echo "package.json version ($PKG_VERSION) disagrees with VERSION ($CURRENT_VERSION) while VERSION matches base."
+    echo "This looks like a manual edit to package.json bypassing /build-recipe-ship. Reconcile manually, then re-run."
+    exit 1
+  fi
+  echo "STATE: FRESH"
+else
+  if [ "$PKG_EXISTS" = "1" ] && [ -n "$PKG_VERSION" ] && [ "$PKG_VERSION" != "$CURRENT_VERSION" ]; then
+    echo "STATE: DRIFT_STALE_PKG"
+  else
+    echo "STATE: ALREADY_BUMPED"
+  fi
+fi
+```
+
+Read the `STATE:` line and dispatch:
+
+- **FRESH** → proceed with the bump action below (steps 1–4).
+- **ALREADY_BUMPED** → skip the bump by default, BUT check for queue drift first: call `repo-local version selection command` with the implied bump level (derived from `CURRENT_VERSION` vs `BASE_VERSION`), compare its `.version` against `CURRENT_VERSION`. If they differ (queue moved since last build-recipe-ship), use **AskUserQuestion**: "VERSION drift detected: you claim v<CURRENT> but next available is v<NEW> (queue moved). A) Rebump to v<NEW> and rewrite CHANGELOG header + PR title (recommended), B) Keep v<CURRENT> — will be rejected by CI version-gate until resolved." If A, treat this as FRESH with `NEW_VERSION=<new>` and run steps 1-4 (which will also trigger Step 13 CHANGELOG header rewrite and Step 19 PR title rewrite). If B, reuse `CURRENT_VERSION` and warn that CI will likely reject. If util is offline, warn and reuse `CURRENT_VERSION`.
+- **DRIFT_STALE_PKG** → a prior `/build-recipe-ship` bumped `VERSION` but failed to update `package.json`. Run the sync-only repair block below (after step 4). Do NOT re-bump. Reuse `CURRENT_VERSION` for CHANGELOG and PR body. (Queue check still runs in ALREADY_BUMPED terms after repair.)
+- **DRIFT_UNEXPECTED** → `/build-recipe-ship` has halted (exit 1). Resolve manually; /build-recipe-ship cannot tell which file is authoritative.
+
+1. Read the current `VERSION` file (4-digit format: `MAJOR.MINOR.PATCH.MICRO`)
+
+2. **Auto-decide the bump level based on the diff:**
+   - Count lines changed (`git diff origin/<base>...HEAD --stat | tail -1`)
+   - Check for feature signals: new route/page files (e.g. `app/*/page.tsx`, `pages/*.ts`), new DB migration/schema files, new test files alongside new source files, or branch name starting with `feat/`
+   - **MICRO** (4th digit): < 50 lines changed, trivial tweaks, typos, config
+   - **PATCH** (3rd digit): 50+ lines changed, no feature signals detected
+   - **MINOR** (2nd digit): **ASK the user** if ANY feature signal is detected, OR 500+ lines changed, OR new modules/packages added
+   - **MAJOR** (1st digit): **ASK the user** — only for milestones or breaking changes
+
+   Save the chosen level as `BUMP_LEVEL` (one of `major`, `minor`, `patch`, `micro`). This is the user-intended level. The next step decides *placement* — the level stays the same even if queue-aware allocation has to advance past a claimed slot.
+
+3. **Queue-aware version pick (workspace-aware build-recipe-ship, v1.6.4.0+).** Call `repo-local version selection command` to see what's already claimed by open PRs + active sibling Conductor worktrees, then render the queue state to the user:
+
+   ```bash
+   QUEUE_JSON=$(printf "{\"version\":\"<new-version>\"}\n" # replace with a repo-local version command when available \
+     --base <base> \
+     --bump "$BUMP_LEVEL" \
+     --current-version "$BASE_VERSION" 2>/dev/null || echo '{"offline":true}')
+   NEW_VERSION=$(echo "$QUEUE_JSON" | jq -r '.version // empty')
+   CLAIMED_COUNT=$(echo "$QUEUE_JSON" | jq -r '.claimed | length')
+   ACTIVE_SIBLING_COUNT=$(echo "$QUEUE_JSON" | jq -r '.active_siblings | length')
+   OFFLINE=$(echo "$QUEUE_JSON" | jq -r '.offline // false')
+   REASON=$(echo "$QUEUE_JSON" | jq -r '.reason // ""')
+   ```
+
+   - If `OFFLINE=true` or the util fails (auth expired, no `gh`/`glab`, network): fall back to local `BUMP_LEVEL` arithmetic (bump `BASE_VERSION` at the chosen level). Print `⚠ workspace-aware build-recipe-ship offline — using local bump only`. Continue.
+   - If `CLAIMED_COUNT > 0`: render the queue table to the user so they can see landing order at a glance:
+     ```
+     Queue on <base> (vBASE_VERSION):
+       #<pr> <branch> → v<version>   [⚠ collision with #<other>]
+     Active sibling workspaces (WIP, not yet PR'd):
+       <path> → v<version> (committed Nh ago)
+     Your branch will claim: vNEW_VERSION  (<reason>)
+     ```
+   - If `ACTIVE_SIBLING_COUNT > 0` and any active sibling's VERSION is `>= NEW_VERSION`, use **AskUserQuestion**: "Sibling workspace <path> has v<X> committed <N>h ago but hasn't PR'd yet. Wait for them to build-recipe-ship first, or advance past? A) Advance past (recommended for unrelated work), B) Abort /build-recipe-ship and sync up with sibling first."
+   - Validate `NEW_VERSION` matches `MAJOR.MINOR.PATCH.MICRO`. If util returns an empty or malformed version, fall back to local bump.
+
+4. **Validate** `NEW_VERSION` and write it to **both** `VERSION` and `package.json`. This block runs only when `STATE: FRESH`.
+
+```bash
+if ! printf '%s' "$NEW_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$'; then
+  echo "ERROR: NEW_VERSION ($NEW_VERSION) does not match MAJOR.MINOR.PATCH.MICRO pattern. Aborting."
+  exit 1
+fi
+echo "$NEW_VERSION" > VERSION
+if [ -f package.json ]; then
+  if command -v node >/dev/null 2>&1; then
+    node -e 'const fs=require("fs"),p=require("./package.json");p.version=process.argv[1];fs.writeFileSync("package.json",JSON.stringify(p,null,2)+"\n")' "$NEW_VERSION" || {
+      echo "ERROR: failed to update package.json. VERSION was written but package.json is now stale. Fix and re-run — the new idempotency check will detect the drift."
+      exit 1
+    }
+  else
+    echo "ERROR: package.json exists but node is not available."
+    exit 1
+  fi
+fi
+```
+
+**DRIFT_STALE_PKG repair path** — runs when idempotency reports `STATE: DRIFT_STALE_PKG`. No re-bump; sync `package.json.version` to the current `VERSION` and continue. Reuse `CURRENT_VERSION` for CHANGELOG and PR body.
+
+```bash
+REPAIR_VERSION=$(cat VERSION | tr -d '\r\n[:space:]')
+if ! printf '%s' "$REPAIR_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$'; then
+  echo "ERROR: VERSION file contents ($REPAIR_VERSION) do not match MAJOR.MINOR.PATCH.MICRO pattern. Refusing to propagate invalid semver into package.json. Fix VERSION manually, then re-run /build-recipe-ship."
+  exit 1
+fi
+if command -v node >/dev/null 2>&1; then
+  node -e 'const fs=require("fs"),p=require("./package.json");p.version=process.argv[1];fs.writeFileSync("package.json",JSON.stringify(p,null,2)+"\n")' "$REPAIR_VERSION" || {
+    echo "ERROR: drift repair failed — could not update package.json."
+    exit 1
+  }
+else
+  echo "ERROR: drift repair failed — node is not available."
+  exit 1
+fi
+echo "Drift repaired: package.json synced to $REPAIR_VERSION. No version bump performed."
+```
+
+---
+
+## Changelog Workflow
+
+Update changelog or release notes only when the repository already uses them or the release workflow explicitly requires them.
+
+---
+
+## Step 14: TODOS.md (auto-update)
+
+Cross-reference the project's TODOS.md against the changes being shipped. Mark completed items automatically; prompt only if the file is missing or disorganized.
+
+Read the bundled TODOS format at `../../build-role-staffengineer/references/TODOS-format.md` for the canonical format reference.
+
+**1. Check if TODOS.md exists** in the repository root.
+
+**If TODOS.md does not exist:** Use AskUserQuestion:
+- Message: "build-stacks recommends maintaining a TODOS.md organized by skill/component, then priority (P0 at top through P4, then Completed at bottom). See TODOS-format.md for the full format. Would you like to create one?"
+- Options: A) Create it now, B) Skip for now
+- If A: Create `TODOS.md` with a skeleton (# TODOS heading + ## Completed section). Continue to step 3.
+- If B: Skip the rest of Step 14. Continue to Step 15.
+
+**2. Check structure and organization:**
+
+Read TODOS.md and verify it follows the recommended structure:
+- Items grouped under `## <Skill/Component>` headings
+- Each item has `**Priority:**` field with P0-P4 value
+- A `## Completed` section at the bottom
+
+**If disorganized** (missing priority fields, no component groupings, no Completed section): Use AskUserQuestion:
+- Message: "TODOS.md doesn't follow the recommended structure (skill/component groupings, P0-P4 priority, Completed section). Would you like to reorganize it?"
+- Options: A) Reorganize now (recommended), B) Leave as-is
+- If A: Reorganize in-place following TODOS-format.md. Preserve all content — only restructure, never delete items.
+- If B: Continue to step 3 without restructuring.
+
+**3. Detect completed TODOs:**
+
+This step is fully automatic — no user interaction.
+
+Use the diff and commit history already gathered in earlier steps:
+- `git diff <base>...HEAD` (full diff against the base branch)
+- `git log <base>..HEAD --oneline` (all commits being shipped)
+
+For each TODO item, check if the changes in this PR complete it by:
+- Matching commit messages against the TODO title and description
+- Checking if files referenced in the TODO appear in the diff
+- Checking if the TODO's described work matches the functional changes
+
+**Be conservative:** Only mark a TODO as completed if there is clear evidence in the diff. If uncertain, leave it alone.
+
+**4. Move completed items** to the `## Completed` section at the bottom. Append: `**Completed:** vX.Y.Z (YYYY-MM-DD)`
+
+**5. Output summary:**
+- `TODOS.md: N items marked complete (item1, item2, ...). M items remaining.`
+- Or: `TODOS.md: No completed items detected. M items remaining.`
+- Or: `TODOS.md: Created.` / `TODOS.md: Reorganized.`
+
+**6. Defensive:** If TODOS.md cannot be written (permission error, disk full), warn the user and continue. Never stop the build-recipe-ship workflow for a TODOS failure.
+
+Save this summary — it goes into the PR body in Step 19.
+
+---
+
+## Step 15: Commit (bisectable chunks)
+
+### Step 15.0: WIP Commit Squash (continuous checkpoint mode only)
+
+If `CHECKPOINT_MODE` is `"continuous"`, the branch likely contains `WIP:` commits
+from auto-checkpointing. These must be squashed INTO the corresponding logical
+commits before the bisectable-grouping logic in Step 15.1 runs. Non-WIP commits
+on the branch (earlier landed work) must be preserved.
+
+**Detection:**
+```bash
+WIP_COUNT=$(git log <base>..HEAD --oneline --grep="^WIP:" 2>/dev/null | wc -l | tr -d ' ')
+echo "WIP_COMMITS: $WIP_COUNT"
+```
+
+If `WIP_COUNT` is 0: skip this sub-step entirely.
+
+If `WIP_COUNT` > 0, collect the WIP context first so it survives the squash:
+
+```bash
+# Export [build-stacks-context] blocks from all WIP commits on this branch.
+# This file becomes input to the CHANGELOG entry and may inform PR body context.
+mkdir -p "$(git rev-parse --show-toplevel)/.build-stacks"
+git log <base>..HEAD --grep="^WIP:" --format="%H%n%B%n---END---" > \
+  "$(git rev-parse --show-toplevel)/.build-stacks/wip-context-before-squash.md" 2>/dev/null || true
+```
+
+**Non-destructive squash strategy:**
+
+`git reset --soft <merge-base>` WOULD uncommit everything including non-WIP commits.
+DO NOT DO THAT. Instead, use `git rebase` scoped to filter WIP commits only.
+
+Option 1 (preferred, if there are non-WIP commits mixed in):
+```bash
+# Interactive rebase with automated WIP squashing.
+# Mark every WIP commit as 'fixup' (drop its message, fold changes into prior commit).
+git rebase -i $(git merge-base HEAD origin/<base>) \
+  --exec 'true' \
+  -X ours 2>/dev/null || {
+    echo "Rebase conflict. Aborting: git rebase --abort"
+    git rebase --abort
+    echo "STATUS: BLOCKED — manual WIP squash required"
+    exit 1
+  }
+```
+
+Option 2 (simpler, if the branch is ALL WIP commits so far — no landed work):
+```bash
+# Branch contains only WIP commits. Reset-soft is safe here because there's
+# nothing non-WIP to preserve. Verify first.
+NON_WIP=$(git log <base>..HEAD --oneline --invert-grep --grep="^WIP:" 2>/dev/null | wc -l | tr -d ' ')
+if [ "$NON_WIP" -eq 0 ]; then
+  git reset --soft $(git merge-base HEAD origin/<base>)
+  echo "WIP-only branch, reset-soft to merge base. Step 15.1 will create clean commits."
+fi
+```
+
+Decide at runtime which option applies. If unsure, prefer stopping and asking the
+user via AskUserQuestion rather than destroying non-WIP commits.
+
+**Anti-footgun rules:**
+- NEVER blind `git reset --soft` if there are non-WIP commits. Codex flagged this
+  as destructive — it would uncommit real landed work and turn the push step into
+  a non-fast-forward push for anyone who already pushed.
+- Only proceed to Step 15.1 after WIP commits are successfully squashed/absorbed
+  or the branch has been verified to contain only WIP work.
+
+### Step 15.1: Bisectable Commits
+
+**Goal:** Create small, logical commits that work well with `git bisect` and help LLMs understand what changed.
+
+1. Analyze the diff and group changes into logical commits. Each commit should represent **one coherent change** — not one file, but one logical unit.
+
+2. **Commit ordering** (earlier commits first):
+   - **Infrastructure:** migrations, config changes, route additions
+   - **Models & services:** new models, services, concerns (with their tests)
+   - **Controllers & views:** controllers, views, JS/React components (with their tests)
+   - **VERSION + CHANGELOG + TODOS.md:** always in the final commit
+
+3. **Rules for splitting:**
+   - A model and its test file go in the same commit
+   - A service and its test file go in the same commit
+   - A controller, its views, and its test go in the same commit
+   - Migrations are their own commit (or grouped with the model they support)
+   - Config/route changes can group with the feature they enable
+   - If the total diff is small (< 50 lines across < 4 files), a single commit is fine
+
+4. **Each commit must be independently valid** — no broken imports, no references to code that doesn't exist yet. Order commits so dependencies come first.
+
+5. Compose each commit message:
+   - First line: `<type>: <summary>` (type = feat/fix/chore/refactor/docs)
+   - Body: brief description of what this commit contains
+   - Only the **final commit** (VERSION + CHANGELOG) gets the version tag and co-author trailer:
+
+```bash
+git commit -m "$(cat <<'EOF'
+chore: bump version and changelog (vX.Y.Z.W)
+
+Generated with build-stacks.
+EOF
+)"
+```
+
+---
+
+## Step 16: Verification Gate
+
+**IRON LAW: NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE.**
+
+Before pushing, re-verify if code changed during Steps 4-6:
+
+1. **Test verification:** If ANY code changed after Step 5's test run (fixes from review findings, CHANGELOG edits don't count), re-run the test suite. Paste fresh output. Stale output from Step 5 is NOT acceptable.
+
+2. **Build verification:** If the project has a build step, run it. Paste output.
+
+3. **Rationalization prevention:**
+   - "Should work now" → RUN IT.
+   - "I'm confident" → Confidence is not evidence.
+   - "I already tested earlier" → Code changed since then. Test again.
+   - "It's a trivial change" → Trivial changes break production.
+
+**If tests fail here:** STOP. Do not push. Fix the issue and return to Step 5.
+
+Claiming work is complete without verification is dishonesty, not efficiency.
+
+---
+
+## Step 17: Push
+
+**Idempotency check:** Check if the branch is already pushed and up to date.
+
+```bash
+git fetch origin <branch-name> 2>/dev/null
+LOCAL=$(git rev-parse HEAD)
+REMOTE=$(git rev-parse origin/<branch-name> 2>/dev/null || echo "none")
+echo "LOCAL: $LOCAL  REMOTE: $REMOTE"
+[ "$LOCAL" = "$REMOTE" ] && echo "ALREADY_PUSHED" || echo "PUSH_NEEDED"
+```
+
+If `ALREADY_PUSHED`, skip the push but continue to Step 18. Otherwise push with upstream tracking:
+
+```bash
+git push -u origin <branch-name>
+```
+
+**You are NOT done.** The code is pushed but documentation sync and PR creation are mandatory final steps. Continue to Step 18.
+
+---
+
+## Step 18: Documentation sync (via subagent, before PR creation)
+
+**Dispatch /document-release as a subagent** using the Agent tool with `subagent_type: "general-purpose"`. The subagent gets a fresh context window — zero rot from the preceding 17 steps. It also runs the **full** `/document-release` workflow (with CHANGELOG clobber protection, doc exclusions, risky-change gates, named staging, race-safe PR body editing) rather than a weaker reimplementation.
+
+**Sequencing:** This step runs AFTER Step 17 (Push) and BEFORE Step 19 (Create PR). The PR is created once from final HEAD with the `## Documentation` section baked into the initial body. No create-then-re-edit dance.
+
+**Subagent prompt:**
+
+> You are executing the /document-release workflow after a code push. Read the full skill file `build-role-docengineer/SKILL.md` and execute its complete workflow end-to-end, including CHANGELOG clobber protection, doc exclusions, risky-change gates, and named staging. Do NOT attempt to edit the PR body — no PR exists yet. Branch: `<branch>`, base: `<base>`.
+>
+> After completing the workflow, output a single JSON object on the LAST LINE of your response (no other text after it):
+> `{"files_updated":["README.md","README.md or project docs",...],"commit_sha":"abc1234","pushed":true,"documentation_section":"<markdown block for PR body's ## Documentation section>"}`
+>
+> If no documentation files needed updating, output:
+> `{"files_updated":[],"commit_sha":null,"pushed":false,"documentation_section":null}`
+
+**Parent processing:**
+
+1. Parse the LAST line of the subagent's output as JSON.
+2. Store `documentation_section` — Step 19 embeds it in the PR body (or omits the section if null).
+3. If `files_updated` is non-empty, print: `Documentation synced: {files_updated.length} files updated, committed as {commit_sha}`.
+4. If `files_updated` is empty, print: `Documentation is current — no updates needed.`
+
+**If the subagent fails or returns invalid JSON:** Print a warning and proceed to Step 19 without a `## Documentation` section. Do not block /build-recipe-ship on subagent failure. The user can run `/document-release` manually after the PR lands.
+
+---
+
+## Step 19: Create PR/MR
+
+**Idempotency check:** Check if a PR/MR already exists for this branch.
+
+**If GitHub:**
+```bash
+gh pr view --json url,number,state -q 'if .state == "OPEN" then "PR #\(.number): \(.url)" else "NO_PR" end' 2>/dev/null || echo "NO_PR"
+```
+
+**If GitLab:**
+```bash
+glab mr view -F json 2>/dev/null | jq -r 'if .state == "opened" then "MR_EXISTS" else "NO_MR" end' 2>/dev/null || echo "NO_MR"
+```
+
+If an **open** PR/MR already exists: **update** the PR body using `gh pr edit --body "..."` (GitHub) or `glab mr update -d "..."` (GitLab). Always regenerate the PR body from scratch using this run's fresh results (test output, coverage audit, review findings, adversarial review, TODOS summary, documentation_section from Step 18). Never reuse stale PR body content from a prior run.
+
+**Always update the PR title to start with `v$NEW_VERSION`.** PR titles use the workspace-aware format `v<NEW_VERSION> <type>: <summary>` — version ALWAYS first, no exceptions, no "custom title kept intentionally" escape hatch. Use the inline rewrite rule in this step; no external helper is required.
+
+1. Read the current title: `CURRENT=$(gh pr view --json title -q .title)` (or `glab mr view -F json | jq -r .title`).
+2. Compute the corrected title:
+   ```bash
+   TITLE_BODY=$(printf "%s" "$CURRENT" | sed -E 's|^v[0-9]+(\.[0-9]+){2,3}[[:space:]-]*||')
+   TITLE_BODY="${TITLE_BODY:-<type>: <summary>}"
+   NEW_TITLE="v${NEW_VERSION} ${TITLE_BODY}"
+   ```
+   This handles three cases: title already correct (no-op), title has a different `v<X.Y.Z.W>` prefix (replace it), or title has no version prefix (prepend one).
+3. If `NEW_TITLE` differs from `CURRENT`, run `gh pr edit --title "$NEW_TITLE"` (or `glab mr update -t "$NEW_TITLE"`).
+4. **Self-check:** re-fetch the title and assert it starts with `v$NEW_VERSION `. If it does not, retry the edit once. If still wrong, surface the failure to the user.
+
+This keeps the title truthful when Step 12's queue-drift detection rebumps a stale version, and forces the format on PRs that were created without it.
+
+Print the existing URL and continue to Step 20.
+
+If no PR/MR exists: create a pull request (GitHub) or merge request (GitLab) using the platform detected in Step 0.
+
+The PR/MR body should contain these sections:
+
+```
+## Summary
+<Summarize ALL changes being shipped. Run `git log <base>..HEAD --oneline` to enumerate
+every commit. Exclude the VERSION/CHANGELOG metadata commit (that's this PR's bookkeeping,
+not a substantive change). Group the remaining commits into logical sections (e.g.,
+"**Performance**", "**Dead Code Removal**", "**Infrastructure**"). Every substantive commit
+must appear in at least one section. If a commit's work isn't reflected in the summary,
+you missed it.>
+
+## Test Coverage
+<coverage diagram from Step 7, or "All new code paths have test coverage.">
+<If Step 7 ran: "Tests: {before} → {after} (+{delta} new)">
+
+## Pre-Landing Review
+<findings from Step 9 code review, or "No issues found.">
+
+## Design Review
+<If design review ran: "Design Review (lite): N findings — M auto-fixed, K skipped. AI Slop: clean/N issues.">
+<If no frontend files changed: "No frontend files changed — design review skipped.">
+
+## Eval Results
+<If evals ran: suite names, pass/fail counts, cost dashboard summary. If skipped: "No prompt-related files changed — evals skipped.">
+
+## Greptile Review
+<If Greptile comments were found: bullet list with [FIXED] / [FALSE POSITIVE] / [ALREADY FIXED] tag + one-line summary per comment>
+<If no Greptile comments found: "No Greptile comments.">
+<If no PR existed during Step 10: omit this section entirely>
+
+## Scope Drift
+<If scope drift ran: "Scope Check: CLEAN" or list of drift/creep findings>
+<If no scope drift: omit this section>
+
+## Plan Completion
+<If plan file found: completion checklist summary from Step 8>
+<If no plan file: "No plan file detected.">
+<If plan items deferred: list deferred items>
+
+## Verification Results
+<If verification ran: summary from Step 8.1 (N PASS, M FAIL, K SKIPPED)>
+<If skipped: reason (no plan, no server, no verification section)>
+<If not applicable: omit this section>
+
+## TODOS
+<If items marked complete: bullet list of completed items with version>
+<If no items completed: "No TODO items completed in this PR.">
+<If TODOS.md created or reorganized: note that>
+<If TODOS.md doesn't exist and user skipped: omit this section>
+
+## Documentation
+<Embed the `documentation_section` string returned by Step 18's subagent here, verbatim.>
+<If Step 18 returned `documentation_section: null` (no docs updated), omit this section entirely.>
+
+## Test plan
+- [x] All Rails tests pass (N runs, 0 failures)
+- [x] All Vitest tests pass (N tests)
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+```
+
+**If GitHub:**
+
+```bash
+# PR title MUST start with v$NEW_VERSION — enforced on every run, no exceptions.
+# See Step 19 idempotency block for the title rewrite rule.
+gh pr create --base <base> --title "v$NEW_VERSION <type>: <summary>" --body "$(cat <<'EOF'
+<PR body from above>
+EOF
+)"
+```
+
+**If GitLab:**
+
+```bash
+# MR title MUST start with v$NEW_VERSION — enforced on every run, no exceptions.
+# See Step 19 idempotency block for the title rewrite rule.
+glab mr create -b <base> -t "v$NEW_VERSION <type>: <summary>" -d "$(cat <<'EOF'
+<MR body from above>
+EOF
+)"
+```
+
+**If neither CLI is available:**
+Print the branch name, remote URL, and instruct the user to create the PR/MR manually via the web UI. Do not stop — the code is pushed and ready.
+
+**Output the PR/MR URL** — then proceed to Step 20.
+
+---
+
+## Step 20: Persist build-recipe-ship metrics
+
+Log coverage and plan completion data so `/retro` can track trends:
+
+```bash
+SLUG="$(basename "$(git rev-parse --show-toplevel 2>/dev/null || pwd)")" && mkdir -p .build-stacks/design-docs/$SLUG
+```
+
+Append to `.build-stacks/design-docs/$SLUG/$BRANCH-reviews.jsonl`:
+
+```bash
+echo '{"skill":"build-recipe-ship","timestamp":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'","coverage_pct":COVERAGE_PCT,"plan_items_total":PLAN_TOTAL,"plan_items_done":PLAN_DONE,"verification_result":"VERIFY_RESULT","version":"VERSION","branch":"BRANCH"}' >> .build-stacks/design-docs/$SLUG/$BRANCH-reviews.jsonl
+```
+
+Substitute from earlier steps:
+- **COVERAGE_PCT**: coverage percentage from Step 7 diagram (integer, or -1 if undetermined)
+- **PLAN_TOTAL**: total plan items extracted in Step 8 (0 if no plan file)
+- **PLAN_DONE**: count of DONE + CHANGED items from Step 8 (0 if no plan file)
+- **VERIFY_RESULT**: "pass", "fail", or "skipped" from Step 8.1
+- **VERSION**: from the VERSION file
+- **BRANCH**: current branch name
+
+This step is automatic — never skip it, never ask for confirmation.
+
+---
+
+## Important Rules
+
+- **Never skip tests.** If tests fail, stop.
+- **Never skip the pre-landing review.** If checklist.md is unreadable, stop.
+- **Never force push.** Use regular `git push` only.
+- **Never ask for trivial confirmations** (e.g., "ready to push?", "create PR?"). DO stop for: version bumps (MINOR/MAJOR), pre-landing review findings (ASK items), and Codex structured review [P1] findings (large diffs only).
+- **Always use the 4-digit version format** from the VERSION file.
+- **Date format in CHANGELOG:** `YYYY-MM-DD`
+- **Split commits for bisectability** — each commit = one logical change.
+- **TODOS.md completion detection must be conservative.** Only mark items as completed when the diff clearly shows the work is done.
+- **Use Greptile reply templates from greptile-triage.md.** Every reply includes evidence (inline diff, code references, re-rank suggestion). Never post vague replies.
+- **Never push without fresh verification evidence.** If code changed after Step 5 tests, re-run before pushing.
+- **Step 7 generates coverage tests.** They must pass before committing. Never commit failing tests.
+- **The goal is: user says `/build-recipe-ship`, next thing they see is the review + PR URL + auto-synced docs.**

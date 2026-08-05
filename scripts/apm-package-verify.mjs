@@ -1,427 +1,130 @@
 import { existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
-import {
-    canonicalApmTargets,
-    expectedApmVersion,
-    retiredLegacySkillRoots,
-    verifyApmCliVersion
-} from "./apm-contract.mjs";
-const apmPackageFailures = [];
-const expectedPackageVersion = "1.1.0";
-const publicPackageScripts = {
-    build: "node scripts/apm-installed-skills-sync.mjs --write",
-    "generated:verify": "node scripts/apm-installed-skills-sync.mjs --verify",
-    "browser:doctor": "agent-browser doctor --offline --quick",
-    "browser:smoke": "node scripts/agent-browser-smoke.mjs",
-    "skill:verify": "node scripts/apm-source-skills-verify.mjs",
-    "apm:verify": "node scripts/apm-package-verify.mjs",
-    "smoke:codex": "node scripts/apm-skill-install-smoke.mjs --target codex",
-    "smoke:all": "node scripts/apm-skill-install-smoke.mjs --target all",
-    "quality:verify": "node scripts/release-quality-verify.mjs",
-    "release:verify": "node scripts/release-verify.mjs",
-    test: "node --test"
-};
+import { buildPackages, buildSkills, packageClosure, skillsForPackage } from "./build-skill-catalog.mjs";
+import { canonicalApmTargets, expectedApmVersion, verifyApmCliVersion } from "./apm-contract.mjs";
+
+const failures = [];
+const expectedVersion = "2.0.0";
+
 verifyApmCliVersion();
-checkNoRootSkillBundle();
-checkNoForbiddenPackageRoots();
-checkManifestShape();
-verifyGeneratedContextContract();
-verifyCiReleaseContract();
-verifyBrowserRunnerSkillPolicy();
-checkReadmeConsumerInstallGuidance();
-verifyPublicPackageScripts();
-verifySourceSkillDocuments();
-verifyScriptNamingRules();
-checkBrowserPolicyReferences();
-checkBrowserSkillSessionSetup();
-verifyPreparedPackageInstall();
-if (apmPackageFailures.length > 0) {
-    console.error(apmPackageFailures.join("\n"));
+verifyRootManifest();
+verifyPackageManifests();
+verifyInstructions();
+verifyGeneratedContext();
+verifyCi();
+verifyPreparedPackage();
+
+if (failures.length > 0) {
+    console.error(failures.join("\n"));
     process.exit(1);
 }
-console.log("apm package verify ok");
-function checkNoRootSkillBundle() {
-    for (const path of ["SKILL.md", "SKILL.md.tmpl"]) {
-        if (existsSync(path)) {
-            apmPackageFailures.push(`root ${path} must not exist; it makes APM install this repo as one skill bundle`);
-        }
-    }
-}
-function checkNoForbiddenPackageRoots() {
-    const forbiddenPaths = [
-        "browser",
-        "tests/browser",
-        "bin/product-browser",
-        "bin/product-config",
-        "bin/product-ledger",
-        "bin/product-review-log",
-        ...retiredLegacySkillRoots
-    ];
-    for (const path of forbiddenPaths) {
-        if (existsSync(path))
-            apmPackageFailures.push(`public package must not include repository runtime path: ${path}`);
-    }
-}
-function checkManifestShape() {
-    const apmBody = readFileSync("apm.yml", "utf8");
+console.log(`apm package verify ok: ${buildPackages.length} packages, ${buildSkills.length} skills`);
+
+function verifyRootManifest() {
+    if (existsSync(".apm")) failures.push("root .apm must not exist; primitives belong to packages/*/.apm");
+    if (existsSync("SKILL.md")) failures.push("root SKILL.md would turn the umbrella into one skill bundle");
+    const manifest = readFileSync("apm.yml", "utf8");
     const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
-    if (!apmBody.includes(`version: ${expectedPackageVersion}`))
-        apmPackageFailures.push(`apm.yml must declare version: ${expectedPackageVersion}`);
-    if (!apmBody.includes("targets:"))
-        apmPackageFailures.push("apm.yml must declare explicit targets");
-    for (const target of canonicalApmTargets) {
-        if (!apmBody.includes(`  - ${target}`))
-            apmPackageFailures.push(`apm.yml must declare target: ${target}`);
-    }
-    if (apmBody.includes("target: all"))
-        apmPackageFailures.push("apm.yml must not use legacy target: all");
-    if (packageJson.version !== expectedPackageVersion)
-        apmPackageFailures.push(`package.json version must be ${expectedPackageVersion}`);
-    for (const forbidden of ["type: hybrid", "includes:"]) {
-        reportLineMatches("apm.yml", apmBody, forbidden, `contains unsupported manifest field: ${forbidden}`);
+    if (!/^name: build-stacks$/m.test(manifest)) failures.push("root package name must be build-stacks");
+    if (!new RegExp(`^version: ${expectedVersion}$`, "m").test(manifest)) failures.push(`root apm.yml must be ${expectedVersion}`);
+    if (packageJson.name !== "build-stacks" || packageJson.version !== expectedVersion) failures.push("package.json name/version mismatch");
+    for (const target of canonicalApmTargets) if (!manifest.includes(`  - ${target}`)) failures.push(`root manifest missing target: ${target}`);
+    const paths = readDependencyPaths(manifest);
+    const expected = ["./packages/maintainer"];
+    if (paths.join("\n") !== expected.join("\n")) failures.push(`root dependency paths mismatch: ${paths.join(", ")}`);
+    const apmScripts = readScripts(manifest);
+    for (const [name, command] of Object.entries(packageJson.scripts)) {
+        if (apmScripts[name] !== command) failures.push(`apm.yml script mismatch: ${name}`);
     }
 }
-function verifyGeneratedContextContract() {
-    const generatedFiles = ["AGENTS.md", "CLAUDE.md", "GEMINI.md"];
-    for (const file of generatedFiles) {
-        if (!existsSync(file)) {
-            apmPackageFailures.push(`missing APM-generated context file: ${file}`);
+
+function verifyPackageManifests() {
+    const closureCounts = { core: 8, browser: 16, design: 22, product: 27, delivery: 30, maintainer: 47 };
+    for (const pkg of buildPackages) {
+        const path = join(pkg.path, "apm.yml");
+        if (!existsSync(path)) {
+            failures.push(`missing package manifest: ${path}`);
             continue;
         }
-        const body = readFileSync(file, "utf8");
-        if (!body.includes("Generated by APM CLI")) {
-            apmPackageFailures.push(`${file} must be generated by APM CLI`);
-        }
-        const declaredVersion = body.match(/<!-- APM Version: ([^ ]+) -->/)?.[1];
-        if (declaredVersion && declaredVersion !== expectedApmVersion) {
-            apmPackageFailures.push(`${file} was generated by APM ${declaredVersion}; expected ${expectedApmVersion}`);
-        }
+        const body = readFileSync(path, "utf8");
+        if (!body.includes(`name: ${pkg.name}`)) failures.push(`${path} name mismatch`);
+        if (!body.includes(`version: ${expectedVersion}`)) failures.push(`${path} version mismatch`);
+        for (const target of canonicalApmTargets) if (!body.includes(target)) failures.push(`${path} missing target ${target}`);
+        const expectedPaths = pkg.dependencies.map((dependency) => `../${dependency}`);
+        const actualPaths = readDependencyPaths(body);
+        if (actualPaths.join("\n") !== expectedPaths.join("\n")) failures.push(`${path} dependencies mismatch`);
+        const actualSkills = readdirSync(join(pkg.path, ".apm", "skills"), { withFileTypes: true }).filter((entry) => entry.isDirectory()).length;
+        if (actualSkills !== skillsForPackage(pkg.id).length) failures.push(`${pkg.id} direct skill count mismatch`);
+        if (packageClosure(pkg.id).length !== closureCounts[pkg.id]) failures.push(`${pkg.id} closure count mismatch`);
     }
+}
+
+function verifyInstructions() {
+    const core = readdirSync("packages/core/.apm/instructions").filter((name) => name.endsWith(".instructions.md"));
+    const browser = readdirSync("packages/browser/.apm/instructions").filter((name) => name.endsWith(".instructions.md"));
+    if (core.length !== 8) failures.push(`core instruction count must be 8, found ${core.length}`);
+    if (browser.length !== 2) failures.push(`browser instruction count must be 2, found ${browser.length}`);
+    for (const name of [...core, ...browser]) if (!name.startsWith("build-")) failures.push(`legacy instruction name: ${name}`);
+}
+
+function verifyGeneratedContext() {
     for (const file of ["AGENTS.md", "GEMINI.md"]) {
-        if (!existsSync(file))
+        if (!existsSync(file)) {
+            failures.push(`missing generated context: ${file}`);
             continue;
+        }
         const body = readFileSync(file, "utf8");
-        if (!body.includes(`<!-- APM Version: ${expectedApmVersion} -->`)) {
-            apmPackageFailures.push(`${file} must declare APM Version: ${expectedApmVersion}`);
-        }
+        if (!body.includes("Generated by APM CLI")) failures.push(`${file} is not APM generated`);
+        if (!body.includes(`APM Version: ${expectedApmVersion}`)) failures.push(`${file} APM version mismatch`);
+        if (/product-(browser|core|guard)-|\.product-build-stacks/.test(body)) failures.push(`${file} contains legacy routing`);
     }
-    if (existsSync("GEMINI.md") && !readFileSync("GEMINI.md", "utf8").includes("@./AGENTS.md")) {
-        apmPackageFailures.push("GEMINI.md must import AGENTS.md");
-    }
+    if (existsSync("CLAUDE.md")) failures.push("CLAUDE.md must be omitted when APM-managed .claude/rules are installed");
 }
-function verifyCiReleaseContract() {
-    const file = ".github/workflows/apm-verify.yml";
-    if (!existsSync(file)) {
-        apmPackageFailures.push(`missing CI workflow: ${file}`);
-        return;
-    }
-    const body = readFileSync(file, "utf8");
-    if (!body.includes("workflow_dispatch:")) {
-        apmPackageFailures.push(`${file} must support manual release verification`);
-    }
-    if (!body.includes("AGENT_BROWSER_EXPECTED_VERSION: \"0.27.0\"")) {
-        apmPackageFailures.push(`${file} must pin agent-browser 0.27.0`);
-    }
-    if (!body.includes("npm run release:verify")) {
-        apmPackageFailures.push(`${file} must invoke the release verification gate`);
-    }
-    if (body.includes("node scripts/codex-skill-activation-smoke.mjs --all-skills")) {
-        apmPackageFailures.push(`${file} must keep heavy Codex E2E smoke opt-in`);
-    }
+
+function verifyCi() {
+    const body = readFileSync(".github/workflows/apm-verify.yml", "utf8");
+    if (!body.includes('APM_EXPECTED_VERSION: "0.26.0"')) failures.push("CI must pin APM 0.26.0");
+    if (!body.includes('AGENT_BROWSER_EXPECTED_VERSION: "0.27.0"')) failures.push("CI must pin agent-browser 0.27.0");
+    if (!body.includes("npm run release:verify")) failures.push("CI must run release:verify");
 }
-function verifyBrowserRunnerSkillPolicy() {
-    const path = ".apm/skills/product-browser-runner/SKILL.md";
-    if (!existsSync(path)) {
-        apmPackageFailures.push(`missing ${path}`);
-        return;
-    }
-    const body = readFileSync(path, "utf8");
-    for (const phrase of [
-        "official `agent-browser`",
-        "`product-browser-runner` is a Skill and policy layer",
-        "command -v agent-browser",
-        "agent-browser --version",
-        "_ABR_RUN_ID=\"$(printf '%s' \"${AGENT_BROWSER_RUN_ID:-local}\" | cksum | awk '{print $1}')\"",
-        "_ABR_SESSION=\"ps-${_ABR_REPO_ID}-${_ABR_RUN_ID}\"",
-        "Do not use `--session-name` for public work",
-        "PRODUCT_BROWSER_EVIDENCE_DIR=\"${EVAL_EVIDENCE_DIR:-.product-build-stacks/artifacts/browser}\"",
-        "AGENT_BROWSER_SOCKET_DIR=\"${PRODUCT_BROWSER_SOCKET_DIR:-/tmp/agent-browser-${_ABR_REPO_ID}}\"",
-        "mkdir -p \"$AGENT_BROWSER_SOCKET_DIR\"",
-        "export AGENT_BROWSER_SOCKET_DIR",
-        "agent-browser --json --content-boundaries --screenshot-dir \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" open <url>",
-        "agent-browser --json --content-boundaries --session \"$_ABR_SESSION\" snapshot -i",
-        "agent-browser --json --screenshot-dir \"$PRODUCT_BROWSER_EVIDENCE_DIR/screenshots\" --session \"$_ABR_SESSION\" screenshot",
-        "agent-browser --json --session \"$_ABR_SESSION\" console",
-        "agent-browser --json --session \"$_ABR_SESSION\" errors",
-        "agent-browser --json --session \"$_ABR_SESSION\" network requests",
-        "agent-browser --json --session \"$_ABR_SESSION\" close",
-        "do not ask for a separate approval",
-        "browser_activation: executed | blocked | report_only | not_applicable",
-        "Product Browser Posture",
-        "product-browser-auth",
-        "untrusted",
-        "\"source\": \"agent-browser\"",
-        "\"trusted\": false"
-    ]) {
-        if (!body.includes(phrase))
-            apmPackageFailures.push(`${path} missing policy phrase: ${phrase}`);
-    }
-    for (const forbidden of ["agent-browser-runner", "@your-org/agent-browser-runner", "Do not call `agent-browser` directly"]) {
-        reportLineMatches(path, body, forbidden, `contains stale browser runtime policy: ${forbidden}`);
-    }
+
+function verifyPreparedPackage() {
+    const output = ".build-stacks/tmp/apm-package-verify";
+    rmSync(output, { recursive: true, force: true });
+    const result = spawnSync("node", ["scripts/apm-package-prepare.mjs", "--out", output], { encoding: "utf8" });
+    if (result.status !== 0) failures.push(`package prepare failed: ${result.stderr.trim() || result.stdout.trim()}`);
+    if (!existsSync(join(output, "packages", "maintainer", "apm.yml"))) failures.push("prepared package misses monorepo packages");
 }
-function checkReadmeConsumerInstallGuidance() {
-    const file = "README.md";
-    if (!existsSync(file)) {
-        apmPackageFailures.push(`missing ${file}`);
-        return;
-    }
-    const body = readFileSync(file, "utf8");
-    for (const phrase of [
-        "brew install agent-browser",
-        "npm i -g agent-browser",
-        "agent-browser --version",
-        "agent-browser install",
-        `apm install guruguruman/product-build-stacks#v${expectedPackageVersion} --target all`,
-        "Commit `apm.yml` and `apm.lock.yaml`",
-        ".product-build-stacks/",
-        "apm audit --ci",
-        "apm compile --validate --local-only",
-        "npm run quality:verify",
-        "npm run release:verify",
-        "product-browser-runner",
-        "Use official `agent-browser`; do not rely on repository-local browser runtime directories in consumer repos"
-    ]) {
-        if (!body.includes(phrase))
-            apmPackageFailures.push(`${file} missing README install instruction: ${phrase}`);
-    }
-    for (const forbidden of ["@your-org/agent-browser-runner", "pnpm agent-browser-runner", "Do not call `agent-browser` directly"]) {
-        reportLineMatches(file, body, forbidden, `contains stale README browser instruction: ${forbidden}`);
-    }
-}
-function verifyPublicPackageScripts() {
-    const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
-    verifyScriptSurface("package.json", packageJson.scripts ?? {});
-    verifyScriptSurface("apm.yml", readApmYamlScripts());
-    for (const [name, command] of Object.entries(packageJson.scripts ?? {})) {
-        if (String(command).includes("browser/src")) {
-            apmPackageFailures.push(`package.json script ${name} must not invoke root browser/src`);
-        }
-    }
-}
-function verifyScriptSurface(label, scripts) {
-    for (const [name, command] of Object.entries(publicPackageScripts)) {
-        if (scripts?.[name] !== command) {
-            apmPackageFailures.push(`${label} script ${name} must be ${command}`);
-        }
-    }
-    const scriptNames = Object.keys(scripts ?? {});
-    const expectedNames = Object.keys(publicPackageScripts);
-    if ([...scriptNames].sort().join(",") !== [...expectedNames].sort().join(",")) {
-        apmPackageFailures.push(`${label} exposes unsupported APM-facing scripts: ${scriptNames.join(", ")}`);
-    }
-}
-function readApmYamlScripts() {
-    const body = readFileSync("apm.yml", "utf8");
-    const scripts = {};
-    const lines = body.split("\n");
-    const start = lines.findIndex((line) => line.trim() === "scripts:");
-    if (start === -1)
-        return scripts;
-    for (const line of lines.slice(start + 1)) {
-        if (/^\S/.test(line))
-            break;
-        if (!line.trim())
+
+function readDependencyPaths(body) {
+    const result = [];
+    let inDependencies = false;
+    let inApm = false;
+    for (const line of body.split("\n")) {
+        if (line === "dependencies:") {
+            inDependencies = true;
+            inApm = false;
             continue;
-        const match = line.match(/^\s{2}([A-Za-z0-9:_-]+):\s*"([^"]*)"\s*$/);
-        if (match)
-            scripts[match[1]] = match[2];
+        }
+        if (inDependencies && /^\S/.test(line)) break;
+        if (inDependencies && /^  apm:/.test(line)) {
+            inApm = true;
+            continue;
+        }
+        if (inApm && /^  [a-z]/.test(line)) inApm = false;
+        const match = inApm ? line.match(/^    - path:\s*(.+)$/) : null;
+        if (match) result.push(match[1].trim());
+    }
+    return result;
+}
+
+function readScripts(body) {
+    const scripts = {};
+    const block = body.match(/^scripts:\n([\s\S]*?)\n\ndependencies:/m)?.[1] ?? "";
+    for (const line of block.split("\n")) {
+        const match = line.match(/^  ([a-z][a-z0-9:-]*):\s+"([^"]+)"$/);
+        if (match) scripts[match[1]] = match[2];
     }
     return scripts;
-}
-function verifyScriptNamingRules() {
-    runComplianceCommand(["node", "scripts/script-names-verify.mjs"], ".");
-}
-function verifySourceSkillDocuments() {
-    runComplianceCommand(["node", "scripts/apm-source-skills-verify.mjs"], ".");
-}
-function checkBrowserPolicyReferences() {
-    const files = [
-        "AGENTS.md",
-        "CLAUDE.md",
-        "README.md",
-        "apm.yml",
-        "package.json",
-        "docs/release-acceptance-scenarios.md",
-        "docs/release-acceptance-skill-matrix.md",
-        "CHANGELOG.md",
-        ...collectFiles(".apm/skills", (file) => /\.(md|tmpl|mjs|ts)$/.test(file)),
-        ...collectFiles("scripts", (file) => file.endsWith(".mjs") && !file.endsWith("scripts/apm-package-verify.mjs"))
-    ];
-    const forbidden = [
-        "~/.claude/skills/product-stacks",
-        ".product/",
-        "type: hybrid",
-        "@your-org/product-" + "browser-runner",
-        "@your-org/agent-browser-runner",
-        "../agent-browser-runner",
-        "agent-browser-runner",
-        "file://<path-to-finalized.html>",
-        "\"mode\":\"cdp\"",
-        "--mode action --approved",
-        "Mode: headed",
-        "Do not call `agent-browser` directly"
-    ];
-    for (const file of files) {
-        if (!existsSync(file))
-            continue;
-        const body = readFileSync(file, "utf8");
-        for (const needle of forbidden) {
-            reportLineMatches(file, body, needle, `contains forbidden reference: ${needle}`);
-        }
-        reportRegexMatches(file, body, /\bagent-browser\s+(open|snapshot|screenshot|console|errors|network|tab|click|fill|press|select|scroll|wait|download|close|stream|session)\b[^\n]*--json\b/, "contains non-canonical agent-browser option order; global options must precede the command");
-        reportRegexMatches(file, body, /\bagent-browser\b[^\n]*--session-name\b/, "contains persistent agent-browser session-name in public browser policy");
-    }
-}
-function checkBrowserSkillSessionSetup() {
-    const files = collectFiles(".apm/skills", (file) => /\.(md|tmpl)$/.test(file));
-    for (const file of files) {
-        const body = readFileSync(file, "utf8");
-        if (body.includes("$_ABR_SESSION") && !body.includes("_ABR_ROOT=")) {
-            apmPackageFailures.push(`${file} uses $_ABR_SESSION without repo/run scoped public session setup`);
-        }
-        if (body.includes("$_ABR_SESSION") && body.includes("agent-browser --json session")) {
-            apmPackageFailures.push(`${file} checks the default agent-browser session instead of $_ABR_SESSION`);
-        }
-    }
-}
-function verifyPreparedPackageInstall() {
-    const packageOut = "tmp/product-build-stacks-package";
-    const consumerOut = "tmp/product-build-stacks-consumer";
-    rmSync(packageOut, { recursive: true, force: true });
-    rmSync(consumerOut, { recursive: true, force: true });
-    runComplianceCommand(["node", "scripts/apm-package-prepare.mjs", "--out", packageOut], ".");
-    verifyPreparedPackageShape(packageOut);
-    runComplianceCommand(["mkdir", "-p", consumerOut], ".");
-    runComplianceCommand(["apm", "init", "--yes"], consumerOut);
-    runComplianceCommand(["apm", "install", "--target", "codex", "../product-build-stacks-package"], consumerOut);
-    runComplianceCommand(["apm", "install", "--target", "all", "../product-build-stacks-package"], consumerOut);
-    const rootBundleCandidates = [
-        join(consumerOut, ".agents/skills/product-build-stacks-package"),
-        join(consumerOut, ".agents/skills/product-stacks-package"),
-        join(consumerOut, ".opencode/skills/product-build-stacks-package")
-    ];
-    for (const path of rootBundleCandidates) {
-        if (existsSync(path))
-            apmPackageFailures.push(`consumer install created forbidden root bundle: ${path}`);
-    }
-    const browserRunner = join(consumerOut, ".agents/skills/product-browser-runner/SKILL.md");
-    if (!existsSync(browserRunner)) {
-        apmPackageFailures.push(`consumer install did not deploy ${browserRunner}`);
-    }
-    else {
-        const body = readFileSync(browserRunner, "utf8");
-        if (!body.includes("official `agent-browser`")) {
-            apmPackageFailures.push(`consumer install deployed ${browserRunner}, but it does not mention official agent-browser`);
-        }
-        if (body.includes("agent-browser-runner")) {
-            apmPackageFailures.push(`consumer install deployed ${browserRunner}, but it still mentions agent-browser-runner`);
-        }
-    }
-}
-function verifyPreparedPackageShape(root) {
-    const required = [
-        ".apm",
-        ".apmignore",
-        "apm.yml",
-        "README.md",
-        "LICENSE",
-        "CHANGELOG.md",
-        "docs",
-        "package.json",
-        "package-lock.json",
-        "scripts"
-    ];
-    const forbidden = [
-        "SKILL.md",
-        "SKILL.md.tmpl",
-        "browser",
-        "bin",
-        "tests",
-        "node_modules",
-        "apm_modules",
-        "tmp",
-        ".product",
-        ".product-build-stacks",
-        ".agents",
-        ".claude",
-        ".kiro",
-        ".cursor",
-        ".github/skills",
-        ".opencode"
-    ];
-    for (const path of required) {
-        if (!existsSync(join(root, path)))
-            apmPackageFailures.push(`prepared package missing required path: ${path}`);
-    }
-    for (const path of forbidden) {
-        if (existsSync(join(root, path)))
-            apmPackageFailures.push(`prepared package includes forbidden path: ${path}`);
-    }
-    const packagePath = join(root, "package.json");
-    if (existsSync(packagePath)) {
-        const packageJson = JSON.parse(readFileSync(packagePath, "utf8"));
-        const scriptNames = Object.keys(packageJson.scripts ?? {});
-        const expectedNames = Object.keys(publicPackageScripts);
-        if (scriptNames.sort().join(",") !== expectedNames.sort().join(",")) {
-            apmPackageFailures.push(`prepared package exposes unsafe scripts: ${scriptNames.join(", ")}`);
-        }
-    }
-}
-function runComplianceCommand(command, cwd) {
-    const result = spawnSync(command[0], command.slice(1), {
-        cwd,
-        encoding: "utf8"
-    });
-    if (result.status !== 0) {
-        apmPackageFailures.push([
-            `command failed: ${command.join(" ")}`,
-            `cwd: ${cwd}`,
-            result.stdout.trim(),
-            result.stderr.trim()
-        ].filter(Boolean).join("\n"));
-    }
-}
-function collectFiles(root, predicate) {
-    const files = [];
-    if (!existsSync(root))
-        return files;
-    for (const entry of readdirSync(root, { withFileTypes: true })) {
-        const path = join(root, entry.name);
-        if (entry.isDirectory()) {
-            files.push(...collectFiles(path, predicate));
-        }
-        else if (predicate(path)) {
-            files.push(path);
-        }
-    }
-    return files;
-}
-function reportLineMatches(file, body, needle, message) {
-    const lines = body.split("\n");
-    for (let index = 0; index < lines.length; index++) {
-        if (lines[index].includes(needle))
-            apmPackageFailures.push(`${file}:${index + 1} ${message}`);
-    }
-}
-function reportRegexMatches(file, body, pattern, message) {
-    const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
-    const regex = new RegExp(pattern.source, flags);
-    const lines = body.split("\n");
-    for (let index = 0; index < lines.length; index++) {
-        regex.lastIndex = 0;
-        if (regex.test(lines[index]))
-            apmPackageFailures.push(`${file}:${index + 1} ${message}`);
-    }
 }

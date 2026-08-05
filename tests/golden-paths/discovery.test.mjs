@@ -12,10 +12,13 @@ const expect = (actual, message) => ({
 });
 describe("discovery guide", () => {
     test("is available as a product recipe", () => {
-        const body = readFileSync(".apm/skills/product-recipe-discovery/SKILL.md", "utf8");
-        expect(body).toContain("product-recipe-discovery");
+        const root = "packages/product/.apm/skills/build-recipe-discovery";
+        const body = ["SKILL.md", "references/extended-workflow.md"]
+            .map((file) => readFileSync(`${root}/${file}`, "utf8"))
+            .join("\n");
+        expect(body).toContain("build-recipe-discovery");
         expect(body).toContain("HARD GATE");
         expect(body).toContain("The Six Forcing Questions");
-        expect(body).toContain(".product-build-stacks/design-docs");
+        expect(body).toContain(".build-stacks/design-docs");
     });
 });

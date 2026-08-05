@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Web UI Finish"
+  short_description: "Score and finish rendered Web UI with real-browser..."
+  default_prompt: "Use $build-flow-webuifinish to score and finish rendered Web UI with real-browser before/after evidence."

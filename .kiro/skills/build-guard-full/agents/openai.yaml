@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard Full"
+  short_description: "Combine destructive, scope, privacy, and browser guards."
+  default_prompt: "Use $build-guard-full to combine destructive, scope, privacy, and browser guards."

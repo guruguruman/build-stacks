@@ -1,0 +1,4 @@
+interface:
+  display_name: "Internal Model Benchmark"
+  short_description: "Internal maintainer and eval workflow for comparing model..."
+  default_prompt: "Use $build-internal-modelbenchmark to compare model outputs and skill quality for maintainer evaluation."

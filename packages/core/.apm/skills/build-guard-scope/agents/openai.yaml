@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard Scope"
+  short_description: "Lock edit scope and report drift."
+  default_prompt: "Use $build-guard-scope to lock edit scope and report drift."

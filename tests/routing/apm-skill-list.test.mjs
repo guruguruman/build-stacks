@@ -1,6 +1,6 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { productSkills, isValidProductSkillName } from "../../scripts/apm-skill-list.mjs";
+import { buildPackages, buildSkills, isValidBuildSkillName, packageClosure } from "../../scripts/build-skill-catalog.mjs";
 const expect = (actual, message) => ({
     toBe: (expected) => assert.strictEqual(actual, expected, message),
     toEqual: (expected) => assert.deepStrictEqual(actual, expected, message),
@@ -11,8 +11,10 @@ const expect = (actual, message) => ({
     }
 });
 describe("APM skill list", () => {
-    test("contains only product names", () => {
-        expect(productSkills.length).toBe(46);
-        expect(productSkills.every((skill) => isValidProductSkillName(skill.name))).toBe(true);
+    test("contains only build names with the expected package closures", () => {
+        expect(buildSkills.length).toBe(47);
+        expect(buildSkills.every((skill) => isValidBuildSkillName(skill.name))).toBe(true);
+        expect(buildPackages.map((pkg) => pkg.id)).toEqual(["core", "browser", "design", "product", "delivery", "maintainer"]);
+        expect(buildPackages.map((pkg) => packageClosure(pkg.id).length)).toEqual([8, 16, 22, 27, 30, 47]);
     });
 });

@@ -7,12 +7,12 @@ const browserRunId = process.env.AGENT_BROWSER_RUN_ID ?? `ci-${Date.now()}`;
 const repoChecksum = computeRepoChecksum(repoRoot);
 const browserRunChecksum = computeRepoChecksum(browserRunId);
 const browserSession = `ps-${repoChecksum}-${browserRunChecksum}`;
-const browserSocketDir = process.env.PRODUCT_BROWSER_SOCKET_DIR ?? `/tmp/agent-browser-${repoChecksum}`;
-const browserSmokeRoot = join(repoRoot, ".product-build-stacks", "live-smoke");
+const browserSocketDir = process.env.BUILD_BROWSER_SOCKET_DIR ?? `/tmp/agent-browser-${repoChecksum}`;
+const browserSmokeRoot = join(repoRoot, ".build-stacks", "live-smoke");
 const fixtureSiteRoot = join(browserSmokeRoot, "site");
-const screenshotOutputDir = join(repoRoot, ".product-build-stacks", "artifacts", "browser", "screenshots");
+const screenshotOutputDir = join(repoRoot, ".build-stacks", "artifacts", "browser", "screenshots");
 const screenshotOutputRoot = resolve(screenshotOutputDir);
-const browserDownloadDir = join(repoRoot, ".product-build-stacks", "browser", "downloads");
+const browserDownloadDir = join(repoRoot, ".build-stacks", "browser", "downloads");
 const fixtureMarker = "Product Stacks Browser Live Smoke";
 mkdirSync(fixtureSiteRoot, { recursive: true });
 mkdirSync(screenshotOutputDir, { recursive: true });
@@ -86,7 +86,7 @@ finally {
     }
     finally {
         await fixtureServer.stop();
-        if (process.env.PRODUCT_BROWSER_SMOKE_KEEP !== "1") {
+        if (process.env.BUILD_BROWSER_SMOKE_KEEP !== "1") {
             rmSync(browserSmokeRoot, { recursive: true, force: true });
         }
     }
@@ -190,7 +190,7 @@ function computeRepoChecksum(value) {
 }
 function startFixtureServer() {
     return new Promise((resolve, reject) => {
-        const requested = Number(process.env.PRODUCT_BROWSER_SMOKE_PORT ?? 41731);
+        const requested = Number(process.env.BUILD_BROWSER_SMOKE_PORT ?? 41731);
         let offset = 0;
         const server = createServer((request, response) => {
             const url = new URL(request.url ?? "/", "http://127.0.0.1");

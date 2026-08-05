@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 2.0.0 - 2026-08-04
+
+- Renamed the public skill namespace from `product-*` to `build-*` and the runtime root from `.product-build-stacks/` to `.build-stacks/`.
+- Split the authored APM source into six dependency-aware packages: core, browser, design, product, delivery, and maintainer.
+- Added `build-flow-organize-stack` to audit package ownership, dependency cycles, closure composition, catalog drift, and legacy identifiers.
+- Standardized all 47 skills on `name` and `description` frontmatter, generated `agents/openai.yaml`, and the conventional `scripts/`, `references/`, and `assets/` resource layout.
+- Added package-closure smoke tests, metadata verification, stack analysis, v2 migration guidance, and generated-output verification for the monorepo layout.
+
 ## 1.1.0 - 2026-08-01
 
 Release name: `1.1.0-release`

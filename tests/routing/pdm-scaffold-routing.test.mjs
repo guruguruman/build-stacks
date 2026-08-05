@@ -1,22 +1,21 @@
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
+import { buildSkills } from "../../scripts/build-skill-catalog.mjs";
 
-const sourceRoot = ".apm/skills";
-const targetSkill = "product-flow-pdmscaffold";
+const targetSkill = "build-flow-pdmscaffold";
 
-describe("product-flow-pdmscaffold routing", () => {
+describe("build-flow-pdmscaffold routing", () => {
     it("uses unique explicit triggers and leaves adjacent workflows unclaimed", () => {
         const targetDocument = readSkill(targetSkill);
-        const targetTriggers = readTriggers(targetDocument);
+        const targetTriggers = readTriggers(targetSkill);
         const targetTriggerKeys = new Set(targetTriggers.map(normalizeTrigger));
 
-        for (const skillName of sourceSkillNames()) {
+        for (const { name: skillName } of buildSkills) {
             if (skillName === targetSkill) {
                 continue;
             }
-            const overlaps = readTriggers(readSkill(skillName))
+            const overlaps = readTriggers(skillName)
                 .filter((trigger) => targetTriggerKeys.has(normalizeTrigger(trigger)));
             assert.deepEqual(overlaps, [], `trigger collision with ${skillName}`);
         }
@@ -34,30 +33,20 @@ describe("product-flow-pdmscaffold routing", () => {
         }
 
         assert.match(targetDocument, /Do not activate on the broad phrases/);
-        assert.match(targetDocument, /product-recipe-discovery/);
-        assert.match(targetDocument, /product-flow-goaldirectedux/);
-        assert.match(targetDocument, /product-flow-plantune/);
-        assert.match(targetDocument, /product-role-docengineer/);
+        assert.match(targetDocument, /build-recipe-discovery/);
+        assert.match(targetDocument, /build-flow-goaldirectedux/);
+        assert.match(targetDocument, /build-flow-plantune/);
+        assert.match(targetDocument, /build-role-docengineer/);
     });
 });
 
-function sourceSkillNames() {
-    return readdirSync(sourceRoot, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory())
-        .map((entry) => entry.name)
-        .sort();
-}
-
 function readSkill(skillName) {
-    return readFileSync(join(sourceRoot, skillName, "SKILL.md"), "utf8");
+    const skill = buildSkills.find((entry) => entry.name === skillName);
+    return readFileSync(`${skill.sourcePath}/SKILL.md`, "utf8");
 }
 
-function readTriggers(document) {
-    const block = document.split("\ntriggers:\n", 2)[1]?.split("\n---\n", 1)[0] ?? "";
-    return block
-        .split("\n")
-        .map((line) => line.match(/^  - (.+)$/)?.[1])
-        .filter(Boolean);
+function readTriggers(skillName) {
+    return buildSkills.find((entry) => entry.name === skillName).activationExamples;
 }
 
 function normalizeTrigger(trigger) {

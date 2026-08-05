@@ -1,21 +1,21 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, it } from "node:test";
+import { buildSkills } from "../../scripts/build-skill-catalog.mjs";
 
-const sourceRoot = ".apm/skills";
-const targetSkill = "product-flow-securitygate";
-const skillRoot = `${sourceRoot}/${targetSkill}`;
+const targetSkill = "build-flow-securitygate";
+const skillRoot = "packages/delivery/.apm/skills/build-flow-securitygate";
 const pythonEnvironment = {
     ...process.env,
     PYTHONDONTWRITEBYTECODE: "1"
 };
 
-describe("product-flow-securitygate", () => {
+describe("build-flow-securitygate", () => {
     it("covers every control and passes its repository regression suite", () => {
         const selfCheck = runPython([
-            `${skillRoot}/bin/security_gate_report.py`,
+            `${skillRoot}/scripts/security_gate_report.py`,
             "self-check"
         ]);
         assert.equal(selfCheck.status, 0, commandFailure(selfCheck));
@@ -36,16 +36,16 @@ describe("product-flow-securitygate", () => {
         assert.match(unitTests.stderr, /OK/);
     });
 
-    it("keeps release-gate triggers distinct from product-role-cso", () => {
+    it("keeps release-gate triggers distinct from build-role-cso", () => {
         const targetDocument = readSkill(targetSkill);
-        const targetTriggers = readTriggers(targetDocument);
+        const targetTriggers = readTriggers(targetSkill);
         const targetTriggerKeys = new Set(targetTriggers.map(normalizeTrigger));
 
-        for (const skillName of sourceSkillNames()) {
+        for (const { name: skillName } of buildSkills) {
             if (skillName === targetSkill) {
                 continue;
             }
-            const overlaps = readTriggers(readSkill(skillName))
+            const overlaps = readTriggers(skillName)
                 .filter((trigger) => targetTriggerKeys.has(normalizeTrigger(trigger)));
             assert.deepEqual(overlaps, [], `security-gate trigger collision with ${skillName}`);
         }
@@ -62,8 +62,8 @@ describe("product-flow-securitygate", () => {
             assert.equal(targetTriggerKeys.has(normalizeTrigger(broadTrigger)), false, `broad trigger must remain unclaimed: ${broadTrigger}`);
         }
 
-        assert.doesNotMatch(targetDocument, /^benefits-from:.*product-role-cso/m);
-        assert.match(targetDocument, /Use `product-role-cso` for open-ended security reviews/);
+        assert.doesNotMatch(targetDocument, /^benefits-from:.*build-role-cso/m);
+        assert.match(targetDocument, /Use `build-role-cso` for open-ended security reviews/);
         assert.match(targetDocument, /Do not invoke either role automatically/);
     });
 });
@@ -82,23 +82,13 @@ function commandFailure(result) {
         .join("\n");
 }
 
-function sourceSkillNames() {
-    return readdirSync(sourceRoot, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory())
-        .map((entry) => entry.name)
-        .sort();
-}
-
 function readSkill(skillName) {
-    return readFileSync(join(sourceRoot, skillName, "SKILL.md"), "utf8");
+    const skill = buildSkills.find((entry) => entry.name === skillName);
+    return readFileSync(join(skill.sourcePath, "SKILL.md"), "utf8");
 }
 
-function readTriggers(document) {
-    const block = document.split("\ntriggers:\n", 2)[1]?.split("\n---\n", 1)[0] ?? "";
-    return block
-        .split("\n")
-        .map((line) => line.match(/^  - (.+)$/)?.[1])
-        .filter(Boolean);
+function readTriggers(skillName) {
+    return buildSkills.find((entry) => entry.name === skillName).activationExamples;
 }
 
 function normalizeTrigger(trigger) {

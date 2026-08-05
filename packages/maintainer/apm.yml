@@ -1,0 +1,9 @@
+name: build-stacks-maintainer
+version: 2.0.0
+description: Stack planning, organization, evaluation, and upgrade workflows
+targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
+dependencies:
+  apm:
+    - path: ../product
+    - path: ../delivery
+  mcp: []

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard Scope Release"
+  short_description: "Release an active scope lock."
+  default_prompt: "Use $build-guard-scope-release to release an active scope lock."

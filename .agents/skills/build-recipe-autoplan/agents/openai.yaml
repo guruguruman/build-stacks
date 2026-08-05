@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Auto Plan"
+  short_description: "Create and harden implementation plans through founder,..."
+  default_prompt: "Use $build-recipe-autoplan to create and harden implementation plans through founder, design, engineering, and DX review."
