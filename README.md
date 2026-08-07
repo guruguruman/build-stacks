@@ -1,6 +1,6 @@
 # build-stacks
 
-`build-stacks` is an APM 0.26 monorepo of composable skills for building software. Version 2 broadens the former product-only stack into six installable packages and publishes 47 breaking-change `build-*` skill names.
+`build-stacks` is an APM 0.26 monorepo of composable skills for building software. Version 2.1 publishes 59 `build-*` skills across seven installable packages, including adapted engineering and collaboration workflows from Matt Pocock's skill set.
 
 Authored sources live under `packages/*/.apm/`. Generated target output is committed for reviewability. Runtime state belongs under `.build-stacks/`.
 
@@ -8,18 +8,19 @@ Authored sources live under `packages/*/.apm/`. Generated target output is commi
 
 | Package | Own skills | Installed closure | Depends on |
 | --- | ---: | ---: | --- |
-| `build-stacks-core` | 8 | 8 | — |
-| `build-stacks-browser` | 8 | 16 | core |
-| `build-stacks-design` | 6 | 22 | browser |
-| `build-stacks-product` | 5 | 27 | design |
-| `build-stacks-delivery` | 14 | 30 | browser |
-| `build-stacks-maintainer` | 6 | 47 | product, delivery |
+| `build-stacks-core` | 9 | 9 | — |
+| `build-stacks-workflow` | 3 | 12 | core |
+| `build-stacks-browser` | 8 | 17 | core |
+| `build-stacks-design` | 6 | 23 | browser |
+| `build-stacks-product` | 8 | 34 | design, workflow |
+| `build-stacks-delivery` | 19 | 39 | browser, workflow |
+| `build-stacks-maintainer` | 6 | 59 | product, delivery |
 
-Install the root bundle for the complete stack. The umbrella depends only on `maintainer`; APM follows its dependency closure to the other five packages without duplicating direct roots.
+Install the root bundle for the complete stack. The umbrella depends only on `maintainer`; APM follows its dependency closure to the other six packages without duplicating direct roots.
 
 ```bash
 apm init --yes
-apm install guruguruman/build-stacks#v2.0.0 --target all
+apm install guruguruman/build-stacks#v2.1.0 --target all
 apm audit --ci
 apm compile --all
 apm compile --validate
@@ -62,4 +63,4 @@ npm run quality:verify
 
 `npm run build` regenerates `.agents/skills/`, `.claude/skills/`, and `.kiro/skills/`; do not edit those roots manually. `npm run quality:verify` is the release-quality contract. The heavier Codex browser E2E remains opt-in with `BUILD_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify`.
 
-See [the v2 migration guide](docs/migration-v2.md), [acceptance scenarios](docs/release-acceptance-scenarios.md), and [the 47-skill matrix](docs/release-acceptance-skill-matrix.md).
+See [the v2 migration guide](docs/migration-v2.md), [acceptance scenarios](docs/release-acceptance-scenarios.md), [the 59-skill matrix](docs/release-acceptance-skill-matrix.md), and [third-party notices](THIRD_PARTY_NOTICES.md).

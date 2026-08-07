@@ -5,7 +5,7 @@ import { buildPackages, buildSkills, packageClosure, skillsForPackage } from "./
 import { canonicalApmTargets, expectedApmVersion, verifyApmCliVersion } from "./apm-contract.mjs";
 
 const failures = [];
-const expectedVersion = "2.0.0";
+const expectedVersion = "2.1.0";
 
 verifyApmCliVersion();
 verifyRootManifest();
@@ -40,7 +40,7 @@ function verifyRootManifest() {
 }
 
 function verifyPackageManifests() {
-    const closureCounts = { core: 8, browser: 16, design: 22, product: 27, delivery: 30, maintainer: 47 };
+    const closureCounts = { core: 9, workflow: 12, browser: 17, design: 23, product: 34, delivery: 39, maintainer: 59 };
     for (const pkg of buildPackages) {
         const path = join(pkg.path, "apm.yml");
         if (!existsSync(path)) {
@@ -95,6 +95,7 @@ function verifyPreparedPackage() {
     const result = spawnSync("node", ["scripts/apm-package-prepare.mjs", "--out", output], { encoding: "utf8" });
     if (result.status !== 0) failures.push(`package prepare failed: ${result.stderr.trim() || result.stdout.trim()}`);
     if (!existsSync(join(output, "packages", "maintainer", "apm.yml"))) failures.push("prepared package misses monorepo packages");
+    if (!existsSync(join(output, "THIRD_PARTY_NOTICES.md"))) failures.push("prepared package misses third-party notices");
 }
 
 function readDependencyPaths(body) {

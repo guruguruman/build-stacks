@@ -19,6 +19,7 @@ Use `<target-object>-<operation>.mjs` for runnable scripts. Keep shared data mod
 | `codex-browser-core-smoke.mjs` | Codex browser core | smoke | Run product browser skills against a local fixture through isolated Codex danger-full-access browser runs. |
 | `script-names-verify.mjs` | script names | verify | Enforce this file naming rule. |
 | `build-skill-catalog.mjs` | APM skill list | module | Export skill metadata and name validation. |
+| `mattpocock-port-map.mjs` | Matt Pocock skill port provenance | module | Record the fixed upstream snapshot and destination for every stable imported capability. |
 | `release-quality-verify.mjs` | release quality gate | verify | Run the mandatory deterministic, install, browser, secret, and diff quality checks. |
 | `release-verify.mjs` | release gate | verify | Run the default release gate command list; heavy Codex E2E smoke is opt-in. |
 | `repo-secret-scan.mjs` | repository secret exposure | scan | Scan working tree and git history for secrets or private paths. |

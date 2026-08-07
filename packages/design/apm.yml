@@ -1,5 +1,5 @@
 name: build-stacks-design
-version: 2.0.0
+version: 2.1.0
 description: Product and interface design workflows
 targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
 dependencies:

@@ -23,6 +23,18 @@ npm run generated:verify
 
 6. Stop before committing unless the user asks for commit/publish work.
 
+## Agent-document writing discipline
+
+Apply these rules to skills, APM instructions, and agent-facing references:
+
+- Treat every description or instruction pointer as a routing interface: name the capability and each distinct trigger branch.
+- Separate ordered steps from reference material. Keep branch-specific detail behind a direct pointer and avoid reference chains deeper than one level.
+- End every step with a checkable completion condition. Prefer observable bounds over "be thorough" language.
+- Keep each rule in one authoritative place. Remove stale caches of facts already discoverable from manifests, code, or command help.
+- Use concise leading terms consistently when they recruit useful existing meaning; define coined terms once.
+- Phrase the desired behavior positively. Keep prohibitions for genuine safety boundaries.
+- Forward-test whether the document changes behavior versus the model default; delete instructions that are no-ops.
+
 ## Output Contract
 
 - proposed skill name

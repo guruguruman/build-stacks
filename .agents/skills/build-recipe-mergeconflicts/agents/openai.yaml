@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Mergeconflicts"
+  short_description: "Resolve merge and rebase conflicts from the intent of both..."
+  default_prompt: "Use $build-recipe-mergeconflicts to resolve merge and rebase conflicts from the intent of both sides."

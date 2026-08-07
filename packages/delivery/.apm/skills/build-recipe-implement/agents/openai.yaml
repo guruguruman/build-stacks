@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Implement"
+  short_description: "Implement an approved spec with tight feedback loops and..."
+  default_prompt: "Use $build-recipe-implement to implement an approved spec with tight feedback loops and optional TDD."

@@ -24,7 +24,7 @@ describe("build stack analyzer", () => {
 
         assert.equal(report.status, 1);
         assert.equal(report.body.findings.some((finding) => finding.code === "package-dependency-drift"), true);
-        assert.equal(report.body.closures.design.length, 14);
+        assert.equal(report.body.closures.design.length, 15);
         assert.equal(report.body.closures.design.includes("build-browser-runner"), false);
     });
 

@@ -12,13 +12,14 @@ const packageSourcePaths = [
     "packages",
     "README.md",
     "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
     "CHANGELOG.md",
     "docs",
     "package.json",
     "package-lock.json",
     "scripts"
 ];
-const requiredPackagePaths = ["apm.yml", "packages", "README.md", "LICENSE", "CHANGELOG.md", "package.json", "scripts"];
+const requiredPackagePaths = ["apm.yml", "packages", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.md", "CHANGELOG.md", "package.json", "scripts"];
 const forbiddenPackagePaths = [
     "SKILL.md", "SKILL.md.tmpl", "tests", "node_modules", "apm_modules", "tmp", ".product", ".build-stacks",
     ".agents", ".claude", ".kiro", ".cursor", ".github", ".opencode"

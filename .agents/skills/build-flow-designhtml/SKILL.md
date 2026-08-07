@@ -22,6 +22,18 @@ approximations. Computed layout via Pretext. Text reflows on resize, heights adj
 to content, cards size themselves, chat bubbles shrinkwrap, editorial spreads flow
 around obstacles.
 
+## Logic Prototype Mode
+
+When the question is whether state or behavior feels right rather than visual polish, build one disposable, self-contained HTML prototype instead of entering the production design workflow below.
+
+- State the single question at the top of the artifact.
+- Provide free-play controls and guided edge-case walkthroughs.
+- Render the complete relevant state after every action.
+- Keep state in memory unless persistence itself is under test.
+- Skip abstractions, production error handling, and tests; make the artifact trivial to open.
+- Store it under `.build-stacks/prototypes/<slug>/` and preview it through `build-browser-runner` when available.
+- Record the answer and which decision it changes. Do not copy prototype code into production automatically.
+
 ## Design Setup
 
 Use existing design assets and browser evidence first. Avoid adding a new design toolchain unless the repo already has one.

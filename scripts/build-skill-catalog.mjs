@@ -45,22 +45,39 @@ const baseSkills = [
     { name: "build-browser-pairagent", layer: "browser", summary: "Browser QA handoff packets for pair-agent collaboration.", status: "shipped" },
     { name: "build-source-deploy", layer: "source", summary: "Deployment environment setup source integration.", status: "shipped" },
     { name: "build-runtime-upgrade", layer: "runtime", summary: "Stack update and migration workflow.", status: "shipped" },
-    { name: "build-flow-organize-stack", layer: "flow", summary: "Audit APM skill placement and propose safe stack organization changes.", status: "shipped" }
+    { name: "build-flow-organize-stack", layer: "flow", summary: "Audit APM skill placement and propose safe stack organization changes.", status: "shipped" },
+    { name: "build-recipe-research", layer: "recipe", summary: "Research questions against primary sources and capture cited findings.", status: "shipped" },
+    { name: "build-flow-projectsetup", layer: "flow", summary: "Configure project domain docs, tracker conventions, and APM context pointers.", status: "shipped" },
+    { name: "build-flow-teach", layer: "flow", summary: "Run a stateful teaching workspace grounded in a learner mission.", status: "shipped" },
+    { name: "build-flow-questionnaire", layer: "flow", summary: "Create a focused discovery questionnaire for an external domain expert.", status: "shipped" },
+    { name: "build-flow-domainmodeling", layer: "flow", summary: "Sharpen domain terminology and record durable architectural decisions.", status: "shipped" },
+    { name: "build-flow-specwork", layer: "flow", summary: "Turn context into a specification or tracer-bullet ticket set.", status: "shipped" },
+    { name: "build-recipe-wayfinding", layer: "recipe", summary: "Map and resolve decision work that exceeds one implementation session.", status: "shipped" },
+    { name: "build-flow-codebasearchitecture", layer: "flow", summary: "Design deep modules and audit codebase architecture for better seams.", status: "shipped" },
+    { name: "build-recipe-implement", layer: "recipe", summary: "Implement an approved spec with tight feedback loops and optional TDD.", status: "shipped" },
+    { name: "build-recipe-mergeconflicts", layer: "recipe", summary: "Resolve merge and rebase conflicts from the intent of both sides.", status: "shipped" },
+    { name: "build-flow-triage", layer: "flow", summary: "Triage GitHub or local issues into verified agent-ready work.", status: "shipped" },
+    { name: "build-flow-humanwizard", layer: "flow", summary: "Generate a guarded interactive shell wizard for human-only setup steps.", status: "shipped" }
 ];
 
 export const buildPackages = [
     { id: "core", name: "build-stacks-core", path: "packages/core", dependencies: [] },
+    { id: "workflow", name: "build-stacks-workflow", path: "packages/workflow", dependencies: ["core"] },
     { id: "browser", name: "build-stacks-browser", path: "packages/browser", dependencies: ["core"] },
     { id: "design", name: "build-stacks-design", path: "packages/design", dependencies: ["browser"] },
-    { id: "product", name: "build-stacks-product", path: "packages/product", dependencies: ["design"] },
-    { id: "delivery", name: "build-stacks-delivery", path: "packages/delivery", dependencies: ["browser"] },
+    { id: "product", name: "build-stacks-product", path: "packages/product", dependencies: ["design", "workflow"] },
+    { id: "delivery", name: "build-stacks-delivery", path: "packages/delivery", dependencies: ["browser", "workflow"] },
     { id: "maintainer", name: "build-stacks-maintainer", path: "packages/maintainer", dependencies: ["product", "delivery"] }
 ];
 
 const packageSkills = {
     core: [
         "build-guard-destructive", "build-guard-scope", "build-guard-scope-release", "build-guard-full",
-        "build-runtime-session", "build-runtime-learnings", "build-runtime-health", "build-recipe-investigate"
+        "build-runtime-session", "build-runtime-learnings", "build-runtime-health", "build-recipe-investigate",
+        "build-recipe-research"
+    ],
+    workflow: [
+        "build-flow-projectsetup", "build-flow-teach", "build-flow-questionnaire"
     ],
     browser: [
         "build-browser-auth", "build-browser-benchmark", "build-browser-canary", "build-browser-pairagent",
@@ -72,13 +89,15 @@ const packageSkills = {
     ],
     product: [
         "build-recipe-discovery", "build-role-founder", "build-flow-pdmscaffold",
-        "build-flow-goaldirectedux", "build-flow-landingreport"
+        "build-flow-goaldirectedux", "build-flow-landingreport", "build-flow-domainmodeling",
+        "build-flow-specwork", "build-recipe-wayfinding"
     ],
     delivery: [
         "build-recipe-qa", "build-recipe-ship", "build-recipe-landdeploy", "build-role-engmanager",
         "build-role-staffengineer", "build-role-releaseengineer", "build-role-cso", "build-role-docengineer",
         "build-flow-plantune", "build-flow-qareport", "build-flow-infradesign", "build-flow-securitygate",
-        "build-source-deploy", "build-source-pdf"
+        "build-source-deploy", "build-source-pdf", "build-flow-codebasearchitecture", "build-recipe-implement",
+        "build-recipe-mergeconflicts", "build-flow-triage", "build-flow-humanwizard"
     ],
     maintainer: [
         "build-recipe-autoplan", "build-role-dxlead", "build-flow-skillify", "build-internal-modelbenchmark",
@@ -99,7 +118,7 @@ const relationships = {
     "build-guard-full": { benefitsFrom: ["build-guard-destructive", "build-guard-scope"], activationExamples: ["build-guard-full", "guard full", "full guard", "safe mode", "guard posture"] },
     "build-guard-scope": { benefitsFrom: ["build-guard-full", "build-guard-scope-release"], activationExamples: ["build-guard-scope", "guard scope", "scope guard", "freeze scope", "lock edits"] },
     "build-guard-scope-release": { benefitsFrom: ["build-guard-scope"], activationExamples: ["build-guard-scope-release", "guard scope release", "release scope", "unfreeze scope", "remove scope lock"] },
-    "build-recipe-investigate": { benefitsFrom: ["build-runtime-learnings", "build-guard-scope"], activationExamples: ["build-recipe-investigate", "recipe investigate", "investigate", "root cause", "debug this"] },
+    "build-recipe-investigate": { benefitsFrom: ["build-runtime-learnings", "build-guard-scope", "build-flow-codebasearchitecture"], activationExamples: ["build-recipe-investigate", "recipe investigate", "investigate", "root cause", "debug this"] },
     "build-runtime-health": { benefitsFrom: ["build-runtime-session", "build-runtime-learnings"], activationExamples: ["build-runtime-health", "runtime health", "workflow health", "stack health", "quality signals"] },
     "build-runtime-learnings": { benefitsFrom: ["build-recipe-investigate", "build-runtime-session", "build-role-staffengineer", "build-recipe-ship"], activationExamples: ["build-runtime-learnings", "runtime learnings", "record learning", "retrieve learning", "repo memory"] },
     "build-runtime-session": { benefitsFrom: ["build-runtime-learnings"], activationExamples: ["build-runtime-session", "runtime session", "save session", "restore session", "working context"] },
@@ -114,7 +133,7 @@ const relationships = {
     "build-role-docengineer": { benefitsFrom: ["build-recipe-ship", "build-source-pdf"], activationExamples: ["build-role-docengineer", "role docengineer", "docs review", "documentation release", "operator docs"] },
     "build-role-engmanager": { benefitsFrom: ["build-flow-plantune", "build-role-staffengineer", "build-role-designer", "build-role-founder"], activationExamples: ["build-role-engmanager", "role engmanager", "engineering manager review", "plan review", "delivery review"] },
     "build-role-releaseengineer": { benefitsFrom: ["build-recipe-ship", "build-recipe-landdeploy", "build-browser-canary"], activationExamples: ["build-role-releaseengineer", "role releaseengineer", "release review", "rollback plan", "release engineer"] },
-    "build-role-staffengineer": { benefitsFrom: ["build-role-cso", "build-role-releaseengineer", "build-runtime-session", "build-role-founder", "build-role-designer"], activationExamples: ["build-role-staffengineer", "role staffengineer", "staff engineer review", "review the diff", "pre landing review"] },
+    "build-role-staffengineer": { benefitsFrom: ["build-role-cso", "build-role-releaseengineer", "build-runtime-session", "build-role-founder", "build-role-designer", "build-flow-codebasearchitecture"], activationExamples: ["build-role-staffengineer", "role staffengineer", "staff engineer review", "review the diff", "pre landing review"] },
     "build-source-deploy": { benefitsFrom: ["build-role-releaseengineer", "build-recipe-landdeploy"], activationExamples: ["build-source-deploy", "source deploy", "deploy setup", "deployment readiness", "provider assumptions"] },
     "build-source-pdf": { benefitsFrom: ["build-role-docengineer", "build-flow-designhtml"], activationExamples: ["build-source-pdf", "source pdf", "PDF support", "create PDF", "verify PDF"] },
     "build-flow-designconsult": { benefitsFrom: ["build-role-designer", "build-browser-runner", "build-recipe-discovery"], activationExamples: ["build-flow-designconsult", "flow designconsult", "design consult", "product design advice", "UX consultation"] },
@@ -123,7 +142,7 @@ const relationships = {
     "build-flow-mobileuifinish": { benefitsFrom: ["build-role-designer", "build-flow-designconsult", "build-flow-qareport"], activationExamples: ["build-flow-mobileuifinish", "flow mobileuifinish", "finish the mobile UI", "mobile UI review", "polish this mobile UI"] },
     "build-flow-webuifinish": { benefitsFrom: ["build-browser-runner", "build-role-designer", "build-flow-designconsult", "build-flow-qareport", "build-recipe-qa", "build-flow-landingreport"], activationExamples: ["build-flow-webuifinish", "flow webuifinish", "finish the Web UI", "Web UI review", "polish this web UI"] },
     "build-role-designer": { benefitsFrom: ["build-flow-designconsult", "build-flow-designshotgun", "build-browser-runner", "build-recipe-ship", "build-role-engmanager", "build-role-founder"], activationExamples: ["build-role-designer", "role designer", "designer review", "design review", "UX review"] },
-    "build-flow-skillify": { benefitsFrom: ["build-role-dxlead", "build-role-staffengineer"], activationExamples: ["build-flow-skillify", "flow skillify", "skillify", "make a skill", "workflow skill"] },
+    "build-flow-skillify": { benefitsFrom: ["build-role-dxlead", "build-role-staffengineer", "build-flow-codebasearchitecture"], activationExamples: ["build-flow-skillify", "flow skillify", "skillify", "make a skill", "workflow skill"] },
     "build-internal-modelbenchmark": { benefitsFrom: ["build-runtime-health", "build-role-staffengineer"], activationExamples: ["build-internal-modelbenchmark", "internal modelbenchmark", "model benchmark", "compare models", "skill quality"] },
     "build-recipe-autoplan": { benefitsFrom: ["build-role-founder", "build-role-designer", "build-role-engmanager", "build-role-dxlead"], activationExamples: ["build-recipe-autoplan", "recipe autoplan", "auto plan", "automatic review", "plan review chain"] },
     "build-role-dxlead": { benefitsFrom: ["build-role-docengineer", "build-flow-skillify"], activationExamples: ["build-role-dxlead", "role dxlead", "DX review", "developer experience review", "API review"] },
@@ -131,9 +150,21 @@ const relationships = {
     "build-flow-goaldirectedux": { benefitsFrom: ["build-role-designer", "build-recipe-discovery", "build-role-dxlead"], activationExamples: ["build-flow-goaldirectedux", "flow goaldirectedux", "Goal-Directed Design", "GDD", "UX requirements", "persona scenarios"] },
     "build-flow-landingreport": { benefitsFrom: ["build-role-founder", "build-browser-runner"], activationExamples: ["build-flow-landingreport", "flow landingreport", "landing report", "conversion review", "landing page review"] },
     "build-flow-pdmscaffold": { benefitsFrom: ["build-recipe-discovery", "build-flow-goaldirectedux", "build-role-docengineer", "build-flow-plantune", "build-flow-skillify"], activationExamples: ["build-flow-pdmscaffold", "flow pdmscaffold", "PdM documentation scaffold", "PRODUCT_PLAN template", "docs/pdm scaffold"] },
-    "build-recipe-discovery": { benefitsFrom: ["build-role-founder", "build-flow-plantune", "build-role-engmanager"], activationExamples: ["build-recipe-discovery", "recipe discovery", "discovery", "shape the idea", "product brief"] },
+    "build-recipe-discovery": { benefitsFrom: ["build-role-founder", "build-flow-plantune", "build-role-engmanager", "build-flow-domainmodeling"], activationExamples: ["build-recipe-discovery", "recipe discovery", "discovery", "shape the idea", "product brief"] },
     "build-role-founder": { benefitsFrom: ["build-recipe-discovery", "build-flow-plantune", "build-recipe-ship", "build-role-engmanager"], activationExamples: ["build-role-founder", "role founder", "founder review", "CEO review", "wedge review"] },
-    "build-flow-organize-stack": { benefitsFrom: ["build-role-dxlead", "build-role-staffengineer"], activationExamples: ["organize this APM stack", "check the package graph", "where should this skill live"] }
+    "build-flow-organize-stack": { benefitsFrom: ["build-role-dxlead", "build-role-staffengineer"], activationExamples: ["organize this APM stack", "check the package graph", "where should this skill live"] },
+    "build-recipe-research": { benefitsFrom: ["build-runtime-learnings"], activationExamples: ["build-recipe-research", "research this", "check primary sources", "write a cited research note"] },
+    "build-flow-projectsetup": { benefitsFrom: ["build-guard-destructive"], activationExamples: ["build-flow-projectsetup", "set up project agent docs", "configure issue tracker", "initialize domain docs"] },
+    "build-flow-teach": { benefitsFrom: ["build-recipe-research", "build-flow-designhtml"], activationExamples: ["build-flow-teach", "teach me", "create a lesson", "learning workspace"] },
+    "build-flow-questionnaire": { benefitsFrom: ["build-flow-domainmodeling"], activationExamples: ["build-flow-questionnaire", "make a questionnaire", "ask a domain expert", "discovery questions"] },
+    "build-flow-domainmodeling": { benefitsFrom: ["build-flow-projectsetup"], activationExamples: ["build-flow-domainmodeling", "domain model", "ubiquitous language", "record an ADR"] },
+    "build-flow-specwork": { benefitsFrom: ["build-flow-domainmodeling", "build-flow-projectsetup", "build-recipe-implement"], activationExamples: ["build-flow-specwork", "write a spec", "split this into tickets", "tracer bullet tickets"] },
+    "build-recipe-wayfinding": { benefitsFrom: ["build-recipe-research", "build-flow-domainmodeling", "build-flow-specwork", "build-flow-projectsetup"], activationExamples: ["build-recipe-wayfinding", "wayfinding", "map a huge effort", "decision map"] },
+    "build-flow-codebasearchitecture": { benefitsFrom: ["build-browser-runner", "build-flow-designhtml", "build-flow-domainmodeling", "build-role-staffengineer"], activationExamples: ["build-flow-codebasearchitecture", "deep module design", "architecture audit", "improve codebase architecture"] },
+    "build-recipe-implement": { benefitsFrom: ["build-role-staffengineer", "build-guard-scope", "build-flow-domainmodeling"], activationExamples: ["build-recipe-implement", "implement this spec", "TDD", "red green refactor"] },
+    "build-recipe-mergeconflicts": { benefitsFrom: ["build-guard-destructive", "build-role-staffengineer"], activationExamples: ["build-recipe-mergeconflicts", "resolve merge conflicts", "fix rebase conflicts", "conflict resolution"] },
+    "build-flow-triage": { benefitsFrom: ["build-flow-projectsetup", "build-recipe-investigate", "build-flow-domainmodeling", "build-guard-destructive"], activationExamples: ["build-flow-triage", "triage issues", "verify a bug report", "make issue agent ready"] },
+    "build-flow-humanwizard": { benefitsFrom: ["build-guard-destructive", "build-role-cso"], activationExamples: ["build-flow-humanwizard", "setup wizard", "human-only provisioning", "credential setup script"] }
 };
 
 const actionOverrides = {

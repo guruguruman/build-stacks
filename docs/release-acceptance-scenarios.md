@@ -1,6 +1,6 @@
 # Release Acceptance Scenarios
 
-These scenarios define the `2.0.0-release` acceptance suite. A skill is complete when a clean consumer install can exercise the workflow and produce evidence.
+These scenarios define the `2.1.0-release` acceptance suite. A skill is complete when a clean consumer install can exercise the workflow and produce evidence.
 
 ## 1. First Browser Smoke
 
@@ -106,8 +106,8 @@ npm run smoke:packages
 
 Success criteria:
 
-- The root consumer project installs all 47 skills.
-- Every subpackage consumer installs exactly its documented dependency closure: 8, 16, 22, 27, 30, or 47 skills.
+- The root consumer project installs all 59 skills.
+- Every subpackage consumer installs exactly its documented dependency closure: 9, 12, 17, 23, 34, 39, or 59 skills.
 - Converged installs contain `.agents/skills`, `.claude/skills`, and `.kiro/skills`.
 - Retired duplicate roots `.cursor/skills`, `.github/skills`, and `.opencode/skills` are absent.
 - No root bundle skill is created.

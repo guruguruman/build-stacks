@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Humanwizard"
+  short_description: "Generate a guarded interactive shell wizard for human-only..."
+  default_prompt: "Use $build-flow-humanwizard to generate a guarded interactive shell wizard for human-only setup steps."

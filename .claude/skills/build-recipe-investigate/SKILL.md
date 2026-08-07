@@ -40,6 +40,10 @@ Do not require global build-stacks state or remote gbrain services.
 
 Gather context before forming any hypothesis.
 
+### Tight feedback gate
+
+Before theorizing, establish one command or interaction that already demonstrates the user's exact symptom. It must be red-capable, deterministic enough to compare, fast enough to repeat, and runnable without hidden human steps. For an intermittent failure, record a bounded repeat count and baseline failure rate. If no such loop exists, building it is the current investigation task.
+
 1. **Collect symptoms:** Read the error messages, stack traces, and reproduction steps. If the user hasn't provided enough context, ask ONE question at a time via AskUserQuestion.
 
 2. **Read the code:** Trace the code path from the symptom back to potential causes. Use Grep to find all references, Read to understand the logic.
@@ -50,7 +54,7 @@ Gather context before forming any hypothesis.
    ```
    Was this working before? What changed? A regression means the root cause is in the diff.
 
-4. **Reproduce:** Can you trigger the bug deterministically? If not, gather more evidence before proceeding.
+4. **Reproduce and minimise:** Trigger the exact bug, then remove inputs, callers, configuration, and steps one at a time until every remaining element is load-bearing. Preserve the original scenario for final verification.
 
 5. **Check investigation history:** Search prior learnings for investigations on the same files. Recurring bugs in the same area are an architectural smell. If prior investigations exist, note patterns and check if the root cause was structural.
 
@@ -58,7 +62,7 @@ Gather context before forming any hypothesis.
 
 If .build-stacks/learnings exists, inspect relevant recent notes before repeating an investigation. If absent, continue without treating it as a failure.
 
-Output: **"Root cause hypothesis: ..."** — a specific, testable claim about what is wrong and why.
+Output a ranked list of 3-5 falsifiable hypotheses. Each states the prediction that would distinguish it. Show the ranking before instrumentation; continue with the strongest evidence-backed hypothesis if the user is unavailable.
 
 ---
 
@@ -127,7 +131,7 @@ If WebSearch is unavailable, skip this search and proceed with hypothesis testin
 
 Before writing ANY fix, verify your hypothesis.
 
-1. **Confirm the hypothesis:** Add a temporary log statement, assertion, or debug output at the suspected root cause. Run the reproduction. Does the evidence match?
+1. **Confirm one hypothesis:** Change one variable or add one targeted probe that distinguishes its prediction. Prefer a debugger or focused assertion over broad logs. Tag temporary instrumentation with a unique `DEBUG-<id>` marker.
 
 2. **If the hypothesis is wrong:** Before forming the next hypothesis, consider searching for the error. **Sanitize first** — strip hostnames, IPs, file paths, SQL fragments, customer identifiers, and any internal/proprietary data from the error message. Search only the generic error type and framework context: "{component} {sanitized error type} {framework version}". If the error message is too specific to sanitize safely, skip the search. If WebSearch is unavailable, skip and proceed. Then return to Phase 1. Gather more evidence. Do not guess.
 
@@ -177,6 +181,8 @@ Once root cause is confirmed:
 **Fresh verification:** Reproduce the original bug scenario and confirm it's fixed. This is not optional.
 
 Run the test suite and paste the output.
+
+Search for and remove every `DEBUG-<id>` marker. If no correct public seam exists for a regression test, record that as an architecture finding and hand it to `build-flow-codebasearchitecture` when installed; do not add an implementation-coupled test for appearances.
 
 Output a structured debug report:
 ```

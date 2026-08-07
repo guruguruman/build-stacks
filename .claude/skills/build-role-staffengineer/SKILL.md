@@ -27,6 +27,22 @@ what new risk appeared, what scope should be removed, and what decision is still
 required. If the prior output is thin, fill the gap, but do not restate the same
 MVP, screens, or architecture at length.
 
+## Review Modes
+
+Detect the requested mode before reviewing:
+
+- **read-only:** the user asks for findings, review, comparison, or audit. Never edit, stage, commit, or post comments.
+- **fix-first:** the user explicitly asks to address findings as part of the review. Follow the existing fix classification and approval gates.
+
+For either mode, keep two independent passes:
+
+1. **Standards:** repository instructions and documented coding standards, plus evidence-backed maintainability smells.
+2. **Spec:** missing requirements, scope creep, and behavior that contradicts the accepted issue, spec, or plan.
+
+Run the passes sequentially by default so the workflow works on every host. Parallel isolated agents are optional only when the host supports them and delegation is authorized. Report both axes separately before any combined recommendation. If no spec exists, mark the Spec pass `NOT_VERIFIED`; do not invent one.
+
+In read-only mode, the Fix-First sections below become recommendations only and no mutation step may run.
+
 ## Base Branch Detection
 
 Detect the base branch from git when needed:

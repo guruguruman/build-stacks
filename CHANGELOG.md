@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added the `build-stacks-workflow` package and expanded the complete closure from 47 to 59 skills.
+- Adapted all 25 stable engineering and productivity capabilities from `mattpocock/skills` at the pinned `8b36d4f` snapshot, with static provenance and MIT attribution.
+- Added research, project setup, teaching, questionnaire, domain modeling, spec/ticket, wayfinding, codebase architecture, implementation/TDD, merge-conflict, triage, and human-wizard workflows.
+- Added guarded GitHub issue writes, collision-safe APM project setup, local tracker conventions, and workflow acceptance tests.
+
 ## 2.0.0 - 2026-08-04
 
 - Renamed the public skill namespace from `product-*` to `build-*` and the runtime root from `.product-build-stacks/` to `.build-stacks/`.

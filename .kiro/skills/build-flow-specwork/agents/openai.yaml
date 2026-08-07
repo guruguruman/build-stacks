@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Specwork"
+  short_description: "Turn context into a specification or tracer-bullet ticket set."
+  default_prompt: "Use $build-flow-specwork to turn context into a specification or tracer-bullet ticket set."

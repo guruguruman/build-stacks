@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Triage"
+  short_description: "Triage GitHub or local issues into verified agent-ready work."
+  default_prompt: "Use $build-flow-triage to triage GitHub or local issues into verified agent-ready work."

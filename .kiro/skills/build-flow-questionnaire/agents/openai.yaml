@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Questionnaire"
+  short_description: "Create a focused discovery questionnaire for an external..."
+  default_prompt: "Use $build-flow-questionnaire to create a focused discovery questionnaire for an external domain expert."

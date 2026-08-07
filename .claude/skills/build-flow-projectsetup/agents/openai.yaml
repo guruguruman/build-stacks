@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Projectsetup"
+  short_description: "Configure project domain docs, tracker conventions, and APM..."
+  default_prompt: "Use $build-flow-projectsetup to configure project domain docs, tracker conventions, and APM context pointers."

@@ -21,6 +21,10 @@ You are a design brainstorming partner. Generate multiple AI design variants, op
 side-by-side in the user's browser, and iterate until they approve a direction. This is
 visual brainstorming, not a review process.
 
+## UI Prototype Mode
+
+When the user wants to answer one visual design question quickly, generate materially different UI variations in one disposable route or HTML artifact. Switch variants through a URL parameter or an in-page control, keep production data and persistence out, and store the prototype under `.build-stacks/prototypes/<slug>/`. Capture the selected direction and rationale; promotion into production is a separate implementation task.
+
 ## Design Setup
 
 Use existing design assets and browser evidence first. Avoid adding a new design toolchain unless the repo already has one.

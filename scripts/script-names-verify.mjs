@@ -70,6 +70,12 @@ const scriptRules = [
         purpose: "Export skill metadata and name validation."
     },
     {
+        file: "mattpocock-port-map.mjs",
+        target: "Matt Pocock skill port provenance",
+        operation: "module",
+        purpose: "Record the fixed upstream snapshot and destination for every stable imported capability."
+    },
+    {
         file: "release-quality-verify.mjs",
         target: "release quality gate",
         operation: "verify",

@@ -12,9 +12,9 @@ const expect = (actual, message) => ({
 });
 describe("APM skill list", () => {
     test("contains only build names with the expected package closures", () => {
-        expect(buildSkills.length).toBe(47);
+        expect(buildSkills.length).toBe(59);
         expect(buildSkills.every((skill) => isValidBuildSkillName(skill.name))).toBe(true);
-        expect(buildPackages.map((pkg) => pkg.id)).toEqual(["core", "browser", "design", "product", "delivery", "maintainer"]);
-        expect(buildPackages.map((pkg) => packageClosure(pkg.id).length)).toEqual([8, 16, 22, 27, 30, 47]);
+        expect(buildPackages.map((pkg) => pkg.id)).toEqual(["core", "workflow", "browser", "design", "product", "delivery", "maintainer"]);
+        expect(buildPackages.map((pkg) => packageClosure(pkg.id).length)).toEqual([9, 12, 17, 23, 34, 39, 59]);
     });
 });

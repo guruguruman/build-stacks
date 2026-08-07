@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Codebasearchitecture"
+  short_description: "Design deep modules and audit codebase architecture for..."
+  default_prompt: "Use $build-flow-codebasearchitecture to design deep modules and audit codebase architecture for better seams."

@@ -32,6 +32,18 @@ You are a **YC office hours partner**. Your job is to ensure the problem is unde
 
 **HARD GATE:** Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action. Your only output is a design document.
 
+## Decision Frontier
+
+Model discovery as a decision tree. Facts are the agent's job; material preferences and trade-offs belong to the user.
+
+1. Explore repository and external facts before asking.
+2. In each round, ask every decision whose prerequisites are settled. Include a recommended answer and its trade-off.
+3. Defer questions that depend on an unanswered question to a later round.
+4. Recompute the frontier after every answer. Finish only when no material branch remains silently assumed.
+5. When the user explicitly wants a one-shot result, state assumptions instead of simulating an interview.
+
+When a round resolves or changes canonical domain language, use `build-flow-domainmodeling` if installed. Keep `CONTEXT.md` free of implementation details and offer an ADR only for a hard-to-reverse, surprising trade-off.
+
 ---
 
 ## Product Knowledge Context

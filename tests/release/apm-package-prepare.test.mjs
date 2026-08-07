@@ -29,6 +29,7 @@ describe("apm package preparation", () => {
         assert.equal(result.status, 0, result.stderr || result.stdout);
         assert.equal(existsSync(join(output, "apm.yml")), true);
         assert.equal(existsSync(join(output, "packages", "core", "apm.yml")), true);
+        assert.equal(existsSync(join(output, "THIRD_PARTY_NOTICES.md")), true);
         assert.match(result.stdout, new RegExp(`prepared build-stacks package at ${escapeRegExp(resolve(output))}`));
 
         const repeated = runPrepare(fixture, output);
@@ -142,6 +143,7 @@ function createFixture(root = createTempRoot()) {
         ["apm.yml", "name: fixture\n"],
         ["README.md", "# fixture\n"],
         ["LICENSE", "fixture\n"],
+        ["THIRD_PARTY_NOTICES.md", "fixture notice\n"],
         ["CHANGELOG.md", "# changes\n"],
         ["package.json", "{\"type\":\"module\"}\n"],
         ["package-lock.json", "{}\n"],

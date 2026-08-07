@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flow Domainmodeling"
+  short_description: "Sharpen domain terminology and record durable architectural..."
+  default_prompt: "Use $build-flow-domainmodeling to sharpen domain terminology and record durable architectural decisions."

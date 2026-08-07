@@ -37,10 +37,22 @@ restore never conflict:
 - `build-runtime-session list [--all]` → **List**
 - `build-runtime-session restore [title-fragment-or-number]` → **Restore**
 - `build-runtime-session resume [title-fragment-or-number]` → **Restore** alias
+- `build-runtime-session handoff [focus]` → **Portable handoff**
 - `build-runtime-session` → show the modes above and stop. Do not save or restore.
 
 If the user provides a title after `save` (e.g., `build-runtime-session save auth refactor`),
 use it as the title. Otherwise, infer a title from the current work.
+
+## Portable handoff flow
+
+Use this mode only when a fresh session, different working directory, or collaborator needs a compact continuation packet.
+
+1. Resolve the operating-system temporary directory and create a collision-safe Markdown path there, never inside the repository.
+2. Summarize the goal, current state, settled decisions, open decisions, verification evidence, residual risk, and exact next action.
+3. Link existing plans, ADRs, issues, commits, and diffs instead of duplicating them.
+4. Include suggested installed `build-*` skills for the next session.
+5. Redact secrets, personal data, private URLs, and credential-bearing commands.
+6. Report the absolute temporary path and intended recipient. Do not mutate source or mark the current work complete.
 
 ---
 

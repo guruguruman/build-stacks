@@ -1,0 +1,4 @@
+interface:
+  display_name: "Recipe Research"
+  short_description: "Research questions against primary sources and capture..."
+  default_prompt: "Use $build-recipe-research to research questions against primary sources and capture cited findings."
