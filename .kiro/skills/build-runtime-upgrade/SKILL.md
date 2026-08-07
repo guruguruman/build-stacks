@@ -1,6 +1,6 @@
 ---
 name: build-runtime-upgrade
-description: "Stack update and migration workflow. Use when the user asks to upgrade build-stacks and verify its migration. Common requests include \"runtime upgrade\", \"upgrade stack\", \"migration check\", \"update build stacks\"."
+description: "Stack update and migration workflow. Use when the user asks to upgrade build-stacks and verify its migration. Natural requests include \"Please upgrade build-stacks and verify its migration.\" or \"build-stacksを更新して移行を確認して\"."
 ---
 
 # build-runtime-upgrade

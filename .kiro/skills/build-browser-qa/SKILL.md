@@ -1,6 +1,6 @@
 ---
 name: build-browser-qa
-description: "Browser-centered QA routines and artifact capture. Use when the user asks to run browser-centered QA and capture evidence. Common requests include \"browser qa\", \"browser QA\", \"test the page\", \"capture evidence\"."
+description: "Browser-centered QA routines and artifact capture. Use when the user asks to run browser-centered QA and capture evidence. Natural requests include \"Please run browser-centered QA and capture evidence.\" or \"画面をブラウザで確認して証跡を残して\". Use for executing browser checks and capturing fresh evidence; if no runnable surface exists, report that blocker without substituting a report-only flow."
 ---
 
 # build-browser-qa

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Flow Teach"
-  short_description: "Run a stateful teaching workspace grounded in a learner mission."
-  default_prompt: "Use $build-flow-teach to run a stateful teaching workspace grounded in a learner mission."

@@ -1,6 +1,6 @@
 ---
 name: build-flow-webuifinish
-description: "Score and finish rendered Web UI with real-browser before/after evidence. Use when the user asks to score and finish rendered Web UI with real-browser before/after evidence. Common requests include \"flow webuifinish\", \"finish the Web UI\", \"Web UI review\", \"polish this web UI\"."
+description: "Score and finish rendered Web UI with real-browser before/after evidence. Use when the user asks to score and finish rendered Web UI with real-browser before/after evidence. Natural requests include \"Please score and finish rendered Web UI with real-browser before/after evidence.\" or \"Web UIを実画面で仕上げて\". Do not use for report-only review without fixes."
 ---
 
 # build-flow-webuifinish

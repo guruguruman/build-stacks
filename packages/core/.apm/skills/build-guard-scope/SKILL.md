@@ -1,6 +1,6 @@
 ---
 name: build-guard-scope
-description: "Lock edit scope and report drift. Use when the user asks to lock edit scope and report drift. Common requests include \"guard scope\", \"scope guard\", \"freeze scope\", \"lock edits\"."
+description: "Lock edit scope and report drift. Use when the user asks to lock edit scope and report drift. Natural requests include \"Please lock edit scope and report drift.\" or \"編集範囲を固定して\"."
 ---
 
 # build-guard-scope

@@ -1,6 +1,6 @@
 ---
 name: build-flow-organize-stack
-description: "Audit APM skill placement and propose safe stack organization changes. Use when the user asks to audit APM skill placement and propose safe stack organization changes. Common requests include \"organize this APM stack\", \"check the package graph\", \"where should this skill live\"."
+description: "Audit APM skill placement and propose safe stack organization changes. Use when the user asks to audit APM skill placement and propose safe stack organization changes. Natural requests include \"Please audit APM skill placement and propose safe stack organization changes.\" or \"APMのpackage構成を整理して\"."
 ---
 
 # build-flow-organize-stack

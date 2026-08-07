@@ -1,6 +1,6 @@
 ---
 name: build-flow-skillify
-description: "Turn repeated work into reviewed skill candidates. Use when the user asks to turn repeated work into reviewed skill candidates. Common requests include \"flow skillify\", \"skillify\", \"make a skill\", \"workflow skill\"."
+description: "Turn repeated work into reviewed skill candidates. Use when the user asks to turn repeated work into reviewed skill candidates. Natural requests include \"Please turn repeated work into reviewed skill candidates.\" or \"この繰り返し作業をskillにして\"."
 ---
 
 # build-flow-skillify

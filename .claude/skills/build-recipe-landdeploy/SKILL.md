@@ -1,6 +1,6 @@
 ---
 name: build-recipe-landdeploy
-description: "Merge, deploy, and verify production only with explicit approval. Use when the user asks to merge, deploy, and verify production only with explicit approval. Common requests include \"recipe landdeploy\", \"land deploy\", \"merge and deploy\", \"ship to production\"."
+description: "Merge, deploy, and verify production only with explicit approval. Use when the user asks to merge, deploy, and verify production only with explicit approval. Natural requests include \"Please merge, deploy, and verify production only with explicit approval.\" or \"マージして本番反映まで確認して\". Do not use for PR preparation only."
 ---
 
 # build-recipe-landdeploy

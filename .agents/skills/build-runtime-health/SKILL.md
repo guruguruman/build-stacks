@@ -1,6 +1,6 @@
 ---
 name: build-runtime-health
-description: "Summarize workflow health and quality signals. Use when the user asks to summarize workflow health and quality signals. Common requests include \"runtime health\", \"workflow health\", \"stack health\", \"quality signals\"."
+description: "Summarize workflow health and quality signals. Use when the user asks to summarize workflow health and quality signals. Natural requests include \"Please summarize workflow health and quality signals.\" or \"workflowの状態を確認して\"."
 ---
 
 # build-runtime-health

@@ -96,7 +96,24 @@ Success criteria:
 - Evidence stays under the temporary app `.build-stacks/artifacts/browser` path.
 - Protected paths, including the real Codex system skill tree, are unchanged after postflight.
 
-## 5. Clean Consumer Install
+## 5. Natural-language activation
+
+Run activation in an isolated clean consumer without naming the expected skill in the task text.
+
+```bash
+npm run smoke:codex-activation-natural-ja
+npm run smoke:codex-activation-natural-en
+```
+
+Success criteria:
+
+- every public skill is selected from at least one natural request;
+- changed workflows and every role pass both Japanese and English requests;
+- collision prompts select at most one flow or recipe coordinator;
+- multiple roles appear only when explicitly requested or declared by an orchestrating coordinator;
+- optional `benefitsFrom` edges do not cause an unrequested sequential workflow.
+
+## 6. Clean Consumer Install
 
 ```bash
 npm run smoke:codex
@@ -106,14 +123,14 @@ npm run smoke:packages
 
 Success criteria:
 
-- The root consumer project installs all 59 skills.
-- Every subpackage consumer installs exactly its documented dependency closure: 9, 12, 17, 23, 34, 39, or 59 skills.
+- The root consumer project installs all 55 skills.
+- Every subpackage consumer installs exactly its documented dependency closure: 9, 17, 23, 30, 36, or 55 skills.
 - Converged installs contain `.agents/skills`, `.claude/skills`, and `.kiro/skills`.
 - Retired duplicate roots `.cursor/skills`, `.github/skills`, and `.opencode/skills` are absent.
 - No root bundle skill is created.
 - Evidence JSON is written under `.build-stacks/evidence/`.
 
-## 6. Mandatory Quality Verification Gate
+## 7. Mandatory Quality Verification Gate
 
 Run the same mandatory verification entry point locally and in CI. The release
 gate delegates to this quality gate, then adds only explicitly enabled heavy E2E
@@ -131,7 +148,7 @@ Success criteria:
 - CI invokes `npm run release:verify`, so local and CI acceptance use the same mandatory contract.
 - Heavy Codex E2E remains opt-in and is reported honestly when it is not enabled.
 
-## 7. Full Codex E2E Release Gate
+## 8. Full Codex E2E Release Gate
 
 Use this only for release candidates that need Codex activation and browser-core
 runtime evidence. It is opt-in to avoid creating large local Docker/runtime
@@ -141,7 +158,7 @@ images during routine verification.
 BUILD_RELEASE_VERIFY_CODEX_E2E=1 npm run release:verify
 ```
 
-## 8. Prelaunch Security Gate
+## 9. Prelaunch Security Gate
 
 Exercise the deterministic security gate separately from open-ended CSO review and
 release-engineering readiness.
@@ -163,7 +180,7 @@ Success criteria:
 - `security review`, `CSO review`, `threat model`, and `release review` do not trigger this flow by themselves.
 - The skill does not automatically invoke `build-role-cso` or `build-role-releaseengineer`.
 
-## 9. Web And Mobile UI Finish
+## 10. Web And Mobile UI Finish
 
 Exercise both focused visual-finishing routes without letting them absorb functional QA
 or generic design review.
@@ -191,7 +208,7 @@ Success criteria:
 - Missing real-screen evidence never produces a fabricated score or screenshot.
 - `QA`, `browser QA`, and `design review` remain routed to their existing functional or design workflows.
 
-## 10. Skill Release Acceptance Matrix
+## 11. Skill Release Acceptance Matrix
 
 Every skill in [docs/release-acceptance-skill-matrix.md](release-acceptance-skill-matrix.md) must have:
 

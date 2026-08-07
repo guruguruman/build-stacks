@@ -1,6 +1,6 @@
 ---
 name: build-browser-visible
-description: "Open a headed browser session for visual inspection. Use when the user asks to open a headed browser session for visual inspection. Common requests include \"browser visible\", \"visible browser\", \"headed browser\", \"watch browser\"."
+description: "Open a headed browser session for visual inspection. Use when the user asks to open a headed browser session for visual inspection. Natural requests include \"Please open a headed browser session for visual inspection.\" or \"見えるブラウザを開いて\"."
 ---
 
 # build-browser-visible

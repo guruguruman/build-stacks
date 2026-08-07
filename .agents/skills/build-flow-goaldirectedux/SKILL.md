@@ -1,6 +1,6 @@
 ---
 name: build-flow-goaldirectedux
-description: "Run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff. Use when the user asks to run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff. Common requests include \"flow goaldirectedux\", \"Goal-Directed Design\", \"GDD\", \"UX requirements\"."
+description: "Run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff. Use when the user asks to run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff. Natural requests include \"Please run Goal-Directed UX Design for personas, scenarios, requirements, and product build handoff.\" or \"ゴール指向でペルソナとシナリオを設計して\"."
 ---
 
 # build-flow-goaldirectedux

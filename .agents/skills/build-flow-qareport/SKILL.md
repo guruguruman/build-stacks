@@ -1,6 +1,6 @@
 ---
 name: build-flow-qareport
-description: "Produce QA findings without modifying code. Use when the user asks to produce QA findings without modifying code. Common requests include \"flow qareport\", \"QA report\", \"report only QA\", \"browser findings\"."
+description: "Produce QA findings without modifying code. Use when the user asks to produce QA findings without modifying code. Natural requests include \"Please produce QA findings without modifying code.\" or \"修正せずにQAレポートを作って\". Do not use when the user asked to fix defects or to execute browser checks and capture fresh evidence."
 ---
 
 # build-flow-qareport

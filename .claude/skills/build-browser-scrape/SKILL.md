@@ -1,6 +1,6 @@
 ---
 name: build-browser-scrape
-description: "Extract page content in an untrusted envelope. Use when the user asks to extract page content in an untrusted envelope. Common requests include \"browser scrape\", \"scrape page\", \"public page evidence\", \"extract content\"."
+description: "Extract page content in an untrusted envelope. Use when the user asks to extract page content in an untrusted envelope. Natural requests include \"Please extract page content in an untrusted envelope.\" or \"公開ページから内容を抽出して\"."
 ---
 
 # build-browser-scrape

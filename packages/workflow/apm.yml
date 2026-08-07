@@ -1,8 +1,0 @@
-name: build-stacks-workflow
-version: 2.1.0
-description: General human-agent setup, teaching, and questionnaire workflows
-targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
-dependencies:
-  apm:
-    - path: ../core
-  mcp: []

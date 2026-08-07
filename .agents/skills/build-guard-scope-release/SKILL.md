@@ -1,6 +1,6 @@
 ---
 name: build-guard-scope-release
-description: "Release an active scope lock. Use when the user asks to release an active scope lock. Common requests include \"guard scope release\", \"release scope\", \"unfreeze scope\", \"remove scope lock\"."
+description: "Release an active scope lock. Use when the user asks to release an active scope lock. Natural requests include \"Please release an active scope lock.\" or \"編集範囲の固定を解除して\"."
 ---
 
 # build-guard-scope-release

@@ -1,6 +1,6 @@
 ---
 name: build-guard-full
-description: "Combine destructive, scope, privacy, and browser guards. Use when the user asks to combine destructive, scope, privacy, and browser guards. Common requests include \"guard full\", \"full guard\", \"safe mode\", \"guard posture\"."
+description: "Combine destructive, scope, privacy, and browser guards. Use when the user asks to combine destructive, scope, privacy, and browser guards. Natural requests include \"Please combine destructive, scope, privacy, and browser guards.\" or \"安全ガードを全部有効にして\"."
 ---
 
 # build-guard-full

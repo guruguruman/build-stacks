@@ -1,6 +1,6 @@
 ---
 name: build-browser-auth
-description: "Guarded cookie import and authenticated browser setup. Use when the user asks to import cookies safely and set up authenticated browser access. Common requests include \"browser auth\", \"authenticated browser\", \"cookie setup\"."
+description: "Guarded cookie import and authenticated browser setup. Use when the user asks to import cookies safely and set up authenticated browser access. Natural requests include \"Please import cookies safely and set up authenticated browser access.\" or \"認証済みブラウザを安全に準備して\"."
 ---
 
 # build-browser-auth

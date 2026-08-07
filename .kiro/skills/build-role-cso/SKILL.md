@@ -1,6 +1,6 @@
 ---
 name: build-role-cso
-description: "Security review for threat model, privacy, auth, secrets, policy risk, and blockers. Use when the user asks to review threats, privacy, auth, secrets, policy risk, and security blockers. Common requests include \"role cso\", \"security review\", \"CSO review\", \"threat model\"."
+description: "Security review for threat model, privacy, auth, secrets, policy risk, and blockers. Stance: Judge threats, authentication, authorization, privacy, secrets, abuse paths, policy exposure, and security blockers. Use when the user asks to review threats, privacy, auth, secrets, policy risk, and security blockers. Natural requests include \"Please review threats, privacy, auth, secrets, policy risk, and security blockers.\" or \"セキュリティ責任者としてレビューして\"."
 ---
 
 # build-role-cso

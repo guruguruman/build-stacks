@@ -1,6 +1,6 @@
 ---
 name: build-role-releaseengineer
-description: "Release engineering lens for rollout, rollback, and verification. Use when the user asks to review rollout, rollback, and verification readiness. Common requests include \"role releaseengineer\", \"release review\", \"rollback plan\", \"release engineer\"."
+description: "Release engineering lens for rollout, rollback, and verification. Stance: Judge rollout, rollback, observability, versioning, operational readiness, and post-release verification. Use when the user asks to review rollout, rollback, and verification readiness. Natural requests include \"Please review rollout, rollback, and verification readiness.\" or \"リリースエンジニアとしてロールバックを確認して\"."
 ---
 
 # build-role-releaseengineer

@@ -1,6 +1,6 @@
 ---
 name: build-flow-infradesign
-description: "Design evidence-backed infrastructure topologies from repository, user, and operational constraints. Use when the user asks to design evidence-backed infrastructure topologies from repository, user, and operational constraints. Common requests include \"flow infradesign\", \"infrastructure design\", \"hosting selection\", \"database selection\"."
+description: "Design evidence-backed infrastructure topologies from repository, user, and operational constraints. Use when the user asks to design evidence-backed infrastructure topologies from repository, user, and operational constraints. Natural requests include \"Please design evidence-backed infrastructure topologies from repository, user, and operational constraints.\" or \"インフラ構成を設計して\"."
 ---
 
 # build-flow-infradesign

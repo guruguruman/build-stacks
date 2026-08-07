@@ -1,6 +1,6 @@
 ---
 name: build-role-founder
-description: "Founder and CEO-style review for wedge, adoption friction, MVP, and first payment reason. Use when the user asks to review product strategy through a founder and CEO lens. Common requests include \"role founder\", \"founder review\", \"CEO review\", \"wedge review\"."
+description: "Founder and CEO-style review for wedge, adoption friction, MVP, and first payment reason. Stance: Challenge the problem wedge, adoption friction, commercial value, and reason a first customer would pay. Use when the user asks to review product strategy through a founder and CEO lens. Natural requests include \"Please review product strategy through a founder and CEO lens.\" or \"創業者の視点でレビューして\"."
 ---
 
 # build-role-founder

@@ -1,43 +1,57 @@
 ---
 name: build-flow-triage
-description: "Triage GitHub or local issues into verified agent-ready work. Use when the user asks to triage GitHub or local issues into verified agent-ready work. Common requests include \"triage issues\", \"verify a bug report\", \"make issue agent ready\"."
+description: "Triage GitHub or local issues into verified agent-ready work. Use when the user asks to triage GitHub or local issues into verified agent-ready work. Natural requests include \"Please triage GitHub or local issues into verified agent-ready work.\" or \"このissueを調査して着手可能にして\". Do not use for root-cause debugging when no issue intake outcome is requested."
 ---
 
 # build-flow-triage
 
-Move one request through a visible state machine: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, or `wontfix`.
+Verify one issue and produce the smallest useful intake outcome. Adapt to the repository instead of imposing a label state machine.
 
-## Preconditions
+## Intake
 
-Read `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` when present. Official execution supports GitHub through `gh` and local Markdown under `.build-stacks/issues/`. Other trackers are report-only adapters.
-
-## Workflow
-
-1. Gather the full request, comments, labels, author context, prior triage notes, and code diff for a pull request.
-2. Search repository behavior, domain language, ADRs, prior issues, and explicit out-of-scope records. Check whether the capability already exists or was previously rejected.
-3. Recommend a state and explain it before changing anything.
+1. Identify the tracker from repository remotes and docs. GitHub and local Markdown are executable; other trackers are report-only.
+2. Gather the full request, comments, labels, author context, linked pull request diff, and prior triage notes.
+3. Read relevant behavior, tests, domain language, ADRs, prior issues, and explicit out-of-scope decisions.
 4. Verify the claim:
-   - bug: reproduce the reported symptom;
+   - bug: reproduce the symptom or explain the missing prerequisite;
    - request: confirm current behavior and affected seam;
    - pull request: inspect the diff and run relevant checks.
-5. Resolve missing product decisions through focused questions and update domain documentation only with approval.
-6. Prepare the outcome from [triage-templates.md](references/triage-templates.md).
-7. Local changes may be written after preview. GitHub labels, comments, closing, or issue edits require explicit approval immediately before the write and must use the installed `build-flow-projectsetup` GitHub helper where supported. Re-read remote state after approval to avoid overwriting concurrent changes. Assignment remains report-only until a guarded helper supports it.
+5. Recommend one outcome before changing anything: ready for agent, ready for human, needs specific information, already implemented, duplicate, or close with reason. Use repository-native wording.
 
-## State Rules
+Use [triage-templates.md](references/triage-templates.md) as content guidance, not as mandatory boilerplate.
 
-- `ready-for-agent`: verified, bounded, decision-complete, and includes acceptance evidence.
-- `ready-for-human`: bounded but depends on judgment, access, or manual action unavailable to an agent.
-- `needs-info`: asks specific answerable questions and preserves established facts.
-- `wontfix`: records the reason; close only with approval.
-- Already implemented is not a rejected request and should not pollute an out-of-scope record.
+## Local tracker
 
-## Output Contract
+Preview and then write the result under `.build-stacks/issues/<feature>/`. Preserve established facts, acceptance evidence, unresolved questions, and links to any owning ticket.
+
+## GitHub through gh
+
+Use `gh` directly.
+
+1. Run `gh auth status` and `gh repo view --json nameWithOwner`.
+2. Read current state with `gh issue view <number> --json number,title,body,state,labels,comments,url`.
+3. Inspect issue templates, `gh label list`, and recent repository examples. Reuse only labels whose meaning fits; do not create or require `needs-triage`, `ready-for-agent`, or another fixed taxonomy.
+4. Prepare a concise title/body delta, comment, close rationale, and label additions or removals. Match the user's language and repository tone; omit AI or skill attribution.
+5. Re-read the issue immediately before writing. If the remote changed, reconcile and preview the new delta.
+6. Require explicit approval before `gh issue edit`, `gh issue comment`, or `gh issue close`. The current request may provide that approval when it names the operation and target.
+7. After a write, re-read the issue and report its URL and resulting state. On partial failure, record the successful operation before retrying.
+
+Creating a missing label is a separate repository write. Propose it only when the repository clearly needs a new concept and obtain explicit approval; otherwise communicate the outcome in the issue body or comment.
+
+## Boundaries
+
+- Do not fix product code unless the user separately asks for implementation.
+- Do not convert uncertain product judgment into an “agent-ready” claim.
+- Already implemented is not rejected work.
+- Closing, assignment, project changes, and label creation are external writes.
+
+## Output contract
 
 - request identity and tracker
 - verification evidence
-- recommended and applied state
-- agent/human brief or information request
-- external write approval/status
+- recommended and applied outcome
+- title/body/comment/label delta
+- external-write authorization and status
+- URL or local path
 - residual risk
 - next handoff

@@ -40,7 +40,7 @@ function verifyRootManifest() {
 }
 
 function verifyPackageManifests() {
-    const closureCounts = { core: 9, workflow: 12, browser: 17, design: 23, product: 34, delivery: 39, maintainer: 59 };
+    const closureCounts = { core: 9, browser: 17, design: 23, product: 30, delivery: 36, maintainer: 55 };
     for (const pkg of buildPackages) {
         const path = join(pkg.path, "apm.yml");
         if (!existsSync(path)) {
@@ -63,7 +63,7 @@ function verifyPackageManifests() {
 function verifyInstructions() {
     const core = readdirSync("packages/core/.apm/instructions").filter((name) => name.endsWith(".instructions.md"));
     const browser = readdirSync("packages/browser/.apm/instructions").filter((name) => name.endsWith(".instructions.md"));
-    if (core.length !== 8) failures.push(`core instruction count must be 8, found ${core.length}`);
+    if (core.length !== 9) failures.push(`core instruction count must be 9, found ${core.length}`);
     if (browser.length !== 2) failures.push(`browser instruction count must be 2, found ${browser.length}`);
     for (const name of [...core, ...browser]) if (!name.startsWith("build-")) failures.push(`legacy instruction name: ${name}`);
 }

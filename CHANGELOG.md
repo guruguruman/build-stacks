@@ -2,10 +2,10 @@
 
 ## Unreleased
 
-- Added the `build-stacks-workflow` package and expanded the complete closure from 47 to 59 skills.
-- Adapted all 25 stable engineering and productivity capabilities from `mattpocock/skills` at the pinned `8b36d4f` snapshot, with static provenance and MIT attribution.
-- Added research, project setup, teaching, questionnaire, domain modeling, spec/ticket, wayfinding, codebase architecture, implementation/TDD, merge-conflict, triage, and human-wizard workflows.
-- Added guarded GitHub issue writes, collision-safe APM project setup, local tracker conventions, and workflow acceptance tests.
+- Expanded the complete closure from 47 to 55 skills across the existing six-package graph.
+- Triaged all 25 stable engineering and productivity capabilities from `mattpocock/skills` at the pinned `8b36d4f` snapshot, with static provenance, explicit omissions, and MIT attribution.
+- Added research, domain modeling, spec/ticket, codebase architecture, implementation/TDD, merge-conflict, adaptive triage, and guarded human-wizard workflows; merged questionnaires and multi-session decision mapping into existing product workflows.
+- Added bilingual natural-language activation contracts, explicit role stances, repository-native `gh` operations, secret-safe wizard primitives, and fixture-backed workflow acceptance tests.
 
 ## 2.0.0 - 2026-08-04
 

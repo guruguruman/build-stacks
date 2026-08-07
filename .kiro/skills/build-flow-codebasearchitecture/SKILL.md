@@ -1,6 +1,6 @@
 ---
 name: build-flow-codebasearchitecture
-description: "Design deep modules and audit codebase architecture for better seams. Use when the user asks to design deep modules and audit codebase architecture for better seams. Common requests include \"deep module design\", \"architecture audit\", \"improve codebase architecture\"."
+description: "Design deep modules and audit codebase architecture for better seams. Use when the user asks to design deep modules and audit codebase architecture for better seams. Natural requests include \"Please design deep modules and audit codebase architecture for better seams.\" or \"コードベースの境界と構造を設計して\". Do not use for a read-only diff review."
 ---
 
 # build-flow-codebasearchitecture

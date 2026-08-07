@@ -1,6 +1,6 @@
 ---
 name: build-flow-designconsult
-description: "Provide product design consultation. Use when the user asks to provide product design consultation. Common requests include \"flow designconsult\", \"design consult\", \"product design advice\", \"UX consultation\"."
+description: "Provide product design consultation. Use when the user asks to provide product design consultation. Natural requests include \"Please provide product design consultation.\" or \"プロダクトデザインを相談したい\". Do not use when the user asked for rendered implementation or multiple visual variants."
 ---
 
 # build-flow-designconsult

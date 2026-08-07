@@ -1,6 +1,6 @@
 ---
 name: build-role-dxlead
-description: "Developer experience review for APIs, onboarding, docs, and adoption friction. Use when the user asks to review APIs, onboarding, documentation, and adoption friction. Common requests include \"role dxlead\", \"DX review\", \"developer experience review\", \"API review\"."
+description: "Developer experience review for APIs, onboarding, docs, and adoption friction. Stance: Judge API ergonomics, onboarding, documentation, debugging, and developer adoption friction. Use when the user asks to review APIs, onboarding, documentation, and adoption friction. Natural requests include \"Please review APIs, onboarding, documentation, and adoption friction.\" or \"DX責任者としてAPIをレビューして\"."
 ---
 
 # build-role-dxlead

@@ -3,6 +3,8 @@ import { spawnSync } from "node:child_process";
 const commands = [["npm", "run", "quality:verify"]];
 const codexE2eCommands = [
     ["node", "scripts/codex-skill-activation-smoke.mjs"],
+    ["node", "scripts/codex-skill-activation-smoke.mjs", "--all-skills", "--natural-ja"],
+    ["node", "scripts/codex-skill-activation-smoke.mjs", "--all-skills", "--natural-en"],
     ["node", "scripts/codex-browser-core-smoke.mjs"]
 ];
 if (process.env.BUILD_RELEASE_VERIFY_CODEX_E2E === "1") {

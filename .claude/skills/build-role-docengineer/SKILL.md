@@ -1,6 +1,6 @@
 ---
 name: build-role-docengineer
-description: "Documentation release review for changelog, migration notes, operator docs, and proof. Use when the user asks to review changelogs, migration notes, operator docs, and release documentation. Common requests include \"role docengineer\", \"docs review\", \"documentation release\", \"operator docs\"."
+description: "Documentation release review for changelog, migration notes, operator docs, and proof. Stance: Judge changelogs, migrations, operator guidance, reference accuracy, and documentation release evidence. Use when the user asks to review changelogs, migration notes, operator docs, and release documentation. Natural requests include \"Please review changelogs, migration notes, operator docs, and release documentation.\" or \"ドキュメントエンジニアとしてリリース文書をレビューして\"."
 ---
 
 # build-role-docengineer

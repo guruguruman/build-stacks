@@ -1,6 +1,6 @@
 ---
 name: build-flow-designhtml
-description: "Create HTML artifacts and design previews. Use when the user asks to create HTML artifacts and design previews. Common requests include \"flow designhtml\", \"design HTML\", \"HTML mockup\", \"preview page\"."
+description: "Create HTML artifacts and design previews. Use when the user asks to create HTML artifacts and design previews. Natural requests include \"Please create HTML artifacts and design previews.\" or \"HTMLでデザイン案を作って\"."
 ---
 
 # build-flow-designhtml

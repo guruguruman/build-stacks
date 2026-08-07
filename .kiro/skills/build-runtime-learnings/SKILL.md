@@ -1,6 +1,6 @@
 ---
 name: build-runtime-learnings
-description: "Record learning candidates for review and promotion. Use when the user asks to record learning candidates for review and promotion. Common requests include \"runtime learnings\", \"record learning\", \"retrieve learning\", \"repo memory\"."
+description: "Record learning candidates for review and promotion. Use when the user asks to record learning candidates for review and promotion. Natural requests include \"Please record learning candidates for review and promotion.\" or \"今回の学びを記録して\"."
 ---
 
 # build-runtime-learnings

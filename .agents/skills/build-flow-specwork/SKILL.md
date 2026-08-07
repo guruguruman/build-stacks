@@ -1,6 +1,6 @@
 ---
 name: build-flow-specwork
-description: "Turn context into a specification or tracer-bullet ticket set. Use when the user asks to turn context into a specification or tracer-bullet ticket set. Common requests include \"write a spec\", \"split this into tickets\", \"tracer bullet tickets\"."
+description: "Turn context into a specification or tracer-bullet ticket set. Use when the user asks to turn context into a specification or tracer-bullet ticket set. Natural requests include \"Please turn context into a specification or tracer-bullet ticket set.\" or \"この内容を仕様書かチケットにして\". Do not use before material product decisions are settled."
 ---
 
 # build-flow-specwork
@@ -21,10 +21,12 @@ Choose one explicit mode: `spec` synthesizes settled context; `tickets` decompos
 3. Add blocking edges only for genuine prerequisites. Tickets with no blockers form the initial frontier.
 4. For a wide mechanical refactor, use expand, migrate batches, and contract instead of pretending each layer is a vertical slice.
 5. Present titles, delivered behavior, and blockers. Iterate until approved.
-6. Publish using tracker conventions from `docs/agents/issue-tracker.md`:
-   - local: one file per ticket under `.build-stacks/issues/<feature>/`;
-   - GitHub: preflight `gh`, request explicit approval, then use the installed `build-flow-projectsetup` GitHub helper to create issues in dependency order;
-   - unsupported tracker: stop with an adapter handoff.
+6. Detect tracker conventions from repository docs, remotes, issue templates, and existing examples. Do not require prior project setup.
+   - local: preview, then write one file per ticket under `.build-stacks/issues/<feature>/`;
+   - GitHub: run `gh auth status`, resolve the repository with `gh repo view --json nameWithOwner`, inspect issue templates and existing labels, then preview every issue;
+   - unsupported tracker: produce a local handoff without claiming executable support.
+7. For an explicitly approved GitHub publication, use `gh issue create --title <title> --body-file <file>` directly in dependency order. Record returned URLs under `.build-stacks/issues/<feature>/published.json` and check those URLs plus matching open titles before retrying so partial failures do not create duplicates.
+8. Match the user's language and repository style. Do not include skill names, model attribution, or AI boilerplate in issue content. Add existing labels only when they fit; never create a fixed taxonomy implicitly.
 
 Use [spec-template.md](assets/spec-template.md) and [ticket-template.md](assets/ticket-template.md).
 

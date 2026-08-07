@@ -1,6 +1,6 @@
 ---
 name: build-recipe-discovery
-description: "Shape ambiguous product requests into a design doc using forcing questions. Use when the user asks to shape ambiguous product requests into a design doc using forcing questions. Common requests include \"recipe discovery\", \"discovery\", \"shape the idea\", \"product brief\"."
+description: "Shape ambiguous product requests into a design doc using forcing questions. Use when the user asks to shape ambiguous product requests into a design doc using forcing questions. Natural requests include \"Please shape ambiguous product requests into a design doc using forcing questions.\" or \"曖昧なアイデアを整理して\". Do not use for an already approved implementation plan."
 ---
 
 # build-recipe-discovery
@@ -44,6 +44,14 @@ Model discovery as a decision tree. Facts are the agent's job; material preferen
 
 When a round resolves or changes canonical domain language, use `build-flow-domainmodeling` if installed. Keep `CONTEXT.md` free of implementation details and offer an ADR only for a hard-to-reverse, surprising trade-off.
 
+### Multi-session decision work
+
+When the decision frontier will exceed one session, read [decision-artifacts.md](references/decision-artifacts.md) and keep one indexed decision map without creating a second coordinator.
+
+### External questionnaire mode
+
+When the user explicitly wants questions for an external expert, read [decision-artifacts.md](references/decision-artifacts.md) and produce the focused questionnaire as this skill's output mode.
+
 ---
 
 ## Product Knowledge Context
@@ -82,7 +90,7 @@ echo "$SLUG"
 
 If .build-stacks/learnings exists, inspect relevant recent notes before repeating an investigation. If absent, continue without treating it as a failure.
 
-5. **Ask: what's your goal with this?** This is a real question, not a formality. The answer determines everything about how the session runs.
+5. **Ask: what's your goal with this?** The answer determines how the session runs.
 
    Via AskUserQuestion, ask:
 

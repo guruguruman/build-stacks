@@ -19,6 +19,8 @@
     "smoke:all": "node scripts/apm-skill-install-smoke.mjs --target all",
     "smoke:packages": "node scripts/apm-skill-install-smoke.mjs --packages",
     "smoke:codex-activation-install": "node scripts/codex-skill-activation-smoke.mjs --install-only",
+    "smoke:codex-activation-natural-ja": "node scripts/codex-skill-activation-smoke.mjs --all-skills --natural-ja",
+    "smoke:codex-activation-natural-en": "node scripts/codex-skill-activation-smoke.mjs --all-skills --natural-en",
     "quality:verify": "node scripts/release-quality-verify.mjs",
     "release:verify": "node scripts/release-verify.mjs",
     "test": "node --test"

@@ -1,6 +1,6 @@
 ---
 name: build-recipe-research
-description: "Research questions against primary sources and capture cited findings. Use when the user asks to research questions against primary sources and capture cited findings. Common requests include \"research this\", \"check primary sources\", \"write a cited research note\"."
+description: "Research questions against primary sources and capture cited findings. Use when the user asks to research questions against primary sources and capture cited findings. Natural requests include \"Please research questions against primary sources and capture cited findings.\" or \"一次情報を調べて出典付きでまとめて\". Do not use for debugging a concrete defect."
 ---
 
 # build-recipe-research

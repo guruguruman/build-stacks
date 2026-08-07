@@ -19,6 +19,8 @@ const systemSkillsSnapshotRoot = join(codexRuntimeRoot, "system-skills-snapshot"
 const keepCodexSmokeWorkspace = process.env.BUILD_CODEX_SMOKE_KEEP === "1" || process.env.BUILD_CODEX_E2E_KEEP === "1";
 const installOnlySmokeMode = process.argv.includes("--install-only");
 const allSkillsSmokeMode = process.argv.includes("--all-skills");
+const naturalJapaneseSmokeMode = process.argv.includes("--natural-ja");
+const naturalEnglishSmokeMode = process.argv.includes("--natural-en");
 const allSkillsSmokeTimeoutMs = Number(process.env.BUILD_CODEX_SMOKE_TIMEOUT_MS ?? process.env.BUILD_CODEX_E2E_TIMEOUT_MS ?? "600000") || 600000;
 const requiredSkillSmokeFields = ["skill", "intent_fit", "findings", "decisions", "evidence", "residual risk", "next handoff", "activation_quality"];
 const codexIsolationConfigArgs = [
@@ -279,12 +281,18 @@ async function runCodexExecSkillSmokeAsync(skill, logName, options = {}) {
     return runLoggedCommandAsync(buildCodexSkillSmokeCommand(skill), consumerAppRoot, logName, options);
 }
 function buildCodexSkillSmokeCommand(skill) {
+    const naturalMode = naturalJapaneseSmokeMode || naturalEnglishSmokeMode;
+    const naturalRequest = naturalJapaneseSmokeMode
+        ? skill.naturalActivationExamples.ja
+        : skill.naturalActivationExamples.en;
     const prompt = [
-        `${skill.name} を使ってください。`,
-        `この skill の意図: ${skill.summary}`,
-        "この tmp プロジェクトを対象に、この skill の意図に沿った実用的な計画・レビュー・判定を返してください。",
+        naturalMode ? naturalRequest : `${skill.name} を使ってください。`,
+        naturalMode
+            ? "skill名を指定されていない自然文として扱い、この依頼に最も適合する公開skillを選んでください。"
+            : `この skill の意図: ${skill.summary}`,
+        "この tmp プロジェクトを対象に、選んだskillの意図に沿った実用的な計画・レビュー・判定を返してください。",
         "実装やファイル変更は不要です。外部 write、deploy、merge、認証操作、cookie import は行わないでください。",
-        "最終応答に skill, intent_fit, findings, decisions, evidence, residual risk, next handoff, activation_quality を含めてください。",
+        "最終応答に `skill: <選択した公開skill名>` を独立した1行で書き、intent_fit, findings, decisions, evidence, residual risk, next handoff, activation_quality を含めてください。",
         "activation_quality の理由は activation_notes に分離してください。",
         "最終行は必ず `activation_quality: pass`、`activation_quality: warn`、`activation_quality: fail` のいずれか 1 行だけにしてください。"
     ].join("\n");
@@ -485,6 +493,9 @@ function collectSkillSmokeQualityFailures(index) {
         if (!buildActivationQualityPattern().test(item.finalText)) {
             skillSmokeFailures.push(`${item.name}: activation_quality must be the final line and pass, warn, or fail`);
         }
+        if ((naturalJapaneseSmokeMode || naturalEnglishSmokeMode) && !new RegExp(`(?:^|\\n)(?:[-*]\\s*)?skill:\\s*${escapeRegExp(item.name)}\\s*$`, "im").test(item.finalText)) {
+            skillSmokeFailures.push(`${item.name}: natural-language request selected a different skill`);
+        }
     }
     return skillSmokeFailures;
 }
@@ -545,4 +556,8 @@ function shellQuoteArg(value) {
     if (/^[A-Za-z0-9_./:=@-]+$/.test(value))
         return value;
     return `'${value.replaceAll("'", "'\\''")}'`;
+}
+
+function escapeRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

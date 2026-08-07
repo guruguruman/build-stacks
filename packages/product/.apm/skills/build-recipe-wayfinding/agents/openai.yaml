@@ -1,4 +1,0 @@
-interface:
-  display_name: "Recipe Wayfinding"
-  short_description: "Map and resolve decision work that exceeds one..."
-  default_prompt: "Use $build-recipe-wayfinding to map and resolve decision work that exceeds one implementation session."

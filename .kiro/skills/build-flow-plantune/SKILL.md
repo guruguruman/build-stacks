@@ -1,6 +1,6 @@
 ---
 name: build-flow-plantune
-description: "Tune plan scope, ordering, omissions, and handoffs. Use when the user asks to tune plan scope, ordering, omissions, and handoffs. Common requests include \"flow plantune\", \"tune the plan\", \"plan tuning\", \"scope review\"."
+description: "Tune plan scope, ordering, omissions, and handoffs. Use when the user asks to tune plan scope, ordering, omissions, and handoffs. Natural requests include \"Please tune plan scope, ordering, omissions, and handoffs.\" or \"この実装計画を具体化して\". Do not use when the user explicitly asks for an engineering manager or another named role stance; the named role owns that review."
 ---
 
 # build-flow-plantune

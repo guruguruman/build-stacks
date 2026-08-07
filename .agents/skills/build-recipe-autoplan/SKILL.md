@@ -1,6 +1,6 @@
 ---
 name: build-recipe-autoplan
-description: "Create and harden implementation plans through founder, design, engineering, and DX review. Use when the user asks to create and harden implementation plans through founder, design, engineering, and DX review. Common requests include \"recipe autoplan\", \"auto plan\", \"automatic review\", \"plan review chain\"."
+description: "Create and harden implementation plans through founder, design, engineering, and DX review. Use when the user asks to create and harden implementation plans through founder, design, engineering, and DX review. Natural requests include \"Please create and harden implementation plans through founder, design, engineering, and DX review.\" or \"複数の専門視点で計画を自動レビューして\". Do not use for one explicitly named review role."
 ---
 
 # build-recipe-autoplan

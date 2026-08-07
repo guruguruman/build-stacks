@@ -1,6 +1,6 @@
 ---
 name: build-browser-pairagent
-description: "Browser QA handoff packets for pair-agent collaboration. Use when the user asks to prepare browser QA handoff packets for pair-agent collaboration. Common requests include \"browser pairagent\", \"pair agent handoff\", \"browser QA packet\", \"handoff packet\"."
+description: "Browser QA handoff packets for pair-agent collaboration. Use when the user asks to prepare browser QA handoff packets for pair-agent collaboration. Natural requests include \"Please prepare browser QA handoff packets for pair-agent collaboration.\" or \"ブラウザQAの引き継ぎ資料を作って\"."
 ---
 
 # build-browser-pairagent

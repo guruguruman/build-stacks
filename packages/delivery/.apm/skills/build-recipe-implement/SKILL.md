@@ -1,6 +1,6 @@
 ---
 name: build-recipe-implement
-description: "Implement an approved spec with tight feedback loops and optional TDD. Use when the user asks to implement an approved spec with tight feedback loops and optional TDD. Common requests include \"implement this spec\", \"TDD\", \"red green refactor\"."
+description: "Implement an approved spec with tight feedback loops and optional TDD. Use when the user asks to implement an approved spec with tight feedback loops and optional TDD. Natural requests include \"Please implement an approved spec with tight feedback loops and optional TDD.\" or \"承認済みの仕様をTDDで実装して\". Do not use for review-only requests or unresolved merge conflicts."
 ---
 
 # build-recipe-implement

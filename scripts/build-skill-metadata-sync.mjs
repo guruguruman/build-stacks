@@ -37,8 +37,10 @@ function syncSkillDescription(path, skill, write) {
 }
 
 function renderSkillDescription(skill) {
-    const examples = skill.activationExamples.filter((example) => example !== skill.name).slice(0, 4);
-    return `${skill.summary} Use when the user asks to ${skill.action}. Common requests include ${examples.map((example) => JSON.stringify(example)).join(", ")}.`;
+    const { en: english, ja: japanese } = skill.naturalActivationExamples;
+    const stance = skill.roleStance ? ` Stance: ${skill.roleStance}` : "";
+    const exclusion = skill.activationExclusions.length > 0 ? ` ${skill.activationExclusions[0]}` : "";
+    return `${skill.summary}${stance} Use when the user asks to ${skill.action}. Natural requests include ${JSON.stringify(english)} or ${JSON.stringify(japanese)}.${exclusion}`;
 }
 
 if (failures.length > 0) {

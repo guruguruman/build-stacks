@@ -1,6 +1,6 @@
 ---
 name: build-runtime-session
-description: "Save and restore session snapshots under .build-stacks. Use when the user asks to save and restore session snapshots under .build-stacks. Common requests include \"runtime session\", \"save session\", \"restore session\", \"working context\"."
+description: "Save and restore session snapshots under .build-stacks. Use when the user asks to save and restore session snapshots under .build-stacks. Natural requests include \"Please save and restore session snapshots under .build-stacks.\" or \"作業状況を保存して次回に引き継いで\"."
 ---
 
 # build-runtime-session
@@ -49,6 +49,7 @@ Use this mode only when a fresh session, different working directory, or collabo
 
 1. Resolve the operating-system temporary directory and create a collision-safe Markdown path there, never inside the repository.
 2. Summarize the goal, current state, settled decisions, open decisions, verification evidence, residual risk, and exact next action.
+   For multi-session decision work, also record the destination, linked decision map, unblocked frontier, remaining fog, and claimed task without duplicating task answers.
 3. Link existing plans, ADRs, issues, commits, and diffs instead of duplicating them.
 4. Include suggested installed `build-*` skills for the next session.
 5. Redact secrets, personal data, private URLs, and credential-bearing commands.

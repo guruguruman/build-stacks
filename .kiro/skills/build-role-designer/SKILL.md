@@ -1,6 +1,6 @@
 ---
 name: build-role-designer
-description: "Product design review for UX plans, visual artifacts, flows, and honest browser status. Use when the user asks to review product UX, visual artifacts, flows, and browser evidence. Common requests include \"role designer\", \"designer review\", \"design review\", \"UX review\"."
+description: "Product design review for UX plans, visual artifacts, flows, and honest browser status. Stance: Judge interaction quality, visual hierarchy, accessibility, and whether rendered evidence supports the UX claim. Use when the user asks to review product UX, visual artifacts, flows, and browser evidence. Natural requests include \"Please review product UX, visual artifacts, flows, and browser evidence.\" or \"デザイナーとしてUXをレビューして\"."
 ---
 
 # build-role-designer

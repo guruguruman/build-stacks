@@ -5,5 +5,4 @@ targets: [copilot, claude, cursor, opencode, codex, gemini, windsurf, kiro]
 dependencies:
   apm:
     - path: ../browser
-    - path: ../workflow
   mcp: []

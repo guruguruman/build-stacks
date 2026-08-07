@@ -21,9 +21,19 @@ function verifyCatalog() {
     for (const skill of buildSkills) {
         if (!isValidBuildSkillName(skill.name)) failures.push(`invalid skill name: ${skill.name}`);
         if (!buildPackages.some((pkg) => pkg.id === skill.package)) failures.push(`unknown package for ${skill.name}: ${skill.package}`);
-        if (skill.activationExamples.length === 0) failures.push(`missing activation examples: ${skill.name}`);
+        if (!skill.activationExamples.some((example) => /[A-Za-z]/.test(example))) failures.push(`missing English activation example: ${skill.name}`);
+        if (!skill.activationExamples.some((example) => /[\u3040-\u30ff\u3400-\u9fff]/u.test(example))) failures.push(`missing Japanese activation example: ${skill.name}`);
+        if (!/^Please\s.+\.$/.test(skill.naturalActivationExamples?.en ?? "")) failures.push(`missing natural English activation request: ${skill.name}`);
+        if (!/[\u3040-\u30ff\u3400-\u9fff]/u.test(skill.naturalActivationExamples?.ja ?? "")) failures.push(`missing natural Japanese activation request: ${skill.name}`);
+        if (Object.values(skill.naturalActivationExamples ?? {}).some((example) => example.includes(skill.name))) failures.push(`natural activation request names the skill: ${skill.name}`);
+        if (!["coordinator", "role", "support", "internal"].includes(skill.routingKind)) failures.push(`invalid routing kind: ${skill.name}`);
+        if (skill.layer === "role" && !skill.roleStance) failures.push(`missing role stance: ${skill.name}`);
+        if (skill.routingKind !== "coordinator" && skill.orchestrates.length > 0) failures.push(`only coordinators may orchestrate: ${skill.name}`);
         for (const dependency of skill.benefitsFrom) {
             if (!expectedNames.has(dependency)) failures.push(`unknown benefitsFrom edge: ${skill.name} -> ${dependency}`);
+        }
+        for (const dependency of skill.orchestrates) {
+            if (!expectedNames.has(dependency)) failures.push(`unknown orchestration edge: ${skill.name} -> ${dependency}`);
         }
     }
 }
@@ -72,8 +82,9 @@ function verifySkill(packageId, directory) {
         failures.push(`description must be a valid quoted scalar: ${path}`);
     }
     if (!/(?:^|[.!?]\s)(?:Use|Apply) when\b/.test(description)) failures.push(`description must state its activation intent: ${path}`);
+    if (!/[\u3040-\u30ff\u3400-\u9fff]/u.test(description)) failures.push(`description must include a Japanese natural-language trigger: ${path}`);
     if (description.length > 1024) failures.push(`description exceeds 1024 characters: ${path}`);
-    if (!/^[\x00-\x7F]*$/.test(frontmatter)) failures.push(`frontmatter must be ASCII-only: ${path}`);
+    if (!/^[\x00-\x7F]+$/.test(declaredName ?? "")) failures.push(`frontmatter name must be ASCII-only: ${path}`);
     const lineCount = body.split("\n").length;
     const approximateTokens = Math.ceil(body.length / 4);
     if (lineCount > 500) failures.push(`${path} exceeds 500 lines: ${lineCount}`);

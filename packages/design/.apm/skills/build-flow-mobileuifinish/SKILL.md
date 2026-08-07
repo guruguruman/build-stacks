@@ -1,6 +1,6 @@
 ---
 name: build-flow-mobileuifinish
-description: "Score and finish native or cross-platform mobile UI with real-screen evidence. Use when the user asks to score and finish native or cross-platform mobile UI with real-screen evidence. Common requests include \"flow mobileuifinish\", \"finish the mobile UI\", \"mobile UI review\", \"polish this mobile UI\"."
+description: "Score and finish native or cross-platform mobile UI with real-screen evidence. Use when the user asks to score and finish native or cross-platform mobile UI with real-screen evidence. Natural requests include \"Please score and finish native or cross-platform mobile UI with real-screen evidence.\" or \"モバイルUIを実画面で仕上げて\". Do not use for report-only review without fixes."
 ---
 
 # build-flow-mobileuifinish
