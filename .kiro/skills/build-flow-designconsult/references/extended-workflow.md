@@ -29,7 +29,7 @@ Use `build-role-designer` as the design-review lens when an outside critique is 
 
 This is the soul of the skill. Propose EVERYTHING as one coherent package.
 
-**AskUserQuestion Q2 — present the full proposal with SAFE/RISK breakdown:**
+**available user-input mechanism Q2 — present the full proposal with SAFE/RISK breakdown:**
 
 ```
 Based on [product context] and [research findings / my design knowledge]:
@@ -134,7 +134,7 @@ When the user wants to change a specific section, go deep on that section:
 - **Aesthetic:** Walk through which directions fit their product and why
 - **Layout/Spacing/Motion:** Present the approaches with concrete tradeoffs for their product type
 
-Each drill-down is one focused AskUserQuestion. After the user decides, re-check coherence with the rest of the system.
+Each drill-down is one focused available user-input mechanism. After the user decides, re-check coherence with the rest of the system.
 
 ---
 
@@ -165,7 +165,7 @@ Run quality check on each variant:
 $D check --image "$_DESIGN_DIR/variant-A.png" --brief "<the original brief>"
 ```
 
-Show each variant inline (Read tool on each PNG) for instant preview.
+Show each variant inline (available file-reading capability on each PNG) for instant preview.
 
 **Before presenting to the user, self-gate:** For each variant, ask yourself: *"Would
 a human designer be embarrassed to put their name on this?"* If yes, discard the
@@ -194,7 +194,7 @@ After the user picks a direction:
 Generate a polished HTML preview page and open it in the user's browser. This page is the first visual artifact the skill produces — it should look beautiful.
 
 ```bash
-PREVIEW_FILE="/tmp/design-consultation-preview-$(date +%s).html"
+PREVIEW_FILE="/tmpbuild-flow-designconsult-preview-$(date +%s).html"
 ```
 
 Write the preview HTML to `$PREVIEW_FILE`, then open it:
@@ -295,7 +295,7 @@ If `$D extract` was used in Phase 5 (Path A), use the extracted tokens as the pr
 ## Decisions Log
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| [today] | Initial design system created | Created by /design-consultation based on [product context / research] |
+| [today] | Initial design system created | Created by build-flow-designconsult based on [product context / research] |
 ```
 
 **Optionally write `.build-stacks/config/design-system.md`** with this guidance when the user wants durable repo-local runtime guidance. Do not edit generated install output:
@@ -308,7 +308,7 @@ Do not deviate without explicit user approval.
 In QA mode, flag any code that doesn't match DESIGN.md.
 ```
 
-**AskUserQuestion Q-final — show summary and confirm:**
+**available user-input mechanism Q-final — show summary and confirm:**
 
 List all decisions. Flag any that used agent defaults without explicit user confirmation (the user should know what they're shipping). Options:
 - A) Ship it — write DESIGN.md and `.build-stacks/config/design-system.md`
@@ -317,7 +317,7 @@ List all decisions. Flag any that used agent defaults without explicit user conf
 
 After shipping DESIGN.md, if the session produced screen-level mockups or page layouts
 (not just system-level tokens), suggest:
-"Want to see this design system as working Pretext-native HTML? Run /design-html."
+"Want to see this design system as working Pretext-native HTML? Run build-flow-designhtml."
 
 ---
 

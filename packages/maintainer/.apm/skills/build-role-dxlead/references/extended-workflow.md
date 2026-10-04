@@ -32,13 +32,13 @@ Pattern:
 4. Load Hall of Fame reference for this pass (read relevant section from references/dx-hall-of-fame.md)
 5. Fix: Edit the plan to add what's missing
 6. Re-rate: "Now 7/10, still missing [specific gap]"
-7. AskUserQuestion if there's a genuine DX choice to resolve
+7. available user-input mechanism if there's a genuine DX choice to resolve
 8. Fix again until 10 or user says "good enough, move on"
 
 **Mode-specific behavior:**
 - **DX EXPANSION:** After fixing to 10, also ask "What would make this dimension
   best-in-class? What would make [persona] rave about it?" Present expansions as
-  individual opt-in AskUserQuestions.
+  individual opt-in available user-input mechanisms.
 - **DX POLISH:** Fix every gap. No shortcuts. Trace each issue to specific files/lines.
 - **DX TRIAGE:** Only flag gaps that would block adoption (score below 5). Skip gaps
   that are nice-to-have (score 5-7).
@@ -95,7 +95,7 @@ time chosen in 0C.
 Stripe test: Can a [persona from 0A] go from "never heard of this" to "it worked"
 in one terminal session without leaving the terminal?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY. Reference the persona.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY. Reference the persona.
 
 ### Pass 2: API/CLI/SDK Design (Usable + Useful)
 
@@ -119,7 +119,7 @@ Evaluate:
 
 Good API design test: Can a [persona] use this API correctly after seeing one example?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
 ### Pass 3: Error Messages & Debugging (Fight Uncertainty)
 
@@ -144,7 +144,7 @@ Also evaluate:
 - **Debug mode**: Verbose output available?
 - **Stack traces**: Useful or internal framework noise?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
 ### Pass 4: Documentation & Learning (Findable + Learn by Doing)
 
@@ -164,7 +164,7 @@ Evaluate:
 - **Versioning**: Docs match the version dev is using?
 - **Tutorials vs references**: Both exist?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
 ### Pass 5: Upgrade & Migration Path (Credible)
 
@@ -179,7 +179,7 @@ Evaluate:
 - **Codemods**: Automated migration scripts?
 - **Versioning strategy**: Semantic versioning? Clear policy?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
 ### Pass 6: Developer Environment & Tooling (Valuable + Accessible)
 
@@ -200,7 +200,7 @@ Evaluate:
 - **Local env reproducibility**: Works across OS, package managers, containers, proxies?
 - **Observability/testability**: Dry-run mode? Verbose output? Sample apps? Fixtures?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
 ### Pass 7: Community & Ecosystem (Findable + Desirable)
 
@@ -216,7 +216,7 @@ Evaluate:
 - **Contributing guide**: Process clear?
 - **Pricing transparency**: No surprise bills?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
 ### Pass 8: DX Measurement & Feedback Loops (Implement + Refine)
 
@@ -229,22 +229,22 @@ Evaluate:
 - **Journey analytics**: Where do devs drop off?
 - **Feedback mechanisms**: Bug reports? NPS? Feedback button?
 - **Friction audits**: Periodic reviews planned?
-- **Boomerang readiness**: Will /devex-review be able to measure reality vs. plan?
+- **Boomerang readiness**: Will build-role-dxlead be able to measure reality vs. plan?
 
-**STOP.** AskUserQuestion once per issue. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Recommend + WHY.
 
-### Appendix: Claude Code Skill DX Checklist
+### Appendix: host environment.skill DX Checklist
 
-**Conditional: only run when product type includes "Claude Code skill".**
+**Conditional: only run when product type includes "host environment.skill".**
 
 This is NOT a scored pass. It's a checklist of proven patterns from build-stacks's own DX.
 
-Load reference: Read the "## Claude Code Skill DX Checklist" section from
+Load reference: Read the "## host environment.skill DX Checklist" section from
 [dx-hall-of-fame.md](dx-hall-of-fame.md).
 
 Check each item. For any unchecked item, explain what's missing and suggest the fix.
 
-**STOP.** AskUserQuestion for any item that requires a design decision.
+**STOP.** Use an available user-input mechanism for any item that requires a design decision.
 
 ## Codex Plan Review
 
@@ -256,10 +256,10 @@ in the context of who is using it and what they're competing against.
 
 ## CRITICAL RULE — How to ask questions
 
-Follow the AskUserQuestion format from the Preamble above. Additional rules for
+Follow an available user-input mechanism format from the Preamble above. Additional rules for
 DX reviews:
 
-* **One issue = one AskUserQuestion call.** Never combine multiple issues.
+* **One issue = one user-input request.** Never combine multiple issues.
 * **Ground every question in evidence.** Reference the persona, competitive benchmark,
   empathy narrative, or friction trace. Never ask a question in the abstract.
 * **Frame pain from the persona's perspective.** Not "developers would be frustrated"
@@ -270,9 +270,9 @@ DX reviews:
   to a specific principle (e.g., "This violates 'zero friction at T0' because
   [persona] needs 3 extra config steps before their first API call").
 * **Escape hatch (tightened):** If a section has zero findings, state "No issues,
-  moving on" and proceed. If it has findings, use AskUserQuestion for each — a
+  moving on" and proceed. If it has findings, use an available user-input mechanism for each — a
   gap with an "obvious fix" is still a gap and still needs user approval before
-  any change lands in the plan. Only skip AskUserQuestion when the fix is
+  any change lands in the plan. Only skip available user-input mechanism when the fix is
   genuinely trivial AND there are no meaningful DX alternatives. When in doubt, ask.
 * Assume the user hasn't looked at this window in 20 minutes. Re-ground every question.
 
@@ -304,7 +304,7 @@ Existing docs, examples, error handling, and DX patterns that the plan should re
 
 ### TODOS.md updates
 After all review passes are complete, present each potential TODO as its own individual
-AskUserQuestion. Never batch. For DX debt: missing error messages, unspecified upgrade
+available user-input mechanism. Never batch. For DX debt: missing error messages, unspecified upgrade
 paths, documentation gaps, missing SDK languages. Each TODO gets:
 * **What:** One-line description
 * **Why:** The concrete developer pain it causes
@@ -378,7 +378,7 @@ DX IMPLEMENTATION CHECKLIST
 ```
 
 ### Unresolved Decisions
-If any AskUserQuestion goes unanswered, note here. Never silently default.
+If any available user-input mechanism goes unanswered, note here. Never silently default.
 
 ## Review Log
 
@@ -418,22 +418,22 @@ When a reusable lesson emerges, write it as a candidate under .build-stacks/lear
 
 After displaying the Review Readiness Dashboard, recommend next reviews:
 
-**Recommend /build-role-engmanager if eng review is not skipped globally** — DX issues often
+**Recommend build-role-engmanager if eng review is not skipped globally** — DX issues often
 have architectural implications. If this DX review found API design problems, error
 handling gaps, or CLI ergonomics issues, eng review should validate the fixes.
 
-**Suggest /build-role-designer if user-facing UI exists** — DX review focuses on
+**Suggest build-role-designer if user-facing UI exists** — DX review focuses on
 developer-facing surfaces; design review covers end-user-facing UI.
 
-**Recommend /devex-review after implementation** — the boomerang. Plan said TTHW would
-be [target from 0C]. Did reality match? Run /devex-review on the live product to find
+**Recommend build-role-dxlead after implementation** — the boomerang. Plan said TTHW would
+be [target from 0C]. Did reality match? Run build-role-dxlead on the live product to find
 out. This is where the competitive benchmark pays off: you have a concrete target to
 measure against.
 
-Use AskUserQuestion with applicable options:
-- **A)** Run /build-role-engmanager next (required gate)
-- **B)** Run /build-role-designer (only if UI scope detected)
-- **C)** Ready to implement, run /devex-review after shipping
+Use an available user-input mechanism with applicable options:
+- **A)** Run build-role-engmanager next (required gate)
+- **B)** Run build-role-designer (only if UI scope detected)
+- **C)** Ready to implement, run build-role-dxlead after shipping
 - **D)** Skip, I'll handle next steps manually
 
 ## Mode Quick Reference

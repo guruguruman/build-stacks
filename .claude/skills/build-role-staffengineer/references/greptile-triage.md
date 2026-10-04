@@ -1,6 +1,6 @@
 # Greptile Comment Triage
 
-Shared reference for fetching, filtering, and classifying Greptile build-role-staffengineer comments on GitHub PRs. Both `/build-role-staffengineer` (Step 2.5) and `build-recipe-ship` (Step 3.75) reference this document.
+Shared reference for fetching, filtering, and classifying Greptile build-role-staffengineer comments on GitHub PRs. Both `build-role-staffengineer` (Step 2.5) and `build-recipe-ship` (Step 3.75) reference this document.
 
 ---
 

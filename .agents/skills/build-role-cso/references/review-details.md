@@ -42,7 +42,7 @@ Goes beyond `npm audit`. Checks actual supply chain risk.
 Check who can modify workflows and what secrets they can access.
 
 **GitHub Actions analysis:** For each workflow file, check for:
-- Unpinned third-party actions (not SHA-pinned) — use Grep for `uses:` lines missing `@[sha]`
+- Unpinned third-party actions (not SHA-pinned) — search for `uses:` lines missing `@[sha]`
 - `pull_request_target` (dangerous: fork PRs get write access)
 - Script injection via `${{ github.event.* }}` in `run:` steps
 - Secrets as env vars (could leak in logs)
@@ -58,7 +58,7 @@ Find shadow infrastructure with excessive access.
 
 **Dockerfiles:** For each Dockerfile, check for missing `USER` directive (runs as root), secrets passed as `ARG`, `.env` files copied into images, exposed ports.
 
-**Config files with prod credentials:** Use Grep to search for database connection strings (postgres://, mysql://, mongodb://, redis://) in config files, excluding localhost/127.0.0.1/example.com. Check for staging/dev configs referencing prod.
+**Config files with prod credentials:** Search repository contents for database connection strings (postgres://, mysql://, mongodb://, redis://) in config files, excluding localhost/127.0.0.1/example.com. Check for staging/dev configs referencing prod.
 
 **IaC security:** For Terraform files, check for `"*"` in IAM actions/resources, hardcoded secrets in `.tf`/`.tfvars`. For K8s manifests, check for privileged containers, hostNetwork, hostPID.
 
@@ -70,11 +70,11 @@ Find shadow infrastructure with excessive access.
 
 Find inbound endpoints that accept anything.
 
-**Webhook routes:** Use Grep to find files containing webhook/hook/callback route patterns. For each file, check whether it also contains signature verification (signature, hmac, verify, digest, x-hub-signature, stripe-signature, svix). Files with webhook routes but NO signature verification are findings.
+**Webhook routes:** Search repository contents for files containing webhook/hook/callback route patterns. For each file, check whether it also contains signature verification (signature, hmac, verify, digest, x-hub-signature, stripe-signature, svix). Files with webhook routes but NO signature verification are findings.
 
-**TLS verification disabled:** Use Grep to search for patterns like `verify.*false`, `VERIFY_NONE`, `InsecureSkipVerify`, `NODE_TLS_REJECT_UNAUTHORIZED.*0`.
+**TLS verification disabled:** Search repository contents for patterns like `verify.*false`, `VERIFY_NONE`, `InsecureSkipVerify`, `NODE_TLS_REJECT_UNAUTHORIZED.*0`.
 
-**OAuth scope analysis:** Use Grep to find OAuth configurations and check for overly broad scopes.
+**OAuth scope analysis:** Search repository contents for OAuth configurations and check for overly broad scopes.
 
 **Verification approach (code-tracing only — NO live requests):** For webhook findings, trace the handler code to determine if signature verification exists anywhere in the middleware chain (parent router, middleware stack, API gateway config). Do NOT make actual HTTP requests to webhook endpoints.
 
@@ -86,7 +86,7 @@ Find inbound endpoints that accept anything.
 
 Check for AI/LLM-specific vulnerabilities. This is a new attack class.
 
-Use Grep to search for these patterns:
+Search repository contents for these patterns:
 - **Prompt injection vectors:** User input flowing into system prompts or tool schemas — look for string interpolation near system prompt construction
 - **Unsanitized LLM output:** `dangerouslySetInnerHTML`, `v-html`, `innerHTML`, `.html()`, `raw()` rendering LLM responses
 - **Tool/function calling without validation:** `tool_choice`, `function_call`, `tools=`, `functions=`
@@ -106,7 +106,7 @@ Use Grep to search for these patterns:
 
 ### Phase 8: Skill Supply Chain
 
-Scan installed Claude Code skills for malicious patterns. 36% of published skills have security flaws, 13.4% are outright malicious (Snyk ToxicSkills research).
+Scan installed host environment.skills for malicious patterns. 36% of published skills have security flaws, 13.4% are outright malicious (Snyk ToxicSkills research).
 
 **Tier 1 — repo-local (automatic):** Scan repo-local authored and generated skill directories for suspicious patterns:
 
@@ -114,12 +114,12 @@ Scan installed Claude Code skills for malicious patterns. 36% of published skill
 find packages/*/.apm/skills .agents/skills .cursor/skills .github/skills .opencode/skills -name SKILL.md -maxdepth 4 2>/dev/null
 ```
 
-Use Grep to search all local skill SKILL.md files for suspicious patterns:
+Search repository contents all local skill SKILL.md files for suspicious patterns:
 - `curl`, `wget`, `fetch`, `http`, `exfiltrat` (network exfiltration)
 - `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `env.`, `process.env` (credential access)
 - `IGNORE PREVIOUS`, `system override`, `disregard`, `forget your instructions` (prompt injection)
 
-**Tier 2 — global skills (requires permission):** Before scanning globally installed skills or user settings, use AskUserQuestion:
+**Tier 2 — global skills (requires permission):** Before scanning globally installed skills or user settings, use an available user-input mechanism:
 "Phase 8 can scan your globally installed AI coding agent skills and hooks for malicious patterns. This reads files outside the repo. Want to include this?"
 Options: A) Yes — scan global skills too  B) No — repo-local only
 
@@ -131,7 +131,7 @@ If approved, run the same Grep patterns on globally installed skill files and ch
 
 ### Phase 9: OWASP Top 10 Assessment
 
-For each OWASP category, perform targeted analysis. Use the Grep tool for all searches — scope file extensions to detected stacks from Phase 0.
+For each OWASP category, perform targeted analysis. Use the available code-search capability for all searches — scope file extensions to detected stacks from Phase 0.
 
 #### A01: Broken Access Control
 - Check for missing auth on controllers/routes (skip_before_action, skip_authorization, public, no_auth)
@@ -230,12 +230,12 @@ Before producing findings, run every candidate through this filter.
 
 **Two modes:**
 
-**Daily mode (default, `/cso`):** 8/10 confidence gate. Zero noise. Only report what you're sure about.
+**Daily mode (default, `build-role-cso`):** 8/10 confidence gate. Zero noise. Only report what you're sure about.
 - 9-10: Certain exploit path. Could write a PoC.
 - 8: Clear vulnerability pattern with known exploitation methods. Minimum bar.
 - Below 8: Do not report.
 
-**Comprehensive mode (`/cso --comprehensive`):** 2/10 confidence gate. Filter true noise only (test fixtures, documentation, placeholders) but include anything that MIGHT be a real issue. Flag these as `TENTATIVE` to distinguish from confirmed findings.
+**Comprehensive mode (`build-role-cso --comprehensive`):** 2/10 confidence gate. Filter true noise only (test fixtures, documentation, placeholders) but include anything that MIGHT be a real issue. Flag these as `TENTATIVE` to distinguish from confirmed findings.
 
 **Hard exclusions — automatically discard findings matching these:**
 
@@ -297,12 +297,12 @@ Mark each finding as:
 
 When a finding is VERIFIED, search the entire codebase for the same vulnerability pattern. One confirmed SSRF means there may be 5 more. For each verified finding:
 1. Extract the core vulnerability pattern
-2. Use the Grep tool to search for the same pattern across all relevant files
+2. Use the available code-search capability to search for the same pattern across all relevant files
 3. Report variants as separate findings linked to the original: "Variant of Finding #N"
 
 **Parallel Finding Verification:**
 
-For each candidate finding, launch an independent verification sub-task using the Agent tool. The verifier has fresh context and cannot see the initial scan's reasoning — only the finding itself and the FP filtering rules.
+For each candidate finding, launch an independent verification sub-task using the isolated-reviewer capability. The verifier has fresh context and cannot see the initial scan's reasoning — only the finding itself and the FP filtering rules.
 
 Prompt each verifier with:
 - The file path and line number ONLY (avoid anchoring)
@@ -311,7 +311,7 @@ Prompt each verifier with:
 
 Launch all verifiers in parallel. Discard findings where the verifier scores below 8 (daily mode) or below 2 (comprehensive mode).
 
-If the Agent tool is unavailable, self-verify by re-reading code with a skeptic's eye. Note: "Self-verified — independent sub-task unavailable."
+If the isolated-reviewer capability is unavailable, self-verify by re-reading code with a skeptic's eye. Note: "Self-verified — independent sub-task unavailable."
 
 ### Phase 13: Findings Report + Trend Tracking + Remediation
 

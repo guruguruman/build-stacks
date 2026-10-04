@@ -12,7 +12,7 @@ If no findings: output `NO FINDINGS` and nothing else.
 
 ### Dead Code & Unused Imports
 - Variables assigned but never read in the changed files
-- Functions/methods defined but never called (check with Grep across the repo)
+- Functions/methods defined but never called (search references across the repository)
 - Imports/requires that are no longer referenced after the change
 - Commented-out code blocks (either remove or explain why they exist)
 

@@ -7,7 +7,7 @@ Review the `git diff origin/main` output for the issues listed below. Be specifi
 **Two-pass build-role-staffengineer:**
 - **Pass 1 (CRITICAL):** Run SQL & Data Safety, Race Conditions, LLM Output Trust Boundary, Shell Injection, and Enum Completeness first. Highest severity.
 - **Pass 2 (INFORMATIONAL):** Run remaining categories below. Lower severity but still actioned.
-- **Specialist categories (handled by parallel subagents, NOT this checklist):** Test Gaps, Dead Code, Magic Numbers, Conditional Side Effects, Performance & Bundle Impact, Crypto & Entropy. Use [testing.md](testing.md), [maintainability.md](maintainability.md), [performance.md](performance.md), [security.md](security.md), and the other specialist references in this directory.
+- **Specialist categories (handled by parallel isolated reviewers, NOT this checklist):** Test Gaps, Dead Code, Magic Numbers, Conditional Side Effects, Performance & Bundle Impact, Crypto & Entropy. Use [testing.md](testing.md), [maintainability.md](maintainability.md), [performance.md](performance.md), [security.md](security.md), and the other specialist references in this directory.
 
 All findings get action via Fix-First Review: obvious mechanical fixes are applied automatically,
 genuinely ambiguous issues are batched into a single user question.
@@ -63,7 +63,7 @@ When the diff introduces a new enum value, status string, tier name, or type con
 - **Trace it through every consumer.** Read (don't just grep — READ) each file that switches on, filters by, or displays that value. If any consumer doesn't handle the new value, flag it. Common miss: adding a value to the frontend dropdown but the backend model/compute method doesn't persist it.
 - **Check allowlists/filter arrays.** Search for arrays or `%w[]` lists containing sibling values (e.g., if adding "revise" to tiers, find every `%w[quick lfg mega]` and verify "revise" is included where needed).
 - **Check `case`/`if-elsif` chains.** If existing code branches on the enum, does the new value fall through to a wrong default?
-To do this: use Grep to find all references to the sibling values (e.g., grep for "lfg" or "mega" to find all tier consumers). Read each match. This step requires reading code OUTSIDE the diff.
+To do this, search for every sibling value (for example, "lfg" or "mega") and read each matching consumer. This step requires reading code outside the diff.
 
 ### Pass 2 — INFORMATIONAL
 
@@ -122,7 +122,7 @@ To do this: use Grep to find all references to the sibling values (e.g., grep fo
 ## Severity Classification
 
 ```
-CRITICAL (highest severity):      INFORMATIONAL (main agent):      SPECIALIST (parallel subagents):
+CRITICAL (highest severity):      INFORMATIONAL (main agent):      SPECIALIST (parallel isolated reviewers):
 ├─ SQL & Data Safety              ├─ Async/Sync Mixing             ├─ Testing specialist
 ├─ Race Conditions & Concurrency  ├─ Column/Field Name Safety      ├─ Maintainability specialist
 ├─ LLM Output Trust Boundary      ├─ Dead Code (version only)      ├─ Security specialist
@@ -143,7 +143,7 @@ lean toward AUTO-FIX (they're more mechanical).
 
 ## Fix-First Heuristic
 
-This heuristic is referenced by both `/build-role-staffengineer` and `build-recipe-ship`. It determines whether
+This heuristic is referenced by both `build-role-staffengineer` and `build-recipe-ship`. It determines whether
 the agent auto-fixes a finding or asks the user.
 
 ```

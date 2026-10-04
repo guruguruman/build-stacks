@@ -21,7 +21,8 @@ Generate an interactive Bash wizard only for steps that genuinely require a huma
 
 - Never echo, log, commit, screenshot, or include real secret values in evidence.
 - Do not write a secret to `.env`, CI, or a remote service without explicit approval at that stage.
-- Prefer stdin-based destinations such as `set_gh_secret`; never put a secret in command arguments.
+- Prefer stdin-based destinations such as `set_gh_secret <name> <value-variable>`; never put a secret in command arguments. Pass only the name of an allowlisted shell variable to secret-writing helpers.
+- Disable shell xtrace before reading or dereferencing a secret. Require a fresh human confirmation immediately before every GitHub secret or private environment-file write; refusal leaves the destination unchanged.
 - File persistence must use `umask 077`, mode `0600`, a same-directory temporary file, and atomic rename. Refuse multiline or non-portable dotenv values instead of using Bash `%q` as dotenv encoding.
 - Use allowlisted variable names and quoted values. Refuse arbitrary shell fragments as captured input.
 - The wizard must remain restartable and must confirm before irreversible actions.

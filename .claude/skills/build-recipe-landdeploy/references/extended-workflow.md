@@ -127,7 +127,7 @@ Explain in plain English: "When I merge, I'll check: has the code been reviewed 
 
 Tell the user: "That's everything I detected. Take a look at the table above — does this match how your project actually deploys?"
 
-Present the full dry-run results to the user via AskUserQuestion:
+Present the full dry-run results to the user through an available user-input mechanism:
 
 - **Re-ground:** "First deploy dry-run for [project] on branch [branch]. Above is what I detected about your deploy infrastructure. Nothing has been merged or deployed yet — this is just my understanding of your setup."
 - Show the infrastructure validation table from 1.5b above.
@@ -286,7 +286,7 @@ If not run, note as informational (not a blocker): "No adversarial review on rec
 **We are extra careful about deploys.** If engineering review is STALE (4+ commits since)
 or NOT RUN, offer to run a quick review inline before proceeding.
 
-Use AskUserQuestion:
+Use an available user-input mechanism:
 - **Re-ground:** "I noticed {the code review is stale / no code review has been run} on this branch. Since this code is about to go to production, I'd like to do a quick safety check on the diff before we merge. This is one of the ways I make sure nothing ships that shouldn't."
 - **RECOMMENDATION:** Choose A for a quick safety check. Choose B if you want the full
   review experience. Choose C only if you're confident in the code.
@@ -431,7 +431,7 @@ If there are WARNINGS but no blockers: list each warning and recommend A if
 warnings are minor, or B if warnings are significant.
 If everything is green: recommend A.
 
-Use AskUserQuestion:
+Use an available user-input mechanism:
 
 - **Re-ground:** "Ready to merge PR #NNN — '{title}' into {base}. Here's what I found."
   Show the report above.
@@ -551,7 +551,7 @@ Look for workflow names containing "deploy", "release", "production", or "cd". I
 
 3. If SCOPE_DOCS is the only scope that's true (no frontend, no backend, no config): skip verification entirely. Tell the user: "This was a docs-only change — nothing to deploy or verify. You're all set." Go to Step 9.
 
-4. If no deploy workflows detected and no URL provided: use AskUserQuestion once:
+4. If no deploy workflows detected and no URL provided: use an available user-input mechanism once:
    - **Re-ground:** "PR is merged, but I don't see a deploy workflow or a production URL for this project. If this is a web app, I can verify the deploy if you give me the URL. If it's a library or CLI tool, there's nothing to verify — we're done."
    - **RECOMMENDATION:** Choose B if this is a library/CLI tool. Choose A if this is a web app.
    - A) Here's the production URL: {let them type it}
@@ -562,7 +562,7 @@ Look for workflow names containing "deploy", "release", "production", or "cd". I
 If staging was detected in Step 1.5c (or from `.build-stacks/config/deploy.md`), and the changes
 include code (not docs-only), offer the staging-first option:
 
-Use AskUserQuestion:
+Use an available user-input mechanism:
 - **Re-ground:** "I found a staging environment at {staging URL or workflow}. Since this deploy includes code changes, I can verify everything works on staging first — before it hits production. This is the safest path: if something breaks on staging, production is untouched."
 - **RECOMMENDATION:** Choose A for maximum safety. Choose B if you're confident.
 - A) Deploy to staging first, verify it works, then go to production (Completeness: 10/10)
@@ -643,7 +643,7 @@ Record deploy start time. Show progress every 2 minutes: "Deploy is still runnin
 
 If deploy succeeds (`conclusion` is `success` or health check passes): Tell the user "Deploy finished successfully. Took {duration}. Now I'll verify the site is healthy." Record deploy duration, continue to Step 7.
 
-If deploy fails (`conclusion` is `failure`): use AskUserQuestion:
+If deploy fails (`conclusion` is `failure`): use an available user-input mechanism:
 - **Re-ground:** "The deploy workflow failed after the merge. The code is merged but may not be live yet. Here's what I can do:"
 - **RECOMMENDATION:** Choose A to investigate before reverting.
 - A) Let me look at the deploy logs to figure out what went wrong
@@ -708,7 +708,7 @@ Take an annotated screenshot as evidence.
 
 If all pass: Tell the user "Site is healthy. Page loaded in {X}s, no console errors, content looks good. Screenshot saved to {path}." Mark as HEALTHY, continue to Step 9.
 
-If any fail: show the evidence (screenshot path, console errors, perf numbers). Use AskUserQuestion:
+If any fail: show the evidence (screenshot path, console errors, perf numbers). Use an available user-input mechanism:
 - **Re-ground:** "I found some issues on the live site after the deploy. Here's what I see: {specific issues}. This might be temporary (caches clearing, CDN propagating) or it might be a real problem."
 - **RECOMMENDATION:** Choose based on severity — B for critical (site down), A for minor (console errors).
 - A) That's expected — the site is still warming up. Mark it as healthy.

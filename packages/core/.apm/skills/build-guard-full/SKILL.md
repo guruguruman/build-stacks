@@ -22,7 +22,7 @@ echo '{"skill":"guard","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","repo":"'$(basena
 
 ## Setup
 
-Ask the user which directory to use as the approved edit scope. Use AskUserQuestion:
+Ask the user which directory to use as the approved edit scope. Use an available user-input mechanism:
 
 - Question: "Which directory should I treat as the approved edit scope? I will ask before destructive commands and before editing outside it."
 - Text input (not multiple choice) — the user types a path.

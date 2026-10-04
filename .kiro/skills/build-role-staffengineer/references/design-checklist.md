@@ -22,9 +22,9 @@ If `SCOPE_FRONTEND=false`, skip the entire design build-role-staffengineer silen
 
 Each item is tagged with a detection confidence level:
 
-- **[HIGH]** — Reliably detectable via grep/pattern match. Definitive findings.
+- **[HIGH]** — Reliably detectable through repository pattern search. Definitive findings.
 - **[MEDIUM]** — Detectable via pattern aggregation or heuristic. Flag as findings but expect some noise.
-- **[LOW]** — Requires understanding visual intent. Present as: "Possible issue — verify visually or run /build-role-designer."
+- **[LOW]** — Requires understanding visual intent. Present as: "Possible issue — verify visually or run build-role-designer."
 
 ---
 
@@ -38,7 +38,7 @@ Each item is tagged with a detection confidence level:
 **ASK** (everything else — requires design judgment):
 - All AI slop findings, typography structure, spacing choices, interaction state gaps, DESIGN.md violations
 
-**LOW confidence items** → present as "Possible: [description]. Verify visually or run /build-role-designer." Never AUTO-FIX.
+**LOW confidence items** → present as "Possible: [description]. Verify visually or run build-role-designer." Never AUTO-FIX.
 
 ---
 
@@ -55,7 +55,7 @@ Design Review: N issues (X auto-fixable, Y need input, Z possible)
   Recommended fix: suggested fix
 
 **POSSIBLE (verify visually):**
-- [file:line] Possible issue — verify with /build-role-designer
+- [file:line] Possible issue — verify with build-role-designer
 ```
 
 Optional: `test_stub` — skeleton test code for this finding using the project's test framework.

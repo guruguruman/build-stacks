@@ -38,9 +38,9 @@ Evaluate:
 * For each new codepath or integration point, describe one realistic production failure scenario and whether the plan accounts for it.
 * **Distribution architecture:** If this introduces a new artifact (binary, package, container), how does it get built, published, and updated? Is the CI/CD pipeline part of the plan or deferred?
 
-For each issue found in this section, call AskUserQuestion individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one AskUserQuestion. Use the preamble's AskUserQuestion Format section. The AskUserQuestion call is a tool_use, not prose — call the tool directly. If no AskUserQuestion variant is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and ExitPlanMode; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
+For each issue found in this section, use an available user-input mechanism individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one available user-input mechanism. Use the preamble's available user-input mechanism Format section. Send the question through the available user-input mechanism and wait for the answer before continuing. If no user-input mechanism is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and finish the planning phase; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
 
-**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call ExitPlanMode until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading the AskUserQuestion schema via ToolSearch and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
+**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call finish the planning phase until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading an available user-input mechanism schema via capability discovery mechanism and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
 
 ## Confidence Calibration
 
@@ -55,9 +55,9 @@ Evaluate:
 * Areas that are over-engineered or under-engineered relative to my preferences.
 * Existing ASCII diagrams in touched files — are they still accurate after this change?
 
-For each issue found in this section, call AskUserQuestion individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one AskUserQuestion. Use the preamble's AskUserQuestion Format section. The AskUserQuestion call is a tool_use, not prose — call the tool directly. If no AskUserQuestion variant is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and ExitPlanMode; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
+For each issue found in this section, use an available user-input mechanism individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one available user-input mechanism. Use the preamble's available user-input mechanism Format section. Send the question through the available user-input mechanism and wait for the answer before continuing. If no user-input mechanism is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and finish the planning phase; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
 
-**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call ExitPlanMode until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading the AskUserQuestion schema via ToolSearch and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
+**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call finish the planning phase until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading an available user-input mechanism schema via capability discovery mechanism and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
 
 ### 3. Test review
 
@@ -65,11 +65,11 @@ For each issue found in this section, call AskUserQuestion individually. One iss
 
 Map changed codepaths to tests. Flag happy path, failure path, edge case, and regression coverage gaps with file-level evidence.
 
-For LLM/prompt changes: check the "Prompt/LLM changes" file patterns listed in README.md or project docs. If this plan touches ANY of those patterns, state which eval suites must be run, which cases should be added, and what baselines to compare against. Then use AskUserQuestion to confirm the eval scope with the user.
+For LLM/prompt changes: check the "Prompt/LLM changes" file patterns listed in README.md or project docs. If this plan touches ANY of those patterns, state which eval suites must be run, which cases should be added, and what baselines to compare against. Then use an available user-input mechanism to confirm the eval scope with the user.
 
-For each issue found in this section, call AskUserQuestion individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one AskUserQuestion. Use the preamble's AskUserQuestion Format section. The AskUserQuestion call is a tool_use, not prose — call the tool directly. If no AskUserQuestion variant is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and ExitPlanMode; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
+For each issue found in this section, use an available user-input mechanism individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one available user-input mechanism. Use the preamble's available user-input mechanism Format section. Send the question through the available user-input mechanism and wait for the answer before continuing. If no user-input mechanism is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and finish the planning phase; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
 
-**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call ExitPlanMode until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading the AskUserQuestion schema via ToolSearch and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
+**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call finish the planning phase until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading an available user-input mechanism schema via capability discovery mechanism and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
 
 ### 4. Performance review
 Evaluate:
@@ -78,9 +78,9 @@ Evaluate:
 * Caching opportunities.
 * Slow or high-complexity code paths.
 
-For each issue found in this section, call AskUserQuestion individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one AskUserQuestion. Use the preamble's AskUserQuestion Format section. The AskUserQuestion call is a tool_use, not prose — call the tool directly. If no AskUserQuestion variant is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and ExitPlanMode; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
+For each issue found in this section, use an available user-input mechanism individually. One issue per call. Present options, state your recommendation, explain WHY. Do NOT batch multiple issues into one available user-input mechanism. Use the preamble's available user-input mechanism Format section. Send the question through the available user-input mechanism and wait for the answer before continuing. If no user-input mechanism is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and finish the planning phase; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
 
-**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call ExitPlanMode until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading the AskUserQuestion schema via ToolSearch and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
+**STOP.** Do NOT proceed to the next review section, edit the plan file with the proposed fix, or call finish the planning phase until the user responds. An issue with an "obvious fix" is still an issue and still needs explicit user approval before it lands in the plan. Loading an available user-input mechanism schema via capability discovery mechanism and then writing the recommendation as chat prose is the failure mode this gate exists to prevent.
 
 ## Codex Plan Review
 
@@ -90,20 +90,20 @@ Use Codex as an optional reviewer for plans when available. Do not make the work
 
 Outside voice findings are INFORMATIONAL until the user explicitly approves each one.
 Do NOT incorporate outside voice recommendations into the plan without presenting each
-finding via AskUserQuestion and getting explicit approval. This applies even when you
+finding through an available user-input mechanism and getting explicit approval. This applies even when you
 agree with the outside voice. Cross-model consensus is a strong signal — present it as
 such — but the user makes the decision.
 
 ## CRITICAL RULE — How to ask questions
-Follow the AskUserQuestion format from the Preamble above. Additional rules for plan reviews:
-* **One issue = one AskUserQuestion call.** Never combine multiple issues into one question.
+Follow an available user-input mechanism format from the Preamble above. Additional rules for plan reviews:
+* **One issue = one user-input request.** Never combine multiple issues into one question.
 * Describe the problem concretely, with file and line references.
 * Present 2-3 options, including "do nothing" where that's reasonable.
 * For each option, specify in one line: effort (human: ~X / CC: ~Y), risk, and maintenance burden. If the complete option is only marginally more effort than the shortcut with CC, recommend the complete option.
 * **Map the reasoning to my engineering preferences above.** One sentence connecting your recommendation to a specific preference (DRY, explicit > clever, minimal diff, etc.).
 * Label with issue NUMBER + option LETTER (e.g., "3A", "3B").
-* **Coverage vs kind:** for every per-issue AskUserQuestion you raise in this review, decide whether the options differ in coverage or in kind. If coverage (e.g., more tests vs fewer, complete error handling vs happy-path-only, full edge-case coverage vs shortcut), include `Completeness: N/10` on each option. If kind (e.g., architectural choice between two different systems, posture-over-posture, A/B/C where each is a different kind of thing), skip the score and add one line: `Note: options differ in kind, not coverage — no completeness score.` Do NOT fabricate scores on kind-differentiated questions — filler scores are worse than no score.
-* **Escape hatch (tightened):** If a section has zero findings, state "No issues, moving on" and proceed. If it has findings, use AskUserQuestion for each — a finding with an "obvious fix" is still a finding and still needs user approval before any change lands in the plan. Only skip AskUserQuestion when the decision is genuinely trivial (e.g., a typo fix) AND there are no meaningful alternatives. When in doubt, ask.
+* **Coverage vs kind:** for every per-issue available user-input mechanism you raise in this review, decide whether the options differ in coverage or in kind. If coverage (e.g., more tests vs fewer, complete error handling vs happy-path-only, full edge-case coverage vs shortcut), include `Completeness: N/10` on each option. If kind (e.g., architectural choice between two different systems, posture-over-posture, A/B/C where each is a different kind of thing), skip the score and add one line: `Note: options differ in kind, not coverage — no completeness score.` Do NOT fabricate scores on kind-differentiated questions — filler scores are worse than no score.
+* **Escape hatch (tightened):** If a section has zero findings, state "No issues, moving on" and proceed. If it has findings, use an available user-input mechanism for each — a finding with an "obvious fix" is still a finding and still needs user approval before any change lands in the plan. Only skip available user-input mechanism when the decision is genuinely trivial (e.g., a typo fix) AND there are no meaningful alternatives. When in doubt, ask.
 
 ## Required outputs
 
@@ -114,7 +114,7 @@ Every plan review MUST produce a "NOT in scope" section listing work that was co
 List existing code/flows that already partially solve sub-problems in this plan, and whether the plan reuses them or unnecessarily rebuilds them.
 
 ### TODOS.md updates
-After all review sections are complete, present each potential TODO as its own individual AskUserQuestion. Never batch TODOs — one per question. Never silently skip this step. Follow the bundled TODOS format at `../../build-role-staffengineer/references/TODOS-format.md`.
+After all review sections are complete, present each potential TODO as its own individual available user-input mechanism. Never batch TODOs — one per question. Never silently skip this step. Follow the bundled TODOS format at `../../build-role-staffengineer/references/TODOS-format.md`.
 
 For each TODO, describe:
 * **What:** One-line description of the work.
@@ -141,7 +141,7 @@ If any failure mode has no test AND no error handling AND would be silent, flag 
 
 ### Worktree parallelization strategy
 
-Analyze the plan's implementation steps for parallel execution opportunities. This helps the user split work across git worktrees (via Claude Code's Agent tool with `isolation: "worktree"` or parallel workspaces).
+Analyze the plan's implementation steps for parallel execution opportunities. This helps the user split work across git worktrees (via host environment.s isolated-reviewer capability with `isolation: "worktree"` or parallel workspaces).
 
 **Skip if:** all steps touch the same primary module, or the plan has fewer than 2 independent workstreams. In that case, write: "Sequential implementation, no parallelization opportunity."
 
@@ -240,18 +240,18 @@ Save durable workflow outputs under .build-stacks with explicit file paths in th
 
 After displaying the Review Readiness Dashboard, check if additional reviews would be valuable. Read the dashboard output to see which reviews have already been run and whether they are stale.
 
-**Suggest /build-role-designer if UI changes exist and no design review has been run** — detect from the test diagram, architecture review, or any section that touched frontend components, CSS, views, or user-facing interaction flows. If an existing design review's commit hash shows it predates significant changes found in this eng review, note that it may be stale.
+**Suggest build-role-designer if UI changes exist and no design review has been run** — detect from the test diagram, architecture review, or any section that touched frontend components, CSS, views, or user-facing interaction flows. If an existing design review's commit hash shows it predates significant changes found in this eng review, note that it may be stale.
 
-**Mention /build-role-founder if this is a significant product change and no CEO review exists** — this is a soft suggestion, not a push. CEO review is optional. Only mention it if the plan introduces new user-facing features, changes product direction, or expands scope substantially.
+**Mention build-role-founder if this is a significant product change and no CEO review exists** — this is a soft suggestion, not a push. CEO review is optional. Only mention it if the plan introduces new user-facing features, changes product direction, or expands scope substantially.
 
 **Note staleness** of existing CEO or design reviews if this eng review found assumptions that contradict them, or if the commit hash shows significant drift.
 
 **If no additional reviews are needed** (or `skip_eng_review` is `true` in the dashboard config, meaning this eng review was optional): state "All relevant reviews complete. Run build-recipe-ship when ready."
 
-Use AskUserQuestion with only the applicable options:
-- **A)** Run /build-role-designer (only if UI scope detected and no design review exists)
-- **B)** Run /build-role-founder (only if significant product change and no CEO review exists)
+Use an available user-input mechanism with only the applicable options:
+- **A)** Run build-role-designer (only if UI scope detected and no design review exists)
+- **B)** Run build-role-founder (only if significant product change and no CEO review exists)
 - **C)** Ready to implement — run build-recipe-ship when done
 
 ## Unresolved decisions
-If the user does not respond to an AskUserQuestion or interrupts to move on, note which decisions were left unresolved. At the end of the review, list these as "Unresolved decisions that may bite you later" — never silently default to an option.
+If the user does not respond to an available user-input mechanism or interrupts to move on, note which decisions were left unresolved. At the end of the review, list these as "Unresolved decisions that may bite you later" — never silently default to an option.

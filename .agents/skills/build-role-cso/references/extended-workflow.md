@@ -52,7 +52,7 @@ Match findings across reports using the `fingerprint` field (sha256 of category 
 
 **Protection file check:** Check if the project has a `.gitleaks.toml` or `.secretlintrc`. If none exists, recommend creating one.
 
-**Remediation Roadmap:** For the top 5 findings, present via AskUserQuestion:
+**Remediation Roadmap:** For the top 5 findings, present through an available user-input mechanism:
 1. Context: The vulnerability, its severity, exploitation scenario
 2. RECOMMENDATION: Choose [X] because [reason]
 3. Options:
@@ -145,12 +145,12 @@ Save durable workflow outputs under .build-stacks with explicit file paths in th
 
 ## Disclaimer
 
-**This tool is not a substitute for a professional security audit.** /cso is an AI-assisted
+**This tool is not a substitute for a professional security audit.** build-role-cso is an AI-assisted
 scan that catches common vulnerability patterns — it is not comprehensive, not guaranteed, and
 not a replacement for hiring a qualified security firm. LLMs can miss subtle vulnerabilities,
 misunderstand complex auth flows, and produce false negatives. For production systems handling
-sensitive data, payments, or PII, engage a professional penetration testing firm. Use /cso as
+sensitive data, payments, or PII, engage a professional penetration testing firm. Use build-role-cso as
 a first pass to catch low-hanging fruit and improve your security posture between professional
 audits — not as your only line of defense.
 
-**Always include this disclaimer at the end of every /cso report output.**
+**Always include this disclaimer at the end of every build-role-cso report output.**

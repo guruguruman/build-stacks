@@ -1,6 +1,6 @@
 # TODOS.md Format Reference
 
-Shared reference for the canonical TODOS.md format. Referenced by `build-recipe-ship` (Step 5.5) and `/build-role-founder` (TODOS.md updates section) to ensure consistent TODO item structure.
+Shared reference for the canonical TODOS.md format. Referenced by `build-recipe-ship` (Step 5.5) and `build-role-founder` (TODOS.md updates section) to ensure consistent TODO item structure.
 
 ---
 

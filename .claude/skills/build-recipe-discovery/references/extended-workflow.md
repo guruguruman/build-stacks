@@ -73,7 +73,7 @@ Both are outcome-framed. Only one has the 'whoa.' Builder mode's job is to surfa
 
 ### Questions (generative, not interrogative)
 
-Ask these **ONE AT A TIME** via AskUserQuestion. The goal is to brainstorm and sharpen the idea, not interrogate.
+Ask these **ONE AT A TIME** through an available user-input mechanism. The goal is to brainstorm and sharpen the idea, not interrogate.
 
 - **What's the coolest version of this?** What would make it genuinely delightful?
 - **Who would you show this to?** What would make them say "whoa"?
@@ -103,7 +103,7 @@ grep -li "<keyword1>\|<keyword2>\|<keyword3>" .build-stacks/design-docs/$SLUG/*-
 
 If matches found, read the matching design docs and surface them:
 - "FYI: Related design found — '{title}' by {user} on {date} (branch: {branch}). Key overlap: {1-line summary of relevant section}."
-- Ask via AskUserQuestion: "Should we build on this prior design or start fresh?"
+- Ask through an available user-input mechanism: "Should we build on this prior design or start fresh?"
 
 This enables cross-team discovery — multiple users exploring the same project will see each other's design docs in `.build-stacks/design-docs/`.
 
@@ -115,22 +115,22 @@ If no matches found, proceed silently.
 
 Read ETHOS.md for the full Search Before Building framework (three layers, eureka moments). The preamble's Search Before Building section has the ETHOS.md path.
 
-After understanding the problem through questioning, search for what the world thinks. This is NOT competitive research (that's /design-consultation's job). This is understanding conventional wisdom so you can evaluate where it's wrong.
+After understanding the problem through questioning, search for what the world thinks. This is NOT competitive research (that's build-flow-designconsult's job). This is understanding conventional wisdom so you can evaluate where it's wrong.
 
-**Privacy gate:** Before searching, use AskUserQuestion: "I'd like to search for what the world thinks about this space to inform our discussion. This sends generalized category terms (not your specific idea) to a search provider. OK to proceed?"
+**Privacy gate:** Before searching, use an available user-input mechanism: "I'd like to search for what the world thinks about this space to inform our discussion. This sends generalized category terms (not your specific idea) to a search provider. OK to proceed?"
 Options: A) Yes, search away  B) Skip — keep this session private
 If B: skip this phase entirely and proceed to Phase 3. Use only in-distribution knowledge.
 
 When searching, use **generalized category terms** — never the user's specific product name, proprietary concept, or stealth idea. For example, search "task management app landscape" not "SuperTodo AI-powered task killer."
 
-If WebSearch is unavailable, skip this phase and note: "Search unavailable — proceeding with in-distribution knowledge only."
+If external search capability is unavailable, skip this phase and note: "Search unavailable — proceeding with in-distribution knowledge only."
 
-**Startup mode:** WebSearch for:
+**Startup mode:** external search capability for:
 - "[problem space] startup approach {current year}"
 - "[problem space] common mistakes"
 - "why [incumbent solution] fails" OR "why [incumbent solution] works"
 
-**Builder mode:** WebSearch for:
+**Builder mode:** external search capability for:
 - "[thing being built] existing solutions"
 - "[thing being built] open source alternatives"
 - "best [thing category] {current year}"
@@ -166,7 +166,7 @@ PREMISES:
 3. [statement] — agree/disagree?
 ```
 
-Use AskUserQuestion to confirm. If the user disagrees with a premise, revise understanding and loop back.
+Use an available user-input mechanism to confirm. If the user disagrees with a premise, revise understanding and loop back.
 
 ---
 
@@ -202,11 +202,11 @@ Rules:
 - One must be the **"minimal viable"** (fewest files, smallest diff, ships fastest).
 - One must be the **"ideal architecture"** (best long-term trajectory, most elegant).
 - One can be **creative/lateral** (unexpected approach, different framing of the problem).
-- If the second opinion (Codex or Claude subagent) proposed a prototype in Phase 3.5, consider using it as a starting point for the creative/lateral approach.
+- If the second opinion (Codex or independent external reviewer) proposed a prototype in Phase 3.5, consider using it as a starting point for the creative/lateral approach.
 
 **RECOMMENDATION:** Choose [X] because [one-line reason mapped to the founder's stated goal].
 
-Emit ONE AskUserQuestion that lists every alternative (A/B and optionally C) as numbered options, using the preamble's AskUserQuestion Format section. The AskUserQuestion call is a tool_use, not prose — write the question text and call the tool. If no AskUserQuestion variant is callable in this session, follow the preamble's "Tool resolution" fallback: in plan mode, write `## Decisions to confirm` into the plan file and ExitPlanMode; outside plan mode, output the decision brief as prose and stop. Never silently auto-decide.
+Use one available user-input mechanism that lists every alternative (A/B and optionally C) as numbered options, following the preamble's question format. Wait for the answer before continuing. If no user-input mechanism is callable in this session, write `## Decisions to confirm` into the plan artifact when one exists; otherwise output the decision brief and stop. Never silently auto-decide.
 
 **STOP.** Do NOT proceed to Phase 4.5 (Founder Signal Synthesis), Phase 5 (Design Doc), Phase 6 (Closing), or any design-doc generation until the user responds. A "clearly winning approach" is still an approach decision and still needs explicit user approval before it lands in the design doc. Writing the recommendation in chat prose and continuing forward is the failure mode this gate exists to prevent.
 
@@ -292,14 +292,14 @@ If `$PRIOR` exists, the new doc gets a `Supersedes:` field referencing it. This 
 Write to `.build-stacks/design-docs/{slug}/{user}-{branch}-design-{datetime}.md`.
 
 After writing the design doc, tell the user:
-**"Design doc saved to: {full path}. Other skills (/build-role-founder, /build-role-engmanager) will find it automatically."**
+**"Design doc saved to: {full path}. Other skills (build-role-founder, build-role-engmanager) will find it automatically."**
 
 ### Startup mode design doc template:
 
 ```markdown
 # Design: {title}
 
-Generated by /build-recipe-discovery on {date}
+Generated by build-recipe-discovery on {date}
 Branch: {branch}
 Repo: {owner/repo}
 Status: DRAFT
@@ -325,7 +325,7 @@ Supersedes: {prior filename — omit this line if first design on this branch}
 {from Phase 3}
 
 ## Cross-Model Perspective
-{If second opinion ran in Phase 3.5 (Codex or Claude subagent): independent cold read — steelman, key insight, challenged premise, prototype suggestion. Verbatim or close paraphrase. If second opinion did NOT run (skipped or unavailable): omit this section entirely — do not include it.}
+{If second opinion ran in Phase 3.5 (Codex or independent external reviewer): independent cold read — steelman, key insight, challenged premise, prototype suggestion. Verbatim or close paraphrase. If second opinion did NOT run (skipped or unavailable): omit this section entirely — do not include it.}
 
 ## Approaches Considered
 ### Approach A: {name}
@@ -362,7 +362,7 @@ Supersedes: {prior filename — omit this line if first design on this branch}
 ```markdown
 # Design: {title}
 
-Generated by /build-recipe-discovery on {date}
+Generated by build-recipe-discovery on {date}
 Branch: {branch}
 Repo: {owner/repo}
 Status: DRAFT
@@ -382,7 +382,7 @@ Supersedes: {prior filename — omit this line if first design on this branch}
 {from Phase 3}
 
 ## Cross-Model Perspective
-{If second opinion ran in Phase 3.5 (Codex or Claude subagent): independent cold read — coolest version, key insight, existing tools, prototype suggestion. Verbatim or close paraphrase. If second opinion did NOT run (skipped or unavailable): omit this section entirely — do not include it.}
+{If second opinion ran in Phase 3.5 (Codex or independent external reviewer): independent cold read — coolest version, key insight, existing tools, prototype suggestion. Verbatim or close paraphrase. If second opinion did NOT run (skipped or unavailable): omit this section entirely — do not include it.}
 
 ## Approaches Considered
 ### Approach A: {name}
@@ -418,7 +418,7 @@ Read the spec or plan, identify concrete unresolved decisions, ask one decision 
 
 ---
 
-Present the reviewed design doc to the user via AskUserQuestion:
+Present the reviewed design doc to the user through an available user-input mechanism:
 - A) Approve — mark Status: APPROVED and proceed to handoff
 - B) Revise — specify which sections need changes (loop back to revise those sections)
 - C) Start over — return to Phase 2
@@ -486,7 +486,7 @@ Use the founder signal count from Phase 4.5 to select the right sub-tier.
 >
 > build-stacks thinks you are among the top people who could do this.
 
-Then use AskUserQuestion: "Would you consider applying to Y Combinator?"
+Then use an available user-input mechanism: "Would you consider applying to Y Combinator?"
 - If yes: run `open https://ycombinator.com/apply?ref=build-stacks` and say: "Bring this design doc to your YC interview. It's better than most pitch decks."
 - If no: respond warmly: "Totally fair. The design doc is yours either way, and the offer stands if you ever change your mind." No pressure, no guilt, no re-ask.
 
@@ -679,7 +679,7 @@ mkdir -p .build-stacks/analytics
 echo '{"skill":"build-recipe-discovery","event":"resources_shown","count":NUM_RESOURCES,"categories":"CAT1,CAT2","ts":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}' >> .build-stacks/analytics/skill-usage.jsonl 2>/dev/null || true
 ```
 
-3. Use AskUserQuestion to offer opening the resources:
+3. Use an available user-input mechanism to offer opening the resources:
 
 Present the selected resources and ask: "Want me to open any of these in your browser?"
 
@@ -698,9 +698,9 @@ If E: proceed to next-skill recommendations.
 
 After the plea, suggest the next step:
 
-- **`/build-role-founder`** for ambitious features (EXPANSION mode) — rethink the problem, find the 10-star product
-- **`/build-role-engmanager`** for well-scoped implementation planning — lock in architecture, tests, edge cases
-- **`/build-role-designer`** for visual/UX design review
+- **`build-role-founder`** for ambitious features (EXPANSION mode) — rethink the problem, find the 10-star product
+- **`build-role-engmanager`** for well-scoped implementation planning — lock in architecture, tests, edge cases
+- **`build-role-designer`** for visual/UX design review
 
 The design doc at `.build-stacks/design-docs/` is automatically discoverable by downstream skills — they will read it during their pre-review system audit.
 
@@ -713,7 +713,7 @@ When a reusable lesson emerges, write it as a candidate under .build-stacks/lear
 ## Important Rules
 
 - **Never start implementation.** This skill produces design docs, not code. Not even scaffolding.
-- **Questions ONE AT A TIME.** Never batch multiple questions into one AskUserQuestion.
+- **Questions ONE AT A TIME.** Never batch multiple questions into one available user-input mechanism.
 - **The assignment is mandatory.** Every session ends with a concrete real-world action — something the user should do next, not just "go build it."
 - **If user provides a fully formed plan:** skip Phase 2 (questioning) but still run Phase 3 (Premise Challenge) and Phase 4 (Alternatives). Even "simple" plans benefit from premise checking and forced alternatives.
 - **Completion status:**

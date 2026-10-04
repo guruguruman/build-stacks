@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-08-07T10:20:40.460902+00:00'
+generated_at: '2026-08-07T14:29:27.289253+00:00'
 apm_version: 0.26.0
 dependencies:
 - repo_url: _local/maintainer
@@ -85,14 +85,14 @@ dependencies:
     .agents/skills/build-flow-skillify/agents/openai.yaml: sha256:c5405adb91f3188b208fc88ab6b71a86f6331cf9f87353ad72205f00a9321368
     .agents/skills/build-internal-modelbenchmark/SKILL.md: sha256:097eadc28e4e4e720572152d04451b64066a5ed184f08f81d502bf8c7578f45b
     .agents/skills/build-internal-modelbenchmark/agents/openai.yaml: sha256:d11c563f8c82b87b6c7e19ef2c50c542891c7e10c13c069a00e6c9da50938c08
-    .agents/skills/build-recipe-autoplan/SKILL.md: sha256:3c45954b3f37e934f3ef9a33364cc88c687edab730124e38ea8fd24915cf4630
+    .agents/skills/build-recipe-autoplan/SKILL.md: sha256:22c702c81dcc1b832c01cbee132f17d50bc4d2ef2d294838ec5579104e62b066
     .agents/skills/build-recipe-autoplan/agents/openai.yaml: sha256:3686f2600e06295b30e78d70a479031086dd421285665c5376fc8249c62ca606
-    .agents/skills/build-recipe-autoplan/references/extended-workflow.md: sha256:6e1fcd4b25382d383c9186a103af68e48aced44bed2aa88e25c617b19b83856f
-    .agents/skills/build-role-dxlead/SKILL.md: sha256:a6ecbed68faa581fbdff50de5a1c6487f25f371848b82c56703c7ccdc4ea08c2
+    .agents/skills/build-recipe-autoplan/references/extended-workflow.md: sha256:398548ee849ff3c5c7579d8ca30699fa95151c4b04239a9f7e2bff1c99cb95ee
+    .agents/skills/build-role-dxlead/SKILL.md: sha256:31f70f353c955d51d50cfc29d20e5b2d2e3884a3eefb88c384ff54284371de6d
     .agents/skills/build-role-dxlead/agents/openai.yaml: sha256:7b518eebec9cf5cace06d9b77ab7d3b0ff6ae71ff17adc6c7042421cb5aa1342
-    .agents/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
-    .agents/skills/build-role-dxlead/references/extended-workflow.md: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
-    .agents/skills/build-runtime-upgrade/SKILL.md: sha256:661be21a1bd8136b8baf0cd69ced68105ea0729bd6a7ebd4cd67003a93e0fcb8
+    .agents/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:5b0173bde1444a5d8bcb65fa3bb173a6d055e297e04bef30003008a2205842ad
+    .agents/skills/build-role-dxlead/references/extended-workflow.md: sha256:1a7d502410d0e16b2e26448c35980e1ee95ec77bee1968963e9a48d05dea1657
+    .agents/skills/build-runtime-upgrade/SKILL.md: sha256:5940e4928116d2b117659238bc9bb501cc18d08172052fce0b41ce0d5854b533
     .agents/skills/build-runtime-upgrade/agents/openai.yaml: sha256:8050e5555a734064d81e4d9f2481aad706d69d392f65252ce211d8ab841c0f82
     .claude/skills/build-flow-organize-stack/SKILL.md: sha256:43315b0027d23371e87b71dd90e8d4501757b3b6148211d20324d8a8abeb1825
     .claude/skills/build-flow-organize-stack/agents/openai.yaml: sha256:d74b108120a27a32b6052139a4b92a409bd469deb13a319a20e14ec094af7cbb
@@ -102,14 +102,14 @@ dependencies:
     .claude/skills/build-flow-skillify/agents/openai.yaml: sha256:c5405adb91f3188b208fc88ab6b71a86f6331cf9f87353ad72205f00a9321368
     .claude/skills/build-internal-modelbenchmark/SKILL.md: sha256:097eadc28e4e4e720572152d04451b64066a5ed184f08f81d502bf8c7578f45b
     .claude/skills/build-internal-modelbenchmark/agents/openai.yaml: sha256:d11c563f8c82b87b6c7e19ef2c50c542891c7e10c13c069a00e6c9da50938c08
-    .claude/skills/build-recipe-autoplan/SKILL.md: sha256:3c45954b3f37e934f3ef9a33364cc88c687edab730124e38ea8fd24915cf4630
+    .claude/skills/build-recipe-autoplan/SKILL.md: sha256:22c702c81dcc1b832c01cbee132f17d50bc4d2ef2d294838ec5579104e62b066
     .claude/skills/build-recipe-autoplan/agents/openai.yaml: sha256:3686f2600e06295b30e78d70a479031086dd421285665c5376fc8249c62ca606
-    .claude/skills/build-recipe-autoplan/references/extended-workflow.md: sha256:6e1fcd4b25382d383c9186a103af68e48aced44bed2aa88e25c617b19b83856f
-    .claude/skills/build-role-dxlead/SKILL.md: sha256:a6ecbed68faa581fbdff50de5a1c6487f25f371848b82c56703c7ccdc4ea08c2
+    .claude/skills/build-recipe-autoplan/references/extended-workflow.md: sha256:398548ee849ff3c5c7579d8ca30699fa95151c4b04239a9f7e2bff1c99cb95ee
+    .claude/skills/build-role-dxlead/SKILL.md: sha256:31f70f353c955d51d50cfc29d20e5b2d2e3884a3eefb88c384ff54284371de6d
     .claude/skills/build-role-dxlead/agents/openai.yaml: sha256:7b518eebec9cf5cace06d9b77ab7d3b0ff6ae71ff17adc6c7042421cb5aa1342
-    .claude/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
-    .claude/skills/build-role-dxlead/references/extended-workflow.md: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
-    .claude/skills/build-runtime-upgrade/SKILL.md: sha256:661be21a1bd8136b8baf0cd69ced68105ea0729bd6a7ebd4cd67003a93e0fcb8
+    .claude/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:5b0173bde1444a5d8bcb65fa3bb173a6d055e297e04bef30003008a2205842ad
+    .claude/skills/build-role-dxlead/references/extended-workflow.md: sha256:1a7d502410d0e16b2e26448c35980e1ee95ec77bee1968963e9a48d05dea1657
+    .claude/skills/build-runtime-upgrade/SKILL.md: sha256:5940e4928116d2b117659238bc9bb501cc18d08172052fce0b41ce0d5854b533
     .claude/skills/build-runtime-upgrade/agents/openai.yaml: sha256:8050e5555a734064d81e4d9f2481aad706d69d392f65252ce211d8ab841c0f82
     .kiro/skills/build-flow-organize-stack/SKILL.md: sha256:43315b0027d23371e87b71dd90e8d4501757b3b6148211d20324d8a8abeb1825
     .kiro/skills/build-flow-organize-stack/agents/openai.yaml: sha256:d74b108120a27a32b6052139a4b92a409bd469deb13a319a20e14ec094af7cbb
@@ -119,14 +119,14 @@ dependencies:
     .kiro/skills/build-flow-skillify/agents/openai.yaml: sha256:c5405adb91f3188b208fc88ab6b71a86f6331cf9f87353ad72205f00a9321368
     .kiro/skills/build-internal-modelbenchmark/SKILL.md: sha256:097eadc28e4e4e720572152d04451b64066a5ed184f08f81d502bf8c7578f45b
     .kiro/skills/build-internal-modelbenchmark/agents/openai.yaml: sha256:d11c563f8c82b87b6c7e19ef2c50c542891c7e10c13c069a00e6c9da50938c08
-    .kiro/skills/build-recipe-autoplan/SKILL.md: sha256:3c45954b3f37e934f3ef9a33364cc88c687edab730124e38ea8fd24915cf4630
+    .kiro/skills/build-recipe-autoplan/SKILL.md: sha256:22c702c81dcc1b832c01cbee132f17d50bc4d2ef2d294838ec5579104e62b066
     .kiro/skills/build-recipe-autoplan/agents/openai.yaml: sha256:3686f2600e06295b30e78d70a479031086dd421285665c5376fc8249c62ca606
-    .kiro/skills/build-recipe-autoplan/references/extended-workflow.md: sha256:6e1fcd4b25382d383c9186a103af68e48aced44bed2aa88e25c617b19b83856f
-    .kiro/skills/build-role-dxlead/SKILL.md: sha256:a6ecbed68faa581fbdff50de5a1c6487f25f371848b82c56703c7ccdc4ea08c2
+    .kiro/skills/build-recipe-autoplan/references/extended-workflow.md: sha256:398548ee849ff3c5c7579d8ca30699fa95151c4b04239a9f7e2bff1c99cb95ee
+    .kiro/skills/build-role-dxlead/SKILL.md: sha256:31f70f353c955d51d50cfc29d20e5b2d2e3884a3eefb88c384ff54284371de6d
     .kiro/skills/build-role-dxlead/agents/openai.yaml: sha256:7b518eebec9cf5cace06d9b77ab7d3b0ff6ae71ff17adc6c7042421cb5aa1342
-    .kiro/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
-    .kiro/skills/build-role-dxlead/references/extended-workflow.md: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
-    .kiro/skills/build-runtime-upgrade/SKILL.md: sha256:661be21a1bd8136b8baf0cd69ced68105ea0729bd6a7ebd4cd67003a93e0fcb8
+    .kiro/skills/build-role-dxlead/references/dx-hall-of-fame.md: sha256:5b0173bde1444a5d8bcb65fa3bb173a6d055e297e04bef30003008a2205842ad
+    .kiro/skills/build-role-dxlead/references/extended-workflow.md: sha256:1a7d502410d0e16b2e26448c35980e1ee95ec77bee1968963e9a48d05dea1657
+    .kiro/skills/build-runtime-upgrade/SKILL.md: sha256:5940e4928116d2b117659238bc9bb501cc18d08172052fce0b41ce0d5854b533
     .kiro/skills/build-runtime-upgrade/agents/openai.yaml: sha256:8050e5555a734064d81e4d9f2481aad706d69d392f65252ce211d8ab841c0f82
   source: local
   local_path: ./packages/maintainer
@@ -396,9 +396,9 @@ dependencies:
     .agents/skills/build-flow-codebasearchitecture/SKILL.md: sha256:d92a888a2c15a8a3a22e2e0744aed316a44346e437084617ce396aeb91751cb3
     .agents/skills/build-flow-codebasearchitecture/agents/openai.yaml: sha256:a3fd79b4388dcdb30902d51f675976ef480ad11c8ae15d56fd0adcc63e0030b0
     .agents/skills/build-flow-codebasearchitecture/assets/report-template.html: sha256:781ec3daca870b329000b88b5e55174ea32cd0aa8820322ea7f0e40e8d6bf9fe
-    .agents/skills/build-flow-humanwizard/SKILL.md: sha256:c5936394fadf6e18de7b97dddbf621cad062e33879d7637566adddc48cae3b9a
+    .agents/skills/build-flow-humanwizard/SKILL.md: sha256:8c941533e33eb8dbf12176ab860949dc5ebe7d6470f294d3d66a2e43bfb74f7a
     .agents/skills/build-flow-humanwizard/agents/openai.yaml: sha256:c4e47e74a539bc40c6a815a891b404e4c8b5c94dda21a87318daa4adda4698db
-    .agents/skills/build-flow-humanwizard/assets/wizard-template.sh: sha256:e47e210153ca86b6675623f73208615c814764cd068317df77c48d0afbf892ce
+    .agents/skills/build-flow-humanwizard/assets/wizard-template.sh: sha256:aaf6e7124fad5ad68b9cbb0dbe7e98bfdc75edb3e706be17ab7d5fd5cf2ecf06
     .agents/skills/build-flow-infradesign/SKILL.md: sha256:ba50307d9853e8f3ce3f0c19e74a08c0e4cf65cb2280bd32372573386b4d4458
     .agents/skills/build-flow-infradesign/agents/openai.yaml: sha256:b3f709918c3637cf933cd82fbad68ec09b5e3af13e114838d176dbf6c51bf0f1
     .agents/skills/build-flow-infradesign/assets/infrastructure-report-template.md: sha256:199466ae4907dfe5d21a9a3ce3bc26fb2a5296fb87ac1354efc9c3ec6b2b9369
@@ -407,9 +407,9 @@ dependencies:
     .agents/skills/build-flow-infradesign/references/repository-inspection.md: sha256:72c88ad5a4f08b83ac3a9a9071756e6fa337cb2971bea01bcde2330d60fa7f62
     .agents/skills/build-flow-plantune/SKILL.md: sha256:78ab73e615141fb272ce2483ed363a6b45266c92b68f47a076231f1a2bc9fda0
     .agents/skills/build-flow-plantune/agents/openai.yaml: sha256:834f8939afbee205abb6c5f612e24c6bb6b3871648e7d43d855f0e42eff0819b
-    .agents/skills/build-flow-qareport/SKILL.md: sha256:5455487abfadc5325a021f3c8903a7db7eefea212d25ff3d023e47b81dfc3d07
+    .agents/skills/build-flow-qareport/SKILL.md: sha256:7f664c9b0fdbfccd31a50b23f60caa4cb8c212cdb95e7e0c68f098610f944f98
     .agents/skills/build-flow-qareport/agents/openai.yaml: sha256:3e5bb4e5838317821993a52a3c7feead22cf0cf0282795c6651b64b52877f780
-    .agents/skills/build-flow-securitygate/SKILL.md: sha256:7a4b63a6e90d28d36f103934d5ecb93c13a050baefe95cdd43c0263b06de427f
+    .agents/skills/build-flow-securitygate/SKILL.md: sha256:9df0df8f3c4b47aa1b5c0abc35feea3c76adeeea5f7432ad1fbff3dfffccf997
     .agents/skills/build-flow-securitygate/agents/openai.yaml: sha256:911c4038bae6dcd534927611d9456b61bab71ee3bf0406530c8361af320a7f71
     .agents/skills/build-flow-securitygate/references/control-catalog.md: sha256:e63b055df2cf435510a79059e3565bebaae779ceb71bb01be392eb2d643e8836
     .agents/skills/build-flow-securitygate/references/repository-evidence-map.md: sha256:c25fb971cfef8b975387ffe4e0307354ab9aa10b95dce54c6c265a9868309ac5
@@ -420,51 +420,51 @@ dependencies:
     .agents/skills/build-recipe-implement/SKILL.md: sha256:a3a2bfa0218d04e02c3c81b62dc980dc4273a189b02deb1fad5b37dbe298899f
     .agents/skills/build-recipe-implement/agents/openai.yaml: sha256:32e0d45eb79895f8a433dae3bc854f10f343a80e029960dc19652d2dfdcde6eb
     .agents/skills/build-recipe-implement/references/tdd-guidance.md: sha256:7c0573f78a069b5fcf40658ccbe4058d6d44e952489f0114ee4392dfda764521
-    .agents/skills/build-recipe-landdeploy/SKILL.md: sha256:064cc1dbb2e0527a5f0d888009bd2379a7940926de8a7c781b7e3012090c39f4
+    .agents/skills/build-recipe-landdeploy/SKILL.md: sha256:e7ac74a6f7c3519f255afd2b59747771b2f0395e942ec87519421a79fce835b6
     .agents/skills/build-recipe-landdeploy/agents/openai.yaml: sha256:10eda7c2ad759746849c67cd9d73eaf1a3d17ae6070124fdb8a3301a8b152693
-    .agents/skills/build-recipe-landdeploy/references/extended-workflow.md: sha256:4d887331bdf9e5e316b4f65d3cd7cfb36608b23ec303843c35629032cd91226c
+    .agents/skills/build-recipe-landdeploy/references/extended-workflow.md: sha256:e7903cee158c2d4308fa73a99722b03065453874d95b2b7ca04c8da743dbbf4c
     .agents/skills/build-recipe-mergeconflicts/SKILL.md: sha256:7ed67362e69abb64a9895ef59840ff0631dd1b0e97870411fa242adec9d31bcc
     .agents/skills/build-recipe-mergeconflicts/agents/openai.yaml: sha256:628157b420652db7fcc37144210f06b8fe07f07528bc650d9c181567e9c63ca2
-    .agents/skills/build-recipe-qa/SKILL.md: sha256:0ba3d8cd0176da94436c08ae7db8d73de159c9e6c8dfe155d8061be79e2a813e
+    .agents/skills/build-recipe-qa/SKILL.md: sha256:358cf58d351d9588824830bc9c5c2b04a6fb452244928a969d64af53e3af9c47
     .agents/skills/build-recipe-qa/agents/openai.yaml: sha256:917b2b569e0bdc71bb7fecf6f8f3203a17a4dc36dd87acdf2a9dfecae7c211cf
     .agents/skills/build-recipe-qa/assets/qa-report-template.md: sha256:b5bef88a00dbca382bee82ebf08f297b8d67878b55312bfe64a14d52595f6111
     .agents/skills/build-recipe-qa/references/issue-taxonomy.md: sha256:dbb99950047ddfe6ecc235958b072f713b13cb7af20dcff2773a0bbd11209b12
-    .agents/skills/build-recipe-ship/SKILL.md: sha256:c783a3ac56762a919ecbe2c5318ccd8674cece2900b107178cfd18e7b3e1b377
+    .agents/skills/build-recipe-ship/SKILL.md: sha256:dd9b7767b51683cd36d20b0bf58ae43719f7815b3e5a025cff815c1b32a28a1a
     .agents/skills/build-recipe-ship/agents/openai.yaml: sha256:4db1cdb960f5386b5b698726d604d01fc36157a9fbb957c7b6b835b7ab5c0688
-    .agents/skills/build-role-cso/SKILL.md: sha256:a5959b836adfd5dfef6019b51534a1bfddda889aa78cd455fc2af306c157e14f
+    .agents/skills/build-role-cso/SKILL.md: sha256:2b15b042059308206596686b7aaa2ceeadc3da1a20b8dfbf676640746326bd15
     .agents/skills/build-role-cso/agents/openai.yaml: sha256:d467e400c074d4e67e53254218ba255797de5edc15a69c6a81ad4b62432c334a
-    .agents/skills/build-role-cso/references/extended-workflow.md: sha256:ced779d593c3bf6dc51b6830f5d77199cd9adb591b321fa06653cbf31700df84
-    .agents/skills/build-role-cso/references/review-details.md: sha256:69f55ca4601e86f2d34bf703e1ef0ee12e7224bedd4ca592fe04201160c923c3
-    .agents/skills/build-role-docengineer/SKILL.md: sha256:3eeb1181f41d6d88b754b2e2a56203d3c3b2833b567a878c0a36a83a8c59ef25
+    .agents/skills/build-role-cso/references/extended-workflow.md: sha256:ece230518e629004b8d4557adbd023cd34be129ab6a5209170a6b4f259181ffd
+    .agents/skills/build-role-cso/references/review-details.md: sha256:2b01968f363afa6f9acdeb97e9bc97ba974940b86f01bbddcfe35b15b6d9082b
+    .agents/skills/build-role-docengineer/SKILL.md: sha256:6bfd091e840e74fe0ae9340401a3b40df910541ba32bc68301d8e14003654a1a
     .agents/skills/build-role-docengineer/agents/openai.yaml: sha256:cc3cb888526cfd83d4f591c477a912efabefe766a56b7cf375ee26c77b808d8d
-    .agents/skills/build-role-engmanager/SKILL.md: sha256:7638e000093c31c6bd9f3e04eadb0bef7e6965ef69515e601961d4736f30e417
+    .agents/skills/build-role-engmanager/SKILL.md: sha256:6d502c3d2d9b6f867d4b9e885b93a1bb35cf300456eb1fd9592597895664c5e0
     .agents/skills/build-role-engmanager/agents/openai.yaml: sha256:d784ae0a3a6773d271f1136ea2640c2c62af5f016f10cf352cd979863919b96a
-    .agents/skills/build-role-engmanager/references/extended-workflow.md: sha256:77648ed811094b4a271f1dd1bd9b8ae2c90fd118c519b1122291859ef742a1cb
+    .agents/skills/build-role-engmanager/references/extended-workflow.md: sha256:107f9e1724e7b6f37ada96c8026e1b5877b1c6acb1ce1bbf5dd83c47c9a53184
     .agents/skills/build-role-releaseengineer/SKILL.md: sha256:d465f9900dbc90e4434fa0e0a62f98199d9b251478e370443e26f857baca120f
     .agents/skills/build-role-releaseengineer/agents/openai.yaml: sha256:dd89c8eded705b7a16b625377c319dfb19687f6086b2ae68bae34788e231caa6
     .agents/skills/build-role-staffengineer/SKILL.md: sha256:5104b9fb6455eb8cfcbf7d039faa27c068886ba235affba9afd96cf9e805eb84
     .agents/skills/build-role-staffengineer/agents/openai.yaml: sha256:79d0f029cca82cf7cfaebcf0d0e0bdcb7786d424fa6a7d78873826113d9c0815
-    .agents/skills/build-role-staffengineer/references/TODOS-format.md: sha256:52c558f46b969992e9e3746b82a4adfed8d545657aab8e42295ea1ad5863386f
+    .agents/skills/build-role-staffengineer/references/TODOS-format.md: sha256:27008b7774d08c00f0279009490bdb440177a194a3a1d3ea59d3a4831fb69c5e
     .agents/skills/build-role-staffengineer/references/api-contract.md: sha256:263d23ac119dd601d315c191dbdbd503d47c00264c9c0ca81959559ca11d4e95
-    .agents/skills/build-role-staffengineer/references/checklist.md: sha256:c49cf0105ca270aa62688fde0f15fcd6d73234a6ebe979afbcea2154e1ffe4ed
+    .agents/skills/build-role-staffengineer/references/checklist.md: sha256:f44ef9d9476232300b06a306bdf0300befb23844176cd5c0712f019ba18ca444
     .agents/skills/build-role-staffengineer/references/data-migration.md: sha256:b6fd9eb229002ea598f8fe9ff53b1cd8821e3bd37a7aa7b07b5526556c71ebca
-    .agents/skills/build-role-staffengineer/references/design-checklist.md: sha256:a2ff2c324eef9136caadb3faf8d17c2616294b23195f396774fac9790f69e2bd
-    .agents/skills/build-role-staffengineer/references/greptile-triage.md: sha256:847ae7540418a4a3a080c287f94bea57cb7904cb1888db6aa89b92dbb360cf1f
-    .agents/skills/build-role-staffengineer/references/maintainability.md: sha256:c7a1483a413abf72fa0189fe9b4d9e6e2dea82efc4c9e28afd6376210419617d
+    .agents/skills/build-role-staffengineer/references/design-checklist.md: sha256:0ca9c51b6dee9d94ea48a95c5704d7c835320dbf1d7e8e7ef46aa8e571abeb86
+    .agents/skills/build-role-staffengineer/references/greptile-triage.md: sha256:31c5e434e87f22f88f89082b50dc3e70620b2171ac2579222bae7c22bf2c1c3f
+    .agents/skills/build-role-staffengineer/references/maintainability.md: sha256:bb7925e0a14671c01c9b3adf5663618c7f63fddf2c9b6898deb4a640ec4c63a4
     .agents/skills/build-role-staffengineer/references/performance.md: sha256:545c294ae53638b4c8524e8cde08246a4ce3b5c287ec7c44e27f5556a3b0e8cc
     .agents/skills/build-role-staffengineer/references/red-team.md: sha256:f90967a04813edd9a46c7730f9f6244c9759d833f969a94a1370df136ee6ff9f
     .agents/skills/build-role-staffengineer/references/security.md: sha256:d0dc1cf0f1c7450507cfc663a67624cbcd5d4cfd0258a3bfeb51dba6f09c7df2
     .agents/skills/build-role-staffengineer/references/testing.md: sha256:d97f0ca2ed58c7465a3aa1e272b2101724cddf47fe34af743660e28d58123ed0
-    .agents/skills/build-source-deploy/SKILL.md: sha256:5a56cc38e2ad3454479ec168899caa78868471f70b109550d337aed2f3ac1f2f
+    .agents/skills/build-source-deploy/SKILL.md: sha256:3dfd95ff33642cefd68fefb641a00a8887d925044651249517bb76feec822159
     .agents/skills/build-source-deploy/agents/openai.yaml: sha256:a1772429dc49c8be1871b395d4c61651e98cbba49864088fb14478e295a177de
     .agents/skills/build-source-pdf/SKILL.md: sha256:2f4cf4ffd03e4126913f022ef9f03e5d93eda9ca9b69a89606e8fa88adedef9a
     .agents/skills/build-source-pdf/agents/openai.yaml: sha256:5504783e5bf6090baeb790e1a8ed80ff163b80cc72360ef7c919abda8a125bd8
     .claude/skills/build-flow-codebasearchitecture/SKILL.md: sha256:d92a888a2c15a8a3a22e2e0744aed316a44346e437084617ce396aeb91751cb3
     .claude/skills/build-flow-codebasearchitecture/agents/openai.yaml: sha256:a3fd79b4388dcdb30902d51f675976ef480ad11c8ae15d56fd0adcc63e0030b0
     .claude/skills/build-flow-codebasearchitecture/assets/report-template.html: sha256:781ec3daca870b329000b88b5e55174ea32cd0aa8820322ea7f0e40e8d6bf9fe
-    .claude/skills/build-flow-humanwizard/SKILL.md: sha256:c5936394fadf6e18de7b97dddbf621cad062e33879d7637566adddc48cae3b9a
+    .claude/skills/build-flow-humanwizard/SKILL.md: sha256:8c941533e33eb8dbf12176ab860949dc5ebe7d6470f294d3d66a2e43bfb74f7a
     .claude/skills/build-flow-humanwizard/agents/openai.yaml: sha256:c4e47e74a539bc40c6a815a891b404e4c8b5c94dda21a87318daa4adda4698db
-    .claude/skills/build-flow-humanwizard/assets/wizard-template.sh: sha256:e47e210153ca86b6675623f73208615c814764cd068317df77c48d0afbf892ce
+    .claude/skills/build-flow-humanwizard/assets/wizard-template.sh: sha256:aaf6e7124fad5ad68b9cbb0dbe7e98bfdc75edb3e706be17ab7d5fd5cf2ecf06
     .claude/skills/build-flow-infradesign/SKILL.md: sha256:ba50307d9853e8f3ce3f0c19e74a08c0e4cf65cb2280bd32372573386b4d4458
     .claude/skills/build-flow-infradesign/agents/openai.yaml: sha256:b3f709918c3637cf933cd82fbad68ec09b5e3af13e114838d176dbf6c51bf0f1
     .claude/skills/build-flow-infradesign/assets/infrastructure-report-template.md: sha256:199466ae4907dfe5d21a9a3ce3bc26fb2a5296fb87ac1354efc9c3ec6b2b9369
@@ -473,9 +473,9 @@ dependencies:
     .claude/skills/build-flow-infradesign/references/repository-inspection.md: sha256:72c88ad5a4f08b83ac3a9a9071756e6fa337cb2971bea01bcde2330d60fa7f62
     .claude/skills/build-flow-plantune/SKILL.md: sha256:78ab73e615141fb272ce2483ed363a6b45266c92b68f47a076231f1a2bc9fda0
     .claude/skills/build-flow-plantune/agents/openai.yaml: sha256:834f8939afbee205abb6c5f612e24c6bb6b3871648e7d43d855f0e42eff0819b
-    .claude/skills/build-flow-qareport/SKILL.md: sha256:5455487abfadc5325a021f3c8903a7db7eefea212d25ff3d023e47b81dfc3d07
+    .claude/skills/build-flow-qareport/SKILL.md: sha256:7f664c9b0fdbfccd31a50b23f60caa4cb8c212cdb95e7e0c68f098610f944f98
     .claude/skills/build-flow-qareport/agents/openai.yaml: sha256:3e5bb4e5838317821993a52a3c7feead22cf0cf0282795c6651b64b52877f780
-    .claude/skills/build-flow-securitygate/SKILL.md: sha256:7a4b63a6e90d28d36f103934d5ecb93c13a050baefe95cdd43c0263b06de427f
+    .claude/skills/build-flow-securitygate/SKILL.md: sha256:9df0df8f3c4b47aa1b5c0abc35feea3c76adeeea5f7432ad1fbff3dfffccf997
     .claude/skills/build-flow-securitygate/agents/openai.yaml: sha256:911c4038bae6dcd534927611d9456b61bab71ee3bf0406530c8361af320a7f71
     .claude/skills/build-flow-securitygate/references/control-catalog.md: sha256:e63b055df2cf435510a79059e3565bebaae779ceb71bb01be392eb2d643e8836
     .claude/skills/build-flow-securitygate/references/repository-evidence-map.md: sha256:c25fb971cfef8b975387ffe4e0307354ab9aa10b95dce54c6c265a9868309ac5
@@ -486,51 +486,51 @@ dependencies:
     .claude/skills/build-recipe-implement/SKILL.md: sha256:a3a2bfa0218d04e02c3c81b62dc980dc4273a189b02deb1fad5b37dbe298899f
     .claude/skills/build-recipe-implement/agents/openai.yaml: sha256:32e0d45eb79895f8a433dae3bc854f10f343a80e029960dc19652d2dfdcde6eb
     .claude/skills/build-recipe-implement/references/tdd-guidance.md: sha256:7c0573f78a069b5fcf40658ccbe4058d6d44e952489f0114ee4392dfda764521
-    .claude/skills/build-recipe-landdeploy/SKILL.md: sha256:064cc1dbb2e0527a5f0d888009bd2379a7940926de8a7c781b7e3012090c39f4
+    .claude/skills/build-recipe-landdeploy/SKILL.md: sha256:e7ac74a6f7c3519f255afd2b59747771b2f0395e942ec87519421a79fce835b6
     .claude/skills/build-recipe-landdeploy/agents/openai.yaml: sha256:10eda7c2ad759746849c67cd9d73eaf1a3d17ae6070124fdb8a3301a8b152693
-    .claude/skills/build-recipe-landdeploy/references/extended-workflow.md: sha256:4d887331bdf9e5e316b4f65d3cd7cfb36608b23ec303843c35629032cd91226c
+    .claude/skills/build-recipe-landdeploy/references/extended-workflow.md: sha256:e7903cee158c2d4308fa73a99722b03065453874d95b2b7ca04c8da743dbbf4c
     .claude/skills/build-recipe-mergeconflicts/SKILL.md: sha256:7ed67362e69abb64a9895ef59840ff0631dd1b0e97870411fa242adec9d31bcc
     .claude/skills/build-recipe-mergeconflicts/agents/openai.yaml: sha256:628157b420652db7fcc37144210f06b8fe07f07528bc650d9c181567e9c63ca2
-    .claude/skills/build-recipe-qa/SKILL.md: sha256:0ba3d8cd0176da94436c08ae7db8d73de159c9e6c8dfe155d8061be79e2a813e
+    .claude/skills/build-recipe-qa/SKILL.md: sha256:358cf58d351d9588824830bc9c5c2b04a6fb452244928a969d64af53e3af9c47
     .claude/skills/build-recipe-qa/agents/openai.yaml: sha256:917b2b569e0bdc71bb7fecf6f8f3203a17a4dc36dd87acdf2a9dfecae7c211cf
     .claude/skills/build-recipe-qa/assets/qa-report-template.md: sha256:b5bef88a00dbca382bee82ebf08f297b8d67878b55312bfe64a14d52595f6111
     .claude/skills/build-recipe-qa/references/issue-taxonomy.md: sha256:dbb99950047ddfe6ecc235958b072f713b13cb7af20dcff2773a0bbd11209b12
-    .claude/skills/build-recipe-ship/SKILL.md: sha256:c783a3ac56762a919ecbe2c5318ccd8674cece2900b107178cfd18e7b3e1b377
+    .claude/skills/build-recipe-ship/SKILL.md: sha256:dd9b7767b51683cd36d20b0bf58ae43719f7815b3e5a025cff815c1b32a28a1a
     .claude/skills/build-recipe-ship/agents/openai.yaml: sha256:4db1cdb960f5386b5b698726d604d01fc36157a9fbb957c7b6b835b7ab5c0688
-    .claude/skills/build-role-cso/SKILL.md: sha256:a5959b836adfd5dfef6019b51534a1bfddda889aa78cd455fc2af306c157e14f
+    .claude/skills/build-role-cso/SKILL.md: sha256:2b15b042059308206596686b7aaa2ceeadc3da1a20b8dfbf676640746326bd15
     .claude/skills/build-role-cso/agents/openai.yaml: sha256:d467e400c074d4e67e53254218ba255797de5edc15a69c6a81ad4b62432c334a
-    .claude/skills/build-role-cso/references/extended-workflow.md: sha256:ced779d593c3bf6dc51b6830f5d77199cd9adb591b321fa06653cbf31700df84
-    .claude/skills/build-role-cso/references/review-details.md: sha256:69f55ca4601e86f2d34bf703e1ef0ee12e7224bedd4ca592fe04201160c923c3
-    .claude/skills/build-role-docengineer/SKILL.md: sha256:3eeb1181f41d6d88b754b2e2a56203d3c3b2833b567a878c0a36a83a8c59ef25
+    .claude/skills/build-role-cso/references/extended-workflow.md: sha256:ece230518e629004b8d4557adbd023cd34be129ab6a5209170a6b4f259181ffd
+    .claude/skills/build-role-cso/references/review-details.md: sha256:2b01968f363afa6f9acdeb97e9bc97ba974940b86f01bbddcfe35b15b6d9082b
+    .claude/skills/build-role-docengineer/SKILL.md: sha256:6bfd091e840e74fe0ae9340401a3b40df910541ba32bc68301d8e14003654a1a
     .claude/skills/build-role-docengineer/agents/openai.yaml: sha256:cc3cb888526cfd83d4f591c477a912efabefe766a56b7cf375ee26c77b808d8d
-    .claude/skills/build-role-engmanager/SKILL.md: sha256:7638e000093c31c6bd9f3e04eadb0bef7e6965ef69515e601961d4736f30e417
+    .claude/skills/build-role-engmanager/SKILL.md: sha256:6d502c3d2d9b6f867d4b9e885b93a1bb35cf300456eb1fd9592597895664c5e0
     .claude/skills/build-role-engmanager/agents/openai.yaml: sha256:d784ae0a3a6773d271f1136ea2640c2c62af5f016f10cf352cd979863919b96a
-    .claude/skills/build-role-engmanager/references/extended-workflow.md: sha256:77648ed811094b4a271f1dd1bd9b8ae2c90fd118c519b1122291859ef742a1cb
+    .claude/skills/build-role-engmanager/references/extended-workflow.md: sha256:107f9e1724e7b6f37ada96c8026e1b5877b1c6acb1ce1bbf5dd83c47c9a53184
     .claude/skills/build-role-releaseengineer/SKILL.md: sha256:d465f9900dbc90e4434fa0e0a62f98199d9b251478e370443e26f857baca120f
     .claude/skills/build-role-releaseengineer/agents/openai.yaml: sha256:dd89c8eded705b7a16b625377c319dfb19687f6086b2ae68bae34788e231caa6
     .claude/skills/build-role-staffengineer/SKILL.md: sha256:5104b9fb6455eb8cfcbf7d039faa27c068886ba235affba9afd96cf9e805eb84
     .claude/skills/build-role-staffengineer/agents/openai.yaml: sha256:79d0f029cca82cf7cfaebcf0d0e0bdcb7786d424fa6a7d78873826113d9c0815
-    .claude/skills/build-role-staffengineer/references/TODOS-format.md: sha256:52c558f46b969992e9e3746b82a4adfed8d545657aab8e42295ea1ad5863386f
+    .claude/skills/build-role-staffengineer/references/TODOS-format.md: sha256:27008b7774d08c00f0279009490bdb440177a194a3a1d3ea59d3a4831fb69c5e
     .claude/skills/build-role-staffengineer/references/api-contract.md: sha256:263d23ac119dd601d315c191dbdbd503d47c00264c9c0ca81959559ca11d4e95
-    .claude/skills/build-role-staffengineer/references/checklist.md: sha256:c49cf0105ca270aa62688fde0f15fcd6d73234a6ebe979afbcea2154e1ffe4ed
+    .claude/skills/build-role-staffengineer/references/checklist.md: sha256:f44ef9d9476232300b06a306bdf0300befb23844176cd5c0712f019ba18ca444
     .claude/skills/build-role-staffengineer/references/data-migration.md: sha256:b6fd9eb229002ea598f8fe9ff53b1cd8821e3bd37a7aa7b07b5526556c71ebca
-    .claude/skills/build-role-staffengineer/references/design-checklist.md: sha256:a2ff2c324eef9136caadb3faf8d17c2616294b23195f396774fac9790f69e2bd
-    .claude/skills/build-role-staffengineer/references/greptile-triage.md: sha256:847ae7540418a4a3a080c287f94bea57cb7904cb1888db6aa89b92dbb360cf1f
-    .claude/skills/build-role-staffengineer/references/maintainability.md: sha256:c7a1483a413abf72fa0189fe9b4d9e6e2dea82efc4c9e28afd6376210419617d
+    .claude/skills/build-role-staffengineer/references/design-checklist.md: sha256:0ca9c51b6dee9d94ea48a95c5704d7c835320dbf1d7e8e7ef46aa8e571abeb86
+    .claude/skills/build-role-staffengineer/references/greptile-triage.md: sha256:31c5e434e87f22f88f89082b50dc3e70620b2171ac2579222bae7c22bf2c1c3f
+    .claude/skills/build-role-staffengineer/references/maintainability.md: sha256:bb7925e0a14671c01c9b3adf5663618c7f63fddf2c9b6898deb4a640ec4c63a4
     .claude/skills/build-role-staffengineer/references/performance.md: sha256:545c294ae53638b4c8524e8cde08246a4ce3b5c287ec7c44e27f5556a3b0e8cc
     .claude/skills/build-role-staffengineer/references/red-team.md: sha256:f90967a04813edd9a46c7730f9f6244c9759d833f969a94a1370df136ee6ff9f
     .claude/skills/build-role-staffengineer/references/security.md: sha256:d0dc1cf0f1c7450507cfc663a67624cbcd5d4cfd0258a3bfeb51dba6f09c7df2
     .claude/skills/build-role-staffengineer/references/testing.md: sha256:d97f0ca2ed58c7465a3aa1e272b2101724cddf47fe34af743660e28d58123ed0
-    .claude/skills/build-source-deploy/SKILL.md: sha256:5a56cc38e2ad3454479ec168899caa78868471f70b109550d337aed2f3ac1f2f
+    .claude/skills/build-source-deploy/SKILL.md: sha256:3dfd95ff33642cefd68fefb641a00a8887d925044651249517bb76feec822159
     .claude/skills/build-source-deploy/agents/openai.yaml: sha256:a1772429dc49c8be1871b395d4c61651e98cbba49864088fb14478e295a177de
     .claude/skills/build-source-pdf/SKILL.md: sha256:2f4cf4ffd03e4126913f022ef9f03e5d93eda9ca9b69a89606e8fa88adedef9a
     .claude/skills/build-source-pdf/agents/openai.yaml: sha256:5504783e5bf6090baeb790e1a8ed80ff163b80cc72360ef7c919abda8a125bd8
     .kiro/skills/build-flow-codebasearchitecture/SKILL.md: sha256:d92a888a2c15a8a3a22e2e0744aed316a44346e437084617ce396aeb91751cb3
     .kiro/skills/build-flow-codebasearchitecture/agents/openai.yaml: sha256:a3fd79b4388dcdb30902d51f675976ef480ad11c8ae15d56fd0adcc63e0030b0
     .kiro/skills/build-flow-codebasearchitecture/assets/report-template.html: sha256:781ec3daca870b329000b88b5e55174ea32cd0aa8820322ea7f0e40e8d6bf9fe
-    .kiro/skills/build-flow-humanwizard/SKILL.md: sha256:c5936394fadf6e18de7b97dddbf621cad062e33879d7637566adddc48cae3b9a
+    .kiro/skills/build-flow-humanwizard/SKILL.md: sha256:8c941533e33eb8dbf12176ab860949dc5ebe7d6470f294d3d66a2e43bfb74f7a
     .kiro/skills/build-flow-humanwizard/agents/openai.yaml: sha256:c4e47e74a539bc40c6a815a891b404e4c8b5c94dda21a87318daa4adda4698db
-    .kiro/skills/build-flow-humanwizard/assets/wizard-template.sh: sha256:e47e210153ca86b6675623f73208615c814764cd068317df77c48d0afbf892ce
+    .kiro/skills/build-flow-humanwizard/assets/wizard-template.sh: sha256:aaf6e7124fad5ad68b9cbb0dbe7e98bfdc75edb3e706be17ab7d5fd5cf2ecf06
     .kiro/skills/build-flow-infradesign/SKILL.md: sha256:ba50307d9853e8f3ce3f0c19e74a08c0e4cf65cb2280bd32372573386b4d4458
     .kiro/skills/build-flow-infradesign/agents/openai.yaml: sha256:b3f709918c3637cf933cd82fbad68ec09b5e3af13e114838d176dbf6c51bf0f1
     .kiro/skills/build-flow-infradesign/assets/infrastructure-report-template.md: sha256:199466ae4907dfe5d21a9a3ce3bc26fb2a5296fb87ac1354efc9c3ec6b2b9369
@@ -539,9 +539,9 @@ dependencies:
     .kiro/skills/build-flow-infradesign/references/repository-inspection.md: sha256:72c88ad5a4f08b83ac3a9a9071756e6fa337cb2971bea01bcde2330d60fa7f62
     .kiro/skills/build-flow-plantune/SKILL.md: sha256:78ab73e615141fb272ce2483ed363a6b45266c92b68f47a076231f1a2bc9fda0
     .kiro/skills/build-flow-plantune/agents/openai.yaml: sha256:834f8939afbee205abb6c5f612e24c6bb6b3871648e7d43d855f0e42eff0819b
-    .kiro/skills/build-flow-qareport/SKILL.md: sha256:5455487abfadc5325a021f3c8903a7db7eefea212d25ff3d023e47b81dfc3d07
+    .kiro/skills/build-flow-qareport/SKILL.md: sha256:7f664c9b0fdbfccd31a50b23f60caa4cb8c212cdb95e7e0c68f098610f944f98
     .kiro/skills/build-flow-qareport/agents/openai.yaml: sha256:3e5bb4e5838317821993a52a3c7feead22cf0cf0282795c6651b64b52877f780
-    .kiro/skills/build-flow-securitygate/SKILL.md: sha256:7a4b63a6e90d28d36f103934d5ecb93c13a050baefe95cdd43c0263b06de427f
+    .kiro/skills/build-flow-securitygate/SKILL.md: sha256:9df0df8f3c4b47aa1b5c0abc35feea3c76adeeea5f7432ad1fbff3dfffccf997
     .kiro/skills/build-flow-securitygate/agents/openai.yaml: sha256:911c4038bae6dcd534927611d9456b61bab71ee3bf0406530c8361af320a7f71
     .kiro/skills/build-flow-securitygate/references/control-catalog.md: sha256:e63b055df2cf435510a79059e3565bebaae779ceb71bb01be392eb2d643e8836
     .kiro/skills/build-flow-securitygate/references/repository-evidence-map.md: sha256:c25fb971cfef8b975387ffe4e0307354ab9aa10b95dce54c6c265a9868309ac5
@@ -552,42 +552,42 @@ dependencies:
     .kiro/skills/build-recipe-implement/SKILL.md: sha256:a3a2bfa0218d04e02c3c81b62dc980dc4273a189b02deb1fad5b37dbe298899f
     .kiro/skills/build-recipe-implement/agents/openai.yaml: sha256:32e0d45eb79895f8a433dae3bc854f10f343a80e029960dc19652d2dfdcde6eb
     .kiro/skills/build-recipe-implement/references/tdd-guidance.md: sha256:7c0573f78a069b5fcf40658ccbe4058d6d44e952489f0114ee4392dfda764521
-    .kiro/skills/build-recipe-landdeploy/SKILL.md: sha256:064cc1dbb2e0527a5f0d888009bd2379a7940926de8a7c781b7e3012090c39f4
+    .kiro/skills/build-recipe-landdeploy/SKILL.md: sha256:e7ac74a6f7c3519f255afd2b59747771b2f0395e942ec87519421a79fce835b6
     .kiro/skills/build-recipe-landdeploy/agents/openai.yaml: sha256:10eda7c2ad759746849c67cd9d73eaf1a3d17ae6070124fdb8a3301a8b152693
-    .kiro/skills/build-recipe-landdeploy/references/extended-workflow.md: sha256:4d887331bdf9e5e316b4f65d3cd7cfb36608b23ec303843c35629032cd91226c
+    .kiro/skills/build-recipe-landdeploy/references/extended-workflow.md: sha256:e7903cee158c2d4308fa73a99722b03065453874d95b2b7ca04c8da743dbbf4c
     .kiro/skills/build-recipe-mergeconflicts/SKILL.md: sha256:7ed67362e69abb64a9895ef59840ff0631dd1b0e97870411fa242adec9d31bcc
     .kiro/skills/build-recipe-mergeconflicts/agents/openai.yaml: sha256:628157b420652db7fcc37144210f06b8fe07f07528bc650d9c181567e9c63ca2
-    .kiro/skills/build-recipe-qa/SKILL.md: sha256:0ba3d8cd0176da94436c08ae7db8d73de159c9e6c8dfe155d8061be79e2a813e
+    .kiro/skills/build-recipe-qa/SKILL.md: sha256:358cf58d351d9588824830bc9c5c2b04a6fb452244928a969d64af53e3af9c47
     .kiro/skills/build-recipe-qa/agents/openai.yaml: sha256:917b2b569e0bdc71bb7fecf6f8f3203a17a4dc36dd87acdf2a9dfecae7c211cf
     .kiro/skills/build-recipe-qa/assets/qa-report-template.md: sha256:b5bef88a00dbca382bee82ebf08f297b8d67878b55312bfe64a14d52595f6111
     .kiro/skills/build-recipe-qa/references/issue-taxonomy.md: sha256:dbb99950047ddfe6ecc235958b072f713b13cb7af20dcff2773a0bbd11209b12
-    .kiro/skills/build-recipe-ship/SKILL.md: sha256:c783a3ac56762a919ecbe2c5318ccd8674cece2900b107178cfd18e7b3e1b377
+    .kiro/skills/build-recipe-ship/SKILL.md: sha256:dd9b7767b51683cd36d20b0bf58ae43719f7815b3e5a025cff815c1b32a28a1a
     .kiro/skills/build-recipe-ship/agents/openai.yaml: sha256:4db1cdb960f5386b5b698726d604d01fc36157a9fbb957c7b6b835b7ab5c0688
-    .kiro/skills/build-role-cso/SKILL.md: sha256:a5959b836adfd5dfef6019b51534a1bfddda889aa78cd455fc2af306c157e14f
+    .kiro/skills/build-role-cso/SKILL.md: sha256:2b15b042059308206596686b7aaa2ceeadc3da1a20b8dfbf676640746326bd15
     .kiro/skills/build-role-cso/agents/openai.yaml: sha256:d467e400c074d4e67e53254218ba255797de5edc15a69c6a81ad4b62432c334a
-    .kiro/skills/build-role-cso/references/extended-workflow.md: sha256:ced779d593c3bf6dc51b6830f5d77199cd9adb591b321fa06653cbf31700df84
-    .kiro/skills/build-role-cso/references/review-details.md: sha256:69f55ca4601e86f2d34bf703e1ef0ee12e7224bedd4ca592fe04201160c923c3
-    .kiro/skills/build-role-docengineer/SKILL.md: sha256:3eeb1181f41d6d88b754b2e2a56203d3c3b2833b567a878c0a36a83a8c59ef25
+    .kiro/skills/build-role-cso/references/extended-workflow.md: sha256:ece230518e629004b8d4557adbd023cd34be129ab6a5209170a6b4f259181ffd
+    .kiro/skills/build-role-cso/references/review-details.md: sha256:2b01968f363afa6f9acdeb97e9bc97ba974940b86f01bbddcfe35b15b6d9082b
+    .kiro/skills/build-role-docengineer/SKILL.md: sha256:6bfd091e840e74fe0ae9340401a3b40df910541ba32bc68301d8e14003654a1a
     .kiro/skills/build-role-docengineer/agents/openai.yaml: sha256:cc3cb888526cfd83d4f591c477a912efabefe766a56b7cf375ee26c77b808d8d
-    .kiro/skills/build-role-engmanager/SKILL.md: sha256:7638e000093c31c6bd9f3e04eadb0bef7e6965ef69515e601961d4736f30e417
+    .kiro/skills/build-role-engmanager/SKILL.md: sha256:6d502c3d2d9b6f867d4b9e885b93a1bb35cf300456eb1fd9592597895664c5e0
     .kiro/skills/build-role-engmanager/agents/openai.yaml: sha256:d784ae0a3a6773d271f1136ea2640c2c62af5f016f10cf352cd979863919b96a
-    .kiro/skills/build-role-engmanager/references/extended-workflow.md: sha256:77648ed811094b4a271f1dd1bd9b8ae2c90fd118c519b1122291859ef742a1cb
+    .kiro/skills/build-role-engmanager/references/extended-workflow.md: sha256:107f9e1724e7b6f37ada96c8026e1b5877b1c6acb1ce1bbf5dd83c47c9a53184
     .kiro/skills/build-role-releaseengineer/SKILL.md: sha256:d465f9900dbc90e4434fa0e0a62f98199d9b251478e370443e26f857baca120f
     .kiro/skills/build-role-releaseengineer/agents/openai.yaml: sha256:dd89c8eded705b7a16b625377c319dfb19687f6086b2ae68bae34788e231caa6
     .kiro/skills/build-role-staffengineer/SKILL.md: sha256:5104b9fb6455eb8cfcbf7d039faa27c068886ba235affba9afd96cf9e805eb84
     .kiro/skills/build-role-staffengineer/agents/openai.yaml: sha256:79d0f029cca82cf7cfaebcf0d0e0bdcb7786d424fa6a7d78873826113d9c0815
-    .kiro/skills/build-role-staffengineer/references/TODOS-format.md: sha256:52c558f46b969992e9e3746b82a4adfed8d545657aab8e42295ea1ad5863386f
+    .kiro/skills/build-role-staffengineer/references/TODOS-format.md: sha256:27008b7774d08c00f0279009490bdb440177a194a3a1d3ea59d3a4831fb69c5e
     .kiro/skills/build-role-staffengineer/references/api-contract.md: sha256:263d23ac119dd601d315c191dbdbd503d47c00264c9c0ca81959559ca11d4e95
-    .kiro/skills/build-role-staffengineer/references/checklist.md: sha256:c49cf0105ca270aa62688fde0f15fcd6d73234a6ebe979afbcea2154e1ffe4ed
+    .kiro/skills/build-role-staffengineer/references/checklist.md: sha256:f44ef9d9476232300b06a306bdf0300befb23844176cd5c0712f019ba18ca444
     .kiro/skills/build-role-staffengineer/references/data-migration.md: sha256:b6fd9eb229002ea598f8fe9ff53b1cd8821e3bd37a7aa7b07b5526556c71ebca
-    .kiro/skills/build-role-staffengineer/references/design-checklist.md: sha256:a2ff2c324eef9136caadb3faf8d17c2616294b23195f396774fac9790f69e2bd
-    .kiro/skills/build-role-staffengineer/references/greptile-triage.md: sha256:847ae7540418a4a3a080c287f94bea57cb7904cb1888db6aa89b92dbb360cf1f
-    .kiro/skills/build-role-staffengineer/references/maintainability.md: sha256:c7a1483a413abf72fa0189fe9b4d9e6e2dea82efc4c9e28afd6376210419617d
+    .kiro/skills/build-role-staffengineer/references/design-checklist.md: sha256:0ca9c51b6dee9d94ea48a95c5704d7c835320dbf1d7e8e7ef46aa8e571abeb86
+    .kiro/skills/build-role-staffengineer/references/greptile-triage.md: sha256:31c5e434e87f22f88f89082b50dc3e70620b2171ac2579222bae7c22bf2c1c3f
+    .kiro/skills/build-role-staffengineer/references/maintainability.md: sha256:bb7925e0a14671c01c9b3adf5663618c7f63fddf2c9b6898deb4a640ec4c63a4
     .kiro/skills/build-role-staffengineer/references/performance.md: sha256:545c294ae53638b4c8524e8cde08246a4ce3b5c287ec7c44e27f5556a3b0e8cc
     .kiro/skills/build-role-staffengineer/references/red-team.md: sha256:f90967a04813edd9a46c7730f9f6244c9759d833f969a94a1370df136ee6ff9f
     .kiro/skills/build-role-staffengineer/references/security.md: sha256:d0dc1cf0f1c7450507cfc663a67624cbcd5d4cfd0258a3bfeb51dba6f09c7df2
     .kiro/skills/build-role-staffengineer/references/testing.md: sha256:d97f0ca2ed58c7465a3aa1e272b2101724cddf47fe34af743660e28d58123ed0
-    .kiro/skills/build-source-deploy/SKILL.md: sha256:5a56cc38e2ad3454479ec168899caa78868471f70b109550d337aed2f3ac1f2f
+    .kiro/skills/build-source-deploy/SKILL.md: sha256:3dfd95ff33642cefd68fefb641a00a8887d925044651249517bb76feec822159
     .kiro/skills/build-source-deploy/agents/openai.yaml: sha256:a1772429dc49c8be1871b395d4c61651e98cbba49864088fb14478e295a177de
     .kiro/skills/build-source-pdf/SKILL.md: sha256:2f4cf4ffd03e4126913f022ef9f03e5d93eda9ca9b69a89606e8fa88adedef9a
     .kiro/skills/build-source-pdf/agents/openai.yaml: sha256:5504783e5bf6090baeb790e1a8ed80ff163b80cc72360ef7c919abda8a125bd8
@@ -753,7 +753,7 @@ dependencies:
     .agents/skills/build-flow-domainmodeling/SKILL.md: sha256:ef3b9a8e8b8dbce0f4259c341f0eb536549927e30c8f21fb991647dc5010b93d
     .agents/skills/build-flow-domainmodeling/agents/openai.yaml: sha256:c9bdd22c21a0614251fc5904ac752a38e1ec42efc33f2b96d2bad4785a722a13
     .agents/skills/build-flow-domainmodeling/references/document-formats.md: sha256:658d5b319e9fa48ccbd85daf098b51c53b512669e3ec668a4164ab55917baf2d
-    .agents/skills/build-flow-goaldirectedux/SKILL.md: sha256:e37a25249e9284b6c0107ce81b6a56252979464990125e84e49c254ff6ce0a54
+    .agents/skills/build-flow-goaldirectedux/SKILL.md: sha256:03bbd85ca6d1a074a64245d99b3fc51741ca75d99229e9607dd262551a9bea2b
     .agents/skills/build-flow-goaldirectedux/agents/openai.yaml: sha256:a01505d227bc2d99e2ac02e65ff993533d3db7bc6c68d632210da385763c4cc7
     .agents/skills/build-flow-goaldirectedux/assets/gdd-output-templates.md: sha256:c863159876121f6beee8c9f4a6c1810a168b8f715bb1e0ccc8a7ac6918a3ec8a
     .agents/skills/build-flow-goaldirectedux/references/method-reference.md: sha256:b9f34946a7e40cbf2e9af4995a7e084cd7c6aea281f838a00671cb7bd43c3aae
@@ -784,18 +784,18 @@ dependencies:
     .agents/skills/build-flow-specwork/agents/openai.yaml: sha256:2032ef369c2ec77a200e11b825065d20ddacee1c5762309164e3cb031dea5cfb
     .agents/skills/build-flow-specwork/assets/spec-template.md: sha256:cd975ee5579bb94d6716fa205c1ab61d6806f60940b80ddf8ddc4199bbdd1ce4
     .agents/skills/build-flow-specwork/assets/ticket-template.md: sha256:ba2e7651ae6aa262f2da4d99959cca75a4052494194c2c26228a04e01f874b34
-    .agents/skills/build-recipe-discovery/SKILL.md: sha256:fd60b20e597b84f3ec4aa21a3f57fa2e96ceb76b6059788da684d58c29a9e681
+    .agents/skills/build-recipe-discovery/SKILL.md: sha256:cfdfd0b732e494043c7011ed7ab1a6a6b4eac8c3d9e890c8717d6ab9ad51b923
     .agents/skills/build-recipe-discovery/agents/openai.yaml: sha256:68c94ad8f9d762d433c30071e0329dbec59e1cbd55ee0a08aa4e6db5b1e169b1
     .agents/skills/build-recipe-discovery/assets/questionnaire-template.md: sha256:76c2575a945d214c943aeb7e3d031600cf177390b292877f0f10a8c9b7576aac
     .agents/skills/build-recipe-discovery/references/decision-artifacts.md: sha256:981e65587cbfebf976120609a69beecfe91e9233f1b3957d23d825396f37f799
-    .agents/skills/build-recipe-discovery/references/extended-workflow.md: sha256:1f4fc01344777682104fc215ac0f0acc84c150f249c098c3959c29c7a1fd512a
-    .agents/skills/build-role-founder/SKILL.md: sha256:e5f8982f6fd038e0ae7c4dcfa7b570bf02010e0c1b5d200149c0b4efb0e94063
+    .agents/skills/build-recipe-discovery/references/extended-workflow.md: sha256:6128dcf065b3c2b360cf5266fb24e77da6069ee3bb67749bc0b402fcbb45cf84
+    .agents/skills/build-role-founder/SKILL.md: sha256:feeac4de3a492ce183a9b5d7fe127420c02c43973ee1633f2f5b27d50f42ce54
     .agents/skills/build-role-founder/agents/openai.yaml: sha256:0559029d70041d504b157b5dfa258e78dd7b74f2054b1194fe46a6338f39c07a
-    .agents/skills/build-role-founder/references/extended-workflow.md: sha256:48b61886ab072ffb77ec6b73b55bcc82e0676fbb2d203f2ec25b0c9a16bc29eb
+    .agents/skills/build-role-founder/references/extended-workflow.md: sha256:e735bce7cac2423c77986cec44a296f5702509faf4ba4e7f4bc132f05c89c2d8
     .claude/skills/build-flow-domainmodeling/SKILL.md: sha256:ef3b9a8e8b8dbce0f4259c341f0eb536549927e30c8f21fb991647dc5010b93d
     .claude/skills/build-flow-domainmodeling/agents/openai.yaml: sha256:c9bdd22c21a0614251fc5904ac752a38e1ec42efc33f2b96d2bad4785a722a13
     .claude/skills/build-flow-domainmodeling/references/document-formats.md: sha256:658d5b319e9fa48ccbd85daf098b51c53b512669e3ec668a4164ab55917baf2d
-    .claude/skills/build-flow-goaldirectedux/SKILL.md: sha256:e37a25249e9284b6c0107ce81b6a56252979464990125e84e49c254ff6ce0a54
+    .claude/skills/build-flow-goaldirectedux/SKILL.md: sha256:03bbd85ca6d1a074a64245d99b3fc51741ca75d99229e9607dd262551a9bea2b
     .claude/skills/build-flow-goaldirectedux/agents/openai.yaml: sha256:a01505d227bc2d99e2ac02e65ff993533d3db7bc6c68d632210da385763c4cc7
     .claude/skills/build-flow-goaldirectedux/assets/gdd-output-templates.md: sha256:c863159876121f6beee8c9f4a6c1810a168b8f715bb1e0ccc8a7ac6918a3ec8a
     .claude/skills/build-flow-goaldirectedux/references/method-reference.md: sha256:b9f34946a7e40cbf2e9af4995a7e084cd7c6aea281f838a00671cb7bd43c3aae
@@ -826,18 +826,18 @@ dependencies:
     .claude/skills/build-flow-specwork/agents/openai.yaml: sha256:2032ef369c2ec77a200e11b825065d20ddacee1c5762309164e3cb031dea5cfb
     .claude/skills/build-flow-specwork/assets/spec-template.md: sha256:cd975ee5579bb94d6716fa205c1ab61d6806f60940b80ddf8ddc4199bbdd1ce4
     .claude/skills/build-flow-specwork/assets/ticket-template.md: sha256:ba2e7651ae6aa262f2da4d99959cca75a4052494194c2c26228a04e01f874b34
-    .claude/skills/build-recipe-discovery/SKILL.md: sha256:fd60b20e597b84f3ec4aa21a3f57fa2e96ceb76b6059788da684d58c29a9e681
+    .claude/skills/build-recipe-discovery/SKILL.md: sha256:cfdfd0b732e494043c7011ed7ab1a6a6b4eac8c3d9e890c8717d6ab9ad51b923
     .claude/skills/build-recipe-discovery/agents/openai.yaml: sha256:68c94ad8f9d762d433c30071e0329dbec59e1cbd55ee0a08aa4e6db5b1e169b1
     .claude/skills/build-recipe-discovery/assets/questionnaire-template.md: sha256:76c2575a945d214c943aeb7e3d031600cf177390b292877f0f10a8c9b7576aac
     .claude/skills/build-recipe-discovery/references/decision-artifacts.md: sha256:981e65587cbfebf976120609a69beecfe91e9233f1b3957d23d825396f37f799
-    .claude/skills/build-recipe-discovery/references/extended-workflow.md: sha256:1f4fc01344777682104fc215ac0f0acc84c150f249c098c3959c29c7a1fd512a
-    .claude/skills/build-role-founder/SKILL.md: sha256:e5f8982f6fd038e0ae7c4dcfa7b570bf02010e0c1b5d200149c0b4efb0e94063
+    .claude/skills/build-recipe-discovery/references/extended-workflow.md: sha256:6128dcf065b3c2b360cf5266fb24e77da6069ee3bb67749bc0b402fcbb45cf84
+    .claude/skills/build-role-founder/SKILL.md: sha256:feeac4de3a492ce183a9b5d7fe127420c02c43973ee1633f2f5b27d50f42ce54
     .claude/skills/build-role-founder/agents/openai.yaml: sha256:0559029d70041d504b157b5dfa258e78dd7b74f2054b1194fe46a6338f39c07a
-    .claude/skills/build-role-founder/references/extended-workflow.md: sha256:48b61886ab072ffb77ec6b73b55bcc82e0676fbb2d203f2ec25b0c9a16bc29eb
+    .claude/skills/build-role-founder/references/extended-workflow.md: sha256:e735bce7cac2423c77986cec44a296f5702509faf4ba4e7f4bc132f05c89c2d8
     .kiro/skills/build-flow-domainmodeling/SKILL.md: sha256:ef3b9a8e8b8dbce0f4259c341f0eb536549927e30c8f21fb991647dc5010b93d
     .kiro/skills/build-flow-domainmodeling/agents/openai.yaml: sha256:c9bdd22c21a0614251fc5904ac752a38e1ec42efc33f2b96d2bad4785a722a13
     .kiro/skills/build-flow-domainmodeling/references/document-formats.md: sha256:658d5b319e9fa48ccbd85daf098b51c53b512669e3ec668a4164ab55917baf2d
-    .kiro/skills/build-flow-goaldirectedux/SKILL.md: sha256:e37a25249e9284b6c0107ce81b6a56252979464990125e84e49c254ff6ce0a54
+    .kiro/skills/build-flow-goaldirectedux/SKILL.md: sha256:03bbd85ca6d1a074a64245d99b3fc51741ca75d99229e9607dd262551a9bea2b
     .kiro/skills/build-flow-goaldirectedux/agents/openai.yaml: sha256:a01505d227bc2d99e2ac02e65ff993533d3db7bc6c68d632210da385763c4cc7
     .kiro/skills/build-flow-goaldirectedux/assets/gdd-output-templates.md: sha256:c863159876121f6beee8c9f4a6c1810a168b8f715bb1e0ccc8a7ac6918a3ec8a
     .kiro/skills/build-flow-goaldirectedux/references/method-reference.md: sha256:b9f34946a7e40cbf2e9af4995a7e084cd7c6aea281f838a00671cb7bd43c3aae
@@ -868,14 +868,14 @@ dependencies:
     .kiro/skills/build-flow-specwork/agents/openai.yaml: sha256:2032ef369c2ec77a200e11b825065d20ddacee1c5762309164e3cb031dea5cfb
     .kiro/skills/build-flow-specwork/assets/spec-template.md: sha256:cd975ee5579bb94d6716fa205c1ab61d6806f60940b80ddf8ddc4199bbdd1ce4
     .kiro/skills/build-flow-specwork/assets/ticket-template.md: sha256:ba2e7651ae6aa262f2da4d99959cca75a4052494194c2c26228a04e01f874b34
-    .kiro/skills/build-recipe-discovery/SKILL.md: sha256:fd60b20e597b84f3ec4aa21a3f57fa2e96ceb76b6059788da684d58c29a9e681
+    .kiro/skills/build-recipe-discovery/SKILL.md: sha256:cfdfd0b732e494043c7011ed7ab1a6a6b4eac8c3d9e890c8717d6ab9ad51b923
     .kiro/skills/build-recipe-discovery/agents/openai.yaml: sha256:68c94ad8f9d762d433c30071e0329dbec59e1cbd55ee0a08aa4e6db5b1e169b1
     .kiro/skills/build-recipe-discovery/assets/questionnaire-template.md: sha256:76c2575a945d214c943aeb7e3d031600cf177390b292877f0f10a8c9b7576aac
     .kiro/skills/build-recipe-discovery/references/decision-artifacts.md: sha256:981e65587cbfebf976120609a69beecfe91e9233f1b3957d23d825396f37f799
-    .kiro/skills/build-recipe-discovery/references/extended-workflow.md: sha256:1f4fc01344777682104fc215ac0f0acc84c150f249c098c3959c29c7a1fd512a
-    .kiro/skills/build-role-founder/SKILL.md: sha256:e5f8982f6fd038e0ae7c4dcfa7b570bf02010e0c1b5d200149c0b4efb0e94063
+    .kiro/skills/build-recipe-discovery/references/extended-workflow.md: sha256:6128dcf065b3c2b360cf5266fb24e77da6069ee3bb67749bc0b402fcbb45cf84
+    .kiro/skills/build-role-founder/SKILL.md: sha256:feeac4de3a492ce183a9b5d7fe127420c02c43973ee1633f2f5b27d50f42ce54
     .kiro/skills/build-role-founder/agents/openai.yaml: sha256:0559029d70041d504b157b5dfa258e78dd7b74f2054b1194fe46a6338f39c07a
-    .kiro/skills/build-role-founder/references/extended-workflow.md: sha256:48b61886ab072ffb77ec6b73b55bcc82e0676fbb2d203f2ec25b0c9a16bc29eb
+    .kiro/skills/build-role-founder/references/extended-workflow.md: sha256:e735bce7cac2423c77986cec44a296f5702509faf4ba4e7f4bc132f05c89c2d8
   source: local
   local_path: ../product
   declaring_parent: ./packages/maintainer
@@ -972,9 +972,9 @@ dependencies:
   deployed_file_hashes:
     .agents/skills/build-browser-auth/SKILL.md: sha256:1ec4b2e233d2b75d2f7001409c9d1176e2a99cf0defa7f5005a70e0af6c5c7b4
     .agents/skills/build-browser-auth/agents/openai.yaml: sha256:b305c5d9aa1b2c75925d6b4c480a6649c29e810a2abfa5d7c6dec24d6419f109
-    .agents/skills/build-browser-benchmark/SKILL.md: sha256:2ed79715eae002e4dcc0743f8972383aac3be33d1d74a2add312ed7b00bceb18
+    .agents/skills/build-browser-benchmark/SKILL.md: sha256:fe68a407d6329d7e680fef8cf769e5eba570f9dee400b82804109007e6ed3d5a
     .agents/skills/build-browser-benchmark/agents/openai.yaml: sha256:0f5ada04bd0a75e2f6fb0ec7477f14f8b7234fcd0ba7a3e2e6de0ca4f728d6dc
-    .agents/skills/build-browser-canary/SKILL.md: sha256:62a5dfda9989e9969097f162eb3d248f7139dd033daf47382f90ccf331735a49
+    .agents/skills/build-browser-canary/SKILL.md: sha256:fcfad20236f2eab322190766c9c3e1dbe776d1500c284e695fd2a7b3e9fec66f
     .agents/skills/build-browser-canary/agents/openai.yaml: sha256:53a4ee19ae044c3336349b797dc81fb0ecdc26e2dc481327fab5e1fc9e7bf2cf
     .agents/skills/build-browser-pairagent/SKILL.md: sha256:f1b25377b657b5044636f2189144e559101a122b8e840952a9d5aea5636d7345
     .agents/skills/build-browser-pairagent/agents/openai.yaml: sha256:bc6a9c046ebd58cbd881cbfad8c1d3f7a4f163d0d554ce09b0d0695242454f7a
@@ -982,7 +982,7 @@ dependencies:
     .agents/skills/build-browser-qa/agents/openai.yaml: sha256:ccae81d1b36a12992b80f08d30b8c6afe7f52867aa41e97df04aa55b3e77cb72
     .agents/skills/build-browser-runner/SKILL.md: sha256:09680cae9c7c4ccbb68704c9c75322eba28694d2a99c93f0101d1b9b4b6f5aa7
     .agents/skills/build-browser-runner/agents/openai.yaml: sha256:ecd0930a65f363cae5d951026e55b97fd2d13d1bb778a519f1bc1b634dcb2d60
-    .agents/skills/build-browser-scrape/SKILL.md: sha256:916453a3e5949453fd7da420b5026794c4f307f50a9c5227bc9a4d6eb5b55a55
+    .agents/skills/build-browser-scrape/SKILL.md: sha256:158115c60beb4893d81abdd20ac9bc1197c215767e089daee737ad65c7ba621f
     .agents/skills/build-browser-scrape/agents/openai.yaml: sha256:96118356d33bc35b1a7c2e8de4dbd8dcdf8fe37bae4b33a25a3748d7e37b1e85
     .agents/skills/build-browser-visible/SKILL.md: sha256:474ee3dbedbb66c23dbdf24ffa5406ff99e0ca338792cd2689ea055a5aa8da28
     .agents/skills/build-browser-visible/agents/openai.yaml: sha256:86aa1f9e5009c54ffdcf38d4da2f88bcc3e0fa3d7254591cc9b8cf1559a13c4c
@@ -990,9 +990,9 @@ dependencies:
     .claude/rules/build-guard-browser.md: sha256:a58d236bab151f40bdb8aafb49b5c53344a8cdbe488bf0c44fd3a5fe8198bf12
     .claude/skills/build-browser-auth/SKILL.md: sha256:1ec4b2e233d2b75d2f7001409c9d1176e2a99cf0defa7f5005a70e0af6c5c7b4
     .claude/skills/build-browser-auth/agents/openai.yaml: sha256:b305c5d9aa1b2c75925d6b4c480a6649c29e810a2abfa5d7c6dec24d6419f109
-    .claude/skills/build-browser-benchmark/SKILL.md: sha256:2ed79715eae002e4dcc0743f8972383aac3be33d1d74a2add312ed7b00bceb18
+    .claude/skills/build-browser-benchmark/SKILL.md: sha256:fe68a407d6329d7e680fef8cf769e5eba570f9dee400b82804109007e6ed3d5a
     .claude/skills/build-browser-benchmark/agents/openai.yaml: sha256:0f5ada04bd0a75e2f6fb0ec7477f14f8b7234fcd0ba7a3e2e6de0ca4f728d6dc
-    .claude/skills/build-browser-canary/SKILL.md: sha256:62a5dfda9989e9969097f162eb3d248f7139dd033daf47382f90ccf331735a49
+    .claude/skills/build-browser-canary/SKILL.md: sha256:fcfad20236f2eab322190766c9c3e1dbe776d1500c284e695fd2a7b3e9fec66f
     .claude/skills/build-browser-canary/agents/openai.yaml: sha256:53a4ee19ae044c3336349b797dc81fb0ecdc26e2dc481327fab5e1fc9e7bf2cf
     .claude/skills/build-browser-pairagent/SKILL.md: sha256:f1b25377b657b5044636f2189144e559101a122b8e840952a9d5aea5636d7345
     .claude/skills/build-browser-pairagent/agents/openai.yaml: sha256:bc6a9c046ebd58cbd881cbfad8c1d3f7a4f163d0d554ce09b0d0695242454f7a
@@ -1000,7 +1000,7 @@ dependencies:
     .claude/skills/build-browser-qa/agents/openai.yaml: sha256:ccae81d1b36a12992b80f08d30b8c6afe7f52867aa41e97df04aa55b3e77cb72
     .claude/skills/build-browser-runner/SKILL.md: sha256:09680cae9c7c4ccbb68704c9c75322eba28694d2a99c93f0101d1b9b4b6f5aa7
     .claude/skills/build-browser-runner/agents/openai.yaml: sha256:ecd0930a65f363cae5d951026e55b97fd2d13d1bb778a519f1bc1b634dcb2d60
-    .claude/skills/build-browser-scrape/SKILL.md: sha256:916453a3e5949453fd7da420b5026794c4f307f50a9c5227bc9a4d6eb5b55a55
+    .claude/skills/build-browser-scrape/SKILL.md: sha256:158115c60beb4893d81abdd20ac9bc1197c215767e089daee737ad65c7ba621f
     .claude/skills/build-browser-scrape/agents/openai.yaml: sha256:96118356d33bc35b1a7c2e8de4dbd8dcdf8fe37bae4b33a25a3748d7e37b1e85
     .claude/skills/build-browser-visible/SKILL.md: sha256:474ee3dbedbb66c23dbdf24ffa5406ff99e0ca338792cd2689ea055a5aa8da28
     .claude/skills/build-browser-visible/agents/openai.yaml: sha256:86aa1f9e5009c54ffdcf38d4da2f88bcc3e0fa3d7254591cc9b8cf1559a13c4c
@@ -1010,9 +1010,9 @@ dependencies:
     .github/instructions/build-guard-browser.instructions.md: sha256:0b75d47c0f125a878c1da1de45ebdfa897f653d18f494fdd30e4599757b3a78a
     .kiro/skills/build-browser-auth/SKILL.md: sha256:1ec4b2e233d2b75d2f7001409c9d1176e2a99cf0defa7f5005a70e0af6c5c7b4
     .kiro/skills/build-browser-auth/agents/openai.yaml: sha256:b305c5d9aa1b2c75925d6b4c480a6649c29e810a2abfa5d7c6dec24d6419f109
-    .kiro/skills/build-browser-benchmark/SKILL.md: sha256:2ed79715eae002e4dcc0743f8972383aac3be33d1d74a2add312ed7b00bceb18
+    .kiro/skills/build-browser-benchmark/SKILL.md: sha256:fe68a407d6329d7e680fef8cf769e5eba570f9dee400b82804109007e6ed3d5a
     .kiro/skills/build-browser-benchmark/agents/openai.yaml: sha256:0f5ada04bd0a75e2f6fb0ec7477f14f8b7234fcd0ba7a3e2e6de0ca4f728d6dc
-    .kiro/skills/build-browser-canary/SKILL.md: sha256:62a5dfda9989e9969097f162eb3d248f7139dd033daf47382f90ccf331735a49
+    .kiro/skills/build-browser-canary/SKILL.md: sha256:fcfad20236f2eab322190766c9c3e1dbe776d1500c284e695fd2a7b3e9fec66f
     .kiro/skills/build-browser-canary/agents/openai.yaml: sha256:53a4ee19ae044c3336349b797dc81fb0ecdc26e2dc481327fab5e1fc9e7bf2cf
     .kiro/skills/build-browser-pairagent/SKILL.md: sha256:f1b25377b657b5044636f2189144e559101a122b8e840952a9d5aea5636d7345
     .kiro/skills/build-browser-pairagent/agents/openai.yaml: sha256:bc6a9c046ebd58cbd881cbfad8c1d3f7a4f163d0d554ce09b0d0695242454f7a
@@ -1020,7 +1020,7 @@ dependencies:
     .kiro/skills/build-browser-qa/agents/openai.yaml: sha256:ccae81d1b36a12992b80f08d30b8c6afe7f52867aa41e97df04aa55b3e77cb72
     .kiro/skills/build-browser-runner/SKILL.md: sha256:09680cae9c7c4ccbb68704c9c75322eba28694d2a99c93f0101d1b9b4b6f5aa7
     .kiro/skills/build-browser-runner/agents/openai.yaml: sha256:ecd0930a65f363cae5d951026e55b97fd2d13d1bb778a519f1bc1b634dcb2d60
-    .kiro/skills/build-browser-scrape/SKILL.md: sha256:916453a3e5949453fd7da420b5026794c4f307f50a9c5227bc9a4d6eb5b55a55
+    .kiro/skills/build-browser-scrape/SKILL.md: sha256:158115c60beb4893d81abdd20ac9bc1197c215767e089daee737ad65c7ba621f
     .kiro/skills/build-browser-scrape/agents/openai.yaml: sha256:96118356d33bc35b1a7c2e8de4dbd8dcdf8fe37bae4b33a25a3748d7e37b1e85
     .kiro/skills/build-browser-visible/SKILL.md: sha256:474ee3dbedbb66c23dbdf24ffa5406ff99e0ca338792cd2689ea055a5aa8da28
     .kiro/skills/build-browser-visible/agents/openai.yaml: sha256:86aa1f9e5009c54ffdcf38d4da2f88bcc3e0fa3d7254591cc9b8cf1559a13c4c
@@ -1127,13 +1127,13 @@ dependencies:
   - .kiro/skills/build-role-designer/agents/openai.yaml
   - .kiro/skills/build-role-designer/references/extended-workflow.md
   deployed_file_hashes:
-    .agents/skills/build-flow-designconsult/SKILL.md: sha256:68460ecbf7b886c279e72968448d7b0c618957e1f13e9127d26675fcaec1db67
+    .agents/skills/build-flow-designconsult/SKILL.md: sha256:43cc2a1b07d2b7ef2589afe1c1a0cc8366ea9d3b2722a5856b8b200c5656432d
     .agents/skills/build-flow-designconsult/agents/openai.yaml: sha256:f9d6e25f623970f342b1ae53d9a36c1c52c37930e677b47575d9eae30cd47575
-    .agents/skills/build-flow-designconsult/references/extended-workflow.md: sha256:992f4f66ccb359f2dc34041d23ef97fc533437d6a399faf119bddddedcbc34ef
-    .agents/skills/build-flow-designhtml/SKILL.md: sha256:0bcd810fba14ed3592bc64eb6ac4e29082f47d8758dfc7df50fdf076f601d9bf
+    .agents/skills/build-flow-designconsult/references/extended-workflow.md: sha256:1e8104714254d953ecbbc32cb7a332e7e1356fe407db7cbda6a7ef1437deac4b
+    .agents/skills/build-flow-designhtml/SKILL.md: sha256:1e49ac594eda977c1507e5fe24010e97d07e86739d4f00f13ab2b64a5fc82309
     .agents/skills/build-flow-designhtml/agents/openai.yaml: sha256:29fc17f2726de00fb77bb3fb0868ccd2456175c65e2ec83c68fd675c7a31946e
-    .agents/skills/build-flow-designhtml/references/extended-workflow.md: sha256:1bd83fa1cd5627b11f19effdf645dae65c6111276c0d3aae8533430954a931b9
-    .agents/skills/build-flow-designshotgun/SKILL.md: sha256:bcca892587e46932e312188d8da11541fd1d965bf87f9d3d21532b1d174de09f
+    .agents/skills/build-flow-designhtml/references/extended-workflow.md: sha256:78e78834663a3d9f6ec9b29ca9aad80444b603fffd177eda1beb8b4ef80d8e28
+    .agents/skills/build-flow-designshotgun/SKILL.md: sha256:c75d330051a6ea86365c4f72eb3d2802830579f21ecfc06e194917b1d920c20d
     .agents/skills/build-flow-designshotgun/agents/openai.yaml: sha256:a99ec245dc53aae3f96686c7ace50a1ed8d95e3e9dde3f20428eafb95d47b190
     .agents/skills/build-flow-mobileuifinish/SKILL.md: sha256:24eafdc290742af33f89225254f84dfb68e6c1d93e8b19cb7d426c364e13b09f
     .agents/skills/build-flow-mobileuifinish/agents/openai.yaml: sha256:a339b02da4b7df8a0eb2f1d15b20c0466d0c3a52a6488df4f4fad27307a14d98
@@ -1147,16 +1147,16 @@ dependencies:
     .agents/skills/build-flow-webuifinish/references/design-guidance.md: sha256:95ba7853892d4ab6a2a72627bb5c7cb71a0900295245083b9285705613ea75f8
     .agents/skills/build-flow-webuifinish/references/project-adapter.md: sha256:447740d249901568724057ef0910534d7bdda296e6a31a2c6a00a6432b501915
     .agents/skills/build-flow-webuifinish/references/scoring-rubric.md: sha256:200e96dba138e6e026410ebae49429cea5aaefdfbbd9471782b38bc8eead5819
-    .agents/skills/build-role-designer/SKILL.md: sha256:5d98a61eef4418539f6fc5996b548adc4ff7402a0eee7af00411cdff227d684d
+    .agents/skills/build-role-designer/SKILL.md: sha256:e62675c0d001c28c3712ea747a76f33f4e5e583c88e1341d405c910dd2c19698
     .agents/skills/build-role-designer/agents/openai.yaml: sha256:c65cc8c80a9613c05a8e1e7376d00356e78ebc9ba51456e164292b9ca136dc21
-    .agents/skills/build-role-designer/references/extended-workflow.md: sha256:f932bd30a5f9c73182c242f06cd4f6cbf02ab19d6d9b37752e0157d0a960b3bf
-    .claude/skills/build-flow-designconsult/SKILL.md: sha256:68460ecbf7b886c279e72968448d7b0c618957e1f13e9127d26675fcaec1db67
+    .agents/skills/build-role-designer/references/extended-workflow.md: sha256:4078f8e39b1cd829912adcd2cfe8f4f1b81c184d4666baa6b9c6f0432c2c08f4
+    .claude/skills/build-flow-designconsult/SKILL.md: sha256:43cc2a1b07d2b7ef2589afe1c1a0cc8366ea9d3b2722a5856b8b200c5656432d
     .claude/skills/build-flow-designconsult/agents/openai.yaml: sha256:f9d6e25f623970f342b1ae53d9a36c1c52c37930e677b47575d9eae30cd47575
-    .claude/skills/build-flow-designconsult/references/extended-workflow.md: sha256:992f4f66ccb359f2dc34041d23ef97fc533437d6a399faf119bddddedcbc34ef
-    .claude/skills/build-flow-designhtml/SKILL.md: sha256:0bcd810fba14ed3592bc64eb6ac4e29082f47d8758dfc7df50fdf076f601d9bf
+    .claude/skills/build-flow-designconsult/references/extended-workflow.md: sha256:1e8104714254d953ecbbc32cb7a332e7e1356fe407db7cbda6a7ef1437deac4b
+    .claude/skills/build-flow-designhtml/SKILL.md: sha256:1e49ac594eda977c1507e5fe24010e97d07e86739d4f00f13ab2b64a5fc82309
     .claude/skills/build-flow-designhtml/agents/openai.yaml: sha256:29fc17f2726de00fb77bb3fb0868ccd2456175c65e2ec83c68fd675c7a31946e
-    .claude/skills/build-flow-designhtml/references/extended-workflow.md: sha256:1bd83fa1cd5627b11f19effdf645dae65c6111276c0d3aae8533430954a931b9
-    .claude/skills/build-flow-designshotgun/SKILL.md: sha256:bcca892587e46932e312188d8da11541fd1d965bf87f9d3d21532b1d174de09f
+    .claude/skills/build-flow-designhtml/references/extended-workflow.md: sha256:78e78834663a3d9f6ec9b29ca9aad80444b603fffd177eda1beb8b4ef80d8e28
+    .claude/skills/build-flow-designshotgun/SKILL.md: sha256:c75d330051a6ea86365c4f72eb3d2802830579f21ecfc06e194917b1d920c20d
     .claude/skills/build-flow-designshotgun/agents/openai.yaml: sha256:a99ec245dc53aae3f96686c7ace50a1ed8d95e3e9dde3f20428eafb95d47b190
     .claude/skills/build-flow-mobileuifinish/SKILL.md: sha256:24eafdc290742af33f89225254f84dfb68e6c1d93e8b19cb7d426c364e13b09f
     .claude/skills/build-flow-mobileuifinish/agents/openai.yaml: sha256:a339b02da4b7df8a0eb2f1d15b20c0466d0c3a52a6488df4f4fad27307a14d98
@@ -1170,16 +1170,16 @@ dependencies:
     .claude/skills/build-flow-webuifinish/references/design-guidance.md: sha256:95ba7853892d4ab6a2a72627bb5c7cb71a0900295245083b9285705613ea75f8
     .claude/skills/build-flow-webuifinish/references/project-adapter.md: sha256:447740d249901568724057ef0910534d7bdda296e6a31a2c6a00a6432b501915
     .claude/skills/build-flow-webuifinish/references/scoring-rubric.md: sha256:200e96dba138e6e026410ebae49429cea5aaefdfbbd9471782b38bc8eead5819
-    .claude/skills/build-role-designer/SKILL.md: sha256:5d98a61eef4418539f6fc5996b548adc4ff7402a0eee7af00411cdff227d684d
+    .claude/skills/build-role-designer/SKILL.md: sha256:e62675c0d001c28c3712ea747a76f33f4e5e583c88e1341d405c910dd2c19698
     .claude/skills/build-role-designer/agents/openai.yaml: sha256:c65cc8c80a9613c05a8e1e7376d00356e78ebc9ba51456e164292b9ca136dc21
-    .claude/skills/build-role-designer/references/extended-workflow.md: sha256:f932bd30a5f9c73182c242f06cd4f6cbf02ab19d6d9b37752e0157d0a960b3bf
-    .kiro/skills/build-flow-designconsult/SKILL.md: sha256:68460ecbf7b886c279e72968448d7b0c618957e1f13e9127d26675fcaec1db67
+    .claude/skills/build-role-designer/references/extended-workflow.md: sha256:4078f8e39b1cd829912adcd2cfe8f4f1b81c184d4666baa6b9c6f0432c2c08f4
+    .kiro/skills/build-flow-designconsult/SKILL.md: sha256:43cc2a1b07d2b7ef2589afe1c1a0cc8366ea9d3b2722a5856b8b200c5656432d
     .kiro/skills/build-flow-designconsult/agents/openai.yaml: sha256:f9d6e25f623970f342b1ae53d9a36c1c52c37930e677b47575d9eae30cd47575
-    .kiro/skills/build-flow-designconsult/references/extended-workflow.md: sha256:992f4f66ccb359f2dc34041d23ef97fc533437d6a399faf119bddddedcbc34ef
-    .kiro/skills/build-flow-designhtml/SKILL.md: sha256:0bcd810fba14ed3592bc64eb6ac4e29082f47d8758dfc7df50fdf076f601d9bf
+    .kiro/skills/build-flow-designconsult/references/extended-workflow.md: sha256:1e8104714254d953ecbbc32cb7a332e7e1356fe407db7cbda6a7ef1437deac4b
+    .kiro/skills/build-flow-designhtml/SKILL.md: sha256:1e49ac594eda977c1507e5fe24010e97d07e86739d4f00f13ab2b64a5fc82309
     .kiro/skills/build-flow-designhtml/agents/openai.yaml: sha256:29fc17f2726de00fb77bb3fb0868ccd2456175c65e2ec83c68fd675c7a31946e
-    .kiro/skills/build-flow-designhtml/references/extended-workflow.md: sha256:1bd83fa1cd5627b11f19effdf645dae65c6111276c0d3aae8533430954a931b9
-    .kiro/skills/build-flow-designshotgun/SKILL.md: sha256:bcca892587e46932e312188d8da11541fd1d965bf87f9d3d21532b1d174de09f
+    .kiro/skills/build-flow-designhtml/references/extended-workflow.md: sha256:78e78834663a3d9f6ec9b29ca9aad80444b603fffd177eda1beb8b4ef80d8e28
+    .kiro/skills/build-flow-designshotgun/SKILL.md: sha256:c75d330051a6ea86365c4f72eb3d2802830579f21ecfc06e194917b1d920c20d
     .kiro/skills/build-flow-designshotgun/agents/openai.yaml: sha256:a99ec245dc53aae3f96686c7ace50a1ed8d95e3e9dde3f20428eafb95d47b190
     .kiro/skills/build-flow-mobileuifinish/SKILL.md: sha256:24eafdc290742af33f89225254f84dfb68e6c1d93e8b19cb7d426c364e13b09f
     .kiro/skills/build-flow-mobileuifinish/agents/openai.yaml: sha256:a339b02da4b7df8a0eb2f1d15b20c0466d0c3a52a6488df4f4fad27307a14d98
@@ -1193,9 +1193,9 @@ dependencies:
     .kiro/skills/build-flow-webuifinish/references/design-guidance.md: sha256:95ba7853892d4ab6a2a72627bb5c7cb71a0900295245083b9285705613ea75f8
     .kiro/skills/build-flow-webuifinish/references/project-adapter.md: sha256:447740d249901568724057ef0910534d7bdda296e6a31a2c6a00a6432b501915
     .kiro/skills/build-flow-webuifinish/references/scoring-rubric.md: sha256:200e96dba138e6e026410ebae49429cea5aaefdfbbd9471782b38bc8eead5819
-    .kiro/skills/build-role-designer/SKILL.md: sha256:5d98a61eef4418539f6fc5996b548adc4ff7402a0eee7af00411cdff227d684d
+    .kiro/skills/build-role-designer/SKILL.md: sha256:e62675c0d001c28c3712ea747a76f33f4e5e583c88e1341d405c910dd2c19698
     .kiro/skills/build-role-designer/agents/openai.yaml: sha256:c65cc8c80a9613c05a8e1e7376d00356e78ebc9ba51456e164292b9ca136dc21
-    .kiro/skills/build-role-designer/references/extended-workflow.md: sha256:f932bd30a5f9c73182c242f06cd4f6cbf02ab19d6d9b37752e0157d0a960b3bf
+    .kiro/skills/build-role-designer/references/extended-workflow.md: sha256:4078f8e39b1cd829912adcd2cfe8f4f1b81c184d4666baa6b9c6f0432c2c08f4
   source: local
   local_path: ../design
   declaring_parent: local:packages/product
@@ -1343,22 +1343,22 @@ dependencies:
     .agents/skills/build-guard-destructive/SKILL.md: sha256:dd444f4ea444cab37a0d051a76f32be327f40ea759ec9b0794a4906cd3db31be
     .agents/skills/build-guard-destructive/agents/openai.yaml: sha256:1f79bd5c4c87c8408481bc14e7fb6d29045a1cc2bf2562c4fa1501670fd5ef19
     .agents/skills/build-guard-destructive/scripts/check-careful.sh: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
-    .agents/skills/build-guard-full/SKILL.md: sha256:93580009631d5bf3cd3fb2c8ff9e6d535cb6581abd313968e6e399fc33f0e096
+    .agents/skills/build-guard-full/SKILL.md: sha256:d8e46da6cc2c9bcf3f154d48649ec99ba0fb9d726ef3887723f88ea27a0f6245
     .agents/skills/build-guard-full/agents/openai.yaml: sha256:96413f4b7a5b11996f3faeb201da9c4fe3ed253eef197dfe2e653ec4da0c5746
     .agents/skills/build-guard-scope-release/SKILL.md: sha256:0e176b4fa36050ab7dc71beca96a9a765a443ab7b1e7c07da06d4cbef910e434
     .agents/skills/build-guard-scope-release/agents/openai.yaml: sha256:508c3c13fdc190c5564c8dcd1467efe3fbf2b9ce553b8cda7f079eca9ce53ab7
-    .agents/skills/build-guard-scope/SKILL.md: sha256:c90809b93f02670caa744dadeb69339ada5ced47b19b4b2fb5bc69d864e2d3e8
+    .agents/skills/build-guard-scope/SKILL.md: sha256:6521be3f0f3ba77029fa2a9f5f58819c8b2fbe0b69ba7c5ff0c638377910a383
     .agents/skills/build-guard-scope/agents/openai.yaml: sha256:36a9bad892efdbd7ca7f48002dea28b07fb70fa86fb9898843b33d4f148faa25
     .agents/skills/build-guard-scope/scripts/check-freeze.sh: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
-    .agents/skills/build-recipe-investigate/SKILL.md: sha256:50bb55d46105d1315264cc5eddd7769956b566423641cee4c2f1914e9970bbbd
+    .agents/skills/build-recipe-investigate/SKILL.md: sha256:3db59d76ddc1843a8b6c25e63764af661f300ec8c98661bf6175de492bdbb2d3
     .agents/skills/build-recipe-investigate/agents/openai.yaml: sha256:6f787b80a7578972385bd2d43ef1e3be46351c18b56fdc4536b52d213c709af5
     .agents/skills/build-recipe-research/SKILL.md: sha256:db567a5cc3b6ed516e298255946b710676a82132dd86503424fd57b6da5cac62
     .agents/skills/build-recipe-research/agents/openai.yaml: sha256:2237fdfa956e706abf99a8002fb46a8e9bfbf1fd3228191719aac2431d23a237
-    .agents/skills/build-runtime-health/SKILL.md: sha256:fa78086ff60bb29c7d6e5dd06ad27369f869d0b07b769ba4f2a25706450a7722
+    .agents/skills/build-runtime-health/SKILL.md: sha256:24117df729d7d7e96273bd9b33e202045a889873fcd5739981cb0e56cc9b67ca
     .agents/skills/build-runtime-health/agents/openai.yaml: sha256:4101b4588c45fb68841f5754b0cc0d2e5aca21237ad4d5f85810cef41d8ff547
-    .agents/skills/build-runtime-learnings/SKILL.md: sha256:87c46a66b460dc1385c597236659cb8b7311a70e068cf6227e133d29fe1e0fe5
+    .agents/skills/build-runtime-learnings/SKILL.md: sha256:aa86661834d381ad11c7ef2cbc9324b3029468e982be75b369414d83ca658e4b
     .agents/skills/build-runtime-learnings/agents/openai.yaml: sha256:e0cf9ba90586682d27eb6e2a3d714021f201d66a7f9479afa2f67fc04f4d6ced
-    .agents/skills/build-runtime-session/SKILL.md: sha256:61c45bbd1321ab4cb6ac1fb8fc9dce48b3c269a9d0e988e6fdcaeb201e6caafa
+    .agents/skills/build-runtime-session/SKILL.md: sha256:7dfc4a501a08d2598c0a41e7ffba0d71dfa786be83b5c811e1694f71026b61a3
     .agents/skills/build-runtime-session/agents/openai.yaml: sha256:fee3aecf5f7636889ea8520ebd061eab33c5fca6a9e00a5ae89a4ca54e9bef7e
     .claude/rules/build-core-evidence.md: sha256:59e6d5f91ac0e5e39da87289555258de0aacb22c336835bd516ceb0242fe1fde
     .claude/rules/build-core-github.md: sha256:b63b2ded2b39373cdd3292cc4eebe742a5e11269f5e4e717988f4fe738056aea
@@ -1372,22 +1372,22 @@ dependencies:
     .claude/skills/build-guard-destructive/SKILL.md: sha256:dd444f4ea444cab37a0d051a76f32be327f40ea759ec9b0794a4906cd3db31be
     .claude/skills/build-guard-destructive/agents/openai.yaml: sha256:1f79bd5c4c87c8408481bc14e7fb6d29045a1cc2bf2562c4fa1501670fd5ef19
     .claude/skills/build-guard-destructive/scripts/check-careful.sh: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
-    .claude/skills/build-guard-full/SKILL.md: sha256:93580009631d5bf3cd3fb2c8ff9e6d535cb6581abd313968e6e399fc33f0e096
+    .claude/skills/build-guard-full/SKILL.md: sha256:d8e46da6cc2c9bcf3f154d48649ec99ba0fb9d726ef3887723f88ea27a0f6245
     .claude/skills/build-guard-full/agents/openai.yaml: sha256:96413f4b7a5b11996f3faeb201da9c4fe3ed253eef197dfe2e653ec4da0c5746
     .claude/skills/build-guard-scope-release/SKILL.md: sha256:0e176b4fa36050ab7dc71beca96a9a765a443ab7b1e7c07da06d4cbef910e434
     .claude/skills/build-guard-scope-release/agents/openai.yaml: sha256:508c3c13fdc190c5564c8dcd1467efe3fbf2b9ce553b8cda7f079eca9ce53ab7
-    .claude/skills/build-guard-scope/SKILL.md: sha256:c90809b93f02670caa744dadeb69339ada5ced47b19b4b2fb5bc69d864e2d3e8
+    .claude/skills/build-guard-scope/SKILL.md: sha256:6521be3f0f3ba77029fa2a9f5f58819c8b2fbe0b69ba7c5ff0c638377910a383
     .claude/skills/build-guard-scope/agents/openai.yaml: sha256:36a9bad892efdbd7ca7f48002dea28b07fb70fa86fb9898843b33d4f148faa25
     .claude/skills/build-guard-scope/scripts/check-freeze.sh: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
-    .claude/skills/build-recipe-investigate/SKILL.md: sha256:50bb55d46105d1315264cc5eddd7769956b566423641cee4c2f1914e9970bbbd
+    .claude/skills/build-recipe-investigate/SKILL.md: sha256:3db59d76ddc1843a8b6c25e63764af661f300ec8c98661bf6175de492bdbb2d3
     .claude/skills/build-recipe-investigate/agents/openai.yaml: sha256:6f787b80a7578972385bd2d43ef1e3be46351c18b56fdc4536b52d213c709af5
     .claude/skills/build-recipe-research/SKILL.md: sha256:db567a5cc3b6ed516e298255946b710676a82132dd86503424fd57b6da5cac62
     .claude/skills/build-recipe-research/agents/openai.yaml: sha256:2237fdfa956e706abf99a8002fb46a8e9bfbf1fd3228191719aac2431d23a237
-    .claude/skills/build-runtime-health/SKILL.md: sha256:fa78086ff60bb29c7d6e5dd06ad27369f869d0b07b769ba4f2a25706450a7722
+    .claude/skills/build-runtime-health/SKILL.md: sha256:24117df729d7d7e96273bd9b33e202045a889873fcd5739981cb0e56cc9b67ca
     .claude/skills/build-runtime-health/agents/openai.yaml: sha256:4101b4588c45fb68841f5754b0cc0d2e5aca21237ad4d5f85810cef41d8ff547
-    .claude/skills/build-runtime-learnings/SKILL.md: sha256:87c46a66b460dc1385c597236659cb8b7311a70e068cf6227e133d29fe1e0fe5
+    .claude/skills/build-runtime-learnings/SKILL.md: sha256:aa86661834d381ad11c7ef2cbc9324b3029468e982be75b369414d83ca658e4b
     .claude/skills/build-runtime-learnings/agents/openai.yaml: sha256:e0cf9ba90586682d27eb6e2a3d714021f201d66a7f9479afa2f67fc04f4d6ced
-    .claude/skills/build-runtime-session/SKILL.md: sha256:61c45bbd1321ab4cb6ac1fb8fc9dce48b3c269a9d0e988e6fdcaeb201e6caafa
+    .claude/skills/build-runtime-session/SKILL.md: sha256:7dfc4a501a08d2598c0a41e7ffba0d71dfa786be83b5c811e1694f71026b61a3
     .claude/skills/build-runtime-session/agents/openai.yaml: sha256:fee3aecf5f7636889ea8520ebd061eab33c5fca6a9e00a5ae89a4ca54e9bef7e
     .cursor/rules/build-core-evidence.mdc: sha256:04781959b467b2777fae64e031e426d326d3afc7fda5ae3967170de0e8ece0bb
     .cursor/rules/build-core-github.mdc: sha256:bc679257e6ac6e9000a58f0b1d2ab4db62441119b3ba296fc5f173bc62db4c52
@@ -1410,22 +1410,22 @@ dependencies:
     .kiro/skills/build-guard-destructive/SKILL.md: sha256:dd444f4ea444cab37a0d051a76f32be327f40ea759ec9b0794a4906cd3db31be
     .kiro/skills/build-guard-destructive/agents/openai.yaml: sha256:1f79bd5c4c87c8408481bc14e7fb6d29045a1cc2bf2562c4fa1501670fd5ef19
     .kiro/skills/build-guard-destructive/scripts/check-careful.sh: sha256:62ac5c47220942187a76bc4b4ddcc21cd6b9c7edebb7fb3599c3bee329022ca0
-    .kiro/skills/build-guard-full/SKILL.md: sha256:93580009631d5bf3cd3fb2c8ff9e6d535cb6581abd313968e6e399fc33f0e096
+    .kiro/skills/build-guard-full/SKILL.md: sha256:d8e46da6cc2c9bcf3f154d48649ec99ba0fb9d726ef3887723f88ea27a0f6245
     .kiro/skills/build-guard-full/agents/openai.yaml: sha256:96413f4b7a5b11996f3faeb201da9c4fe3ed253eef197dfe2e653ec4da0c5746
     .kiro/skills/build-guard-scope-release/SKILL.md: sha256:0e176b4fa36050ab7dc71beca96a9a765a443ab7b1e7c07da06d4cbef910e434
     .kiro/skills/build-guard-scope-release/agents/openai.yaml: sha256:508c3c13fdc190c5564c8dcd1467efe3fbf2b9ce553b8cda7f079eca9ce53ab7
-    .kiro/skills/build-guard-scope/SKILL.md: sha256:c90809b93f02670caa744dadeb69339ada5ced47b19b4b2fb5bc69d864e2d3e8
+    .kiro/skills/build-guard-scope/SKILL.md: sha256:6521be3f0f3ba77029fa2a9f5f58819c8b2fbe0b69ba7c5ff0c638377910a383
     .kiro/skills/build-guard-scope/agents/openai.yaml: sha256:36a9bad892efdbd7ca7f48002dea28b07fb70fa86fb9898843b33d4f148faa25
     .kiro/skills/build-guard-scope/scripts/check-freeze.sh: sha256:9237cbaff567648d7f593242f57021a5b3494a06b9d6286c60ed924e4c7551e9
-    .kiro/skills/build-recipe-investigate/SKILL.md: sha256:50bb55d46105d1315264cc5eddd7769956b566423641cee4c2f1914e9970bbbd
+    .kiro/skills/build-recipe-investigate/SKILL.md: sha256:3db59d76ddc1843a8b6c25e63764af661f300ec8c98661bf6175de492bdbb2d3
     .kiro/skills/build-recipe-investigate/agents/openai.yaml: sha256:6f787b80a7578972385bd2d43ef1e3be46351c18b56fdc4536b52d213c709af5
     .kiro/skills/build-recipe-research/SKILL.md: sha256:db567a5cc3b6ed516e298255946b710676a82132dd86503424fd57b6da5cac62
     .kiro/skills/build-recipe-research/agents/openai.yaml: sha256:2237fdfa956e706abf99a8002fb46a8e9bfbf1fd3228191719aac2431d23a237
-    .kiro/skills/build-runtime-health/SKILL.md: sha256:fa78086ff60bb29c7d6e5dd06ad27369f869d0b07b769ba4f2a25706450a7722
+    .kiro/skills/build-runtime-health/SKILL.md: sha256:24117df729d7d7e96273bd9b33e202045a889873fcd5739981cb0e56cc9b67ca
     .kiro/skills/build-runtime-health/agents/openai.yaml: sha256:4101b4588c45fb68841f5754b0cc0d2e5aca21237ad4d5f85810cef41d8ff547
-    .kiro/skills/build-runtime-learnings/SKILL.md: sha256:87c46a66b460dc1385c597236659cb8b7311a70e068cf6227e133d29fe1e0fe5
+    .kiro/skills/build-runtime-learnings/SKILL.md: sha256:aa86661834d381ad11c7ef2cbc9324b3029468e982be75b369414d83ca658e4b
     .kiro/skills/build-runtime-learnings/agents/openai.yaml: sha256:e0cf9ba90586682d27eb6e2a3d714021f201d66a7f9479afa2f67fc04f4d6ced
-    .kiro/skills/build-runtime-session/SKILL.md: sha256:61c45bbd1321ab4cb6ac1fb8fc9dce48b3c269a9d0e988e6fdcaeb201e6caafa
+    .kiro/skills/build-runtime-session/SKILL.md: sha256:7dfc4a501a08d2598c0a41e7ffba0d71dfa786be83b5c811e1694f71026b61a3
     .kiro/skills/build-runtime-session/agents/openai.yaml: sha256:fee3aecf5f7636889ea8520ebd061eab33c5fca6a9e00a5ae89a4ca54e9bef7e
     .kiro/steering/build-core-evidence.md: sha256:42fd6300733d4e42d873a33bc8569f3baea4ea093bcf164aabf4c6d381a55916
     .kiro/steering/build-core-github.md: sha256:c56935bf1571a238662db076031f9b899e40cedbfd82f9ced8c89f6a9e837630
@@ -1593,7 +1593,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:2ed79715eae002e4dcc0743f8972383aac3be33d1d74a2add312ed7b00bceb18
+  content_hash: sha256:fe68a407d6329d7e680fef8cf769e5eba570f9dee400b82804109007e6ed3d5a
 - kind: project-relative
   target: claude
   value: .claude/skills/build-browser-benchmark/agents/openai.yaml
@@ -1620,7 +1620,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:62a5dfda9989e9969097f162eb3d248f7139dd033daf47382f90ccf331735a49
+  content_hash: sha256:fcfad20236f2eab322190766c9c3e1dbe776d1500c284e695fd2a7b3e9fec66f
 - kind: project-relative
   target: claude
   value: .claude/skills/build-browser-canary/agents/openai.yaml
@@ -1728,7 +1728,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:916453a3e5949453fd7da420b5026794c4f307f50a9c5227bc9a4d6eb5b55a55
+  content_hash: sha256:158115c60beb4893d81abdd20ac9bc1197c215767e089daee737ad65c7ba621f
 - kind: project-relative
   target: claude
   value: .claude/skills/build-browser-scrape/agents/openai.yaml
@@ -1818,7 +1818,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:68460ecbf7b886c279e72968448d7b0c618957e1f13e9127d26675fcaec1db67
+  content_hash: sha256:43cc2a1b07d2b7ef2589afe1c1a0cc8366ea9d3b2722a5856b8b200c5656432d
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-designconsult/agents/openai.yaml
@@ -1836,7 +1836,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:992f4f66ccb359f2dc34041d23ef97fc533437d6a399faf119bddddedcbc34ef
+  content_hash: sha256:1e8104714254d953ecbbc32cb7a332e7e1356fe407db7cbda6a7ef1437deac4b
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-designhtml
@@ -1854,7 +1854,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:0bcd810fba14ed3592bc64eb6ac4e29082f47d8758dfc7df50fdf076f601d9bf
+  content_hash: sha256:1e49ac594eda977c1507e5fe24010e97d07e86739d4f00f13ab2b64a5fc82309
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-designhtml/agents/openai.yaml
@@ -1872,7 +1872,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:1bd83fa1cd5627b11f19effdf645dae65c6111276c0d3aae8533430954a931b9
+  content_hash: sha256:78e78834663a3d9f6ec9b29ca9aad80444b603fffd177eda1beb8b4ef80d8e28
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-designshotgun
@@ -1890,7 +1890,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:bcca892587e46932e312188d8da11541fd1d965bf87f9d3d21532b1d174de09f
+  content_hash: sha256:c75d330051a6ea86365c4f72eb3d2802830579f21ecfc06e194917b1d920c20d
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-designshotgun/agents/openai.yaml
@@ -1953,7 +1953,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:e37a25249e9284b6c0107ce81b6a56252979464990125e84e49c254ff6ce0a54
+  content_hash: sha256:03bbd85ca6d1a074a64245d99b3fc51741ca75d99229e9607dd262551a9bea2b
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-goaldirectedux/agents/openai.yaml
@@ -2043,7 +2043,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c5936394fadf6e18de7b97dddbf621cad062e33879d7637566adddc48cae3b9a
+  content_hash: sha256:8c941533e33eb8dbf12176ab860949dc5ebe7d6470f294d3d66a2e43bfb74f7a
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-humanwizard/agents/openai.yaml
@@ -2061,7 +2061,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:e47e210153ca86b6675623f73208615c814764cd068317df77c48d0afbf892ce
+  content_hash: sha256:aaf6e7124fad5ad68b9cbb0dbe7e98bfdc75edb3e706be17ab7d5fd5cf2ecf06
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-infradesign
@@ -2457,7 +2457,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:5455487abfadc5325a021f3c8903a7db7eefea212d25ff3d023e47b81dfc3d07
+  content_hash: sha256:7f664c9b0fdbfccd31a50b23f60caa4cb8c212cdb95e7e0c68f098610f944f98
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-qareport/agents/openai.yaml
@@ -2484,7 +2484,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:7a4b63a6e90d28d36f103934d5ecb93c13a050baefe95cdd43c0263b06de427f
+  content_hash: sha256:9df0df8f3c4b47aa1b5c0abc35feea3c76adeeea5f7432ad1fbff3dfffccf997
 - kind: project-relative
   target: claude
   value: .claude/skills/build-flow-securitygate/agents/openai.yaml
@@ -2745,7 +2745,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:93580009631d5bf3cd3fb2c8ff9e6d535cb6581abd313968e6e399fc33f0e096
+  content_hash: sha256:d8e46da6cc2c9bcf3f154d48649ec99ba0fb9d726ef3887723f88ea27a0f6245
 - kind: project-relative
   target: claude
   value: .claude/skills/build-guard-full/agents/openai.yaml
@@ -2799,7 +2799,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:c90809b93f02670caa744dadeb69339ada5ced47b19b4b2fb5bc69d864e2d3e8
+  content_hash: sha256:6521be3f0f3ba77029fa2a9f5f58819c8b2fbe0b69ba7c5ff0c638377910a383
 - kind: project-relative
   target: claude
   value: .claude/skills/build-guard-scope/agents/openai.yaml
@@ -2862,7 +2862,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:3c45954b3f37e934f3ef9a33364cc88c687edab730124e38ea8fd24915cf4630
+  content_hash: sha256:22c702c81dcc1b832c01cbee132f17d50bc4d2ef2d294838ec5579104e62b066
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-autoplan/agents/openai.yaml
@@ -2880,7 +2880,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:6e1fcd4b25382d383c9186a103af68e48aced44bed2aa88e25c617b19b83856f
+  content_hash: sha256:398548ee849ff3c5c7579d8ca30699fa95151c4b04239a9f7e2bff1c99cb95ee
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-discovery
@@ -2898,7 +2898,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:fd60b20e597b84f3ec4aa21a3f57fa2e96ceb76b6059788da684d58c29a9e681
+  content_hash: sha256:cfdfd0b732e494043c7011ed7ab1a6a6b4eac8c3d9e890c8717d6ab9ad51b923
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-discovery/agents/openai.yaml
@@ -2934,7 +2934,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:1f4fc01344777682104fc215ac0f0acc84c150f249c098c3959c29c7a1fd512a
+  content_hash: sha256:6128dcf065b3c2b360cf5266fb24e77da6069ee3bb67749bc0b402fcbb45cf84
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-implement
@@ -2988,7 +2988,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:50bb55d46105d1315264cc5eddd7769956b566423641cee4c2f1914e9970bbbd
+  content_hash: sha256:3db59d76ddc1843a8b6c25e63764af661f300ec8c98661bf6175de492bdbb2d3
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-investigate/agents/openai.yaml
@@ -3015,7 +3015,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:064cc1dbb2e0527a5f0d888009bd2379a7940926de8a7c781b7e3012090c39f4
+  content_hash: sha256:e7ac74a6f7c3519f255afd2b59747771b2f0395e942ec87519421a79fce835b6
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-landdeploy/agents/openai.yaml
@@ -3033,7 +3033,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:4d887331bdf9e5e316b4f65d3cd7cfb36608b23ec303843c35629032cd91226c
+  content_hash: sha256:e7903cee158c2d4308fa73a99722b03065453874d95b2b7ca04c8da743dbbf4c
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-mergeconflicts
@@ -3078,7 +3078,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:0ba3d8cd0176da94436c08ae7db8d73de159c9e6c8dfe155d8061be79e2a813e
+  content_hash: sha256:358cf58d351d9588824830bc9c5c2b04a6fb452244928a969d64af53e3af9c47
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-qa/agents/openai.yaml
@@ -3150,7 +3150,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c783a3ac56762a919ecbe2c5318ccd8674cece2900b107178cfd18e7b3e1b377
+  content_hash: sha256:dd9b7767b51683cd36d20b0bf58ae43719f7815b3e5a025cff815c1b32a28a1a
 - kind: project-relative
   target: claude
   value: .claude/skills/build-recipe-ship/agents/openai.yaml
@@ -3177,7 +3177,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:a5959b836adfd5dfef6019b51534a1bfddda889aa78cd455fc2af306c157e14f
+  content_hash: sha256:2b15b042059308206596686b7aaa2ceeadc3da1a20b8dfbf676640746326bd15
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-cso/agents/openai.yaml
@@ -3195,7 +3195,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:ced779d593c3bf6dc51b6830f5d77199cd9adb591b321fa06653cbf31700df84
+  content_hash: sha256:ece230518e629004b8d4557adbd023cd34be129ab6a5209170a6b4f259181ffd
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-cso/references/review-details.md
@@ -3204,7 +3204,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:69f55ca4601e86f2d34bf703e1ef0ee12e7224bedd4ca592fe04201160c923c3
+  content_hash: sha256:2b01968f363afa6f9acdeb97e9bc97ba974940b86f01bbddcfe35b15b6d9082b
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-designer
@@ -3222,7 +3222,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:5d98a61eef4418539f6fc5996b548adc4ff7402a0eee7af00411cdff227d684d
+  content_hash: sha256:e62675c0d001c28c3712ea747a76f33f4e5e583c88e1341d405c910dd2c19698
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-designer/agents/openai.yaml
@@ -3240,7 +3240,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:f932bd30a5f9c73182c242f06cd4f6cbf02ab19d6d9b37752e0157d0a960b3bf
+  content_hash: sha256:4078f8e39b1cd829912adcd2cfe8f4f1b81c184d4666baa6b9c6f0432c2c08f4
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-docengineer
@@ -3258,7 +3258,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:3eeb1181f41d6d88b754b2e2a56203d3c3b2833b567a878c0a36a83a8c59ef25
+  content_hash: sha256:6bfd091e840e74fe0ae9340401a3b40df910541ba32bc68301d8e14003654a1a
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-docengineer/agents/openai.yaml
@@ -3285,7 +3285,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:a6ecbed68faa581fbdff50de5a1c6487f25f371848b82c56703c7ccdc4ea08c2
+  content_hash: sha256:31f70f353c955d51d50cfc29d20e5b2d2e3884a3eefb88c384ff54284371de6d
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-dxlead/agents/openai.yaml
@@ -3303,7 +3303,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
+  content_hash: sha256:5b0173bde1444a5d8bcb65fa3bb173a6d055e297e04bef30003008a2205842ad
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-dxlead/references/extended-workflow.md
@@ -3312,7 +3312,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
+  content_hash: sha256:1a7d502410d0e16b2e26448c35980e1ee95ec77bee1968963e9a48d05dea1657
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-engmanager
@@ -3330,7 +3330,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:7638e000093c31c6bd9f3e04eadb0bef7e6965ef69515e601961d4736f30e417
+  content_hash: sha256:6d502c3d2d9b6f867d4b9e885b93a1bb35cf300456eb1fd9592597895664c5e0
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-engmanager/agents/openai.yaml
@@ -3348,7 +3348,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:77648ed811094b4a271f1dd1bd9b8ae2c90fd118c519b1122291859ef742a1cb
+  content_hash: sha256:107f9e1724e7b6f37ada96c8026e1b5877b1c6acb1ce1bbf5dd83c47c9a53184
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-founder
@@ -3366,7 +3366,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:e5f8982f6fd038e0ae7c4dcfa7b570bf02010e0c1b5d200149c0b4efb0e94063
+  content_hash: sha256:feeac4de3a492ce183a9b5d7fe127420c02c43973ee1633f2f5b27d50f42ce54
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-founder/agents/openai.yaml
@@ -3384,7 +3384,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:48b61886ab072ffb77ec6b73b55bcc82e0676fbb2d203f2ec25b0c9a16bc29eb
+  content_hash: sha256:e735bce7cac2423c77986cec44a296f5702509faf4ba4e7f4bc132f05c89c2d8
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-releaseengineer
@@ -3447,7 +3447,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:52c558f46b969992e9e3746b82a4adfed8d545657aab8e42295ea1ad5863386f
+  content_hash: sha256:27008b7774d08c00f0279009490bdb440177a194a3a1d3ea59d3a4831fb69c5e
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-staffengineer/references/api-contract.md
@@ -3465,7 +3465,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c49cf0105ca270aa62688fde0f15fcd6d73234a6ebe979afbcea2154e1ffe4ed
+  content_hash: sha256:f44ef9d9476232300b06a306bdf0300befb23844176cd5c0712f019ba18ca444
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-staffengineer/references/data-migration.md
@@ -3483,7 +3483,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:a2ff2c324eef9136caadb3faf8d17c2616294b23195f396774fac9790f69e2bd
+  content_hash: sha256:0ca9c51b6dee9d94ea48a95c5704d7c835320dbf1d7e8e7ef46aa8e571abeb86
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-staffengineer/references/greptile-triage.md
@@ -3492,7 +3492,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:847ae7540418a4a3a080c287f94bea57cb7904cb1888db6aa89b92dbb360cf1f
+  content_hash: sha256:31c5e434e87f22f88f89082b50dc3e70620b2171ac2579222bae7c22bf2c1c3f
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-staffengineer/references/maintainability.md
@@ -3501,7 +3501,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c7a1483a413abf72fa0189fe9b4d9e6e2dea82efc4c9e28afd6376210419617d
+  content_hash: sha256:bb7925e0a14671c01c9b3adf5663618c7f63fddf2c9b6898deb4a640ec4c63a4
 - kind: project-relative
   target: claude
   value: .claude/skills/build-role-staffengineer/references/performance.md
@@ -3555,7 +3555,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:fa78086ff60bb29c7d6e5dd06ad27369f869d0b07b769ba4f2a25706450a7722
+  content_hash: sha256:24117df729d7d7e96273bd9b33e202045a889873fcd5739981cb0e56cc9b67ca
 - kind: project-relative
   target: claude
   value: .claude/skills/build-runtime-health/agents/openai.yaml
@@ -3582,7 +3582,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:87c46a66b460dc1385c597236659cb8b7311a70e068cf6227e133d29fe1e0fe5
+  content_hash: sha256:aa86661834d381ad11c7ef2cbc9324b3029468e982be75b369414d83ca658e4b
 - kind: project-relative
   target: claude
   value: .claude/skills/build-runtime-learnings/agents/openai.yaml
@@ -3609,7 +3609,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:61c45bbd1321ab4cb6ac1fb8fc9dce48b3c269a9d0e988e6fdcaeb201e6caafa
+  content_hash: sha256:7dfc4a501a08d2598c0a41e7ffba0d71dfa786be83b5c811e1694f71026b61a3
 - kind: project-relative
   target: claude
   value: .claude/skills/build-runtime-session/agents/openai.yaml
@@ -3636,7 +3636,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:661be21a1bd8136b8baf0cd69ced68105ea0729bd6a7ebd4cd67003a93e0fcb8
+  content_hash: sha256:5940e4928116d2b117659238bc9bb501cc18d08172052fce0b41ce0d5854b533
 - kind: project-relative
   target: claude
   value: .claude/skills/build-runtime-upgrade/agents/openai.yaml
@@ -3663,7 +3663,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:5a56cc38e2ad3454479ec168899caa78868471f70b109550d337aed2f3ac1f2f
+  content_hash: sha256:3dfd95ff33642cefd68fefb641a00a8887d925044651249517bb76feec822159
 - kind: project-relative
   target: claude
   value: .claude/skills/build-source-deploy/agents/openai.yaml
@@ -3744,7 +3744,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:2ed79715eae002e4dcc0743f8972383aac3be33d1d74a2add312ed7b00bceb18
+  content_hash: sha256:fe68a407d6329d7e680fef8cf769e5eba570f9dee400b82804109007e6ed3d5a
 - kind: project-relative
   target: codex
   value: .agents/skills/build-browser-benchmark/agents/openai.yaml
@@ -3771,7 +3771,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:62a5dfda9989e9969097f162eb3d248f7139dd033daf47382f90ccf331735a49
+  content_hash: sha256:fcfad20236f2eab322190766c9c3e1dbe776d1500c284e695fd2a7b3e9fec66f
 - kind: project-relative
   target: codex
   value: .agents/skills/build-browser-canary/agents/openai.yaml
@@ -3879,7 +3879,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:916453a3e5949453fd7da420b5026794c4f307f50a9c5227bc9a4d6eb5b55a55
+  content_hash: sha256:158115c60beb4893d81abdd20ac9bc1197c215767e089daee737ad65c7ba621f
 - kind: project-relative
   target: codex
   value: .agents/skills/build-browser-scrape/agents/openai.yaml
@@ -3969,7 +3969,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:68460ecbf7b886c279e72968448d7b0c618957e1f13e9127d26675fcaec1db67
+  content_hash: sha256:43cc2a1b07d2b7ef2589afe1c1a0cc8366ea9d3b2722a5856b8b200c5656432d
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-designconsult/agents/openai.yaml
@@ -3987,7 +3987,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:992f4f66ccb359f2dc34041d23ef97fc533437d6a399faf119bddddedcbc34ef
+  content_hash: sha256:1e8104714254d953ecbbc32cb7a332e7e1356fe407db7cbda6a7ef1437deac4b
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-designhtml
@@ -4005,7 +4005,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:0bcd810fba14ed3592bc64eb6ac4e29082f47d8758dfc7df50fdf076f601d9bf
+  content_hash: sha256:1e49ac594eda977c1507e5fe24010e97d07e86739d4f00f13ab2b64a5fc82309
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-designhtml/agents/openai.yaml
@@ -4023,7 +4023,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:1bd83fa1cd5627b11f19effdf645dae65c6111276c0d3aae8533430954a931b9
+  content_hash: sha256:78e78834663a3d9f6ec9b29ca9aad80444b603fffd177eda1beb8b4ef80d8e28
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-designshotgun
@@ -4041,7 +4041,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:bcca892587e46932e312188d8da11541fd1d965bf87f9d3d21532b1d174de09f
+  content_hash: sha256:c75d330051a6ea86365c4f72eb3d2802830579f21ecfc06e194917b1d920c20d
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-designshotgun/agents/openai.yaml
@@ -4104,7 +4104,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:e37a25249e9284b6c0107ce81b6a56252979464990125e84e49c254ff6ce0a54
+  content_hash: sha256:03bbd85ca6d1a074a64245d99b3fc51741ca75d99229e9607dd262551a9bea2b
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-goaldirectedux/agents/openai.yaml
@@ -4194,7 +4194,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c5936394fadf6e18de7b97dddbf621cad062e33879d7637566adddc48cae3b9a
+  content_hash: sha256:8c941533e33eb8dbf12176ab860949dc5ebe7d6470f294d3d66a2e43bfb74f7a
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-humanwizard/agents/openai.yaml
@@ -4212,7 +4212,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:e47e210153ca86b6675623f73208615c814764cd068317df77c48d0afbf892ce
+  content_hash: sha256:aaf6e7124fad5ad68b9cbb0dbe7e98bfdc75edb3e706be17ab7d5fd5cf2ecf06
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-infradesign
@@ -4608,7 +4608,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:5455487abfadc5325a021f3c8903a7db7eefea212d25ff3d023e47b81dfc3d07
+  content_hash: sha256:7f664c9b0fdbfccd31a50b23f60caa4cb8c212cdb95e7e0c68f098610f944f98
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-qareport/agents/openai.yaml
@@ -4635,7 +4635,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:7a4b63a6e90d28d36f103934d5ecb93c13a050baefe95cdd43c0263b06de427f
+  content_hash: sha256:9df0df8f3c4b47aa1b5c0abc35feea3c76adeeea5f7432ad1fbff3dfffccf997
 - kind: project-relative
   target: codex
   value: .agents/skills/build-flow-securitygate/agents/openai.yaml
@@ -4896,7 +4896,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:93580009631d5bf3cd3fb2c8ff9e6d535cb6581abd313968e6e399fc33f0e096
+  content_hash: sha256:d8e46da6cc2c9bcf3f154d48649ec99ba0fb9d726ef3887723f88ea27a0f6245
 - kind: project-relative
   target: codex
   value: .agents/skills/build-guard-full/agents/openai.yaml
@@ -4950,7 +4950,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:c90809b93f02670caa744dadeb69339ada5ced47b19b4b2fb5bc69d864e2d3e8
+  content_hash: sha256:6521be3f0f3ba77029fa2a9f5f58819c8b2fbe0b69ba7c5ff0c638377910a383
 - kind: project-relative
   target: codex
   value: .agents/skills/build-guard-scope/agents/openai.yaml
@@ -5013,7 +5013,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:3c45954b3f37e934f3ef9a33364cc88c687edab730124e38ea8fd24915cf4630
+  content_hash: sha256:22c702c81dcc1b832c01cbee132f17d50bc4d2ef2d294838ec5579104e62b066
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-autoplan/agents/openai.yaml
@@ -5031,7 +5031,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:6e1fcd4b25382d383c9186a103af68e48aced44bed2aa88e25c617b19b83856f
+  content_hash: sha256:398548ee849ff3c5c7579d8ca30699fa95151c4b04239a9f7e2bff1c99cb95ee
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-discovery
@@ -5049,7 +5049,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:fd60b20e597b84f3ec4aa21a3f57fa2e96ceb76b6059788da684d58c29a9e681
+  content_hash: sha256:cfdfd0b732e494043c7011ed7ab1a6a6b4eac8c3d9e890c8717d6ab9ad51b923
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-discovery/agents/openai.yaml
@@ -5085,7 +5085,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:1f4fc01344777682104fc215ac0f0acc84c150f249c098c3959c29c7a1fd512a
+  content_hash: sha256:6128dcf065b3c2b360cf5266fb24e77da6069ee3bb67749bc0b402fcbb45cf84
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-implement
@@ -5139,7 +5139,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:50bb55d46105d1315264cc5eddd7769956b566423641cee4c2f1914e9970bbbd
+  content_hash: sha256:3db59d76ddc1843a8b6c25e63764af661f300ec8c98661bf6175de492bdbb2d3
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-investigate/agents/openai.yaml
@@ -5166,7 +5166,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:064cc1dbb2e0527a5f0d888009bd2379a7940926de8a7c781b7e3012090c39f4
+  content_hash: sha256:e7ac74a6f7c3519f255afd2b59747771b2f0395e942ec87519421a79fce835b6
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-landdeploy/agents/openai.yaml
@@ -5184,7 +5184,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:4d887331bdf9e5e316b4f65d3cd7cfb36608b23ec303843c35629032cd91226c
+  content_hash: sha256:e7903cee158c2d4308fa73a99722b03065453874d95b2b7ca04c8da743dbbf4c
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-mergeconflicts
@@ -5229,7 +5229,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:0ba3d8cd0176da94436c08ae7db8d73de159c9e6c8dfe155d8061be79e2a813e
+  content_hash: sha256:358cf58d351d9588824830bc9c5c2b04a6fb452244928a969d64af53e3af9c47
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-qa/agents/openai.yaml
@@ -5301,7 +5301,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c783a3ac56762a919ecbe2c5318ccd8674cece2900b107178cfd18e7b3e1b377
+  content_hash: sha256:dd9b7767b51683cd36d20b0bf58ae43719f7815b3e5a025cff815c1b32a28a1a
 - kind: project-relative
   target: codex
   value: .agents/skills/build-recipe-ship/agents/openai.yaml
@@ -5328,7 +5328,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:a5959b836adfd5dfef6019b51534a1bfddda889aa78cd455fc2af306c157e14f
+  content_hash: sha256:2b15b042059308206596686b7aaa2ceeadc3da1a20b8dfbf676640746326bd15
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-cso/agents/openai.yaml
@@ -5346,7 +5346,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:ced779d593c3bf6dc51b6830f5d77199cd9adb591b321fa06653cbf31700df84
+  content_hash: sha256:ece230518e629004b8d4557adbd023cd34be129ab6a5209170a6b4f259181ffd
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-cso/references/review-details.md
@@ -5355,7 +5355,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:69f55ca4601e86f2d34bf703e1ef0ee12e7224bedd4ca592fe04201160c923c3
+  content_hash: sha256:2b01968f363afa6f9acdeb97e9bc97ba974940b86f01bbddcfe35b15b6d9082b
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-designer
@@ -5373,7 +5373,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:5d98a61eef4418539f6fc5996b548adc4ff7402a0eee7af00411cdff227d684d
+  content_hash: sha256:e62675c0d001c28c3712ea747a76f33f4e5e583c88e1341d405c910dd2c19698
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-designer/agents/openai.yaml
@@ -5391,7 +5391,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:f932bd30a5f9c73182c242f06cd4f6cbf02ab19d6d9b37752e0157d0a960b3bf
+  content_hash: sha256:4078f8e39b1cd829912adcd2cfe8f4f1b81c184d4666baa6b9c6f0432c2c08f4
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-docengineer
@@ -5409,7 +5409,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:3eeb1181f41d6d88b754b2e2a56203d3c3b2833b567a878c0a36a83a8c59ef25
+  content_hash: sha256:6bfd091e840e74fe0ae9340401a3b40df910541ba32bc68301d8e14003654a1a
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-docengineer/agents/openai.yaml
@@ -5436,7 +5436,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:a6ecbed68faa581fbdff50de5a1c6487f25f371848b82c56703c7ccdc4ea08c2
+  content_hash: sha256:31f70f353c955d51d50cfc29d20e5b2d2e3884a3eefb88c384ff54284371de6d
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-dxlead/agents/openai.yaml
@@ -5454,7 +5454,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
+  content_hash: sha256:5b0173bde1444a5d8bcb65fa3bb173a6d055e297e04bef30003008a2205842ad
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-dxlead/references/extended-workflow.md
@@ -5463,7 +5463,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
+  content_hash: sha256:1a7d502410d0e16b2e26448c35980e1ee95ec77bee1968963e9a48d05dea1657
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-engmanager
@@ -5481,7 +5481,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:7638e000093c31c6bd9f3e04eadb0bef7e6965ef69515e601961d4736f30e417
+  content_hash: sha256:6d502c3d2d9b6f867d4b9e885b93a1bb35cf300456eb1fd9592597895664c5e0
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-engmanager/agents/openai.yaml
@@ -5499,7 +5499,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:77648ed811094b4a271f1dd1bd9b8ae2c90fd118c519b1122291859ef742a1cb
+  content_hash: sha256:107f9e1724e7b6f37ada96c8026e1b5877b1c6acb1ce1bbf5dd83c47c9a53184
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-founder
@@ -5517,7 +5517,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:e5f8982f6fd038e0ae7c4dcfa7b570bf02010e0c1b5d200149c0b4efb0e94063
+  content_hash: sha256:feeac4de3a492ce183a9b5d7fe127420c02c43973ee1633f2f5b27d50f42ce54
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-founder/agents/openai.yaml
@@ -5535,7 +5535,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:48b61886ab072ffb77ec6b73b55bcc82e0676fbb2d203f2ec25b0c9a16bc29eb
+  content_hash: sha256:e735bce7cac2423c77986cec44a296f5702509faf4ba4e7f4bc132f05c89c2d8
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-releaseengineer
@@ -5598,7 +5598,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:52c558f46b969992e9e3746b82a4adfed8d545657aab8e42295ea1ad5863386f
+  content_hash: sha256:27008b7774d08c00f0279009490bdb440177a194a3a1d3ea59d3a4831fb69c5e
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-staffengineer/references/api-contract.md
@@ -5616,7 +5616,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c49cf0105ca270aa62688fde0f15fcd6d73234a6ebe979afbcea2154e1ffe4ed
+  content_hash: sha256:f44ef9d9476232300b06a306bdf0300befb23844176cd5c0712f019ba18ca444
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-staffengineer/references/data-migration.md
@@ -5634,7 +5634,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:a2ff2c324eef9136caadb3faf8d17c2616294b23195f396774fac9790f69e2bd
+  content_hash: sha256:0ca9c51b6dee9d94ea48a95c5704d7c835320dbf1d7e8e7ef46aa8e571abeb86
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-staffengineer/references/greptile-triage.md
@@ -5643,7 +5643,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:847ae7540418a4a3a080c287f94bea57cb7904cb1888db6aa89b92dbb360cf1f
+  content_hash: sha256:31c5e434e87f22f88f89082b50dc3e70620b2171ac2579222bae7c22bf2c1c3f
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-staffengineer/references/maintainability.md
@@ -5652,7 +5652,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c7a1483a413abf72fa0189fe9b4d9e6e2dea82efc4c9e28afd6376210419617d
+  content_hash: sha256:bb7925e0a14671c01c9b3adf5663618c7f63fddf2c9b6898deb4a640ec4c63a4
 - kind: project-relative
   target: codex
   value: .agents/skills/build-role-staffengineer/references/performance.md
@@ -5706,7 +5706,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:fa78086ff60bb29c7d6e5dd06ad27369f869d0b07b769ba4f2a25706450a7722
+  content_hash: sha256:24117df729d7d7e96273bd9b33e202045a889873fcd5739981cb0e56cc9b67ca
 - kind: project-relative
   target: codex
   value: .agents/skills/build-runtime-health/agents/openai.yaml
@@ -5733,7 +5733,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:87c46a66b460dc1385c597236659cb8b7311a70e068cf6227e133d29fe1e0fe5
+  content_hash: sha256:aa86661834d381ad11c7ef2cbc9324b3029468e982be75b369414d83ca658e4b
 - kind: project-relative
   target: codex
   value: .agents/skills/build-runtime-learnings/agents/openai.yaml
@@ -5760,7 +5760,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:61c45bbd1321ab4cb6ac1fb8fc9dce48b3c269a9d0e988e6fdcaeb201e6caafa
+  content_hash: sha256:7dfc4a501a08d2598c0a41e7ffba0d71dfa786be83b5c811e1694f71026b61a3
 - kind: project-relative
   target: codex
   value: .agents/skills/build-runtime-session/agents/openai.yaml
@@ -5787,7 +5787,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:661be21a1bd8136b8baf0cd69ced68105ea0729bd6a7ebd4cd67003a93e0fcb8
+  content_hash: sha256:5940e4928116d2b117659238bc9bb501cc18d08172052fce0b41ce0d5854b533
 - kind: project-relative
   target: codex
   value: .agents/skills/build-runtime-upgrade/agents/openai.yaml
@@ -5814,7 +5814,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:5a56cc38e2ad3454479ec168899caa78868471f70b109550d337aed2f3ac1f2f
+  content_hash: sha256:3dfd95ff33642cefd68fefb641a00a8887d925044651249517bb76feec822159
 - kind: project-relative
   target: codex
   value: .agents/skills/build-source-deploy/agents/openai.yaml
@@ -6093,7 +6093,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:2ed79715eae002e4dcc0743f8972383aac3be33d1d74a2add312ed7b00bceb18
+  content_hash: sha256:fe68a407d6329d7e680fef8cf769e5eba570f9dee400b82804109007e6ed3d5a
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-browser-benchmark/agents/openai.yaml
@@ -6120,7 +6120,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:62a5dfda9989e9969097f162eb3d248f7139dd033daf47382f90ccf331735a49
+  content_hash: sha256:fcfad20236f2eab322190766c9c3e1dbe776d1500c284e695fd2a7b3e9fec66f
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-browser-canary/agents/openai.yaml
@@ -6228,7 +6228,7 @@ deployments:
   owners:
   - local:packages/browser
   active_owner: local:packages/browser
-  content_hash: sha256:916453a3e5949453fd7da420b5026794c4f307f50a9c5227bc9a4d6eb5b55a55
+  content_hash: sha256:158115c60beb4893d81abdd20ac9bc1197c215767e089daee737ad65c7ba621f
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-browser-scrape/agents/openai.yaml
@@ -6318,7 +6318,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:68460ecbf7b886c279e72968448d7b0c618957e1f13e9127d26675fcaec1db67
+  content_hash: sha256:43cc2a1b07d2b7ef2589afe1c1a0cc8366ea9d3b2722a5856b8b200c5656432d
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-designconsult/agents/openai.yaml
@@ -6336,7 +6336,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:992f4f66ccb359f2dc34041d23ef97fc533437d6a399faf119bddddedcbc34ef
+  content_hash: sha256:1e8104714254d953ecbbc32cb7a332e7e1356fe407db7cbda6a7ef1437deac4b
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-designhtml
@@ -6354,7 +6354,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:0bcd810fba14ed3592bc64eb6ac4e29082f47d8758dfc7df50fdf076f601d9bf
+  content_hash: sha256:1e49ac594eda977c1507e5fe24010e97d07e86739d4f00f13ab2b64a5fc82309
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-designhtml/agents/openai.yaml
@@ -6372,7 +6372,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:1bd83fa1cd5627b11f19effdf645dae65c6111276c0d3aae8533430954a931b9
+  content_hash: sha256:78e78834663a3d9f6ec9b29ca9aad80444b603fffd177eda1beb8b4ef80d8e28
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-designshotgun
@@ -6390,7 +6390,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:bcca892587e46932e312188d8da11541fd1d965bf87f9d3d21532b1d174de09f
+  content_hash: sha256:c75d330051a6ea86365c4f72eb3d2802830579f21ecfc06e194917b1d920c20d
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-designshotgun/agents/openai.yaml
@@ -6453,7 +6453,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:e37a25249e9284b6c0107ce81b6a56252979464990125e84e49c254ff6ce0a54
+  content_hash: sha256:03bbd85ca6d1a074a64245d99b3fc51741ca75d99229e9607dd262551a9bea2b
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-goaldirectedux/agents/openai.yaml
@@ -6543,7 +6543,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c5936394fadf6e18de7b97dddbf621cad062e33879d7637566adddc48cae3b9a
+  content_hash: sha256:8c941533e33eb8dbf12176ab860949dc5ebe7d6470f294d3d66a2e43bfb74f7a
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-humanwizard/agents/openai.yaml
@@ -6561,7 +6561,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:e47e210153ca86b6675623f73208615c814764cd068317df77c48d0afbf892ce
+  content_hash: sha256:aaf6e7124fad5ad68b9cbb0dbe7e98bfdc75edb3e706be17ab7d5fd5cf2ecf06
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-infradesign
@@ -6957,7 +6957,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:5455487abfadc5325a021f3c8903a7db7eefea212d25ff3d023e47b81dfc3d07
+  content_hash: sha256:7f664c9b0fdbfccd31a50b23f60caa4cb8c212cdb95e7e0c68f098610f944f98
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-qareport/agents/openai.yaml
@@ -6984,7 +6984,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:7a4b63a6e90d28d36f103934d5ecb93c13a050baefe95cdd43c0263b06de427f
+  content_hash: sha256:9df0df8f3c4b47aa1b5c0abc35feea3c76adeeea5f7432ad1fbff3dfffccf997
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-flow-securitygate/agents/openai.yaml
@@ -7245,7 +7245,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:93580009631d5bf3cd3fb2c8ff9e6d535cb6581abd313968e6e399fc33f0e096
+  content_hash: sha256:d8e46da6cc2c9bcf3f154d48649ec99ba0fb9d726ef3887723f88ea27a0f6245
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-guard-full/agents/openai.yaml
@@ -7299,7 +7299,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:c90809b93f02670caa744dadeb69339ada5ced47b19b4b2fb5bc69d864e2d3e8
+  content_hash: sha256:6521be3f0f3ba77029fa2a9f5f58819c8b2fbe0b69ba7c5ff0c638377910a383
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-guard-scope/agents/openai.yaml
@@ -7362,7 +7362,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:3c45954b3f37e934f3ef9a33364cc88c687edab730124e38ea8fd24915cf4630
+  content_hash: sha256:22c702c81dcc1b832c01cbee132f17d50bc4d2ef2d294838ec5579104e62b066
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-autoplan/agents/openai.yaml
@@ -7380,7 +7380,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:6e1fcd4b25382d383c9186a103af68e48aced44bed2aa88e25c617b19b83856f
+  content_hash: sha256:398548ee849ff3c5c7579d8ca30699fa95151c4b04239a9f7e2bff1c99cb95ee
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-discovery
@@ -7398,7 +7398,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:fd60b20e597b84f3ec4aa21a3f57fa2e96ceb76b6059788da684d58c29a9e681
+  content_hash: sha256:cfdfd0b732e494043c7011ed7ab1a6a6b4eac8c3d9e890c8717d6ab9ad51b923
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-discovery/agents/openai.yaml
@@ -7434,7 +7434,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:1f4fc01344777682104fc215ac0f0acc84c150f249c098c3959c29c7a1fd512a
+  content_hash: sha256:6128dcf065b3c2b360cf5266fb24e77da6069ee3bb67749bc0b402fcbb45cf84
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-implement
@@ -7488,7 +7488,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:50bb55d46105d1315264cc5eddd7769956b566423641cee4c2f1914e9970bbbd
+  content_hash: sha256:3db59d76ddc1843a8b6c25e63764af661f300ec8c98661bf6175de492bdbb2d3
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-investigate/agents/openai.yaml
@@ -7515,7 +7515,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:064cc1dbb2e0527a5f0d888009bd2379a7940926de8a7c781b7e3012090c39f4
+  content_hash: sha256:e7ac74a6f7c3519f255afd2b59747771b2f0395e942ec87519421a79fce835b6
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-landdeploy/agents/openai.yaml
@@ -7533,7 +7533,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:4d887331bdf9e5e316b4f65d3cd7cfb36608b23ec303843c35629032cd91226c
+  content_hash: sha256:e7903cee158c2d4308fa73a99722b03065453874d95b2b7ca04c8da743dbbf4c
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-mergeconflicts
@@ -7578,7 +7578,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:0ba3d8cd0176da94436c08ae7db8d73de159c9e6c8dfe155d8061be79e2a813e
+  content_hash: sha256:358cf58d351d9588824830bc9c5c2b04a6fb452244928a969d64af53e3af9c47
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-qa/agents/openai.yaml
@@ -7650,7 +7650,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c783a3ac56762a919ecbe2c5318ccd8674cece2900b107178cfd18e7b3e1b377
+  content_hash: sha256:dd9b7767b51683cd36d20b0bf58ae43719f7815b3e5a025cff815c1b32a28a1a
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-recipe-ship/agents/openai.yaml
@@ -7677,7 +7677,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:a5959b836adfd5dfef6019b51534a1bfddda889aa78cd455fc2af306c157e14f
+  content_hash: sha256:2b15b042059308206596686b7aaa2ceeadc3da1a20b8dfbf676640746326bd15
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-cso/agents/openai.yaml
@@ -7695,7 +7695,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:ced779d593c3bf6dc51b6830f5d77199cd9adb591b321fa06653cbf31700df84
+  content_hash: sha256:ece230518e629004b8d4557adbd023cd34be129ab6a5209170a6b4f259181ffd
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-cso/references/review-details.md
@@ -7704,7 +7704,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:69f55ca4601e86f2d34bf703e1ef0ee12e7224bedd4ca592fe04201160c923c3
+  content_hash: sha256:2b01968f363afa6f9acdeb97e9bc97ba974940b86f01bbddcfe35b15b6d9082b
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-designer
@@ -7722,7 +7722,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:5d98a61eef4418539f6fc5996b548adc4ff7402a0eee7af00411cdff227d684d
+  content_hash: sha256:e62675c0d001c28c3712ea747a76f33f4e5e583c88e1341d405c910dd2c19698
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-designer/agents/openai.yaml
@@ -7740,7 +7740,7 @@ deployments:
   owners:
   - local:packages/design
   active_owner: local:packages/design
-  content_hash: sha256:f932bd30a5f9c73182c242f06cd4f6cbf02ab19d6d9b37752e0157d0a960b3bf
+  content_hash: sha256:4078f8e39b1cd829912adcd2cfe8f4f1b81c184d4666baa6b9c6f0432c2c08f4
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-docengineer
@@ -7758,7 +7758,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:3eeb1181f41d6d88b754b2e2a56203d3c3b2833b567a878c0a36a83a8c59ef25
+  content_hash: sha256:6bfd091e840e74fe0ae9340401a3b40df910541ba32bc68301d8e14003654a1a
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-docengineer/agents/openai.yaml
@@ -7785,7 +7785,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:a6ecbed68faa581fbdff50de5a1c6487f25f371848b82c56703c7ccdc4ea08c2
+  content_hash: sha256:31f70f353c955d51d50cfc29d20e5b2d2e3884a3eefb88c384ff54284371de6d
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-dxlead/agents/openai.yaml
@@ -7803,7 +7803,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:9a2bb570699f306a34a7619c85304d797d938a5989290154f8d8b6ee457a1c28
+  content_hash: sha256:5b0173bde1444a5d8bcb65fa3bb173a6d055e297e04bef30003008a2205842ad
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-dxlead/references/extended-workflow.md
@@ -7812,7 +7812,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:571ad6bca297b634445fde3eb4a62dd4206cc4bd4b48ac58f166d25072597091
+  content_hash: sha256:1a7d502410d0e16b2e26448c35980e1ee95ec77bee1968963e9a48d05dea1657
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-engmanager
@@ -7830,7 +7830,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:7638e000093c31c6bd9f3e04eadb0bef7e6965ef69515e601961d4736f30e417
+  content_hash: sha256:6d502c3d2d9b6f867d4b9e885b93a1bb35cf300456eb1fd9592597895664c5e0
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-engmanager/agents/openai.yaml
@@ -7848,7 +7848,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:77648ed811094b4a271f1dd1bd9b8ae2c90fd118c519b1122291859ef742a1cb
+  content_hash: sha256:107f9e1724e7b6f37ada96c8026e1b5877b1c6acb1ce1bbf5dd83c47c9a53184
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-founder
@@ -7866,7 +7866,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:e5f8982f6fd038e0ae7c4dcfa7b570bf02010e0c1b5d200149c0b4efb0e94063
+  content_hash: sha256:feeac4de3a492ce183a9b5d7fe127420c02c43973ee1633f2f5b27d50f42ce54
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-founder/agents/openai.yaml
@@ -7884,7 +7884,7 @@ deployments:
   owners:
   - local:packages/product
   active_owner: local:packages/product
-  content_hash: sha256:48b61886ab072ffb77ec6b73b55bcc82e0676fbb2d203f2ec25b0c9a16bc29eb
+  content_hash: sha256:e735bce7cac2423c77986cec44a296f5702509faf4ba4e7f4bc132f05c89c2d8
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-releaseengineer
@@ -7947,7 +7947,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:52c558f46b969992e9e3746b82a4adfed8d545657aab8e42295ea1ad5863386f
+  content_hash: sha256:27008b7774d08c00f0279009490bdb440177a194a3a1d3ea59d3a4831fb69c5e
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-staffengineer/references/api-contract.md
@@ -7965,7 +7965,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c49cf0105ca270aa62688fde0f15fcd6d73234a6ebe979afbcea2154e1ffe4ed
+  content_hash: sha256:f44ef9d9476232300b06a306bdf0300befb23844176cd5c0712f019ba18ca444
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-staffengineer/references/data-migration.md
@@ -7983,7 +7983,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:a2ff2c324eef9136caadb3faf8d17c2616294b23195f396774fac9790f69e2bd
+  content_hash: sha256:0ca9c51b6dee9d94ea48a95c5704d7c835320dbf1d7e8e7ef46aa8e571abeb86
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-staffengineer/references/greptile-triage.md
@@ -7992,7 +7992,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:847ae7540418a4a3a080c287f94bea57cb7904cb1888db6aa89b92dbb360cf1f
+  content_hash: sha256:31c5e434e87f22f88f89082b50dc3e70620b2171ac2579222bae7c22bf2c1c3f
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-staffengineer/references/maintainability.md
@@ -8001,7 +8001,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:c7a1483a413abf72fa0189fe9b4d9e6e2dea82efc4c9e28afd6376210419617d
+  content_hash: sha256:bb7925e0a14671c01c9b3adf5663618c7f63fddf2c9b6898deb4a640ec4c63a4
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-role-staffengineer/references/performance.md
@@ -8055,7 +8055,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:fa78086ff60bb29c7d6e5dd06ad27369f869d0b07b769ba4f2a25706450a7722
+  content_hash: sha256:24117df729d7d7e96273bd9b33e202045a889873fcd5739981cb0e56cc9b67ca
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-runtime-health/agents/openai.yaml
@@ -8082,7 +8082,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:87c46a66b460dc1385c597236659cb8b7311a70e068cf6227e133d29fe1e0fe5
+  content_hash: sha256:aa86661834d381ad11c7ef2cbc9324b3029468e982be75b369414d83ca658e4b
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-runtime-learnings/agents/openai.yaml
@@ -8109,7 +8109,7 @@ deployments:
   owners:
   - local:packages/core
   active_owner: local:packages/core
-  content_hash: sha256:61c45bbd1321ab4cb6ac1fb8fc9dce48b3c269a9d0e988e6fdcaeb201e6caafa
+  content_hash: sha256:7dfc4a501a08d2598c0a41e7ffba0d71dfa786be83b5c811e1694f71026b61a3
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-runtime-session/agents/openai.yaml
@@ -8136,7 +8136,7 @@ deployments:
   owners:
   - ./packages/maintainer
   active_owner: ./packages/maintainer
-  content_hash: sha256:661be21a1bd8136b8baf0cd69ced68105ea0729bd6a7ebd4cd67003a93e0fcb8
+  content_hash: sha256:5940e4928116d2b117659238bc9bb501cc18d08172052fce0b41ce0d5854b533
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-runtime-upgrade/agents/openai.yaml
@@ -8163,7 +8163,7 @@ deployments:
   owners:
   - local:packages/delivery
   active_owner: local:packages/delivery
-  content_hash: sha256:5a56cc38e2ad3454479ec168899caa78868471f70b109550d337aed2f3ac1f2f
+  content_hash: sha256:3dfd95ff33642cefd68fefb641a00a8887d925044651249517bb76feec822159
 - kind: project-relative
   target: kiro
   value: .kiro/skills/build-source-deploy/agents/openai.yaml

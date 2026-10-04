@@ -49,8 +49,10 @@ Use `gh` directly; do not require a build-stacks wrapper.
 2. Read any pull request template and recent repository examples. Match the user's language and repository tone.
 3. Run `gh pr list --head <branch> --state all --limit 1 --json url,number,state,title,body` to detect an existing PR.
 4. Preview the title and body before a write unless the current request already supplied and authorized them.
-5. Create with `gh pr create --base <base> --head <branch> --title <title> --body-file <file>`, or update the existing PR with `gh pr edit`.
-6. Re-read the PR and return its URL. A partial failure must report which write succeeded before retrying.
+5. Branch on the returned state. An `OPEN` PR may be updated with `gh pr edit` when that exact write is authorized. Never edit a `CLOSED`/`MERGED` PR.
+6. When only a `CLOSED`/`MERGED` PR exists, create a new PR only when authorized. If GitHub rejects reuse of the branch, report that a new branch is required and stop; do not rewrite the closed record.
+7. Otherwise create with `gh pr create --base <base> --head <branch> --title <title> --body-file <file>`.
+8. Re-read the PR and return its URL. A partial failure must report which write succeeded before retrying.
 
 PR content should summarize delivered behavior, verification, risks, and follow-up. Do not mention skill names, models, prompting, or “AI-generated” text unless the repository explicitly requires it.
 

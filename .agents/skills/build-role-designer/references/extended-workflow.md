@@ -56,13 +56,13 @@ Explain what a 10 looks like for THIS plan.
 
 ### 0B. DESIGN.md Status
 - If DESIGN.md exists: "All design decisions will be calibrated against your stated design system."
-- If no DESIGN.md: "No design system found. Recommend running /design-consultation first. Proceeding with universal design principles."
+- If no DESIGN.md: "No design system found. Recommend running build-flow-designconsult first. Proceeding with universal design principles."
 
 ### 0C. Existing Design Leverage
 What existing UI patterns, components, or design decisions in the codebase should this plan reuse? Don't reinvent what already works.
 
 ### 0D. Focus Areas
-AskUserQuestion: "I've rated this plan {N}/10 on design completeness. The biggest gaps are {X, Y, Z}. I'll generate visual mockups next, then review all 7 dimensions. Want me to focus on specific areas instead of all 7?"
+available user-input mechanism: "I've rated this plan {N}/10 on design completeness. The biggest gaps are {X, Y, Z}. I'll generate visual mockups next, then review all 7 dimensions. Want me to focus on specific areas instead of all 7?"
 
 **STOP.** Do NOT proceed until user responds.
 
@@ -104,9 +104,9 @@ echo "DESIGN_DIR: $_DESIGN_DIR"
 Replace `<screen-name>` with a descriptive kebab-case name (e.g., `homepage-variants`, `settings-page`, `onboarding-flow`).
 
 **Generate mockups ONE AT A TIME in this skill.** The inline review flow generates
-fewer variants and benefits from sequential control. Note: /design-shotgun uses
-parallel Agent subagents for variant generation, which works at Tier 2+ (15+ RPM).
-The sequential constraint here is specific to build-role-designer's inline pattern.
+fewer variants and benefits from sequential control. `build-flow-designshotgun`
+also defaults to independent sequential variant passes; safe isolated parallelism is
+optional only when the user requests it and the host supports it.
 
 For each UI screen/section in scope, construct a design brief from the plan's description (and DESIGN.md if present) and generate variants:
 
@@ -122,7 +122,7 @@ $D check --image "$_DESIGN_DIR/variant-A.png" --brief "<the original brief>"
 
 Flag any variants that fail the quality check. Offer to regenerate failures.
 
-**Do NOT show variants inline via Read tool and ask for preferences.** Proceed
+**Do NOT show variants inline via available file-reading capability and ask for preferences.** Proceed
 directly to the Comparison Board + Feedback Loop section below. The comparison board
 IS the chooser — it has rating controls, comments, remix/regenerate, and structured
 feedback output. Showing mockups inline is a blocked experience.
@@ -131,7 +131,7 @@ feedback output. Showing mockups inline is a blocked experience.
 
 Generate multiple directions only when the product decision benefits from comparison. Capture tradeoffs and user choice explicitly.
 
-**Do NOT use AskUserQuestion to ask which variant the user picked.** Read `feedback.json` — it already contains their preferred variant, ratings, comments, and overall feedback. Only use AskUserQuestion to confirm you understood the feedback correctly, never to re-ask what they chose.
+**Do NOT use an available user-input mechanism to ask which variant the user picked.** Read `feedback.json` — it already contains their preferred variant, ratings, comments, and overall feedback. Only use an available user-input mechanism to confirm you understood the feedback correctly, never to re-ask what they chose.
 
 Note which direction was approved. This becomes the visual reference for all subsequent review passes.
 
@@ -152,10 +152,10 @@ Pattern:
 2. Gap: "It's a 4 because the plan doesn't define content hierarchy. A 10 would have clear primary/secondary/tertiary for every screen."
 3. Fix: Edit the plan to add what's missing
 4. Re-rate: "Now 8/10 — still missing mobile nav hierarchy"
-5. AskUserQuestion if there's a genuine design choice to resolve
+5. available user-input mechanism if there's a genuine design choice to resolve
 6. Fix again → repeat until 10 or user says "good enough, move on"
 
-Re-run loop: invoke /build-role-designer again → re-rate → sections at 8+ get a quick pass, sections below 8 get full treatment.
+Re-run loop: invoke build-role-designer again → re-rate → sections at 8+ get a quick pass, sections below 8 get full treatment.
 
 ### "Show me what 10/10 looks like" (requires design binary)
 
@@ -166,7 +166,7 @@ offer to generate a visual mockup showing what the improved version would look l
 $D generate --brief "<description of what 10/10 looks like for this dimension>" --output /tmp/build-stacks-ideal-<dimension>.png
 ```
 
-Show the mockup to the user via the Read tool. This makes the gap between
+Show the mockup to the user via the available file-reading capability. This makes the gap between
 "what the plan describes" and "what it should look like" visceral, not abstract.
 
 If the design binary is not available, skip this and continue with text-based
@@ -183,7 +183,7 @@ If .build-stacks/learnings exists, inspect relevant recent notes before repeatin
 ### Pass 1: Information Architecture
 Rate 0-10: Does the plan define what the user sees first, second, third?
 FIX TO 10: Add information hierarchy to the plan. Include ASCII diagram of screen/page structure and navigation flow. Apply "constraint worship" — if you can only show 3 things, which 3?
-**STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY. If no issues, say so and move on. Do NOT proceed until user responds.
+**STOP.** Use an available user-input mechanism once per issue. Do NOT batch. Recommend + WHY. If no issues, say so and move on. Do NOT proceed until user responds.
 
 ### Pass 2: Interaction State Coverage
 Rate 0-10: Does the plan specify loading, empty, error, success, partial states?
@@ -195,7 +195,7 @@ FIX TO 10: Add interaction state table to the plan:
 ```
 For each state: describe what the user SEES, not backend behavior.
 Empty states are features — specify warmth, primary action, context.
-**STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Do NOT batch. Recommend + WHY.
 
 ### Pass 3: User Journey & Emotional Arc
 Rate 0-10: Does the plan consider the user's emotional experience?
@@ -207,7 +207,7 @@ FIX TO 10: Add user journey storyboard:
   ...
 ```
 Apply time-horizon design: 5-sec visceral, 5-min behavioral, 5-year reflective.
-**STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Do NOT batch. Recommend + WHY.
 
 ### Pass 4: AI Slop Risk
 Rate 0-10: Does the plan describe specific, intentional UI — or generic patterns?
@@ -220,19 +220,19 @@ Do not accept vague UI language. Name the concrete screen, state, breakpoint, in
 - "Hero section" → what makes this hero feel like THIS product?
 - "Clean, modern UI" → meaningless. Replace with actual design decisions.
 - "Dashboard with widgets" → what makes this NOT every other dashboard?
-If visual mockups were generated in Step 0.5, evaluate them against the AI slop blacklist above. Read each mockup image using the Read tool. Does the mockup fall into generic patterns (3-column grid, centered hero, stock-photo feel)? If so, flag it and offer to regenerate with more specific direction via `$D iterate --feedback "..."`.
-**STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY.
+If visual mockups were generated in Step 0.5, evaluate them against the AI slop blacklist above. Read each mockup image using the available file-reading capability. Does the mockup fall into generic patterns (3-column grid, centered hero, stock-photo feel)? If so, flag it and offer to regenerate with more specific direction via `$D iterate --feedback "..."`.
+**STOP.** Use an available user-input mechanism once per issue. Do NOT batch. Recommend + WHY.
 
 ### Pass 5: Design System Alignment
 Rate 0-10: Does the plan align with DESIGN.md?
-FIX TO 10: If DESIGN.md exists, annotate with specific tokens/components. If no DESIGN.md, flag the gap and recommend `/design-consultation`.
+FIX TO 10: If DESIGN.md exists, annotate with specific tokens/components. If no DESIGN.md, flag the gap and recommend `build-flow-designconsult`.
 Flag any new component — does it fit the existing vocabulary?
-**STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Do NOT batch. Recommend + WHY.
 
 ### Pass 6: Responsive & Accessibility
 Rate 0-10: Does the plan specify mobile/tablet, keyboard nav, screen readers?
 FIX TO 10: Add responsive specs per viewport — not "stacked on mobile" but intentional layout changes. Add a11y: keyboard nav patterns, ARIA landmarks, touch target sizes (44px min), color contrast requirements.
-**STOP.** AskUserQuestion once per issue. Do NOT batch. Recommend + WHY.
+**STOP.** Use an available user-input mechanism once per issue. Do NOT batch. Recommend + WHY.
 
 ### Pass 7: Unresolved Design Decisions
 Surface ambiguities that will haunt implementation:
@@ -244,25 +244,25 @@ Surface ambiguities that will haunt implementation:
   ...
 ```
 If visual mockups were generated in Step 0.5, reference them as evidence when surfacing unresolved decisions. A mockup makes decisions concrete — e.g., "Your approved mockup shows a sidebar nav, but the plan doesn't specify mobile behavior. What happens to this sidebar on 375px?"
-Each decision = one AskUserQuestion with recommendation + WHY + alternatives. Edit the plan with each decision as it's made.
+Each decision = one available user-input mechanism with recommendation + WHY + alternatives. Edit the plan with each decision as it's made.
 
 ### Post-Pass: Update Mockups (if generated)
 
 If mockups were generated in Step 0.5 and review passes changed significant design decisions (information architecture restructure, new states, layout changes), offer to regenerate (one-shot, not a loop):
 
-AskUserQuestion: "The review passes changed [list major design changes]. Want me to regenerate mockups to reflect the updated plan? This ensures the visual reference matches what we're actually building."
+available user-input mechanism: "The review passes changed [list major design changes]. Want me to regenerate mockups to reflect the updated plan? This ensures the visual reference matches what we're actually building."
 
 If yes, use `$D iterate` with feedback summarizing the changes, or `$D variants` with an updated brief. Save to the same `$_DESIGN_DIR` directory.
 
 ## CRITICAL RULE — How to ask questions
-Follow the AskUserQuestion format from the Preamble above. Additional rules for plan design reviews:
-* **One issue = one AskUserQuestion call.** Never combine multiple issues into one question.
+Follow an available user-input mechanism format from the Preamble above. Additional rules for plan design reviews:
+* **One issue = one user-input request.** Never combine multiple issues into one question.
 * Describe the design gap concretely — what's missing, what the user will experience if it's not specified.
 * Present 2-3 options. For each: effort to specify now, risk if deferred.
 * **Map to Design Principles above.** One sentence connecting your recommendation to a specific principle.
 * Label with issue NUMBER + option LETTER (e.g., "3A", "3B").
-* **Escape hatch (tightened):** If a section has zero findings, state "No issues, moving on" and proceed. If it has findings, use AskUserQuestion for each — a gap with an "obvious fix" is still a gap and still needs user approval before any change lands in the plan. Only skip AskUserQuestion when the fix is genuinely trivial AND there are no meaningful design alternatives. When in doubt, ask.
-* **NEVER use AskUserQuestion to ask which variant the user prefers.** Always create a comparison board first (`$D compare --serve`) and open it in the browser. The board has rating controls, comments, remix/regenerate buttons, and structured feedback output. Use AskUserQuestion ONLY to notify the user the board is open and wait for them to finish — not to present variants inline and ask "which do you prefer?" That is a blocked experience.
+* **Escape hatch (tightened):** If a section has zero findings, state "No issues, moving on" and proceed. If it has findings, use an available user-input mechanism for each — a gap with an "obvious fix" is still a gap and still needs user approval before any change lands in the plan. Only skip available user-input mechanism when the fix is genuinely trivial AND there are no meaningful design alternatives. When in doubt, ask.
+* **NEVER use an available user-input mechanism to ask which variant the user prefers.** Always create a comparison board first (`$D compare --serve`) and open it in the browser. The board has rating controls, comments, remix/regenerate buttons, and structured feedback output. Use an available user-input mechanism ONLY to notify the user the board is open and wait for them to finish — not to present variants inline and ask "which do you prefer?" That is a blocked experience.
 
 ## Required Outputs
 
@@ -273,7 +273,7 @@ Design decisions considered and explicitly deferred, with one-line rationale eac
 Existing DESIGN.md, UI patterns, and components that the plan should reuse.
 
 ### TODOS.md updates
-After all review passes are complete, present each potential TODO as its own individual AskUserQuestion. Never batch TODOs — one per question. Never silently skip this step.
+After all review passes are complete, present each potential TODO as its own individual available user-input mechanism. Never batch TODOs — one per question. Never silently skip this step.
 
 For design debt: missing a11y, unresolved responsive behavior, deferred empty states. Each TODO gets:
 * **What:** One-line description of the work.
@@ -311,11 +311,11 @@ Then present options: **A)** Add to TODOS.md **B)** Skip — not valuable enough
   +====================================================================+
 ```
 
-If all passes 8+: "Plan is design-complete. Run /design-review after implementation for visual QA."
+If all passes 8+: "Plan is design-complete. Run build-role-designer after implementation for visual QA."
 If any below 8: note what's unresolved and why (user chose to defer).
 
 ### Unresolved Decisions
-If any AskUserQuestion goes unanswered, note it here. Never silently default to an option.
+If any available user-input mechanism goes unanswered, note it here. Never silently default to an option.
 
 ### Approved Mockups
 
@@ -377,23 +377,23 @@ When a reusable lesson emerges, write it as a candidate under .build-stacks/lear
 
 After displaying the Review Readiness Dashboard, recommend the next review(s) based on what this design review discovered. Read the dashboard output to see which reviews have already been run and whether they are stale.
 
-**Recommend /build-role-engmanager if eng review is not skipped globally** — check the dashboard output for `skip_eng_review`. If it is `true`, eng review is opted out — do not recommend it. Otherwise, eng review is the required shipping gate. If this design review added significant interaction specifications, new user flows, or changed the information architecture, emphasize that eng review needs to validate the architectural implications. If an eng review already exists but the commit hash shows it predates this design review, note that it may be stale and should be re-run.
+**Recommend build-role-engmanager if eng review is not skipped globally** — check the dashboard output for `skip_eng_review`. If it is `true`, eng review is opted out — do not recommend it. Otherwise, eng review is the required shipping gate. If this design review added significant interaction specifications, new user flows, or changed the information architecture, emphasize that eng review needs to validate the architectural implications. If an eng review already exists but the commit hash shows it predates this design review, note that it may be stale and should be re-run.
 
-**Consider recommending /build-role-founder** — but only if this design review revealed fundamental product direction gaps. Specifically: if the overall design score started below 4/10, if the information architecture had major structural problems, or if the review surfaced questions about whether the right problem is being solved. AND no CEO review exists in the dashboard. This is a selective recommendation — most design reviews should NOT trigger a CEO review.
+**Consider recommending build-role-founder** — but only if this design review revealed fundamental product direction gaps. Specifically: if the overall design score started below 4/10, if the information architecture had major structural problems, or if the review surfaced questions about whether the right problem is being solved. AND no CEO review exists in the dashboard. This is a selective recommendation — most design reviews should NOT trigger a CEO review.
 
 **If both are needed, recommend eng review first** (required gate).
 
-**Recommend design exploration skills when appropriate** — /design-shotgun and /design-html
+**Recommend design exploration skills when appropriate** — build-flow-designshotgun and build-flow-designhtml
 produce design artifacts (mockups, HTML previews), not application code. They belong in
 plan mode alongside reviews. If this design review found visual issues that would benefit
-from exploring new directions, recommend /design-shotgun. If approved mockups exist and
-need to be turned into working HTML, recommend /design-html.
+from exploring new directions, recommend build-flow-designshotgun. If approved mockups exist and
+need to be turned into working HTML, recommend build-flow-designhtml.
 
-Use AskUserQuestion to present the next step. Include only applicable options:
-- **A)** Run /build-role-engmanager next (required gate)
-- **B)** Run /build-role-founder (only if fundamental product gaps found)
-- **C)** Run /design-shotgun — explore visual design variants for issues found
-- **D)** Run /design-html — generate Pretext-native HTML from approved mockups
+Use an available user-input mechanism to present the next step. Include only applicable options:
+- **A)** Run build-role-engmanager next (required gate)
+- **B)** Run build-role-founder (only if fundamental product gaps found)
+- **C)** Run build-flow-designshotgun — explore visual design variants for issues found
+- **D)** Run build-flow-designhtml — generate Pretext-native HTML from approved mockups
 - **E)** Skip — I'll handle next steps manually
 
 ## Formatting Rules

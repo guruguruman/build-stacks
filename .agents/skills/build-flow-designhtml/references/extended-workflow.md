@@ -35,7 +35,7 @@ Check if the user's project uses a frontend framework:
 [ -f package.json ] && cat package.json | grep -o '"react"\|"svelte"\|"vue"\|"@angular/core"\|"solid-js"\|"preact"' | head -1 || echo "NONE"
 ```
 
-If a framework is detected, use AskUserQuestion:
+If a framework is detected, use an available user-input mechanism:
 > Detected [React/Svelte/Vue] in your project. What format should the output be?
 > A) Vanilla HTML — self-contained preview file (recommended for first pass)
 > B) [React/Svelte/Vue] component — framework-native with Pretext hooks
@@ -79,7 +79,7 @@ Run the detected install command. Then use standard imports in the component.
 
 ### HTML Generation
 
-Write a single file using the Write tool. Save to:
+Write a single file using the available file-writing capability. Save to:
 `.build-stacks/design-docs/$SLUG/designs/<screen-name>-YYYYMMDD/finalized.html`
 
 For framework output, save to:
@@ -310,7 +310,7 @@ agent-browser --json --screenshot-dir .build-stacks/artifacts/browser/screenshot
 agent-browser --json --screenshot-dir .build-stacks/artifacts/browser/screenshots --session "$_ABR_SESSION" screenshot
 ```
 
-Show all three screenshots inline using the Read tool. Check for:
+Show all three screenshots inline using the available file-reading capability. Check for:
 - Text overflow (text cut off or extending beyond containers)
 - Layout collapse (elements overlapping or missing)
 - Responsive breakage (content not adapting to viewport)
@@ -327,10 +327,10 @@ LOOP:
   1. If server is running, tell user to open http://localhost:PORT/finalized.html
      Otherwise: open <path>/finalized.html
 
-  2. If an approved mockup PNG exists, show it inline (Read tool) for visual comparison.
+  2. If an approved mockup PNG exists, show it inline (available file-reading capability) for visual comparison.
      If in plan-driven or freeform mode, skip this step.
 
-  3. AskUserQuestion (adjust wording based on mode):
+  3. available user-input mechanism (adjust wording based on mode):
      With mockup: "The HTML is live in your browser. Here's the approved mockup for comparison.
       Try: resize the window (text should reflow dynamically),
       click any text (it's editable, layout recomputes instantly).
@@ -341,7 +341,7 @@ LOOP:
 
   4. If "done" / "ship it" / "looks good" / "perfect" → exit loop, go to Step 5
 
-  5. Apply feedback using targeted Edit tool changes on the HTML file
+  5. Apply feedback using targeted available file-editing capability changes on the HTML file
      (do NOT regenerate the entire file — surgical edits only)
 
   6. Brief summary of what changed (2-3 lines max)
@@ -351,7 +351,7 @@ LOOP:
   8. Go to LOOP
 ```
 
-Maximum 10 iterations. If the user hasn't said "done" after 10, use AskUserQuestion:
+Maximum 10 iterations. If the user hasn't said "done" after 10, use an available user-input mechanism:
 "We've done 10 rounds of refinement. Want to continue iterating or call it done?"
 
 ---
@@ -370,10 +370,10 @@ Extract from the HTML:
 - Border radius values
 - Shadow values
 
-Use AskUserQuestion:
+Use an available user-input mechanism:
 > No DESIGN.md found. I can extract the design tokens from the HTML we just built
-> and create a DESIGN.md for your project. This means future /design-shotgun and
-> /design-html runs will be style-consistent automatically.
+> and create a DESIGN.md for your project. This means future build-flow-designshotgun and
+> build-flow-designhtml runs will be style-consistent automatically.
 > A) Create DESIGN.md from these tokens
 > B) Skip — I'll handle the design system later
 
@@ -399,7 +399,7 @@ Write `finalized.json` alongside the HTML:
 
 ### Next Steps
 
-Use AskUserQuestion:
+Use an available user-input mechanism:
 > Design finalized with Pretext-native layout. What's next?
 > A) Copy to project — copy the HTML/component into your codebase
 > B) Iterate more — keep refining
@@ -418,13 +418,13 @@ Use AskUserQuestion:
 - **Always use Pretext for text layout.** Even if the design looks simple, Pretext
   ensures correct height computation on resize. The overhead is 30KB. Every page benefits.
 
-- **Surgical edits in the refinement loop.** Use the Edit tool to make targeted changes,
-  not the Write tool to regenerate the entire file. The user may have made manual edits
+- **Surgical edits in the refinement loop.** Use the available file-editing capability to make targeted changes,
+  not the available file-writing capability to regenerate the entire file. The user may have made manual edits
   via contenteditable that should be preserved.
 
 - **Real content only.** When a mockup exists, extract text from it. In plan-driven mode,
   use content from the plan. In freeform mode, generate realistic content based on the
   user's description. Never use "Lorem ipsum", "Your text here", or placeholder content.
 
-- **One page per invocation.** For multi-page designs, run /design-html once per page.
+- **One page per invocation.** For multi-page designs, run build-flow-designhtml once per page.
   Each run produces one HTML file.
