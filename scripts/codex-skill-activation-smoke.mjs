@@ -1,9 +1,11 @@
-import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, utimesSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { buildSkills } from "./build-skill-catalog.mjs";
+import { routingCorpus } from "./routing-corpus.mjs";
+import { extractReadSkillNames } from "./codex-routing-evidence.mjs";
 const repoRoot = process.cwd();
 const codexSmokeRoot = join(repoRoot, ".build-stacks", "tmp-codex-skill-smoke");
 const preparedPackageRoot = join(codexSmokeRoot, "package");
@@ -15,12 +17,13 @@ const fakeHome = join(codexRuntimeRoot, "home");
 const realCodexHome = resolve(process.env.BUILD_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
 const realCodexSkillsRoot = join(realCodexHome, "skills");
 const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
-const systemSkillsSnapshotRoot = join(codexRuntimeRoot, "system-skills-snapshot");
 const keepCodexSmokeWorkspace = process.env.BUILD_CODEX_SMOKE_KEEP === "1" || process.env.BUILD_CODEX_E2E_KEEP === "1";
 const installOnlySmokeMode = process.argv.includes("--install-only");
 const allSkillsSmokeMode = process.argv.includes("--all-skills");
 const naturalJapaneseSmokeMode = process.argv.includes("--natural-ja");
 const naturalEnglishSmokeMode = process.argv.includes("--natural-en");
+const collisionSmokeMode = process.argv.includes("--collisions");
+const smokeEvidenceLabel = process.env.BUILD_CODEX_SMOKE_EVIDENCE_LABEL;
 const allSkillsSmokeTimeoutMs = Number(process.env.BUILD_CODEX_SMOKE_TIMEOUT_MS ?? process.env.BUILD_CODEX_E2E_TIMEOUT_MS ?? "600000") || 600000;
 const requiredSkillSmokeFields = ["skill", "intent_fit", "findings", "decisions", "evidence", "residual risk", "next handoff", "activation_quality"];
 const codexIsolationConfigArgs = [
@@ -36,9 +39,7 @@ const codexIsolationConfigArgs = [
     "features.tool_suggest=false"
 ];
 process.once("exit", cleanupFakeCodexRuntime);
-let codexSkillsPreflightState;
-let codexSystemSkillsPreflightState;
-let codexSystemSkillsPreflightTreeState;
+let realCodexSkillsPreflightFingerprint;
 runCodexSkillSmoke().catch((error) => {
     console.error(error);
     process.exit(1);
@@ -93,7 +94,7 @@ async function runCodexSkillSmoke() {
         }
     }
     finally {
-        restoreFakeCodexRuntimeSystemSkills();
+        assertRealCodexSkillsUnchanged();
         cleanupFakeCodexRuntime();
     }
 }
@@ -107,97 +108,51 @@ function prepareFakeCodexRuntime() {
         cpSync(authFile, join(fakeCodexHome, "auth.json"));
         copiedFiles.push("auth.json");
     }
-    codexSkillsPreflightState = readFakeCodexRuntimePathState(realCodexSkillsRoot);
-    codexSystemSkillsPreflightState = readFakeCodexRuntimePathState(realCodexSystemSkillsRoot);
-    codexSystemSkillsPreflightTreeState = readFakeCodexRuntimeTreeState(realCodexSystemSkillsRoot);
-    if (existsSync(realCodexSystemSkillsRoot)) {
-        cpSync(realCodexSystemSkillsRoot, systemSkillsSnapshotRoot, { recursive: true, preserveTimestamps: true });
-    }
+    realCodexSkillsPreflightFingerprint = fingerprintRealCodexSkills();
     writeFileSync(join(smokeResultsRoot, "codex-runtime.json"), `${JSON.stringify({
         fakeCodexHome,
         fakeHome,
         realCodexHome,
         copiedFiles,
-        systemSkillsSnapshot: existsSync(systemSkillsSnapshotRoot),
+        realSkillsFingerprintRecorded: true,
         ignoreUserConfig: true,
         note: "Codex smoke commands use fake HOME/CODEX_HOME. Only auth.json is copied when present; user config, skills, history, logs, and state are not copied."
     }, null, 2)}\n`);
 }
-function restoreFakeCodexRuntimeSystemSkills() {
-    if (existsSync(systemSkillsSnapshotRoot)) {
-        rmSync(realCodexSystemSkillsRoot, { recursive: true, force: true });
-        cpSync(systemSkillsSnapshotRoot, realCodexSystemSkillsRoot, { recursive: true, preserveTimestamps: true });
-        restoreFakeCodexRuntimeTreeTimes(realCodexSystemSkillsRoot, codexSystemSkillsPreflightTreeState);
-    }
-    if (codexSkillsPreflightState?.exists && typeof codexSkillsPreflightState.mtimeMs === "number") {
-        const time = new Date(codexSkillsPreflightState.mtimeMs);
-        utimesSync(realCodexSkillsRoot, time, time);
-    }
-    if (codexSystemSkillsPreflightState?.exists && typeof codexSystemSkillsPreflightState.mtimeMs === "number" && existsSync(realCodexSystemSkillsRoot)) {
-        const time = new Date(codexSystemSkillsPreflightState.mtimeMs);
-        utimesSync(realCodexSystemSkillsRoot, time, time);
-    }
-}
 function cleanupFakeCodexRuntime() {
     rmSync(codexRuntimeRoot, { recursive: true, force: true });
 }
-function readFakeCodexRuntimePathState(path) {
-    try {
-        const stat = statSync(path);
-        return { exists: true, mtimeMs: stat.mtimeMs };
-    }
-    catch {
-        return { exists: false };
+function assertRealCodexSkillsUnchanged() {
+    const current = fingerprintRealCodexSkills();
+    if (current !== realCodexSkillsPreflightFingerprint) {
+        throw new Error(`real Codex skills changed during isolated smoke; no restore was attempted: ${realCodexSystemSkillsRoot}`);
     }
 }
-function readFakeCodexRuntimeTreeState(root) {
-    const rootState = readFakeCodexRuntimePathState(root);
-    if (!rootState.exists) {
-        return {
-            exists: false,
-            rootState,
-            entries: []
-        };
-    }
+function fingerprintRealCodexSkills() {
     const entries = [];
-    walkFakeCodexRuntimeTreeState(root, root, entries);
-    return {
-        exists: true,
-        rootState,
-        entries
-    };
+    fingerprintPath(realCodexSkillsRoot, realCodexSkillsRoot, entries);
+    return createHash("sha256").update(JSON.stringify(entries)).digest("hex");
 }
-function walkFakeCodexRuntimeTreeState(root, current, entries) {
-    for (const name of readdirSync(current).sort()) {
-        const path = join(current, name);
-        const stat = lstatSync(path);
-        entries.push({
-            rel: path.slice(root.length + 1),
-            mtimeMs: stat.mtimeMs
-        });
-        if (stat.isDirectory()) {
-            walkFakeCodexRuntimeTreeState(root, path, entries);
-        }
-    }
-}
-function restoreFakeCodexRuntimeTreeTimes(root, tree) {
-    if (!tree?.exists)
+function fingerprintPath(root, path, entries) {
+    if (!existsSync(path)) {
+        entries.push({ rel: path === root ? "." : path.slice(root.length + 1), exists: false });
         return;
-    const deepestFirst = [...tree.entries].sort((left, right) => fakeCodexRuntimePathDepth(right.rel) - fakeCodexRuntimePathDepth(left.rel));
-    for (const entry of deepestFirst) {
-        const path = join(root, entry.rel);
-        if (!existsSync(path))
-            continue;
-        const time = new Date(entry.mtimeMs);
-        utimesSync(path, time, time);
     }
-    if (existsSync(root) && typeof tree.rootState?.mtimeMs === "number") {
-        const time = new Date(tree.rootState.mtimeMs);
-        utimesSync(root, time, time);
+    const stat = lstatSync(path, { bigint: true });
+    const entry = {
+        rel: path === root ? "." : path.slice(root.length + 1),
+        mode: stat.mode.toString(),
+        ino: stat.ino.toString(),
+        size: stat.size.toString(),
+        mtimeNs: stat.mtimeNs.toString(),
+        type: stat.isDirectory() ? "directory" : stat.isSymbolicLink() ? "symlink" : stat.isFile() ? "file" : "other"
+    };
+    if (stat.isFile()) entry.sha256 = createHash("sha256").update(readFileSync(path)).digest("hex");
+    if (stat.isSymbolicLink()) entry.target = readlinkSync(path);
+    entries.push(entry);
+    if (stat.isDirectory()) {
+        for (const name of readdirSync(path).sort()) fingerprintPath(root, join(path, name), entries);
     }
-}
-function fakeCodexRuntimePathDepth(path) {
-    return path.split("/").length;
 }
 function runSingleSkillSmoke(promptInputHasSkillRoots) {
     const execResult = runCodexExecSkillSmokeSync(buildSkills.find((skill) => skill.name === "build-recipe-qa"), "codex-exec.jsonl");
@@ -214,26 +169,30 @@ async function runAllSkillSmokes() {
         while (nextIndex < skills.length) {
             const indexNumber = nextIndex++;
             const skill = skills[indexNumber];
-            console.log(`[${indexNumber + 1}/${skills.length}] ${skill.name}`);
-            let logName = join("all-skills", `${skill.name}.jsonl`);
+            const smokeId = skill.smokeId ?? skill.name;
+            console.log(`[${indexNumber + 1}/${skills.length}] ${smokeId} -> ${skill.name}`);
+            let logName = join("all-skills", `${smokeId}.jsonl`);
             let result = await runCodexExecSkillSmokeAsync(skill, logName, { allowFailure: true, timeoutMs: allSkillsSmokeTimeoutMs });
             let finalText = extractFinalCodexAgentMessage(result.stdout);
-            const attemptLogs = [join(smokeResultsRoot, logName)];
+            const attemptLogs = [logName];
             if (shouldRetrySkillSmokeResult(result, finalText)) {
                 console.log(`[retry 1/1] ${skill.name}`);
-                logName = join("all-skills", `${skill.name}.retry-1.jsonl`);
+                logName = join("all-skills", `${smokeId}.retry-1.jsonl`);
                 result = await runCodexExecSkillSmokeAsync(skill, logName, { allowFailure: true, timeoutMs: allSkillsSmokeTimeoutMs });
                 finalText = extractFinalCodexAgentMessage(result.stdout);
-                attemptLogs.push(join(smokeResultsRoot, logName));
+                attemptLogs.push(logName);
             }
             index[indexNumber] = {
                 name: skill.name,
+                smokeId,
                 layer: skill.layer,
                 summary: skill.summary,
-                log: join(smokeResultsRoot, logName),
+                log: logName,
                 attemptLogs,
                 attempts: attemptLogs.length,
                 finalText,
+                readSkills: extractReadSkillNames(result.stdout),
+                routingCase: skill.routingCase,
                 exitCode: result.exitCode
             };
         }
@@ -245,34 +204,75 @@ async function runAllSkillSmokes() {
         const skill = skills[indexNumber];
         return {
             name: skill.name,
+            smokeId: skill.smokeId ?? skill.name,
             layer: skill.layer,
             summary: skill.summary,
-            log: join(smokeResultsRoot, "all-skills", `${skill.name}.jsonl`),
+            log: join("all-skills", `${skill.smokeId ?? skill.name}.jsonl`),
             attemptLogs: [],
             attempts: 0,
             finalText: "",
+            readSkills: [],
+            routingCase: skill.routingCase,
             exitCode: null
         };
     });
     writeFileSync(join(allDir, "index.json"), `${JSON.stringify(completed, null, 2)}\n`);
     const qualityFailures = collectSkillSmokeQualityFailures(completed);
     writeAllSkillSmokeSummary(completed, qualityFailures);
+    archiveSmokeResults();
     if (qualityFailures.length > 0) {
         throw new Error(`codex all-skills quality gate failed (${qualityFailures.length}); see ${join(allDir, "summary.md")}`);
     }
 }
+function archiveSmokeResults() {
+    if (!smokeEvidenceLabel) return;
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(smokeEvidenceLabel)) {
+        throw new Error(`invalid BUILD_CODEX_SMOKE_EVIDENCE_LABEL: ${smokeEvidenceLabel}`);
+    }
+    const archiveRoot = join(repoRoot, ".build-stacks", "evidence", "codex-routing", smokeEvidenceLabel);
+    rmSync(archiveRoot, { recursive: true, force: true });
+    mkdirSync(dirname(archiveRoot), { recursive: true });
+    cpSync(smokeResultsRoot, archiveRoot, { recursive: true, preserveTimestamps: true });
+}
 function selectSkillsForSmoke() {
+    if (collisionSmokeMode) {
+        const selected = routingCorpus.collisions
+            .filter((entry) => naturalJapaneseSmokeMode ? entry.language === "ja" : naturalEnglishSmokeMode ? entry.language === "en" : true)
+            .map((entry) => attachRoutingCase(entry.expectedPrimary, {
+                prompt: entry.prompt,
+                expectedPrimary: entry.expectedPrimary,
+                forbiddenCoordinators: entry.forbiddenCoordinators,
+                allowedRoles: entry.allowedRoles
+            }, `collision-${entry.id}`));
+        if (selected.length === 0) throw new Error("collision smoke selected no routing cases");
+        return selected;
+    }
     const names = (process.env.BUILD_CODEX_SMOKE_SKILLS ?? process.env.BUILD_CODEX_E2E_SKILLS)?.split(",")
         .map((name) => name.trim())
         .filter(Boolean);
     if (!names?.length)
-        return buildSkills;
+        return buildSkills.map((skill) => attachNaturalRoutingCase(skill));
     return names.map((name) => {
         const skill = buildSkills.find((candidate) => candidate.name === name);
         if (!skill)
             throw new Error(`unknown skill in BUILD_CODEX_SMOKE_SKILLS: ${name}`);
-        return skill;
+        return attachNaturalRoutingCase(skill);
     });
+}
+function attachNaturalRoutingCase(skill) {
+    const corpusCase = routingCorpus.cases.find((entry) => entry.expectedPrimary === skill.name);
+    if (!corpusCase) throw new Error(`routing corpus missing skill: ${skill.name}`);
+    return attachRoutingCase(skill.name, {
+        prompt: naturalJapaneseSmokeMode ? corpusCase.promptJa : corpusCase.promptEn,
+        expectedPrimary: corpusCase.expectedPrimary,
+        forbiddenCoordinators: corpusCase.forbiddenCoordinators,
+        allowedRoles: corpusCase.allowedRoles
+    }, skill.name);
+}
+function attachRoutingCase(skillName, routingCase, smokeId) {
+    const skill = buildSkills.find((candidate) => candidate.name === skillName);
+    if (!skill) throw new Error(`routing corpus references unknown skill: ${skillName}`);
+    return { ...skill, routingCase, smokeId };
 }
 function runCodexExecSkillSmokeSync(skill, logName) {
     return runLoggedCommandSync(buildCodexSkillSmokeCommand(skill), consumerAppRoot, logName, { timeoutMs: 180000 });
@@ -282,16 +282,18 @@ async function runCodexExecSkillSmokeAsync(skill, logName, options = {}) {
 }
 function buildCodexSkillSmokeCommand(skill) {
     const naturalMode = naturalJapaneseSmokeMode || naturalEnglishSmokeMode;
-    const naturalRequest = naturalJapaneseSmokeMode
+    const naturalRequest = skill.routingCase?.prompt ?? (naturalJapaneseSmokeMode
         ? skill.naturalActivationExamples.ja
-        : skill.naturalActivationExamples.en;
+        : skill.naturalActivationExamples.en);
     const prompt = [
         naturalMode ? naturalRequest : `${skill.name} を使ってください。`,
         naturalMode
-            ? "skill名を指定されていない自然文として扱い、この依頼に最も適合する公開skillを選んでください。"
+            ? "skill名を指定されていない自然文として扱い、この依頼に最も適合する公開skillを一つ選んでください。明示された複数roleまたは選んだcoordinatorが宣言するrole orchestrationだけは併読できます。"
             : `この skill の意図: ${skill.summary}`,
-        "この tmp プロジェクトを対象に、選んだskillの意図に沿った実用的な計画・レビュー・判定を返してください。",
-        "実装やファイル変更は不要です。外部 write、deploy、merge、認証操作、cookie import は行わないでください。",
+        naturalMode
+            ? "routing検証です。選択した一次skillのSKILL.mdを実際に読んだら、workflow本体、repo調査、テスト、ファイル変更は実行せず、選択理由だけを返してください。"
+            : "この tmp プロジェクトを対象に、選んだskillの意図に沿った実用的な計画・レビュー・判定を返してください。",
+        "外部 write、deploy、merge、認証操作、cookie import は行わないでください。",
         "最終応答に `skill: <選択した公開skill名>` を独立した1行で書き、intent_fit, findings, decisions, evidence, residual risk, next handoff, activation_quality を含めてください。",
         "activation_quality の理由は activation_notes に分離してください。",
         "最終行は必ず `activation_quality: pass`、`activation_quality: warn`、`activation_quality: fail` のいずれか 1 行だけにしてください。"
@@ -446,7 +448,7 @@ If codex exec is review-required, inspect codex-exec.jsonl. The prompt-input ver
 `);
 }
 function writeAllSkillSmokeSummary(index, qualityFailures) {
-    const rows = index.map((item) => `| ${item.name} | ${item.layer} | ${item.exitCode ?? "null"} | ${item.attempts} | ${scoreUsefulnessRubric(item.finalText).total}/10 | ${item.log} |`);
+    const rows = index.map((item) => `| ${item.smokeId ?? item.name} | ${item.name} | ${item.layer} | ${item.exitCode ?? "null"} | ${item.attempts} | ${scoreUsefulnessRubric(item.finalText).total}/10 | ${item.readSkills.join(", ")} | ${item.log} |`);
     const rubricRows = index.map((item) => {
         const rubric = scoreUsefulnessRubric(item.finalText);
         return `| ${item.name} | ${rubric.total}/10 | ${rubric.checks.map((check) => `${check.name}:${check.score}`).join(", ")} |`;
@@ -458,14 +460,14 @@ function writeAllSkillSmokeSummary(index, qualityFailures) {
 - skills passed quality gate: ${index.length - failedSkillCount}
 - skills failed quality gate: ${failedSkillCount}
 - quality failures: ${qualityFailures.length}
-- logs: ${join(smokeResultsRoot, "all-skills")}
+- logs: all-skills/
 - reviewer: manual LLM review still required after this mechanical gate
 - usefulness rubric: advisory only; it is not a release gate
 
 ${qualityFailures.length > 0 ? `## Quality Failures\n\n${qualityFailures.map((failure) => `- ${failure}`).join("\n")}\n` : "## Quality Failures\n\nNone.\n"}
 
-| Skill | Layer | Exit | Attempts | Usefulness | Log |
-| --- | --- | --- | --- | --- | --- |
+| Case | Expected skill | Layer | Exit | Attempts | Usefulness | Actual skill reads | Log |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 ${rows.join("\n")}
 
 ## Advisory Usefulness Rubric
@@ -493,11 +495,27 @@ function collectSkillSmokeQualityFailures(index) {
         if (!buildActivationQualityPattern().test(item.finalText)) {
             skillSmokeFailures.push(`${item.name}: activation_quality must be the final line and pass, warn, or fail`);
         }
+        if (item.routingCase) {
+            if (!item.readSkills.includes(item.routingCase.expectedPrimary)) {
+                skillSmokeFailures.push(`${item.smokeId}: expected SKILL.md read was not observed: ${item.routingCase.expectedPrimary}`);
+            }
+            const forbiddenReads = item.readSkills.filter((name) => item.routingCase.forbiddenCoordinators.includes(name));
+            if (forbiddenReads.length > 0) {
+                skillSmokeFailures.push(`${item.smokeId}: forbidden coordinator read(s): ${forbiddenReads.join(", ")}`);
+            }
+            const unexpectedRoles = item.readSkills.filter((name) => isRoleSkill(name) && !item.routingCase.allowedRoles.includes(name));
+            if (unexpectedRoles.length > 0) {
+                skillSmokeFailures.push(`${item.smokeId}: unexpected role read(s): ${unexpectedRoles.join(", ")}`);
+            }
+        }
         if ((naturalJapaneseSmokeMode || naturalEnglishSmokeMode) && !new RegExp(`(?:^|\\n)(?:[-*]\\s*)?skill:\\s*${escapeRegExp(item.name)}\\s*$`, "im").test(item.finalText)) {
             skillSmokeFailures.push(`${item.name}: natural-language request selected a different skill`);
         }
     }
     return skillSmokeFailures;
+}
+function isRoleSkill(name) {
+    return buildSkills.find((skill) => skill.name === name)?.routingKind === "role";
 }
 function buildActivationQualityPattern() {
     return /(?:^|\n)activation_quality: (pass|warn|fail)\s*$/i;

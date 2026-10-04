@@ -1,4 +1,4 @@
-import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, utimesSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, readlinkSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { spawn, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -17,8 +17,8 @@ const fakeHome = join(runtimeRoot, "home");
 const agentBrowserSocketDir = `/tmp/pbs-ab-${process.pid}`;
 const realCodexHome = resolve(process.env.BUILD_CODEX_REAL_HOME ?? process.env.CODEX_HOME ?? join(process.env.HOME ?? tmpdir(), ".codex"));
 const realCodexSkillsRoot = join(realCodexHome, "skills");
-const realCodexSystemSkillsRoot = join(realCodexSkillsRoot, ".system");
-const systemSkillsSnapshotRoot = join(runtimeRoot, "system-skills-snapshot");
+const installOnlySmokeMode = process.argv.includes("--install-only");
+const browserEvidenceLabel = process.env.BUILD_CODEX_BROWSER_EVIDENCE_LABEL;
 const codexModel = process.env.BUILD_CODEX_BROWSER_MODEL ?? "gpt-5.5";
 const codexReasoning = process.env.BUILD_CODEX_BROWSER_REASONING ?? "high";
 const codexTimeoutMs = Number(process.env.BUILD_CODEX_BROWSER_TIMEOUT_MS ?? "600000") || 600000;
@@ -35,9 +35,6 @@ const codexIsolationConfigArgs = [
     "features.tool_suggest=false"
 ];
 const protectedPaths = [
-    join(process.env.HOME ?? "", ".claude"),
-    join(process.env.HOME ?? "", "." + ["g", "stack"].join("")),
-    realCodexSkillsRoot,
     join(repoRoot, ".claude"),
     join(repoRoot, "CLAUDE.md"),
     join(repoRoot, "AGENTS.md")
@@ -62,14 +59,21 @@ async function runCodexBrowserCoreSmoke() {
         runCodexBrowserCommand(["node", "scripts/apm-package-prepare.mjs", "--out", packageRoot], repoRoot, "package-prepare.log");
         runCodexBrowserCommand(["apm", "install", packageRoot, "--target", "codex", "--force"], appRoot, "apm-install.log");
         runCodexBrowserCommand(["apm", "compile", "--target", "codex"], appRoot, "apm-compile.log");
+        if (installOnlySmokeMode) {
+            const postflight = captureCodexBrowserPostflight(preflight);
+            if (postflight.status !== "pass")
+                throw new Error(`Codex browser install-only smoke changed protected state: ${runRoot}`);
+            console.log("Codex browser install-only isolation smoke ok");
+            return;
+        }
         fixtureServer = await startBrowserFixtureServer();
         const runs = [];
         runs.push(await runCodexBrowserSkill("build-browser-runner", buildBrowserRunnerPrompt(fixtureServer.url)));
         runs.push(await runCodexBrowserSkill("build-browser-qa", buildBrowserQaPrompt(fixtureServer.url)));
-        const restoredSystemSkills = restoreCodexSystemSkillsSnapshot(preflight);
         const postflight = captureCodexBrowserPostflight(preflight);
-        const summary = buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl: fixtureServer.url, restoredSystemSkills });
+        const summary = buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl: fixtureServer.url });
         writeCodexBrowserReports(summary);
+        archiveCodexBrowserEvidence(summary);
         console.log(`codex browser core smoke ${summary.status}: ${runRoot}`);
         if (summary.status !== "pass")
             process.exit(1);
@@ -101,21 +105,19 @@ function prepareCodexBrowserRuntime() {
         cpSync(authFile, join(fakeCodexHome, "auth.json"));
         copiedFiles.push("auth.json");
     }
-    if (existsSync(realCodexSystemSkillsRoot)) {
-        cpSync(realCodexSystemSkillsRoot, systemSkillsSnapshotRoot, { recursive: true, preserveTimestamps: true });
-    }
     writeFileSync(join(reportsRoot, "runtime.json"), `${JSON.stringify({
         fakeCodexHome,
         fakeHome,
         agentBrowserSocketDir,
         realCodexHome,
         copiedFiles,
-        systemSkillsSnapshot: existsSync(systemSkillsSnapshotRoot),
+        realSkillsFingerprintRecorded: true,
         codexModel,
         codexReasoning,
         sandbox: "danger-full-access",
         ignoreUserConfig: true,
-        isolationConfigArgs: codexIsolationConfigArgs
+        isolationConfigArgs: codexIsolationConfigArgs,
+        note: "Browser smoke commands use fake HOME/CODEX_HOME. Only auth.json is copied when present; real Codex skills are fingerprinted and never restored or rewritten."
     }, null, 2)}\n`);
 }
 
@@ -124,40 +126,11 @@ function cleanupCodexBrowserRuntime() {
     rmSync(agentBrowserSocketDir, { recursive: true, force: true });
 }
 
-function restoreCodexSystemSkillsSnapshot(preflight) {
-    const beforeState = preflight.protectedPaths.find((state) => state.path === realCodexSkillsRoot);
-    let restored = false;
-    if (existsSync(systemSkillsSnapshotRoot)) {
-        rmSync(realCodexSystemSkillsRoot, { recursive: true, force: true });
-        cpSync(systemSkillsSnapshotRoot, realCodexSystemSkillsRoot, { recursive: true, preserveTimestamps: true });
-        restoreCodexBrowserTreeTimes(realCodexSystemSkillsRoot, preflight.codexSystemSkillsTree);
-        restored = true;
-    }
-    else if (!preflight.codexSystemSkillsRoot?.exists && existsSync(realCodexSystemSkillsRoot)) {
-        rmSync(realCodexSystemSkillsRoot, { recursive: true, force: true });
-        restored = true;
-    }
-    if (!beforeState?.exists && existsSync(realCodexSkillsRoot)) {
-        rmSync(realCodexSkillsRoot, { recursive: true, force: true });
-        return true;
-    }
-    if (beforeState?.exists && typeof beforeState.mtimeMs === "number") {
-        const time = new Date(beforeState.mtimeMs);
-        utimesSync(realCodexSkillsRoot, time, time);
-    }
-    if (preflight.codexSystemSkillsRoot?.exists && typeof preflight.codexSystemSkillsRoot.mtimeMs === "number") {
-        const time = new Date(preflight.codexSystemSkillsRoot.mtimeMs);
-        utimesSync(realCodexSystemSkillsRoot, time, time);
-    }
-    return restored;
-}
-
 function captureCodexBrowserPreflight() {
     return {
         generatedAt: new Date().toISOString(),
         protectedPaths: protectedPaths.map(readCodexBrowserPathState),
-        codexSystemSkillsRoot: readCodexBrowserPathState(realCodexSystemSkillsRoot),
-        codexSystemSkillsTree: readCodexBrowserTreeState(realCodexSystemSkillsRoot),
+        realCodexSkillsTree: readCodexBrowserTreeState(realCodexSkillsRoot),
         repoStatusShort: readCodexBrowserRepoStatus()
     };
 }
@@ -166,30 +139,35 @@ function captureCodexBrowserPostflight(preflight) {
     const postflight = {
         generatedAt: new Date().toISOString(),
         protectedPaths: protectedPaths.map(readCodexBrowserPathState),
-        codexSystemSkillsTree: readCodexBrowserTreeState(realCodexSystemSkillsRoot),
+        realCodexSkillsTree: readCodexBrowserTreeState(realCodexSkillsRoot),
         repoStatusShort: readCodexBrowserRepoStatus()
     };
     postflight.protectedPathDiffs = postflight.protectedPaths
         .map((after, index) => ({ before: preflight.protectedPaths[index], after }))
         .filter(({ before, after }) => !isSamePathState(before, after));
-    postflight.codexSystemSkillsTreeChanged = !isSameTreeState(preflight.codexSystemSkillsTree, postflight.codexSystemSkillsTree);
+    postflight.realCodexSkillsTreeChanged = !isSameTreeState(preflight.realCodexSkillsTree, postflight.realCodexSkillsTree);
     postflight.repoStatusChanged = preflight.repoStatusShort !== postflight.repoStatusShort;
-    postflight.status = postflight.protectedPathDiffs.length === 0 && !postflight.codexSystemSkillsTreeChanged && !postflight.repoStatusChanged ? "pass" : "fail";
+    postflight.status = postflight.protectedPathDiffs.length === 0 && !postflight.realCodexSkillsTreeChanged && !postflight.repoStatusChanged ? "pass" : "fail";
     return postflight;
 }
 
 function readCodexBrowserPathState(path) {
     try {
-        const stat = statSync(path);
-        return {
+        const stat = lstatSync(path, { bigint: true });
+        const state = {
             path,
             exists: true,
-            mtimeMs: stat.mtimeMs,
-            size: stat.size,
-            mode: stat.mode,
+            inode: stat.ino.toString(),
+            mtimeNs: stat.mtimeNs.toString(),
+            size: stat.size.toString(),
+            mode: stat.mode.toString(),
             isDirectory: stat.isDirectory(),
-            isFile: stat.isFile()
+            isFile: stat.isFile(),
+            isSymbolicLink: stat.isSymbolicLink()
         };
+        if (stat.isFile()) state.sha256 = createHash("sha256").update(readFileSync(path)).digest("hex");
+        if (stat.isSymbolicLink()) state.target = readlinkSync(path);
+        return state;
     }
     catch (error) {
         if (error?.code === "ENOENT")
@@ -203,11 +181,15 @@ function isSamePathState(left, right) {
         return false;
     if (!left.exists && !right.exists)
         return true;
-    return Math.abs(left.mtimeMs - right.mtimeMs) < 2
+    return left.inode === right.inode
+        && left.mtimeNs === right.mtimeNs
         && left.size === right.size
         && left.mode === right.mode
         && left.isDirectory === right.isDirectory
-        && left.isFile === right.isFile;
+        && left.isFile === right.isFile
+        && left.isSymbolicLink === right.isSymbolicLink
+        && left.sha256 === right.sha256
+        && left.target === right.target;
 }
 
 function readCodexBrowserTreeState(root) {
@@ -234,17 +216,19 @@ function readCodexBrowserTreeState(root) {
 function walkCodexBrowserTreeState(root, current, entries) {
     for (const name of readdirSync(current).sort()) {
         const path = join(current, name);
-        const stat = lstatSync(path);
+        const stat = lstatSync(path, { bigint: true });
         const entry = {
             rel: path.slice(root.length + 1),
-            mtimeMs: stat.mtimeMs,
-            size: stat.size,
-            mode: stat.mode,
+            inode: stat.ino.toString(),
+            mtimeNs: stat.mtimeNs.toString(),
+            size: stat.size.toString(),
+            mode: stat.mode.toString(),
             type: stat.isDirectory() ? "directory" : stat.isFile() ? "file" : stat.isSymbolicLink() ? "symlink" : "other"
         };
         if (stat.isFile()) {
             entry.sha256 = createHash("sha256").update(readFileSync(path)).digest("hex");
         }
+        if (stat.isSymbolicLink()) entry.target = readlinkSync(path);
         entries.push(entry);
         if (stat.isDirectory()) {
             walkCodexBrowserTreeState(root, path, entries);
@@ -269,31 +253,12 @@ function isSameTreeState(left, right) {
 function isSameTreeEntry(left, right) {
     return left.rel === right.rel
         && left.type === right.type
-        && Math.abs(left.mtimeMs - right.mtimeMs) < 2
+        && left.inode === right.inode
+        && left.mtimeNs === right.mtimeNs
         && left.size === right.size
         && left.mode === right.mode
-        && left.sha256 === right.sha256;
-}
-
-function restoreCodexBrowserTreeTimes(root, tree) {
-    if (!tree?.exists)
-        return;
-    const deepestFirst = [...tree.entries].sort((left, right) => pathDepth(right.rel) - pathDepth(left.rel));
-    for (const entry of deepestFirst) {
-        const path = join(root, entry.rel);
-        if (!existsSync(path))
-            continue;
-        const time = new Date(entry.mtimeMs);
-        utimesSync(path, time, time);
-    }
-    if (existsSync(root) && typeof tree.rootState?.mtimeMs === "number") {
-        const time = new Date(tree.rootState.mtimeMs);
-        utimesSync(root, time, time);
-    }
-}
-
-function pathDepth(path) {
-    return path.split("/").length;
+        && left.sha256 === right.sha256
+        && left.target === right.target;
 }
 
 function readCodexBrowserRepoStatus() {
@@ -621,7 +586,7 @@ function collectCodexBrowserFiles(root) {
 
 function walkCodexBrowserFiles(root, current, files) {
     for (const entry of spawnSync("find", [current, "-maxdepth", "1", "-mindepth", "1"], { encoding: "utf8" }).stdout.split("\n").filter(Boolean)) {
-        const stat = statSync(entry);
+        const stat = lstatSync(entry);
         if (stat.isDirectory()) {
             walkCodexBrowserFiles(root, entry, files);
         }
@@ -631,7 +596,7 @@ function walkCodexBrowserFiles(root, current, files) {
     }
 }
 
-function buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl, restoredSystemSkills }) {
+function buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl }) {
     const runFailures = [];
     for (const run of runs) {
         if (run.exitCode !== 0)
@@ -643,14 +608,13 @@ function buildCodexBrowserSummary({ preflight, postflight, runs, fixtureUrl, res
     }
     const failures = [
         ...runFailures,
-        ...(postflight.codexSystemSkillsTreeChanged ? ["real Codex system skills tree changed during danger-full-access browser smoke"] : []),
+        ...(postflight.realCodexSkillsTreeChanged ? ["real Codex skills tree changed during danger-full-access browser smoke; no restore was attempted"] : []),
         ...(postflight.status === "pass" ? [] : ["protected path or repo status changed during danger-full-access browser smoke"])
     ];
     return {
         status: failures.length === 0 ? "pass" : "fail",
         runRoot,
         fixtureUrl,
-        restoredSystemSkills,
         failures,
         preflight,
         postflight,
@@ -670,7 +634,7 @@ function writeCodexBrowserReports(summary) {
         `Sandbox for browser runs: \`danger-full-access\``,
         `Model: \`${codexModel}\``,
         `Reasoning: \`${codexReasoning}\``,
-        `Restored real Codex system skills snapshot: \`${summary.restoredSystemSkills}\``,
+        "Real Codex skills restore attempted: `false`",
         "",
         "## Runs",
         "",
@@ -685,7 +649,7 @@ function writeCodexBrowserReports(summary) {
         "## Environment Hygiene",
         "",
         `Postflight: **${summary.postflight.status}**`,
-        `Codex system skills tree changed: **${summary.postflight.codexSystemSkillsTreeChanged ? "yes" : "no"}**`,
+        `Real Codex skills tree changed: **${summary.postflight.realCodexSkillsTreeChanged ? "yes" : "no"}**`,
         "",
         "| Path | Changed |",
         "| --- | --- |",
@@ -694,6 +658,38 @@ function writeCodexBrowserReports(summary) {
             return `| ${state.path} | ${changed ? "yes" : "no"} |`;
         })
     ].join("\n"));
+}
+
+function archiveCodexBrowserEvidence(summary) {
+    if (!browserEvidenceLabel)
+        return;
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(browserEvidenceLabel))
+        throw new Error(`invalid BUILD_CODEX_BROWSER_EVIDENCE_LABEL: ${browserEvidenceLabel}`);
+    const archiveRoot = join(repoRoot, ".build-stacks", "evidence", "codex-browser", browserEvidenceLabel);
+    rmSync(archiveRoot, { recursive: true, force: true });
+    mkdirSync(archiveRoot, { recursive: true });
+    const artifactRoot = join(appRoot, ".build-stacks", "artifacts", "browser");
+    if (existsSync(artifactRoot))
+        cpSync(artifactRoot, join(archiveRoot, "artifacts"), { recursive: true, preserveTimestamps: true });
+    writeFileSync(join(archiveRoot, "summary.json"), `${JSON.stringify({
+        status: summary.status,
+        completedAt: new Date().toISOString(),
+        fixture: "local-loopback",
+        failures: summary.failures,
+        environmentHygiene: {
+            status: summary.postflight.status,
+            realCodexSkillsTreeChanged: summary.postflight.realCodexSkillsTreeChanged,
+            repoStatusChanged: summary.postflight.repoStatusChanged,
+            restoreAttempted: false
+        },
+        runs: summary.runs.map((run) => ({
+            skillName: run.skillName,
+            exitCode: run.exitCode,
+            timedOut: run.timedOut,
+            browserActivation: run.browserActivation,
+            evidenceFiles: run.evidenceFiles
+        }))
+    }, null, 2)}\n`);
 }
 
 function shellQuoteCodexBrowserArg(value) {

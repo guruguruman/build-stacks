@@ -28,8 +28,11 @@ scripts:
   smoke:codex-activation-install: "node scripts/codex-skill-activation-smoke.mjs --install-only"
   smoke:codex-activation-natural-ja: "node scripts/codex-skill-activation-smoke.mjs --all-skills --natural-ja"
   smoke:codex-activation-natural-en: "node scripts/codex-skill-activation-smoke.mjs --all-skills --natural-en"
+  routing:verify: "node scripts/host-neutral-source-verify.mjs"
+  github:forward-test: "node scripts/github-workflow-forward-test.mjs"
   quality:verify: "node scripts/release-quality-verify.mjs"
   release:verify: "node scripts/release-verify.mjs"
+  release:candidate-verify: "node scripts/release-candidate-verify.mjs"
   test: "node --test"
 
 dependencies:

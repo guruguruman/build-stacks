@@ -30,7 +30,7 @@ describe("ported workflow contracts", () => {
         assert.equal(existsSync("packages/product/.apm/skills/build-recipe-discovery/assets/questionnaire-template.md"), true);
     });
 
-    test("wizard persists only portable private values and passes remote secrets over stdin", () => {
+    test("wizard confirms every secret write and never exposes values in arguments or xtrace", () => {
         const syntax = spawnSync("bash", ["-n", wizardTemplate], { encoding: "utf8" });
         assert.equal(syntax.status, 0, syntax.stderr);
 
@@ -38,24 +38,28 @@ describe("ported workflow contracts", () => {
         const helpers = readFileSync(wizardTemplate, "utf8").split("# STAGES:")[0];
         const privateEnv = join(root, ".env");
         const writeScript = join(root, "write-private.sh");
-        writeFileSync(writeScript, `${helpers}\nwrite_private_env "$1" TOKEN abc_123-xyz\n`);
-        let result = spawnSync("bash", [writeScript, privateEnv], { encoding: "utf8" });
+        writeFileSync(writeScript, `${helpers}\nTOKEN_VALUE=abc_123-xyz\nwrite_private_env "$1" TOKEN TOKEN_VALUE\n`);
+        let result = spawnSync("bash", [writeScript, privateEnv], { encoding: "utf8", input: "n\n" });
+        assert.notEqual(result.status, 0);
+        assert.equal(existsSync(privateEnv), false);
+
+        result = spawnSync("bash", [writeScript, privateEnv], { encoding: "utf8", input: "y\n" });
         assert.equal(result.status, 0, result.stderr);
         assert.equal(statSync(privateEnv).mode & 0o777, 0o600);
         assert.equal(readFileSync(privateEnv, "utf8"), "TOKEN=abc_123-xyz\n");
 
         const unsafeEnv = join(root, "unsafe.env");
         const unsafeScript = join(root, "reject-unsafe.sh");
-        writeFileSync(unsafeScript, `${helpers}\nif write_private_env "$1" TOKEN 'contains space'; then exit 9; fi\n`);
-        result = spawnSync("bash", [unsafeScript, unsafeEnv], { encoding: "utf8" });
+        writeFileSync(unsafeScript, `${helpers}\nTOKEN_VALUE='contains space'\nif write_private_env "$1" TOKEN TOKEN_VALUE; then exit 9; fi\n`);
+        result = spawnSync("bash", [unsafeScript, unsafeEnv], { encoding: "utf8", input: "y\n" });
         assert.equal(result.status, 0, result.stderr);
         assert.equal(existsSync(unsafeEnv), false);
 
         const directoryEnv = join(root, "directory.env");
         mkdirSync(directoryEnv);
         const nonRegularScript = join(root, "reject-non-regular.sh");
-        writeFileSync(nonRegularScript, `${helpers}\nif write_private_env "$1" TOKEN safe; then exit 9; fi\n`);
-        result = spawnSync("bash", [nonRegularScript, directoryEnv], { encoding: "utf8" });
+        writeFileSync(nonRegularScript, `${helpers}\nTOKEN_VALUE=safe\nif write_private_env "$1" TOKEN TOKEN_VALUE; then exit 9; fi\n`);
+        result = spawnSync("bash", [nonRegularScript, directoryEnv], { encoding: "utf8", input: "y\n" });
         assert.equal(result.status, 0, result.stderr);
 
         const bin = join(root, "bin");
@@ -64,17 +68,28 @@ describe("ported workflow contracts", () => {
         writeFileSync(gh, "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$GH_ARGS\"\nIFS= read -r value || true\nprintf '%s' \"$value\" > \"$GH_STDIN\"\n");
         chmodSync(gh, 0o755);
         const ghScript = join(root, "gh-secret.sh");
-        writeFileSync(ghScript, `${helpers}\nset_gh_secret TOKEN super-secret-value\n`);
+        writeFileSync(ghScript, `${helpers}\nset_gh_secret TOKEN SECRET_VALUE\n`);
         const argsPath = join(root, "args.txt");
         const stdinPath = join(root, "stdin.txt");
         result = spawnSync("bash", [ghScript], {
             encoding: "utf8",
-            env: { ...process.env, PATH: `${bin}${delimiter}${process.env.PATH}`, GH_ARGS: argsPath, GH_STDIN: stdinPath }
+            input: "n\n",
+            env: { ...process.env, PATH: `${bin}${delimiter}${process.env.PATH}`, GH_ARGS: argsPath, GH_STDIN: stdinPath, SECRET_VALUE: "super-secret-value" }
+        });
+        assert.notEqual(result.status, 0);
+        assert.equal(existsSync(argsPath), false);
+        assert.equal(existsSync(stdinPath), false);
+
+        result = spawnSync("bash", ["-x", ghScript], {
+            encoding: "utf8",
+            input: "y\n",
+            env: { ...process.env, PATH: `${bin}${delimiter}${process.env.PATH}`, GH_ARGS: argsPath, GH_STDIN: stdinPath, SECRET_VALUE: "super-secret-value" }
         });
         assert.equal(result.status, 0, result.stderr);
         assert.equal(readFileSync(argsPath, "utf8"), "secret\nset\nTOKEN\n");
         assert.equal(readFileSync(stdinPath, "utf8"), "super-secret-value");
         assert.doesNotMatch(readFileSync(argsPath, "utf8"), /super-secret-value/);
+        assert.doesNotMatch(`${result.stdout}\n${result.stderr}`, /super-secret-value/);
         assert.doesNotMatch(readFileSync(wizardTemplate, "utf8"), /%q/);
     });
 
@@ -124,7 +139,19 @@ describe("ported workflow contracts", () => {
         assert.doesNotMatch(ship, /fully automated|auto-commit|Generated with/);
         assert.doesNotMatch(ship, /gh pr view --head/);
         assert.match(ship, /gh pr list --head <branch>/);
+        assert.match(ship, /OPEN/);
+        assert.match(ship, /`CLOSED`\/`MERGED`/);
+        assert.match(ship, /never edit/i);
         assert.match(ship, /Skill invocation alone is not approval/);
+    });
+
+    test("upgrade verification observes the installed 2.1.0 skill set instead of a stale fixed count", () => {
+        const upgrade = readFileSync("packages/maintainer/.apm/skills/build-runtime-upgrade/SKILL.md", "utf8");
+        assert.match(upgrade, /2\.1\.0/);
+        assert.doesNotMatch(upgrade, /2\.0\.0|47 skills|47スキル/);
+        assert.match(upgrade, /apm audit --ci/);
+        assert.match(upgrade, /deployed_files/);
+        assert.match(upgrade, /\.agents.*\.claude.*\.kiro/s);
     });
 });
 

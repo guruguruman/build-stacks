@@ -94,7 +94,8 @@ Success criteria:
 - `build-browser-runner` returns `browser_activation: executed` with browser evidence.
 - `build-browser-qa` returns `browser_activation: executed` after fixture form interaction.
 - Evidence stays under the temporary app `.build-stacks/artifacts/browser` path.
-- Protected paths, including the real Codex system skill tree, are unchanged after postflight.
+- When `BUILD_CODEX_BROWSER_EVIDENCE_LABEL` is set, sanitized summaries and browser artifacts are archived under `.build-stacks/evidence/codex-browser/<label>/`.
+- Protected paths and the complete real Codex skills tree are unchanged after postflight; the smoke never deletes or restores the real tree.
 
 ## 5. Natural-language activation
 

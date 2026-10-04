@@ -61,6 +61,30 @@ describe("release quality gate", () => {
         assert.match(workflow, /npm run release:verify/);
     });
 
+    it("requires bilingual read-event routing, collisions, and mocked GitHub for a release candidate", async () => {
+        const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+        assert.equal(packageJson.scripts["release:candidate-verify"], "node scripts/release-candidate-verify.mjs");
+        const { releaseCandidateCommands } = await import("../../scripts/release-candidate-verify.mjs");
+        assert.deepEqual(releaseCandidateCommands.slice(0, 3), [
+            ["npm", "run", "quality:verify"],
+            ["node", "scripts/host-neutral-source-verify.mjs"],
+            ["node", "scripts/github-workflow-forward-test.mjs"]
+        ]);
+        assert.equal(releaseCandidateCommands.filter((command) => command.includes("--natural-ja")).length, 2);
+        assert.equal(releaseCandidateCommands.filter((command) => command.includes("--natural-en")).length, 2);
+        assert.equal(releaseCandidateCommands.filter((command) => command.includes("--collisions")).length, 2);
+        for (const label of ["natural-ja", "natural-en", "collisions-ja", "collisions-en"]) {
+            assert.ok(releaseCandidateCommands.some((command) => command.includes(`BUILD_CODEX_SMOKE_EVIDENCE_LABEL=${label}`)));
+        }
+        assert.ok(releaseCandidateCommands.some((command) => command.includes("BUILD_CODEX_BROWSER_EVIDENCE_LABEL=browser-core")));
+    });
+
+    it("keeps archived routing summaries portable", () => {
+        const activationSmoke = readFileSync("scripts/codex-skill-activation-smoke.mjs", "utf8");
+        assert.match(activationSmoke, /- logs: all-skills\//);
+        assert.doesNotMatch(activationSmoke, /- logs: \$\{join\(smokeResultsRoot/);
+    });
+
     it("includes Python skill sources in repository secret scanning", () => {
         const secretScanner = readFileSync("scripts/repo-secret-scan.mjs", "utf8");
         assert.match(secretScanner, /\|py\|/);
